@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Welcome to Jekyll!"
+title:  "Entendendo como funciona flexbox css"
 date:   2016-02-20 10:09:31 -0200
 categories: jekyll update
 ---

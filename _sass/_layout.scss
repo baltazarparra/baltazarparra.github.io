@@ -1,3 +1,25 @@
+body {
+  padding-top: 240px;
+}
+
+* {
+  transition: all .4s;
+}
+
+#particles-js {
+  position: absolute;
+  width: 100%;
+  display: inline-block;
+  left: 0;
+  top: 0;
+  z-index: -1;
+}
+
+.header-img {
+  position: absolute;
+  top: 0;
+}
+
 /**
  * Site header
  */
@@ -5,6 +27,7 @@
     border-top: 5px solid $grey-color-dark;
     border-bottom: 1px solid $grey-color-light;
     min-height: 56px;
+    background-color: rgba(255,255,255,.7);
 
     // Positioning context for the mobile navigation icon
     position: relative;
