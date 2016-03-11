@@ -1,5 +1,5 @@
 body {
-  padding-top: 240px;
+  padding-top: 0;
 }
 
 * {
@@ -16,8 +16,7 @@ body {
 }
 
 .header-img {
-  position: absolute;
-  top: 0;
+  position: relative;
 }
 
 /**
