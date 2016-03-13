@@ -3,7 +3,7 @@ title: Baltazar Parra
 email: baltazarparra@outlook.com
 description: > # this means to ignore newlines until "baseurl:"
   Página pessoal, criada para registrar e compartilhar conteúdo relacionado a
-  frontend e novidades como o flexbox css.
+  frontends.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://baltazarparra.github.io" # the base hostname & protocol for your site
 twitter_username: Baltazar_Parra
