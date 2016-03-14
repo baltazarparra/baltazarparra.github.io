@@ -5,11 +5,11 @@ date:   2016-03-13 08:45:31 -0200
 categories: css flexbox frontend baltazar
 ---
 
-##\{O que é flexbox???\}
+## \{ O que é flexbox?! \}
 
 Flexible Box Layout Model, também conhecida como 'flexbox', é parte da especificação CSS3. Ele provê um novo modelo de 'box' otimizado para design de interface. Na prática isso quer dizer, menos gambiarras com o 'float' e layouts mais concisos.
 
-##\{display: flex;\}
+## \{ display: flex; \}
 
 Vamos começar com uma estrutura básica, criei um container, que vai receber o novo valor Flex, para a propriedade Display e dentro do container coloquei algumas div's.
 
@@ -25,7 +25,7 @@ Podemos ainda alterar o valor de display para inline-flex, dizendo ao nosso cont
 <p data-height="268" data-theme-id="22766" data-slug-hash="KzgmNN" data-default-tab="result" data-user="baltazarparra" class="codepen">See the Pen <a href="http://codepen.io/baltazarparra/pen/KzgmNN/">flexbox-1.2</a> by Baltazar Parra (<a href="http://codepen.io/baltazarparra">@baltazarparra</a>) on <a href="http://codepen.io">CodePen</a>.</p>
 <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
 
-##\{flex-direction: row;\}
+## \{ flex-direction: row; \}
 
 Outra nova propriedade interessante, é a flex-direction, com ela podemos dizer ao nosso container flexivel, qual eixo os elementos devem seguir, por padrão o valor de flex-direction é row, onde os elementos são alocados horizontalmente da esquerda para direita, mas podemor alterar isso facilmente, mudando o valor para column.
 
@@ -44,4 +44,4 @@ Logicamente o mesmo acontece ao valor column-reverse, alterando o sentido do eix
 <p data-height="268" data-theme-id="22766" data-slug-hash="RaGVyb" data-default-tab="result" data-user="baltazarparra" class="codepen">See the Pen <a href="http://codepen.io/baltazarparra/pen/RaGVyb/">flexbox-1.5</a> by Baltazar Parra (<a href="http://codepen.io/baltazarparra">@baltazarparra</a>) on <a href="http://codepen.io">CodePen</a>.</p>
 <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
 
-#####\{Inspirado no site [flexbox.io](http://flexbox.io) de [Wes Bos](http://wesbos.com/).\}
+#####Inspirado no site [flexbox.io](http://flexbox.io) de [Wes Bos](http://wesbos.com/).
