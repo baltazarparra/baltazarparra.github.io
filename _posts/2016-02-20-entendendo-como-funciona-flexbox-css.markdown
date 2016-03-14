@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Entendendo como funciona Flexbox CSS - Parte 01"
-date:   2016-03-13 08:45:31 -0200
+date:   2016-03-14 06:57:31 -0200
 categories: css flexbox frontend baltazar
 ---
 
