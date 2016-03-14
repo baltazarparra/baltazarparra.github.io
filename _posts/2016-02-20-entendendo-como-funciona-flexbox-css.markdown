@@ -5,7 +5,7 @@ date:   2016-03-13 08:45:31 -0200
 categories: css flexbox frontend baltazar
 ---
 
-##\{O que é flexbox?\}
+##\{O que é flexbox???\}
 
 Flexible Box Layout Model, também conhecida como 'flexbox', é parte da especificação CSS3. Ele provê um novo modelo de 'box' otimizado para design de interface. Na prática isso quer dizer, menos gambiarras com o 'float' e layouts mais concisos.
 
