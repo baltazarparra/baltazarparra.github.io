@@ -51,7 +51,7 @@ Mudando o fluxo do container para 'column' ou seja, de cima para baixo, pode ser
 Provavelmente você não definiu uma altura para seu container, então feito isso, o comportamento será como esperado,
 para todos valores citados acima.
 
-<p data-height="268" data-theme-id="22766" data-slug-hash="mPWYaG" data-default-tab="result" data-user="baltazarparra" class="codepen">See the Pen <a href="http://codepen.io/baltazarparra/pen/mPWYaG/">flexbox-1.9</a> by Baltazar Parra (<a href="http://codepen.io/baltazarparra">@baltazarparra</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+<p data-height="400" data-theme-id="22766" data-slug-hash="mPWYaG" data-default-tab="result" data-user="baltazarparra" class="codepen">See the Pen <a href="http://codepen.io/baltazarparra/pen/mPWYaG/">flexbox-1.9</a> by Baltazar Parra (<a href="http://codepen.io/baltazarparra">@baltazarparra</a>) on <a href="http://codepen.io">CodePen</a>.</p>
 <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
 
 ##### Fortemente inspirado no site [flexbox.io](http://flexbox.io) de [Wes Bos](http://wesbos.com/).
