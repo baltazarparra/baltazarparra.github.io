@@ -28,18 +28,18 @@ Agora vem a glória... E se você quiser colocar esse conteúdo todo a direita d
 Com o flexbox isso é bem simples, vamos usar o valor 'flex-end' da propriedade 'justify-content',
 e ver como o conteúdo se comporta.
 
-<p data-height="268" data-theme-id="22766" data-slug-hash="PNpvpa" data-default-tab="result" data-user="baltazarparra" class="codepen">See the Pen <a href="http://codepen.io/baltazarparra/pen/PNpvpa/">flexbox-1.6</a> by Baltazar Parra (<a href="http://codepen.io/baltazarparra">@baltazarparra</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+<p data-height="168" data-theme-id="22766" data-slug-hash="PNpvpa" data-default-tab="result" data-user="baltazarparra" class="codepen">See the Pen <a href="http://codepen.io/baltazarparra/pen/PNpvpa/">flexbox-1.6</a> by Baltazar Parra (<a href="http://codepen.io/baltazarparra">@baltazarparra</a>) on <a href="http://codepen.io">CodePen</a>.</p>
 <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
 
 É lindo de se ver, certo? Mas calma, tem mais, quer alinhar ao centro?
 
-<p data-height="268" data-theme-id="22766" data-slug-hash="jqBovN" data-default-tab="result" data-user="baltazarparra" class="codepen">See the Pen <a href="http://codepen.io/baltazarparra/pen/jqBovN/">flexbox-1.7</a> by Baltazar Parra (<a href="http://codepen.io/baltazarparra">@baltazarparra</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+<p data-height="168" data-theme-id="22766" data-slug-hash="jqBovN" data-default-tab="result" data-user="baltazarparra" class="codepen">See the Pen <a href="http://codepen.io/baltazarparra/pen/jqBovN/">flexbox-1.7</a> by Baltazar Parra (<a href="http://codepen.io/baltazarparra">@baltazarparra</a>) on <a href="http://codepen.io">CodePen</a>.</p>
 <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
 
 'justify-content: center;' Simples assim. Também podemos declarar diferentes tipos de espaçamentos,
 com 'space-between' e 'space-around'.
 
-<p data-height="268" data-theme-id="22766" data-slug-hash="MypdPK" data-default-tab="result" data-user="baltazarparra" class="codepen">See the Pen <a href="http://codepen.io/baltazarparra/pen/MypdPK/">flexbox-1.8</a> by Baltazar Parra (<a href="http://codepen.io/baltazarparra">@baltazarparra</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+<p data-height="220" data-theme-id="22766" data-slug-hash="MypdPK" data-default-tab="result" data-user="baltazarparra" class="codepen">See the Pen <a href="http://codepen.io/baltazarparra/pen/MypdPK/">flexbox-1.8</a> by Baltazar Parra (<a href="http://codepen.io/baltazarparra">@baltazarparra</a>) on <a href="http://codepen.io">CodePen</a>.</p>
 <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
 
 A diferença entre os dois é que 'space-between' começa colado com o seu container, 'space-around' não.
