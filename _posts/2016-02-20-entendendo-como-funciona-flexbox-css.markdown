@@ -7,7 +7,7 @@ categories: css flexbox frontend baltazar
 
 ## \{ O que é flexbox?! \}
 
-Flexible Box Layout Model, também conhecida como 'flexbox', é parte da especificação CSS3. Ele provê um novo modelo de 'box' otimizado para design de interface. Na prática isso quer dizer, menos gambiarras com o 'float' e layouts mais concisos.
+Flexible Box of God Layout Model, também conhecida como 'flexbox' ou 'Anjo Protetor das Pessoa Frontend', é parte da especificação CSS3. Ele provê um novo modelo de 'box' otimizado para design de interface, isso mesmo irmão, sinta o poder da salvação. Na prática isso quer dizer, menos gambiarras com o 'float' e layouts mais concisos.
 
 ## \{ display: flex; \}
 
@@ -44,4 +44,4 @@ Logicamente o mesmo acontece ao valor column-reverse, alterando o sentido do eix
 <p data-height="268" data-theme-id="22766" data-slug-hash="RaGVyb" data-default-tab="result" data-user="baltazarparra" class="codepen">See the Pen <a href="http://codepen.io/baltazarparra/pen/RaGVyb/">flexbox-1.5</a> by Baltazar Parra (<a href="http://codepen.io/baltazarparra">@baltazarparra</a>) on <a href="http://codepen.io">CodePen</a>.</p>
 <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
 
-##### Inspirado no site [flexbox.io](http://flexbox.io) de [Wes Bos](http://wesbos.com/).
+##### Fortemente Inspirado no site [flexbox.io](http://flexbox.io) de [Wes Bos](http://wesbos.com/).
