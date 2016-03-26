@@ -8,15 +8,14 @@ categories: css flexbox frontend baltazar front end
 ## \{ align-content \}
 
 O 'align-content' é uma propriedade que depende de certos contextos, no exemplo a seguir,
-vamos setar nosso 'flex-wrap' com o valor 'wrap' e vamos dar uma altura ao nosso container.
+vamos setar nosso 'flex-wrap' com o valor 'wrap' para nos ajudar na visualização, e vamos dar uma altura ao nosso container.
+
 O valor default de 'align-content' é 'stretch'. Ele preenche todo o espaço do nosso container.
 
 <p data-height="700" data-theme-id="22766" data-slug-hash="YqVOXm" data-default-tab="result" data-user="baltazarparra" class="codepen">See the Pen <a href="http://codepen.io/baltazarparra/pen/YqVOXm/">flexbox-1.14</a> by Baltazar Parra (<a href="http://codepen.io/baltazarparra">@baltazarparra</a>) on <a href="http://codepen.io">CodePen</a>.</p>
 <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
 
-Essa propriedade é muito simples, então vou passar rapidão pelos valores, demoro?
-
-Ai temos o 'flex-start' que posiciona o conteúdo no começo do nosso container, e diferente do 'stretch',
+Ai temos o 'flex-start' que posiciona o conteúdo no começo do nosso container, diferente do 'stretch',
 ele não preenche todo nosso container, ele se limita ao nosso conteúdo.
 
 <p data-height="600" data-theme-id="22766" data-slug-hash="oxwgYR" data-default-tab="result" data-user="baltazarparra" class="codepen">See the Pen <a href="http://codepen.io/baltazarparra/pen/oxwgYR/">flexbox-1.16</a> by Baltazar Parra (<a href="http://codepen.io/baltazarparra">@baltazarparra</a>) on <a href="http://codepen.io">CodePen</a>.</p>
@@ -42,6 +41,12 @@ e o 'space-around'.
 <p data-height="600" data-theme-id="22766" data-slug-hash="aNwJwQ" data-default-tab="result" data-user="baltazarparra" class="codepen">See the Pen <a href="http://codepen.io/baltazarparra/pen/aNwJwQ/">flexbox-1.19</a> by Baltazar Parra (<a href="http://codepen.io/baltazarparra">@baltazarparra</a>) on <a href="http://codepen.io">CodePen</a>.</p>
 <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
 
-Tudo isso, vem para nos dar uma gama enorme de poder, que até então só tinhamos atraves de hacks's e gambis.
+Tudo isso, vem para nos dar uma gama enorme de poder, que até então só tinhamos atraves de hacks's e gambiarras.
+Combinando as propriedades, temos resultados incriveis, dá até vontade de chorar, Se liga, se eu jogo um 'justify-content':
+
+<p data-height="600" data-theme-id="22766" data-slug-hash="EKXWQG" data-default-tab="result" data-user="baltazarparra" class="codepen">See the Pen <a href="http://codepen.io/baltazarparra/pen/EKXWQG/">flexbox-1.20</a> by Baltazar Parra (<a href="http://codepen.io/baltazarparra">@baltazarparra</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+
+Olha ai que coisa linda, centralizadinho.
 
 ##### Fortemente inspirado no site [flexbox.io](http://flexbox.io) de [Wes Bos](http://wesbos.com/).
