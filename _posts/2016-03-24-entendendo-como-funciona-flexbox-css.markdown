@@ -29,7 +29,19 @@ Temos o já conhecido 'flex-end' que posiciona nosso conteúdo ao final do conta
 
 Logicamente, temos o 'center' que eu não preciso dizer o que faz...
 
+<p data-height="600" data-theme-id="22766" data-slug-hash="jqwEBL" data-default-tab="result" data-user="baltazarparra" class="codepen">See the Pen <a href="http://codepen.io/baltazarparra/pen/jqwEBL/">flexbox-1.18</a> by Baltazar Parra (<a href="http://codepen.io/baltazarparra">@baltazarparra</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
 
+E ainda temos o 'space-between'
 
+<p data-height="600" data-theme-id="22766" data-slug-hash="remZLK" data-default-tab="result" data-user="baltazarparra" class="codepen">See the Pen <a href="http://codepen.io/baltazarparra/pen/remZLK/">flexbox-1.15</a> by Baltazar Parra (<a href="http://codepen.io/baltazarparra">@baltazarparra</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+
+e o 'space-around'.
+
+<p data-height="600" data-theme-id="22766" data-slug-hash="aNwJwQ" data-default-tab="result" data-user="baltazarparra" class="codepen">See the Pen <a href="http://codepen.io/baltazarparra/pen/aNwJwQ/">flexbox-1.19</a> by Baltazar Parra (<a href="http://codepen.io/baltazarparra">@baltazarparra</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+
+Tudo isso, vem para nos dar uma gama enorme de poder, que até então só tinhamos atraves de hacks's e gambis.
 
 ##### Fortemente inspirado no site [flexbox.io](http://flexbox.io) de [Wes Bos](http://wesbos.com/).
