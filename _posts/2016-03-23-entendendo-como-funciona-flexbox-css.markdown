@@ -5,6 +5,13 @@ date:   2016-03-23 05:44:31 -0200
 categories: css flexbox frontend baltazar front end
 ---
 
+Lembra quando te pediam para alinhar um conteúdo ao centro?
+Lembra daqueles layouts do inferno, cheios de armadilhas do tinhoso?
+
+Todos nós já passamos por isso, sabemos o quanto é doloroso.
+
+Agora, pelo poder da flex-box, eu ordeno que você seja libertado dessa dor na sua vida.
+
 ## \{ align-items \}
 
 Uma das propriedades mais espetacularmente foda do flexbox é sem dúvidas a 'align-items'.
@@ -34,3 +41,5 @@ E temos ainda, um valor muito louco, o 'baseline', que centraliza tudo de acordo
 Dahora né?
 
 ##### Fortemente inspirado no site [flexbox.io](http://flexbox.io) de [Wes Bos](http://wesbos.com/).
+
+Próximo artigo: [Alinhando Conteúdo](http://baltazarparra.github.io/css/flexbox/frontend/baltazar/front/end/2016/03/25/entendendo-como-funciona-flexbox-css.html)

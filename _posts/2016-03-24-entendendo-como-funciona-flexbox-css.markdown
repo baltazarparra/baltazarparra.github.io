@@ -50,3 +50,5 @@ Combinando as propriedades, temos resultados incriveis, dá até vontade de chor
 Olha ai que coisa linda, centralizadinho.
 
 ##### Fortemente inspirado no site [flexbox.io](http://flexbox.io) de [Wes Bos](http://wesbos.com/).
+
+Próximo Artigo: [Alinhamento Próprio](http://baltazarparra.github.io/css/flexbox/frontend/baltazar/front/end/2016/03/26/entendendo-como-funciona-flexbox-css.html)

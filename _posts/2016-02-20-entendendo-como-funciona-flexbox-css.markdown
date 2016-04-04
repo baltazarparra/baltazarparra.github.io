@@ -7,7 +7,7 @@ categories: css flexbox frontend baltazar
 
 ## \{ O que é flexbox?! \}
 
-Flexible Box of God Layout Model, também conhecida como 'flexbox', é parte da especificação CSS3. Ele provê um novo modelo de 'box' otimizado para design de interface, isso mesmo irmão, menos gambiarras com o 'float' e layouts mais concisos.
+"Flexible Box of God Layout Model", também conhecida como 'flexbox', é parte da especificação CSS3. Ele provê um novo modelo de 'box' otimizado para design de interface, isso mesmo irmão, menos gambiarras com o 'float' e layouts mais concisos.
 
 ## \{ display: flex; \}
 
@@ -27,7 +27,7 @@ Podemos ainda alterar o valor de display para inline-flex, dizendo ao nosso cont
 
 ## \{ flex-direction: row; \}
 
-Outra nova propriedade interessante, é a flex-direction, com ela podemos dizer ao nosso container flexivel, qual eixo os elementos devem seguir, por padrão o valor de flex-direction é row, onde os elementos são alocados horizontalmente da esquerda para direita, mas podemor alterar isso facilmente, mudando o valor para column.
+Outra propriedade interessante é a flex-direction, com ela podemos dizer ao nosso container flexível, qual eixo os elementos devem seguir, por padrão o valor de flex-direction é row, onde os elementos são alocados horizontalmente da esquerda para direita, mas podemor alterar isso facilmente, mudando o valor para column.
 
 <p data-height="368" data-theme-id="22766" data-slug-hash="pyEPpw" data-default-tab="result" data-user="baltazarparra" class="codepen">See the Pen <a href="http://codepen.io/baltazarparra/pen/pyEPpw/">flexbox-1.3</a> by Baltazar Parra (<a href="http://codepen.io/baltazarparra">@baltazarparra</a>) on <a href="http://codepen.io">CodePen</a>.</p>
 <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
@@ -41,7 +41,9 @@ Podemos ainda, alterar o sentido dos eixos, acrescentando '-reverse' aos nossos 
 
 Logicamente o mesmo acontece ao valor column-reverse, alterando o sentido do eixo, ordenando os elementos de baixo para cima.
 
-<p data-height="168" data-theme-id="22766" data-slug-hash="RaGVyb" data-default-tab="result" data-user="baltazarparra" class="codepen">See the Pen <a href="http://codepen.io/baltazarparra/pen/RaGVyb/">flexbox-1.5</a> by Baltazar Parra (<a href="http://codepen.io/baltazarparra">@baltazarparra</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+<p data-height="368" data-theme-id="22766" data-slug-hash="RaGVyb" data-default-tab="result" data-user="baltazarparra" class="codepen">See the Pen <a href="http://codepen.io/baltazarparra/pen/RaGVyb/">flexbox-1.5</a> by Baltazar Parra (<a href="http://codepen.io/baltazarparra">@baltazarparra</a>) on <a href="http://codepen.io">CodePen</a>.</p>
 <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
 
 ##### Fortemente Inspirado no site [flexbox.io](http://flexbox.io) de [Wes Bos](http://wesbos.com/).
+
+Próximo artigo: [Justificando Conteúdo](http://baltazarparra.github.io/css/flexbox/frontend/baltazar/2016/03/22/entendendo-como-funciona-flexbox-css.html)

@@ -7,20 +7,8 @@ categories: css flexbox frontend baltazar
 
 ## \{ justify-content \}
 
-Eu gostaria de começar esse post irmão, esse post da salvação, pedindo pra você ficar de pé...
-isso irmão, levante, porque oque você preste a presenciar vai ser o momento da sua libertação.
-
-Agora ajoelhe e receba a graça...
-
-Lembra quando te pediam para alinhar uma imagem ao centro? um conteúdo ao centro?
-Lembra irmão, daqueles layouts do mundo inferior, cheios de armadilhas do tinhoso?
-Pode chorar irmão, todos nós já passamos por isso, sabemos o quanto é doloroso.
-
-Agora, pelo poder da flex-box, eu ordeno que você seja libertado dessa dor na sua vida.
-
-Vamos começar com calma minha querida pessoa frontend,
-primeiro vamos te livrar das gambiarras com float.
 O valor default de 'justify-content' é 'flex-start', onde o conteúdo segue o fluxo do seu container,
+
 Exemplo, se sua 'flex-direction' for row, o conteúdo segue da esquerda pra direita, se for 'column',
 segue de cima para baixo, e assim por diante.
 
@@ -55,3 +43,5 @@ para todos valores citados acima.
 <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
 
 ##### Fortemente inspirado no site [flexbox.io](http://flexbox.io) de [Wes Bos](http://wesbos.com/).
+
+Próximo artigo: [Alinhando Items](http://baltazarparra.github.io/css/flexbox/frontend/baltazar/front/end/2016/03/23/entendendo-como-funciona-flexbox-css.html)
