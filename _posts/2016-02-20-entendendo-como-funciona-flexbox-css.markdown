@@ -7,13 +7,13 @@ categories: css flexbox frontend baltazar
 
 ## \{ O que é flexbox?! \}
 
-Flexible Box of God Layout Model, também conhecida como 'flexbox' ou 'Anjo Protetor das Pessoa Frontend', é parte da especificação CSS3. Ele provê um novo modelo de 'box' otimizado para design de interface, isso mesmo irmão, sinta o poder da salvação. Na prática isso quer dizer, menos gambiarras com o 'float' e layouts mais concisos.
+Flexible Box of God Layout Model, também conhecida como 'flexbox', é parte da especificação CSS3. Ele provê um novo modelo de 'box' otimizado para design de interface, isso mesmo irmão, menos gambiarras com o 'float' e layouts mais concisos.
 
 ## \{ display: flex; \}
 
-Vamos começar com uma estrutura básica, criei um container, que vai receber o novo valor Flex, para a propriedade Display e dentro do container coloquei algumas div's.
+Vamos começar com uma estrutura básica, criei um container, que vai receber o novo valor Flex, para a propriedade 'display' e dentro do container coloquei algumas div's.
 
-Automaticamente, todos elementos dentro do container com display:flex, se tornam itens flexiveis (flex-item), lembrando que você pode aplicar esse valor para qualquer elemento.
+Automaticamente, todos elementos dentro do container com 'display:flex' se tornam flex-items, lembrando que você pode aplicar esse valor para qualquer elemento.
 
 <p data-height="168" data-theme-id="0" data-slug-hash="jqMmOq" data-default-tab="result" data-user="baltazarparra" class="codepen">See the Pen <a href="http://codepen.io/baltazarparra/pen/jqMmOq/">flexbox-1.1</a> by Baltazar Parra (<a href="http://codepen.io/baltazarparra">@baltazarparra</a>) on <a href="http://codepen.io">CodePen</a>.</p>
 <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
@@ -29,7 +29,7 @@ Podemos ainda alterar o valor de display para inline-flex, dizendo ao nosso cont
 
 Outra nova propriedade interessante, é a flex-direction, com ela podemos dizer ao nosso container flexivel, qual eixo os elementos devem seguir, por padrão o valor de flex-direction é row, onde os elementos são alocados horizontalmente da esquerda para direita, mas podemor alterar isso facilmente, mudando o valor para column.
 
-<p data-height="168" data-theme-id="22766" data-slug-hash="pyEPpw" data-default-tab="result" data-user="baltazarparra" class="codepen">See the Pen <a href="http://codepen.io/baltazarparra/pen/pyEPpw/">flexbox-1.3</a> by Baltazar Parra (<a href="http://codepen.io/baltazarparra">@baltazarparra</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+<p data-height="368" data-theme-id="22766" data-slug-hash="pyEPpw" data-default-tab="result" data-user="baltazarparra" class="codepen">See the Pen <a href="http://codepen.io/baltazarparra/pen/pyEPpw/">flexbox-1.3</a> by Baltazar Parra (<a href="http://codepen.io/baltazarparra">@baltazarparra</a>) on <a href="http://codepen.io">CodePen</a>.</p>
 <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
 
 Agora nossos elementos seguem um novo eixo, eles são alocados verticalmente de cima para baixo.
