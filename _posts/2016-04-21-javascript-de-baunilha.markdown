@@ -46,7 +46,7 @@ var pegaSpan = document.getElementByTagName('span')[2];
 ```
 
 Yeah, isso mesmo, quando usamos o 'getElementByTagName' ele nos retorna um objeto parecido com um array, mas só para leitura.
-Dentro desse objeto virão todos elementos com a tag que você pediu.
+Dentro desse objeto vão vir todos elementos com a tag que você pediu.
 Isso nos dá muito poder, por exemplo, e se você quiser encontrar o primeiro o 'h1' da primeira 'section' do seu documento? podemos fazer isso desta forma:
 
 ```javascript
