@@ -37,7 +37,7 @@ var meusBotoes = document.getElementByName('botoes_envio');
 
 ### Selecionando elementos pela tag
 
-Vamos deixa as coisas um pouco mais interessantes... E se você quiser pegar o terceiro elemento <span> dentro do seu documento? Simples:
+Vamos deixa as coisas um pouco mais interessantes... E se você quiser pegar o terceiro elemento 'span' dentro do seu documento? Simples:
 
 ```javascript
 
@@ -47,7 +47,7 @@ var pegaSpan = document.getElementByTagName('span')[2];
 
 Yeah, isso mesmo, quando usamos o 'getElementByTagName' ele nos retorna um objeto parecido com um array, mas só para leitura.
 Dentro desse objeto virão todos elementos com a tag que você pediu.
-Isso nos dá muito poder, por exemplo, e se você quiser encontrar o primeiro o <h1> da primeira <section> do seu documento? podemos fazer isso desta forma:
+Isso nos dá muito poder, por exemplo, e se você quiser encontrar o primeiro o 'h1' da primeira 'section' do seu documento? podemos fazer isso desta forma:
 
 ```javascript
 
