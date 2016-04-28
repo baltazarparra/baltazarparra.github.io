@@ -31,7 +31,7 @@ O atributo 'name', atribui um nome ao elemento HTML, diferente da ID, podemos te
 
 ```javascript
 
-var meusBotoes = document.getElementByName('botoes_envio');
+var meusBotoes = document.getElementsByName('botoes_envio');
 
 ```
 
@@ -41,7 +41,7 @@ Vamos deixa as coisas um pouco mais interessantes... E se você quiser pegar o t
 
 ```javascript
 
-var pegaSpan = document.getElementByTagName('span')[2];
+var pegaSpan = document.getElementsByTagName('span')[2];
 
 ```
 
@@ -51,8 +51,8 @@ Isso nos dá muito poder, por exemplo, e se você quiser encontrar o primeiro o 
 
 ```javascript
 
-var primeiraSessao = document.getElementByTagName('section')[0];
-var primeiroTitulo = primeiraSessao.getElementByTagName('h1');
+var primeiraSessao = document.getElementsByTagName('section')[0];
+var primeiroTitulo = primeiraSessao.getElementsByTagName('h1');
 
 ```
 
@@ -62,7 +62,7 @@ Outra forma de selecionar elementos, é direto pela classe CSS:
 
 ```javascript
 
-document.getElementByClassName('minhaClasse');
+document.getElementsByClassName('minhaClasse');
 
 ```
 
@@ -71,7 +71,7 @@ Podemos usar isso de muitas formas, um interessante para o 'getElementByClassNam
 ```javascript
 
 var aviso = document.getElementById('aviso');
-var erro = aviso.getElementByClassName('erro');
+var erro = aviso.getElementsByClassName('erro');
 
 ```
 

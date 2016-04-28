@@ -15,12 +15,21 @@ O 'Document' entende seus objetos, os objetos de 'Element' e os objetos 'Text' c
 - *firstChild*, *lastChild* - Primeiro e Último nó filho, do nó selecionado
 - *nextSibling*, *previousSibling* - O nó irmão, próximo e anterior ao nó selecionado
 
+O problema em trabalhar com essa API é que ela é uma sensível a conteúdo, se você adicionar algo ao documento, pode alterar toda estrutura da árvore de nós, bagunçando sua lógica.
 
+Portanto, a API de 'Elements' é mais interessante para nós, já que ela só olha os elementos e ignora nós de texto por exemplo.
+Suas principais propriedades são:
 
-```javascript
+- *children* - É como a *childNode* mas retorna somente os elementos
+- *firstElementChild*, *lastElementChild* - Parecidos com *firstChild* e *lastChild*, mas somente para elementos
+- *nextElementSibling*, *previousElementSibling* - Parecidos com... ah, vocês já sacaram né?
 
-var familia = document.querySelectorAll('.irmaos');
-var irmaoProximo = familia.nextSibling;
+Próximo post vou falar um pouco sobre os atributos ;) até lá!
 
-```
+<!--```javascript-->
+
+<!--var familia = document.querySelectorAll('.irmaos');-->
+<!--var irmaoProximo = familia.nextSibling;-->
+
+<!--```-->
 
