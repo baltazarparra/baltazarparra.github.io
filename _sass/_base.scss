@@ -93,8 +93,8 @@ h1, h2, h3, h4, h5, h6 {
 a {
     color: gray;
     text-decoration: none;
-    border-bottom: solid 1px;
-    border-color: transparent;
+    border-bottom: solid 1px transparent;
+    transition: .3s all;
 
     &:visited {
         color: gray;
@@ -102,8 +102,14 @@ a {
 
     &:hover {
         color: gray;
-        border-color: gray;
+        border-bottom: dashed 1px gray;
+        &:after {
+            content: "\21d1";
+            font-size: 14px;
+            padding-left: 4px;
+        }
     }
+
 }
 
 
