@@ -2,7 +2,7 @@
 layout: post
 title:  "Entendendo Flexbox CSS: Parte 04 - Alinhando Conteúdo"
 date:   2016-03-25 07:28:31 -0200
-categories: css flexbox frontend baltazar front end
+categories: CSS
 ---
 
 ## \{ align-content \}

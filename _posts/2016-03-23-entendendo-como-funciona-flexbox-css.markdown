@@ -2,7 +2,7 @@
 layout: post
 title:  "Entendendo Flexbox CSS: Parte 03 - Alinhando Itens"
 date:   2016-03-23 05:44:31 -0200
-categories: css flexbox frontend baltazar front end
+categories: CSS
 ---
 
 Lembra quando te pediam para alinhar um conteúdo ao centro?

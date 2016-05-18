@@ -2,7 +2,7 @@
 layout: post
 title:  "Entendendo Flexbox CSS: Parte 01 - Como Funciona?"
 date:   2016-03-14 06:57:31 -0200
-categories: css flexbox frontend baltazar
+categories: CSS
 ---
 
 ## \{ O que é flexbox?! \}

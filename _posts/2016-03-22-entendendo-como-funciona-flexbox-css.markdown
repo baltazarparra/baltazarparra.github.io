@@ -2,7 +2,7 @@
 layout: post
 title:  "Entendendo Flexbox CSS: Parte 02 - Justificando Conteúdo"
 date:   2016-03-22 06:05:31 -0200
-categories: css flexbox frontend baltazar
+categories: CSS
 ---
 
 ## \{ justify-content \}

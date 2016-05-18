@@ -2,7 +2,7 @@
 layout: post
 title:  "Entendendo Flexbox CSS: Parte 05 - Alinhamento Próprio"
 date:   2016-03-26 10:08:31 -0200
-categories: css flexbox frontend baltazar front end
+categories: CSS
 ---
 
 ## \{ align-self \}
