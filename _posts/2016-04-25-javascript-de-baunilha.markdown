@@ -2,7 +2,7 @@
 layout: post
 title:  "JavaScript de Baunilha - Percorrendo o documento."
 date:   2016-04-25 06:24:31 -0200
-categories: Javascript
+categories: Javascript, VanillaJs
 ---
 
 Vimos [aqui](http://baltazarparra.github.io/js/vanilla/baunilha/javascript/baltazar/parra/2016/04/21/javascript-de-baunilha.html) algumas técnicas para selecionar nossos elementos quando precisarmos manipular o DOM,

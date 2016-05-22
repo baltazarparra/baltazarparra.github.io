@@ -2,7 +2,7 @@
 layout: post
 title:  "JavaScript de Baunilha - Conteúdo de Elemento."
 date:   2016-05-16 06:41:31 -0200
-categories: Javascript
+categories: Javascript, VanillaJs
 ---
 
 ## conteúdoDeElementoComoHTML

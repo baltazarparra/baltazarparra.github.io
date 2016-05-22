@@ -2,7 +2,7 @@
 layout: post
 title:  "JavaScript de Baunilha - Visão geral do DOM"
 date:   2016-04-19 21:19:31 -0200
-categories: Javascript
+categories: Javascript, VanillaJs
 ---
 
 Apesar de não ser muito complicada, a Document Object Model (aka DOM) possui muitos detalhes de arquitetura.
