@@ -211,3 +211,6 @@ div.replaceChild(rep, p);
   </div>
 </section>
 ```
+
+Próximo post, quero mostrar um pouco sobre o DocumentFragments,
+até lá o/
