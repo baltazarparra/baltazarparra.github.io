@@ -2,7 +2,7 @@
 layout: post
 title:  "JavaScript de Baunilha - Selecionando elementos do documento."
 date:   2016-04-21 09:44:31 -0200
-categories: Javascript, VanillaJs
+categories: Javascript
 ---
 
 Manipulação de DOM, talvez umas das skills mais importante para um desenvolvedor Js. Você precisa de alguma forma, selecionar os elementos que quer manipular.

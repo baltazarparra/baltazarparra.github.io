@@ -2,7 +2,7 @@
 layout: post
 title:  "JavaScript de Baunilha - Criando, Inserindo e Excluindo Nós."
 date:   2016-05-19 06:03:31 -0200
-categories: Javascript, VanillaJs
+categories: Javascript
 ---
 
 ## criandoInserindoExcluindoNos
