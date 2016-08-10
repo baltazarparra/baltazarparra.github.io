@@ -1,16 +1,19 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely need to edit after that.
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'jekyll serve'. If you change this file, please restart the server process.
+
 # Site settings
 title: Baltazar Parra
 email: baltazarparra@outlook.com
-description: > # this means to ignore newlines until "baseurl:"
-  Página pessoal, criada para registrar e compartilhar conteúdo relacionado a
-  frontends.
+description: "Blog sobre desenvolvimento para web com foco em CSS, JavaScript e UX."
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://baltazarparra.github.io" # the base hostname & protocol for your site
-twitter_username: Baltazar_Parra
+twitter_username: baltazar_parra
 github_username:  baltazarparra
 
 # Build settings
 markdown: kramdown
-
-# Exclude os bang
-exclude: ['package.json', 'src', 'node_modules']
+permalink: /:title

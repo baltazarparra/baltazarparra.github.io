@@ -91,25 +91,17 @@ h1, h2, h3, h4, h5, h6 {
  * Links
  */
 a {
-    color: gray;
+    color: $brand-color;
     text-decoration: none;
-    border-bottom: solid 1px transparent;
-    transition: .3s all;
 
     &:visited {
-        color: gray;
+        color: darken($brand-color, 15%);
     }
 
     &:hover {
-        color: gray;
-        border-bottom: dashed 1px gray;
-        &:after {
-            content: "\21d1";
-            font-size: 14px;
-            padding-left: 4px;
-        }
+        color: $text-color;
+        text-decoration: underline;
     }
-
 }
 
 
