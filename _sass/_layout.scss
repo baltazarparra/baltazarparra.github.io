@@ -1,5 +1,5 @@
 .header {
-    padding: 0 40px;
+    padding: 0 80px;
     display: flex;
     background-color: $color-sec;
     position: fixed;
@@ -53,7 +53,7 @@
     background-color: $color;
     color: $color-sec;
     position: relative;
-    padding: 40px 20px 20px;
+    padding: 40px 80px 20px;
     margin-bottom: 100px;
     display: flex;
     &:after {
@@ -79,6 +79,7 @@
     flex: 1 1 auto;
     padding: 0 40px;
     max-width: 700px;
+    z-index: 2;
     > p {
         font-family: 'Montserrat', sans-serif;
         font-size: 28px;
@@ -91,6 +92,7 @@
 .hero__img {
     flex: 1 1 auto;
     padding: 0 40px;
+    z-index: 2;
     img {
         float: right;
     }
@@ -190,4 +192,9 @@
     h2 {
         color: $color;
     }
+}
+
+canvas {
+    position: absolute;
+    max-width: 90%;
 }
