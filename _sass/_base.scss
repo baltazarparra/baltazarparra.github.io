@@ -45,8 +45,7 @@ a {
 h1, h2, h3, h4, h5, h6 {
   font-family: arial;
   margin-top: 0;
-  margin-bottom: .5rem;
-  font-weight: 600;
+  margin-bottom: .5rem;  
   line-height: 1.1;
   color: #333;
   letter-spacing: -.025rem;
@@ -125,6 +124,20 @@ ol + h1,
 ol + h2,
 ol + h3 {
   margin-top: 1.5rem;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: $color;
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+    background-color: $color-sec;
 }
 
 hr {
