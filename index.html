@@ -2,19 +2,33 @@
 layout: default
 ---
 
-<div class="content list">
-  {% if site.posts.size == 0 %}
-    <h2>No post found</h2>
-  {% else %}
+<section class="hero">
+    <div class="hero__content">
+        <p>
+            <span>E ae!</span>
+        </p>
+        <p>
+            Meu nome é Baltazar,<br>
+            mas pode me chamar de Baltz.<br>
+            Sou desenvolvedor de interfaces para web<br>
+            e este é o meu blog.
+        </p>
+    </div>
+    <div class="hero__img">
+        <img src="hero-img.png" alt="Imagem de um poste, com um tênis nos fios">
+    </div>
+
+</section>
+<div class="container">
+    <h1 class="posts__title">Artigos</h1>
     {% for post in site.posts %}
-      <div class="list-item">
-        <h2 class="list-post-title">
-          <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
-        </h2>
-        <div class="list-post-date">
-          <time>{{ post.date | date_to_string }}</time>
+        <div class="posts">
+            <div>
+                <time>{{ post.date | date_to_string }}</time>
+            </div>
+            <h2>
+                <a class="posts__link" href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+            </h2>
         </div>
-      </div>
     {% endfor %}
-  {% endif %}
 </div>
