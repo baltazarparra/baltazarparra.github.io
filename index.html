@@ -24,7 +24,14 @@ layout: default
     {% for post in site.posts %}
         <article class="posts">
             <div class="post-img">
-                <img src="https://2014.front-trends.com/images/dabca344.logo.png" alt="Imagem para ilustrar tema da postagem">                
+
+                {% if post.categories contains 'Javascript' %}
+                    <img src="http://66.media.tumblr.com/tumblr_lsus01g1ik1qies3uo1_400.png" alt="Imagem para ilustrar tema da postagem">
+                {% elsif post.categories contains 'CSS' %}
+                    <img src="http://w3widgets.com/responsive-slider/img/css3.png" alt="Imagem para ilustrar tema da postagem">
+                {% endif %}
+
+
             </div>
             <div class="post">
                 <div>
