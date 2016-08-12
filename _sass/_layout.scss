@@ -151,7 +151,7 @@
     width: 100px;
     margin-right: 40px;
     img {
-        margin: 0;        
+        margin: 0;
     }
 }
 
@@ -165,4 +165,21 @@
 
 .post-date {
     padding-bottom: 40px;
+}
+
+.post-title {
+    color: $color;
+}
+
+.post-date {
+    time {
+        color: $color;
+    }
+}
+
+.content_post {
+    color: $color;
+    h2 {
+        color: $color;
+    }
 }
