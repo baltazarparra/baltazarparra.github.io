@@ -23,6 +23,7 @@ layout: default
     <h1 class="posts__title">Artigos</h1>
     {% for post in site.posts %}
         <article class="posts">
+
             <div class="post-img">
 
                 {% if post.categories contains 'Javascript' %}
@@ -31,16 +32,20 @@ layout: default
                     <img src="http://w3widgets.com/responsive-slider/img/css3.png" alt="Imagem para ilustrar tema da postagem">
                 {% endif %}
 
-
             </div>
+
             <div class="post">
+
                 <div>
                     <time>{{ post.date | date: "%d/%m/%Y" }}</time>
                 </div>
+
                 <h2>
                     <a class="posts__link" href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
                 </h2>
+
             </div>
+
         </article>
     {% endfor %}
 </div>
