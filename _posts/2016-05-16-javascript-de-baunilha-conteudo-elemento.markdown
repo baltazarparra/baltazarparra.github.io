@@ -15,31 +15,31 @@ Ele nos permite inserir uma string "adjacente" dentro do nosso conteúdo HTML...
 
 Ok, vou mostrar:
 
-```html
+~~~html
 
 <div id="one">one</div>
 
-```
+~~~
 
 Inserindo novo elemento adjacente
 
-```javascript
+~~~javascript
 
 var newDiv = document.getElementById('one');
 
 newDiv.insertAdjacentHTML('beforeend', '<div id="two">two</div>');
 
-```
+~~~
 
 Conteúdo HTML modificado
 
-```html
+~~~html
 
 <div id="one">one</div>
 
 <div id="two">two</div>
 
-```
+~~~
 
 Sacou?
 
@@ -53,28 +53,28 @@ Aproveitando o embalo, vamos conversar um pouco sobre:
 
 Para tal, usamos a propriedade 'textContent':
 
-```html
+~~~html
 
 <p>
   Sou um texto triste =(
 </p>
 
-```
+~~~
 
-```javascript
+~~~javascript
 
 var para = document.getElementsByTagName('p')[0];
 var text = para.textContent;
 para.textContent = 'Agora sou um textoContente =D';
 
-```
-```html
+~~~
+~~~html
 
 <p>
   Agora sou um textoContente =D
 </p>
 
-```
+~~~
 
 A mágica do textContent é concatenar todos descendentes do nó Text do elemento, bem simples certo?
 Próximo artigo, quero mostrar um pouco sobre criar, inserir e excluir nós.

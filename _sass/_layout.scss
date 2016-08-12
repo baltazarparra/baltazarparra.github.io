@@ -64,7 +64,8 @@
         position: absolute;
         right: 0;
         z-index: -1;
-        -webkit-backface-visibility: hidden;
+        outline: 1px solid transparent;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.22), 0 2px 4px rgba(0,0,0,0.50);
           bottom: 0;
         -webkit-transform: skewY(-3deg);
                 transform: skewY(-3deg);
@@ -114,7 +115,7 @@
         top: 0;
         transform: skewY(1.5deg);
         transform-origin: 100% 0;
-        -webkit-backface-visibility: hidden;
+        outline: 1px solid transparent;
     }
     .nav {
         display: inline-block;
@@ -131,14 +132,37 @@
 }
 
 .posts__title {
+    color: $color;
     font-size: 60px;
     margin: 40px 0;
 }
 
-.posts {
+.post {
+    width: 50%;
     margin: 40px 0;
+    display: inline-block;
+    time {
+        color: $color;
+    }
+}
+
+.post-img {
+    display: inline-block;
+    width: 100px;
+    margin-right: 40px;
+    img {
+        margin: 0;        
+    }
 }
 
 .posts__link {
     color: $color;
+}
+
+.content_post {
+    padding: 60px 0;
+}
+
+.post-date {
+    padding-bottom: 40px;
 }

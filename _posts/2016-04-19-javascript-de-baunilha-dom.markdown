@@ -12,7 +12,7 @@ outro nó representando strings de texto.
 
 Vamos ver na prática:
 
-```html
+~~~html
 <html>
     <head>
         <title>Documento vazio(Como a cabeça de quem admira o Bolsonaro)</title>
@@ -22,7 +22,7 @@ Vamos ver na prática:
         <p>*igual a cabeça de quem elogia o <i>trabalho</i> do Cunha.</p>
     </body>
 </html>
-```
+~~~
 
 Esse trecho seria representado na DOM como:
 

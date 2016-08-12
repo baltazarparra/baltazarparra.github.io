@@ -22,13 +22,18 @@ layout: default
 <div class="container">
     <h1 class="posts__title">Artigos</h1>
     {% for post in site.posts %}
-        <div class="posts">
-            <div>
-                <time>{{ post.date | date_to_string }}</time>
+        <article class="posts">
+            <div class="post-img">
+                <img src="https://2014.front-trends.com/images/dabca344.logo.png" alt="Imagem para ilustrar tema da postagem">                
             </div>
-            <h2>
-                <a class="posts__link" href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
-            </h2>
-        </div>
+            <div class="post">
+                <div>
+                    <time>{{ post.date | date: "%d/%m/%Y" }}</time>
+                </div>
+                <h2>
+                    <a class="posts__link" href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+                </h2>
+            </div>
+        </article>
     {% endfor %}
 </div>

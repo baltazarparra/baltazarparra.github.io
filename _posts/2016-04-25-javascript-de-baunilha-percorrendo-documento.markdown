@@ -26,9 +26,9 @@ Suas principais propriedades são:
 
 Próximo post vou falar um pouco sobre os atributos ;) até lá!
 
-<!--```javascript-->
+<!--~~~javascript-->
 
 <!--var familia = document.querySelectorAll('.irmaos');-->
 <!--var irmaoProximo = familia.nextSibling;-->
 
-<!--```-->
+<!--~~~-->
