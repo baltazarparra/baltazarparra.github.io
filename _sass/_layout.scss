@@ -16,6 +16,13 @@
         font-size: 22px;
         line-height: 40px;
         transition: .3s;
+        @media (max-width: 425px) {
+            padding: 0 4px;
+            font-size: 16px;
+        }
+    }
+    @media (max-width: 425px) {
+        padding: 0 4px;
     }
 }
 
@@ -46,6 +53,10 @@
             color: $color-sec;
             text-decoration: none;
         }
+        @media (max-width: 425px) {
+            padding: 0 6px;
+            font-size: 14px;
+        }
     }
 }
 
@@ -73,6 +84,15 @@
         -webkit-transform-origin: 100%;
                 transform-origin: 100%;
     }
+    @media (max-width: 1199px) {
+        padding: 40px 20px 20px;
+    }
+    @media (max-width: 425px) {
+        flex-direction: column;
+        padding: 0;
+        text-align: center;
+        margin-bottom: 40px;
+    }
 }
 
 .hero__content {
@@ -83,9 +103,15 @@
     > p {
         font-family: 'Montserrat', sans-serif;
         font-size: 28px;
+        @media (max-width: 768px) {
+            font-size: 24px;
+        }
         > span {
             font-size: 60px;
         }
+    }
+    @media (max-width: 768px) {
+        padding: 0 20px;
     }
 }
 
@@ -97,6 +123,9 @@
         float: right;
         height: 400px;
     }
+    @media (max-width: 768px) {
+        padding: 0 20px;
+    }
 }
 
 .footer {
@@ -104,7 +133,7 @@
     color: $color-sec;
     position: relative;
     z-index: 1;
-    padding: 10px 0;
+    padding: 30px 0;
     margin-top: 40px;
     display: flex;
     &:before {
@@ -121,9 +150,13 @@
         transform-origin: 100% 0;
         outline: 1px solid transparent;
     }
+
     .nav {
         display: inline-block;
         float: right;
+        @media (max-width: 425px) {
+            width: 100%;
+        }
     }
     .link {
         color: $color-sec;
@@ -138,12 +171,18 @@
 .posts {
     padding: 20px;
     margin: 40px 0;
+    @media (max-width: 425px) {
+        padding: 0;
+    }
 }
 
 .posts__title {
     color: $color;
     font-size: 60px;
     margin: 60px 0;
+    @media (max-width: 425px) {
+        text-align: center;
+    }
 }
 
 .post {
@@ -151,6 +190,9 @@
     display: inline-block;
     time {
         color: $color;
+    }
+    @media (max-width: 425px) {
+        width: 70%;
     }
 }
 
@@ -163,6 +205,9 @@
     img {
         margin: 0;
         max-width: 60px;
+    }
+    @media (max-width: 425px) {
+        width: 60px;
     }
 }
 
@@ -198,4 +243,8 @@
 canvas {
     position: absolute;
     max-width: 90%;
+    @media (max-width: 1199px) {
+        max-width: 80%;
+        padding: 40px;
+    }
 }

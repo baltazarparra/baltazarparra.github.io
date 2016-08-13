@@ -45,7 +45,7 @@ a {
 h1, h2, h3, h4, h5, h6 {
   font-family: arial;
   margin-top: 0;
-  margin-bottom: .5rem;  
+  margin-bottom: .5rem;
   line-height: 1.1;
   color: #333;
   letter-spacing: -.025rem;
@@ -57,6 +57,9 @@ h1 {
 
 h2 {
   font-size: 1.6rem;
+  @media (max-width: 425px) {
+      font-size: 1rem;
+  }
 }
 
 h3 {
@@ -213,6 +216,13 @@ pre code {
     width: 1024px;
     margin: 0 auto;
     padding: 20px;
+    @media (max-width: 1199px) {
+        width: 100%;
+        padding: 40px;
+    }
+    @media (max-width: 425px) {
+        padding: 8px;
+    }
 }
 
 .highlight {
