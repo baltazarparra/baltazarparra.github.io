@@ -36,6 +36,6 @@ var sum = [1, 2, 3].reduce(function(total, num) {
 // total == 7
 ```
 
-Nosso total final agora é igual a '7' por começamos nosso callback passando o valor inicial '1'.
+Nosso total final agora é igual a '7' por que começamos nosso callback passando o valor inicial '1'.
 
 Espero que tenha ficado claro, qualquer dúvida, deixa nos comentários.
