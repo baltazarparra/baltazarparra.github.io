@@ -26,6 +26,26 @@
     }
 }
 
+.weird-bg {
+    background-image: url(https://media.giphy.com/media/M6hgceLnI2uJi/giphy.gif);
+    background-repeat: no-repeat;
+    background-position: top 30px right 140px;
+    background-size: 140px;
+    height: 100%;
+    @media (max-width: 1199px) {
+        background-position: top 60px right 140px;
+        background-size: 120px;
+    }
+    @media (max-width: 990px) {
+        background-position: top 90px right 80px;
+        background-size: 100px;
+    }
+    @media (max-width: 640px) {
+        background-position: top 140px right 40px;
+        background-size: 60px;
+    }
+}
+
 .title {
     flex: 1 1 auto;
     margin: 0;
