@@ -16,6 +16,11 @@
         font-size: 22px;
         line-height: 40px;
         transition: .3s;
+        @media (max-width: 768px) {
+            span {
+                display: none;
+            }
+        }
         @media (max-width: 425px) {
             padding: 0 4px;
             font-size: 16px;
