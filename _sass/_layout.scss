@@ -31,28 +31,12 @@
     }
 }
 
-.weird-bg {
-    background-image: url(https://media.giphy.com/media/M6hgceLnI2uJi/giphy.gif);
-    background-repeat: no-repeat;
-    background-position: top 30px right 100px;
-    background-size: 140px;
-    height: 100%;
-    @media (max-width: 1199px) {
-        background-position: top 60px center;
-        background-size: 120px;
-    }
-    @media (max-width: 990px) {
-        background-position: top 90px center;
-        background-size: 100px;
-    }
-    @media (max-width: 640px) {
-        background-position: top 120px center;
-        background-size: 80px;
-    }
-    @media (max-width: 542px) {
-        background-position: top 138px center;
-        background-size: 80px;
-    }
+.svg-hero {
+    margin:20px 40px 0 auto;
+    z-index: 1;
+    height: 360px;
+    width: 360px;
+    max-width: 100%;
 }
 
 .title {
