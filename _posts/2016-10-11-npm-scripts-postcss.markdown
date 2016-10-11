@@ -39,7 +39,7 @@ Agora, mãos a obra
 "output": "final.css",
 "local-plugins": true
 }
-``` 
+```
 
 Agora vamos criar as tasks dentro do nosso package.json
 
