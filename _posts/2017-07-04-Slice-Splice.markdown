@@ -6,10 +6,13 @@ categories: Javascript
 ---
 
 **Slice**, metódo não destrutivo, não modifica o array principal e nos retorna um novo array.
+Você pode usar ele de boas, que não vai estragar nada,
+já que ele não vai modificar nosso array original.
 
 Seu 1º parâmetro deve ser o 1º índice que você quer no corte do array,
 se queremos cortar a partir do 3º índice, o valor a ser passado será o 2,
-já que array's tem base zero. (0, 1, 2)
+já que array's tem base zero (0, 1, 2),
+eu sei, dá um nó na cabeça, então respira e lê mais uma vez com calma.
 
 Se passarmos apenas um parâmetro,
 ele vai nos retornar todos índices do 1º argumento até o final do array.
@@ -22,7 +25,8 @@ newArr [3,4,5,6]
 
 O último parâmetro deve ser um índice após o último índice que queremos,
 se vamos cortar até o 14º índice, o valor a ser passado será 15,
-pois o slice vai cortar antes do valor do último argumento. (... 12, 13, 14, "corte" 15)
+pois o slice vai cortar antes do valor do último argumento (... 12, 13, 14, "corte" 15),
+respira de novo, e leia com calma.
 
 Então, se queremos um corte do 3 ao 14:
 
@@ -33,6 +37,8 @@ newArr [3,4,5,6,7,8,9,10,11,12,13,14]
 ~~~
 
 **Splice**, método destrutivo, modifica o array principal.
+Entendeu? Destrutivo, então cuidado com essa porra,
+você pode zua o array original, ai vai dá merda.
 
 Seu 1º argumento é o índice onde quer começar a dividir o array.
 
