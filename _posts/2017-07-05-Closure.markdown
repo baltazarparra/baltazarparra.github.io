@@ -1,0 +1,34 @@
+---
+layout: post
+title: Entendendo: Closure
+date: '2017-07-05 06:32:31 -0200'
+categories: Javascript
+---
+
+**Closure**, é a forma que tratamos nosso escopo dentro do Javascript.
+
+~~~javascript
+function funk() {
+  function sum() {
+    return 1 + 2
+  }
+  return sum()
+}
+~~~
+
+Como o Javascript possui escopo de função, eu tenho acesso a função *sum*,
+apenas enquanto dentro da função *funk*, caso tente chamar ela fora:
+
+~~~javascript
+function funk() {
+  function sum() {
+    return 1 + 2
+  }
+}
+return sum()
+
+ReferenceError: sum is not defined
+~~~
+
+Só temos acesso aos recursos de uma função, enquanto estivermos dentro dela,
+isso serve pra tudo, inclusive váriaveis.
