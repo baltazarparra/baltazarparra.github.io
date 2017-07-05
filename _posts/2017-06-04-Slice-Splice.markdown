@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Entendendo: Slice e Splice
-date: 2017-06-04 21:46:31 -0200
+title: Entendendo Slice e Splice
+date: 2017-07-04 21:46:31 -0200
 categories: Javascript
 ---
 
