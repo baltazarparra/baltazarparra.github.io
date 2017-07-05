@@ -1,7 +1,7 @@
 ---
 layout: post
 title: O que é um Projeto?
-date: '2017-03-30 07:27:31 -0200'
+date: 2017-03-30 07:27:31 -0200
 categories: GP
 ---
 
