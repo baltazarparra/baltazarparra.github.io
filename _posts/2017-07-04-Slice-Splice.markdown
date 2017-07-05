@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Slice e Splite
+title: Entendendo: Slice e Splice
 date: '2017-07-04 21:46:31 -0200'
 categories: Javascript
 ---
@@ -56,7 +56,7 @@ newArray[2,3,4]
 array[1,5,6,7]
 ~~~
 
-Diferente do método slice, o splite ainda pode receber mais parâmetros,
+Diferente do método slice, o splice ainda pode receber mais parâmetros,
 podemos colocar um ou mais valores,
 e eles serão inseridos após o índice que passarmos como 1º argumento.
 
