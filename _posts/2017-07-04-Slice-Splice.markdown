@@ -57,5 +57,37 @@ array[1,5,6,7]
 ~~~
 
 Diferente do método slice, o splite ainda pode receber mais parâmetros,
-depois do segundo parâmetro, podemos colocar um ou mais valores,
+podemos colocar um ou mais valores,
 e eles serão inseridos após o índice que passarmos como 1º argumento.
+
+~~~javascript
+let array = [1,2,3,4,5,6,7]
+array.splice(1,0,'a')
+array[1,'a',2,3,4,5,6,7]
+~~~
+
+Como nosso segundo parâmetro é zero, não houve corte,
+e nosso último parâmetro 'a', foi inserido no índice do 1º parâmetro.
+Lembrando que, ele pode receber um ou mais valores.
+
+~~~javascript
+let array = [1,2,3,4,5,6,7]
+array.splice(1,0,'a','b','c','d')
+array[1,'a','b','c','d',2,3,4,5,6,7]
+~~~
+
+Um bom uso para essa funcionalidade, seria trocar valores dentro de um array.
+
+~~~javascript
+let array = [1,'a','b','c','d',5,6,7]
+array.splice(1,4,2,3,4)
+array[1,2,3,4,5,6,7]
+~~~
+
+O 1º parâmetro declara onde vamos começar a dividir o array,
+no 2º passamos a quantidade de itens que vamos remover,
+e nos demais, os itens que vamos inserir após o índice declarado no 1º parâmetro.
+
+Apesar de fazer parte da base da linguagem,
+o método splice é bem complicado no começo,
+mas com certeza, após dominar ele, será uma ótima ferramenta na sua caixa de desenvolvimento.
