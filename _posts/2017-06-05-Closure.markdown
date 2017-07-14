@@ -12,12 +12,12 @@ function pai() {
   function filha() {
     return 1 + 2
   }
-  return sum()
+  return filha()
 }
 ~~~
 
-Como o Javascript possui escopo de função, eu tenho acesso a função *sum*,
-apenas enquanto dentro da função *funk*, caso tente chamar ela fora:
+Como o Javascript possui escopo de função, eu tenho acesso a função *filha*,
+apenas enquanto dentro da função *pai*, caso tente chamar ela fora:
 
 ~~~javascript
 function pai() {
@@ -25,9 +25,9 @@ function pai() {
     return 1 + 2
   }
 }
-return sum()
+return filha()
 
-ReferenceError: sum is not defined
+ReferenceError: filha is not defined
 ~~~
 
 Só temos acesso aos recursos de uma função, enquanto estivermos dentro dela,
