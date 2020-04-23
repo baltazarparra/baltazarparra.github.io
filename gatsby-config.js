@@ -5,6 +5,21 @@ module.exports = {
     author: `@baltazarparra`,
   },
   plugins: [
+    {
+      resolve: `gatsby-plugin-prefetch-google-fonts`,
+      options: {
+        fonts: [
+          {
+            family: `Sedgwick Ave Display`,
+            variants: [`400`, `700`]
+          },
+          {
+            family: `Roboto Mono`,
+            variants: [`100`, `300`, `400`]
+          },
+        ],
+      },
+    },
     `gatsby-plugin-styled-components`,
     `gatsby-plugin-react-helmet`,
     {

@@ -1,21 +1,22 @@
-import React from "react"
-import PropTypes from "prop-types"
-import Profile from "../Profile"
+import React from 'react'
+import PropTypes from 'prop-types'
 
 import styled from 'styled-components'
 import GlobalStyles from '../../styles/global'
 
 const Wrapper = styled.main`
   display: flex;
-  padding: 1rem;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 `
 
 const Layout = ({ children }) => {
   return (
     <Wrapper>
       <GlobalStyles />
-      <Profile />
-      <main>{children}</main>
+        {children}
     </Wrapper>
   )
 }

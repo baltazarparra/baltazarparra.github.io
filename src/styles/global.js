@@ -38,6 +38,9 @@ const GlobalStyles = createGlobalStyle`
     scroll-behavior: smooth;
     text-rendering: optimizeSpeed;
     line-height: 1.5;
+    font-family: 'Roboto Mono';
+    background-color: #0D2834;
+    color: #E2FFF7;
   }
 
   /* Remove list styles on ul, ol elements with a class attribute */
@@ -68,11 +71,6 @@ const GlobalStyles = createGlobalStyle`
   textarea,
   select {
     font: inherit;
-  }
-
-  body {
-    background-color: #333339;
-    color: #ddf;
   }
 
   a,
