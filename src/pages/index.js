@@ -4,6 +4,7 @@ import SEO from '../components/seo'
 import Menu from '../components/Menu'
 import Avatar from '../components/Avatar'
 import Hero from '../components/Hero'
+import Background from '../components/Background'
 
 const IndexPage = () => (
   <Layout>
@@ -11,6 +12,7 @@ const IndexPage = () => (
     <Menu />
     <Avatar />
     <Hero />
+    <Background />
   </Layout>
 )
 

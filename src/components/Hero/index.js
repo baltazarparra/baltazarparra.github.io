@@ -36,7 +36,7 @@ const Hero = () => {
   return (
     <Container>
       <Title>
-        Front-end
+        Creative
         <span>developer</span>
       </Title>
       <Subtitle>
