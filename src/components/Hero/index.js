@@ -2,34 +2,56 @@ import React from "react"
 import styled from 'styled-components'
 
 const Container = styled.section`
-  margin: 280px 0 0 -60px;
   z-index: 9;
+
+  @media (min-width: 1024px) {
+    margin: 280px 0 0 -60px;
+  }
 `
 
 const Title = styled.h1`
   font-family: 'Sedgwick Ave Display';
-  font-size: 6rem;
-  font-weight: normal;
-  line-height: 1;
   color: #E2FFF7;
-  margin-bottom: 30px;
+  font-weight: normal;
+  font-size: 4em;
+  line-height: 1;
+  margin-left: -30px;
+  margin-top: 260px;
 
   span {
     display: block;
+  }
+
+  @media (min-width: 1024px) {
+    line-height: 1;
+    font-size: 6rem;
+    margin-bottom: 30px;
+    margin-left: 0;
+    margin-top: 0;
   }
 `
 
 const Subtitle = styled.h2`
   font-family: 'Sedgwick Ave Display';
-  font-size: 4rem;
   font-weight: normal;
-  line-height: 1;
   color: #7AA7AC;
-  margin-left: -40px;
+  font-size: 4em;
   text-align: right;
+  margin-left: -120px;
+  margin-top: 20px;
 
   span {
-    display: block;
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 4rem;
+    line-height: 1;
+    margin-left: -40px;
+    span {
+      display: block;
+    }
+
   }
 `
 const Hero = () => {

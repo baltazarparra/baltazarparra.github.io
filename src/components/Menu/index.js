@@ -1,5 +1,6 @@
 import React from "react"
 import styled from 'styled-components'
+import { Link } from 'gatsby'
 
 const List = styled.ul`
   display: flex;
@@ -10,7 +11,7 @@ const List = styled.ul`
   :before {
     content: '';
     position: absolute;
-    top: 12px;
+    top: 10px;
     left: -50px;
     height: 1px;
     width: 30px;
@@ -23,15 +24,20 @@ const List = styled.ul`
 
   a {
     display: block;
-    color: #7AA7AC;
     cursor: pointer;
     transform: translateY(0px);
     transition: .3s;
     will-change: transform;
+    color: #7AA7AC;
+    text-decoration: none;
   }
 
   a:hover {
     transform: translateY(-2px);
+  }
+
+  a:visited {
+    color: #7AA7AC;
   }
 `
 
@@ -39,23 +45,18 @@ const Menu = () => {
   return (
     <List>
       <li>
-        <a>
+        <a href='https://github.com/baltazarparra' target="_blank">
           Github
         </a>
       </li>
       <li>
-        <a>
+      <a href='https://codepen.io/baltazarparra' target="_blank">
           Codepen
         </a>
       </li>
       <li>
-        <a>
+        <a href='https://www.linkedin.com/in/baltazarparra/' target="_blank">
           LinkedIn
-        </a>
-      </li>
-      <li>
-        <a>
-          CV
         </a>
       </li>
     </List>

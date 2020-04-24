@@ -18,12 +18,19 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 `
 
 const Wrapper = styled(Tilt)`
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transform-style: preserve-3d;
+  margin-left: -110px;
+  height: 280px;
+  width: 280px;
+
+  @media (min-width: 1024px) {
+    height: 400px;
+    width: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform-style: preserve-3d;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  }
 `
 
 const Avatar = () => {
@@ -31,10 +38,6 @@ const Avatar = () => {
     <Wrapper
       options={{
         max: 25
-      }}
-      style={{
-        height: 400,
-        width: 400
       }}
     >
       <ShadertoyReact
