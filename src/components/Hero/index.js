@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 const Container = styled.section`
   margin: 280px 0 0 -60px;
+  z-index: 9;
 `
 
 const Title = styled.h1`
