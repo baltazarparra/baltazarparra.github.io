@@ -24,7 +24,8 @@ const Info = styled.div`
   animation-delay: 1.8s;
 
   span {
-    margin: 1em 2em 0 0;
+    font-size: 12px;
+    margin: .5em 1em 0 0;
   }
 `
 
