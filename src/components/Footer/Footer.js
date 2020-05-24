@@ -14,7 +14,7 @@ const slide = keyframes`
 `
 
 const bg = keyframes`
-  30% {
+  50% {
     background-color: transparent;
   }
   100% {
@@ -31,8 +31,8 @@ const Info = styled.div`
   right: 0;
   opacity: 0;
   animation: ${slide} 1.2s cubic-bezier(.12,.58,0,1.61) forwards,
-  ${bg} 1.2s cubic-bezier(.12,.58,0,1.61) forwards;
-  animation-delay: 1.8s, 2.6s;
+  ${bg} 3s cubic-bezier(.12,.58,0,1.61) forwards;
+  animation-delay: 1.8s, 1.8s;
   width: 100%;
   padding: 1em;
 
