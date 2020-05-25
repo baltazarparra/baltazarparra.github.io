@@ -15,7 +15,7 @@ const comeUp = keyframes`
 const Container = styled.section`
   z-index: 9;
 
-  @media (min-width: 1024px) {
+  @media (min-width: 720px) {
     margin: 280px 0 0 -60px;
   }
 `
@@ -24,10 +24,10 @@ const Title = styled.h1`
   font-family: 'Sedgwick Ave Display';
   color: #E2FFF7;
   font-weight: normal;
-  font-size: 4em;
+  font-size: 3em;
   line-height: 1;
   margin-left: -30px;
-  margin-top: 260px;
+  margin-top: 180px;
   opacity: 0;
   animation: ${comeUp} .8s ease forwards;
   animation-delay: .4s;
@@ -36,7 +36,7 @@ const Title = styled.h1`
     display: block;
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 720px) {
     line-height: 1;
     font-size: 6rem;
     margin-bottom: 30px;
@@ -49,7 +49,7 @@ const Subtitle = styled.h2`
   font-family: 'Sedgwick Ave Display';
   font-weight: normal;
   color: #7AA7AC;
-  font-size: 4em;
+  font-size: 3em;
   text-align: right;
   margin-left: -120px;
   margin-top: 20px;
@@ -61,7 +61,7 @@ const Subtitle = styled.h2`
     display: none;
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 720px) {
     font-size: 4rem;
     line-height: 1;
     margin-left: -40px;

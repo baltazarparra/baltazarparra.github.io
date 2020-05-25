@@ -31,12 +31,12 @@ const comeDown = keyframes`
 
 const Wrapper = styled(Tilt)`
   margin-left: -110px;
-  height: 280px;
-  width: 280px;
+  height: 220px;
+  width: 220px;
   opacity: 0;
   animation: ${comeDown} 1.8s ease forwards;
 
-  @media (min-width: 1024px) {
+  @media (min-width: 720px) {
     height: 400px;
     width: 400px;
     display: flex;

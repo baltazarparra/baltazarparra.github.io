@@ -12,20 +12,34 @@ const slide = keyframes`
   }
 `
 
+const bg = keyframes`
+  50% {
+    background-color: transparent;
+  }
+  100% {
+    background-color: rgba(0,0,0,0.1);
+  }
+`
 const List = styled.ul`
   display: flex;
   position: fixed;
-  top: 10px;
-  right: 10px;
+  top: 0;
+  right: 0;
   opacity: 0;
-  animation: ${slide} .8s cubic-bezier(.22,.68,0,1.71) forwards;
-  animation-delay: 1.4s;
+  padding: 1em;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  height: 36px;
+  animation: ${slide} 1.2s cubic-bezier(.12,.58,0,1.61) forwards,
+  ${bg} 3s cubic-bezier(.12,.58,0,1.61) forwards;
+  animation-delay: 1.4s, 1.4s;
 
   :before {
     content: '';
     position: absolute;
-    top: 12px;
-    left: -50px;
+    top: 18px;
+    right: 280px;
     height: 1px;
     width: 30px;
     background-color: #7AA7AC;
