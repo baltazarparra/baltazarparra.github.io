@@ -8,6 +8,19 @@ const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  body::-webkit-scrollbar {
+    width: .5em;
+  }
+
+  body::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+
+  body::-webkit-scrollbar-thumb {
+    background-color: #7AA7AC;
+    outline: 1px solid #0D2834;
+  }
+
   /* Remove default padding */
   ul[class],
   ol[class] {
@@ -80,6 +93,17 @@ const GlobalStyles = createGlobalStyle`
 
   li {
     list-style: none;
+  }
+
+  code {
+    font-family: monospace;
+    font-size: 16px;
+    color: #7AA7AC;
+    background-color: rgba(0,0,0,.1);
+    padding: 1em;
+    border-radius: 4px;
+    display: block;
+    margin: 1em 0;
   }
 
   /* Remove all animations and transitions for people that prefer not to see them */

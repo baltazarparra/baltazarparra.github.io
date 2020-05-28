@@ -1,26 +1,54 @@
 import React from 'react'
-import { graphql, Link } from 'gatsby'
+import { graphql } from 'gatsby'
 import PropTypes from 'prop-types'
 
-import Layout from '../components/Layout'
 import Seo from '../components/seo'
 import Background from '../components/Background'
 
 import styled from 'styled-components'
+import Tilt from 'react-tilt'
+import Unsplash from 'react-unsplash-wrapper'
+
+import AniLink from 'gatsby-plugin-transition-link/AniLink'
+import GlobalStyles from '../../src/styles/global'
 
 const Post = styled.main`
-  display: flex;
-  flex-direction: column;
-  max-width: 40%;
+  padding: 1em 1em;
+
+  @media (min-width: 720px) {
+    max-width: 700px;
+  }
 
   h1 {
-    margin-bottom: 2em;
+    margin: 1em 0;
   }
 
   p {
     line-height: 1.8;
     letter-spacing: .01em;
   }
+  `
+
+const ImageWrap = styled.div`
+  width: fit-content;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  margin: 90px auto 20px;
+
+  img {
+    box-shadow: 12px 12px 1px 1px #E2FFF7;
+    margin: 0;
+  }
+`
+
+const Wrapper = styled.main`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin-bottom: 90px;
 `
 
 export const query = graphql`
@@ -28,6 +56,8 @@ export const query = graphql`
     markdownRemark(fields: {slug: {eq: $slug}}) {
       frontmatter {
         title
+        date
+        tags
       }
       html
     }
@@ -39,12 +69,19 @@ const BlogPost = ({ data }) => {
 
   return (
     <>
-      <Link to='/'>Back to home</Link>
-      <Layout>
+      <GlobalStyles />
+      <AniLink style={{ position: 'fixed', top: '10px', right: '10px' }} paintDrip to='/' duration={1} hex='#0D2834'>Back to home</AniLink>
+      <Wrapper>
+        <ImageWrap>
+          <Tilt key={post.frontmatter.slug} options={{ max: 16, scale: 1 }}>
+            <Unsplash width='300' height='300' keywords={post.frontmatter.tags} img />
+          </Tilt>
+        </ImageWrap>
         <Seo title={`${post.frontmatter.title}`} />
+        <small>{post.frontmatter.date}</small>
         <Post dangerouslySetInnerHTML={{ __html: post.html }} />
         <Background />
-      </Layout>
+      </Wrapper>
     </>
   )
 }

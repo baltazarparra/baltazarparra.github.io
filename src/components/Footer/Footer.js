@@ -10,22 +10,12 @@ const slide = keyframes`
   }
 `
 
-const bg = keyframes`
-  50% {
-    background-color: transparent;
-  }
-  100% {
-    background-color: rgba(0,0,0,0.7);
-  }
-`
-
 const Info = styled.div`
   display: flex;
   justify-content: flex-end;
   opacity: 0;
-  animation: ${slide} 1.2s cubic-bezier(.12,.58,0,1.61) forwards,
-  ${bg} 3s cubic-bezier(.12,.58,0,1.61) forwards;
-  animation-delay: 1.8s, 1.8s;
+  animation: ${slide} 1.2s cubic-bezier(.12,.58,0,1.61) forwards;
+  animation-delay: 1.8s;
   width: 100%;
   z-index: 9;
 

@@ -21,6 +21,7 @@ module.exports = {
       }
     },
     'gatsby-plugin-styled-components',
+    'gatsby-plugin-transition-link',
     'gatsby-plugin-react-helmet',
     {
       resolve: 'gatsby-source-filesystem',
@@ -39,7 +40,7 @@ module.exports = {
     {
       resolve: 'gatsby-transformer-remark',
       options: {
-        plagins: []
+        plugins: []
       }
     },
     'gatsby-transformer-sharp',

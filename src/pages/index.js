@@ -10,9 +10,9 @@ import Footer from '../components/Footer'
 
 const IndexPage = () => (
   <>
+    <Menu />
     <Layout>
       <Seo title='stay creative' />
-      <Menu />
       <Avatar />
       <Hero />
       <Background />
