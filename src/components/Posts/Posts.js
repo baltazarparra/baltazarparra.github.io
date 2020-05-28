@@ -1,5 +1,5 @@
 import React from 'react'
-import { useStaticQuery, graphql } from 'gatsby'
+import { useStaticQuery, graphql, Link } from 'gatsby'
 
 import styled, { keyframes } from 'styled-components'
 
@@ -63,6 +63,9 @@ const Posts = () => {
       allMarkdownRemark {
         edges {
           node {
+            fields {
+              slug
+            }
             frontmatter {
               title
               resume
@@ -81,12 +84,15 @@ const Posts = () => {
       <ul>
         {postList.map(({
           node: {
-            frontmatter: { title, resume }
+            frontmatter: { title, resume },
+            fields: { slug }
           }
         }) => (
-          <li key={title}>
-            <h2>{title}</h2>
-            <span>{resume}</span>
+          <li key={slug}>
+            <Link to={slug}>
+              <h2>{title}</h2>
+              <span>{resume}</span>
+            </Link>
           </li>
         ))}
       </ul>
