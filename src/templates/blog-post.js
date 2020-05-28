@@ -1,6 +1,27 @@
 import React from 'react'
-import { graphql } from 'gatsby'
+import { graphql, Link } from 'gatsby'
 import PropTypes from 'prop-types'
+
+import Layout from '../components/Layout'
+import Seo from '../components/seo'
+import Background from '../components/Background'
+
+import styled from 'styled-components'
+
+const Post = styled.main`
+  display: flex;
+  flex-direction: column;
+  max-width: 40%;
+
+  h1 {
+    margin-bottom: 2em;
+  }
+
+  p {
+    line-height: 1.8;
+    letter-spacing: .01em;
+  }
+`
 
 export const query = graphql`
   query Post($slug: String!) {
@@ -18,8 +39,12 @@ const BlogPost = ({ data }) => {
 
   return (
     <>
-      <h1>{post.frontmatter.title}</h1>
-      <div dangerouslySetInnerHTML={{ __html: post.html }} />
+      <Link to='/'>Back to home</Link>
+      <Layout>
+        <Seo title={`${post.frontmatter.title}`} />
+        <Post dangerouslySetInnerHTML={{ __html: post.html }} />
+        <Background />
+      </Layout>
     </>
   )
 }

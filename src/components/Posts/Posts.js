@@ -2,7 +2,7 @@ import React from 'react'
 import { useStaticQuery, graphql, Link } from 'gatsby'
 
 import styled, { keyframes } from 'styled-components'
-
+import Tilt from 'react-tilt'
 import Unsplash from 'react-unsplash-wrapper'
 
 const slide = keyframes`
@@ -62,7 +62,7 @@ const PostList = styled.section`
 `
 
 const PostTitle = styled.h1`
-  font-size: 32px;
+  font-size: 38px;
   letter-spacing: 6px;
   line-height: 3;
   position: relative;
@@ -70,7 +70,7 @@ const PostTitle = styled.h1`
   :before {
     content: '';
     position: absolute;
-    top: 64px;
+    top: 76px;
     left: -54px;
     height: 2px;
     width: 32px;
@@ -124,17 +124,19 @@ const Posts = () => {
             fields: { slug }
           }
         }) => (
-          <li key={slug}>
-            <Link to={slug}>
-              <div>
-                <h2>{title}</h2>
-                <span>{resume}</span>
-              </div>
-              <ImageWrap>
-                <Unsplash width='100' height='100' keywords={`${tags}`} img />
-              </ImageWrap>
-            </Link>
-          </li>
+          <Tilt key={slug} options={{ max: 2, scale: 1.04 }}>
+            <li>
+              <Link to={slug}>
+                <div>
+                  <h2>{title}</h2>
+                  <span>{resume}</span>
+                </div>
+                <ImageWrap>
+                  <Unsplash width='100' height='100' keywords={`${tags}`} img />
+                </ImageWrap>
+              </Link>
+            </li>
+          </Tilt>
         ))}
       </ul>
     </PostList>

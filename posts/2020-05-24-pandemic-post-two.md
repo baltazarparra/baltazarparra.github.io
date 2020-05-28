@@ -1,6 +1,6 @@
 ---
 title: Pandemic Post Two
-tags: office, wind
+tags: speedy
 resume: Two Resume post for pandemic write here for description this post
 ---
 
