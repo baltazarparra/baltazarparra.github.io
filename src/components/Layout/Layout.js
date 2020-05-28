@@ -10,10 +10,6 @@ const Wrapper = styled.main`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-
-  @media (min-width: 1024px) {
-    height: 100vh;
-  }
 `
 
 const Layout = ({ children }) => {

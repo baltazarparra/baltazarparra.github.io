@@ -17,14 +17,13 @@ const bg = keyframes`
     background-color: transparent;
   }
   100% {
-    background-color: rgba(0,0,0,0.1);
+    background-color: rgba(0,0,0,0.7);
   }
 `
 const List = styled.ul`
   display: flex;
   position: fixed;
   top: 0;
-  right: 0;
   opacity: 0;
   padding: 1em;
   justify-content: flex-end;
@@ -34,6 +33,12 @@ const List = styled.ul`
   animation: ${slide} 1.2s cubic-bezier(.12,.58,0,1.61) forwards,
   ${bg} 3s cubic-bezier(.12,.58,0,1.61) forwards;
   animation-delay: 1.4s, 1.4s;
+  z-index: 11;
+
+  @media (min-width: 720px) {
+    animation: ${slide} 1.2s cubic-bezier(.12,.58,0,1.61) forwards;
+    animation-delay: 1.4s;
+  }
 
   :before {
     content: '';
