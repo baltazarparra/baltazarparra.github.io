@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { graphql } from 'gatsby'
 import PropTypes from 'prop-types'
+import { graphql } from 'gatsby'
+import { DiscussionEmbed } from 'disqus-react'
 
 import Seo from '../components/seo'
 import Background from '../components/Background'
@@ -71,6 +72,11 @@ const BlogPost = ({ data }) => {
   const [ready, isReady] = useState(false)
   const [scrollPosition, setScrollPosition] = useState(0)
 
+  const disqusConfig = {
+    shortname: 'baltazarparra',
+    config: { identifier: post.frontmatter.title }
+  }
+
   const handleScroll = () => {
     const position = window.pageYOffset
     setScrollPosition(position)
@@ -109,6 +115,7 @@ const BlogPost = ({ data }) => {
         <Seo title={`${post.frontmatter.title}`} />
         <small>{post.frontmatter.date}</small>
         <Post dangerouslySetInnerHTML={{ __html: post.html }} />
+        <DiscussionEmbed {...disqusConfig} />
         <Background />
       </Wrapper>
     </>
