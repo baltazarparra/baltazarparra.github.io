@@ -11,10 +11,25 @@ import AnimatedCursor from 'react-animated-cursor'
 
 const IndexPage = () => {
   const [ready, isReady] = useState(false)
+  const [scrollPosition, setScrollPosition] = useState(0)
+
+  const handleScroll = () => {
+    const position = window.pageYOffset
+    setScrollPosition(position)
+  }
 
   useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
     isReady(true)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
   }, [])
+
+  const translateAvatar = `translateY(-${scrollPosition / 5}px)`
+
+  const translateHero = `translateY(-${scrollPosition}px)`
 
   return (
     <>
@@ -30,8 +45,8 @@ const IndexPage = () => {
       <Menu />
       <Layout>
         <Seo title='stay creative' />
-        <Avatar />
-        <Hero />
+        <Avatar style={{ transform: translateAvatar }} />
+        <Hero style={{ transform: translateHero }} />
         <Background />
       </Layout>
       <Posts />

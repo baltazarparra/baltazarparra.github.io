@@ -85,7 +85,7 @@ const BlogPost = ({ data }) => {
     }
   }, [])
 
-  const translate = `translateY(-${scrollPosition}px)`
+  const translate = `translateY(-${scrollPosition / 3}px)`
 
   return (
     <>
@@ -116,7 +116,7 @@ const BlogPost = ({ data }) => {
 }
 
 BlogPost.propTypes = {
-  data: PropTypes.string
+  data: PropTypes.object
 }
 
 export default BlogPost

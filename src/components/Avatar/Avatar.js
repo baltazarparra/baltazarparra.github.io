@@ -1,9 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
 import ShadertoyReact from 'shadertoy-react'
 import styled, { keyframes } from 'styled-components'
 import Tilt from 'react-tilt'
 
-import AvatarImg from '../../images/avatar-min.jpg'
+import img from '../../images/avatar-min.jpg'
 import NoiseImg from '../../images/noise.jpg'
 
 const fragmentShader = `
@@ -47,19 +49,26 @@ const Wrapper = styled(Tilt)`
   }
 `
 
-const Avatar = () => {
+const Avatar = ({ style }) => {
   return (
     <Wrapper
+      style={{
+        transform: style?.transform
+      }}
       options={{
         max: 25
       }}
     >
       <ShadertoyReact
         fs={fragmentShader}
-        textures={[{ url: NoiseImg }, { url: AvatarImg }]}
+        textures={[{ url: NoiseImg }, { url: img }]}
       />
     </Wrapper>
   )
+}
+
+Avatar.propTypes = {
+  style: PropTypes.object
 }
 
 export default Avatar

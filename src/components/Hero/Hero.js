@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
 import styled, { keyframes } from 'styled-components'
 
 const comeUp = keyframes`
@@ -72,19 +74,29 @@ const Subtitle = styled.h2`
   }
 `
 
-const Hero = () => {
+const Hero = ({ style }) => {
   return (
     <Container>
-      <Title>
-        Creative
-        <span>developer</span>
-      </Title>
-      <Subtitle>
-        Hi, im Baltz.
-        <span>...just dive right in</span>
-      </Subtitle>
+      <div
+        style={{
+          transform: style?.transform
+        }}
+      >
+        <Title>
+          Creative
+          <span>developer</span>
+        </Title>
+        <Subtitle>
+          Hi, im Baltz.
+          <span>...just dive right in</span>
+        </Subtitle>
+      </div>
     </Container>
   )
+}
+
+Hero.propTypes = {
+  style: PropTypes.object
 }
 
 export default Hero
