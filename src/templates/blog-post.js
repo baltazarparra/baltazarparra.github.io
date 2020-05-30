@@ -69,10 +69,23 @@ export const query = graphql`
 const BlogPost = ({ data }) => {
   const post = data?.markdownRemark
   const [ready, isReady] = useState(false)
+  const [scrollPosition, setScrollPosition] = useState(0)
+
+  const handleScroll = () => {
+    const position = window.pageYOffset
+    setScrollPosition(position)
+  }
 
   useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
     isReady(true)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
   }, [])
+
+  const translate = `translateY(-${scrollPosition}px)`
 
   return (
     <>
@@ -88,7 +101,7 @@ const BlogPost = ({ data }) => {
       <GlobalStyles />
       <AniLink style={{ position: 'fixed', top: '10px', right: '10px' }} paintDrip to='/' duration={1} hex='#0D2834'>Back to home</AniLink>
       <Wrapper>
-        <ImageWrap>
+        <ImageWrap style={{ transform: translate }}>
           <Tilt key={post.frontmatter.slug} options={{ max: 16, scale: 1 }}>
             <Unsplash width='300' height='300' keywords={post.frontmatter.tags} img />
           </Tilt>
