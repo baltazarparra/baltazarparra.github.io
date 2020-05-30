@@ -16,6 +16,9 @@ import AnimatedCursor from 'react-animated-cursor'
 
 const Post = styled.main`
   padding: 1em 1em;
+  font-size: 20px;
+  line-height: 32px;
+  text-align: left;
 
   @media (min-width: 720px) {
     max-width: 700px;
@@ -26,21 +29,26 @@ const Post = styled.main`
   }
 
   p {
-    line-height: 1.8;
-    letter-spacing: .01em;
+    font-size: 20px;
+    line-height: 32px;
   }
   `
 
 const ImageWrap = styled.div`
-  width: fit-content;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  margin: 90px auto 20px;
+  position: relative;
+  display: block;
+  height: 300px;
+  width: 90%;
+  overflow: hidden;
+  margin-top: 3em;
+  margin-bottom: 3em;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.05), 0 10px 10px rgba(0,0,0,0.02);
 
-  img {
-    box-shadow: 12px 12px 1px 1px #E2FFF7;
-    margin: 0;
+  @media (min-width: 720px) {
+    display: block;
+    margin: 14px auto;
+    height: 400px;
+    width: 100%;
   }
 `
 
@@ -50,7 +58,49 @@ const Wrapper = styled.main`
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  margin-bottom: 90px;
+  margin: 32px auto;
+  padding: 0 .8em;
+
+  h1 {
+    margin: 0;
+    font-size: 38px;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  h3 {
+    font-size: 20px;
+    font-wight: 400;
+    margin-top: 1em;
+    text-align: center;
+  }
+
+  small {
+    font-size: 12px;
+    margin-top: 1em;
+  }
+
+  @media (min-width: 720px) {
+    max-width: 700px;
+
+    h1 {
+      font-size: 56px;
+    }
+
+    h3 {
+      font-size: 20px;
+    }
+
+    small {
+      font-size: 12px;
+    }
+  }
+`
+
+const Back = styled(AniLink)`
+  display: block;
+  padding: 1em;
+  text-align: right;
 `
 
 export const query = graphql`
@@ -58,6 +108,7 @@ export const query = graphql`
     markdownRemark(fields: {slug: {eq: $slug}}) {
       frontmatter {
         title
+        resume
         date
         tags
       }
@@ -85,7 +136,7 @@ const BlogPost = ({ data }) => {
     }
   }, [])
 
-  const translate = `translateY(-${scrollPosition / 3}px)`
+  const translate = `translateY(-${scrollPosition / 10}px)`
 
   return (
     <>
@@ -99,15 +150,17 @@ const BlogPost = ({ data }) => {
           outlineScale={4}
         />}
       <GlobalStyles />
-      <AniLink style={{ position: 'fixed', top: '10px', right: '10px' }} paintDrip to='/' duration={1} hex='#0D2834'>Back to home</AniLink>
+      <Back paintDrip to='/' duration={1} hex='#0D2834'>Back to home</Back>
       <Wrapper>
+        <h1>{post.frontmatter.title}</h1>
+        <h3>{post.frontmatter.resume}</h3>
+        <small>{post.frontmatter.date}</small>
         <ImageWrap style={{ transform: translate }}>
           <Tilt key={post.frontmatter.slug} options={{ max: 16, scale: 1 }}>
-            <Unsplash width='300' height='300' keywords={post.frontmatter.tags} img />
+            <Unsplash keywords={post.frontmatter.tags} />
           </Tilt>
         </ImageWrap>
         <Seo title={`${post.frontmatter.title}`} />
-        <small>{post.frontmatter.date}</small>
         <Post dangerouslySetInnerHTML={{ __html: post.html }} />
         <Background />
       </Wrapper>

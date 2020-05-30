@@ -6,10 +6,18 @@ import GlobalStyles from '../../styles/global'
 
 const Wrapper = styled.main`
   display: flex;
-  height: 80vh;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  @media (min-width: 720px) {
+    height: 80vh;
+  }
+  @media (min-width: 1024px) {
+    height: 60vh;
+  }
+  @media (min-width: 1366px) {
+    height: 80vh;
+  }
 `
 
 const Layout = ({ children }) => {

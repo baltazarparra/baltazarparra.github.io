@@ -21,19 +21,19 @@ const List = styled.ul`
   width: 100%;
   height: 36px;
   animation: ${slide} 1.2s cubic-bezier(.12,.58,0,1.61) forwards;
-  animation-delay: 1.4s;
+  animation-delay: 1;
   z-index: 11;
 
   @media (min-width: 720px) {
     animation: ${slide} 1.2s cubic-bezier(.12,.58,0,1.61) forwards;
-    animation-delay: 1.4s;
+    animation-delay: 1s;
   }
 
   :before {
     content: '';
     position: absolute;
     top: 18px;
-    right: 280px;
+    right: 256px;
     height: 1px;
     width: 30px;
     background-color: #7AA7AC;

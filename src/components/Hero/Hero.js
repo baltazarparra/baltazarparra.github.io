@@ -26,9 +26,9 @@ const Title = styled.h1`
   font-family: 'Sedgwick Ave Display';
   color: #E2FFF7;
   font-weight: normal;
-  font-size: 3em;
+  font-size: 3.8em;
   line-height: 1;
-  margin-left: -30px;
+  margin-left: -60px;
   margin-top: 180px;
   opacity: 0;
   animation: ${comeUp} .8s ease forwards;
@@ -51,7 +51,7 @@ const Subtitle = styled.h2`
   font-family: 'Sedgwick Ave Display';
   font-weight: normal;
   color: #7AA7AC;
-  font-size: 3em;
+  font-size: 3.4em;
   text-align: right;
   margin-left: -120px;
   margin-top: 20px;

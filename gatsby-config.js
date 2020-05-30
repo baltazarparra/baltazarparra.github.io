@@ -14,8 +14,8 @@ module.exports = {
             variants: ['400', '700']
           },
           {
-            family: 'Roboto Mono',
-            variants: ['100', '300', '400']
+            family: 'Open Sans',
+            variants: ['300', '400', '800']
           }
         ]
       }

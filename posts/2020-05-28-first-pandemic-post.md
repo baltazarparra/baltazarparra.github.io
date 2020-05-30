@@ -5,8 +5,6 @@ resume: post explicando um pouco das tecnologias que usei para refazer a minha p
 date: 28 de Maio de 2020
 ---
 
-# First pandemic post
-
 Recentemente eu tive oportunidade de trabalhar
 com <a href="https://www.gatsbyjs.org/" target="_blank">Gatsby</a> em um <a href="https://14islands.com/proxy" target="_blank">projeto grande</a>, o que despertou meu interesse em refazer minha página.
 

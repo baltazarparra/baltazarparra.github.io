@@ -24,18 +24,24 @@ const PostList = styled.section`
   align-items: center;
   opacity: 0;
   animation: ${slide} 1.2s cubic-bezier(.12,.58,0,1.61) forwards;
-  animation-delay: 3s;
+  animation-delay: 2s;
+  margin-top: 4em;
 
   li {
     text-align: left;
     padding: 1em;
     opacity: 0;
     position: relative;
-    margin-bottom: 4em;
     animation: ${slide} 1s cubic-bezier(.12,.58,0,1.61) forwards;
-    animation-delay: 3.8s;
+    animation-delay: 2.4s;
     :hover {
       box-shadow: 10px -20px 50px 4px rgba(0,0,0,0.12);
+    }
+    @media (min-width: 640px) {
+      margin-bottom: 2em;
+    }
+    @media (min-width: 1024px) {
+      margin-bottom: 4em;
     }
   }
 
@@ -45,6 +51,7 @@ const PostList = styled.section`
   }
 
   h2 {
+    font-size: 24px;
     padding-bottom: .4em;
   }
 
@@ -52,6 +59,7 @@ const PostList = styled.section`
     display: block;
     width: 240px;
     margin-right: 1em;
+    font-size: 14px;
 
     @media (min-width: 720px) {
       width: 440px;
@@ -66,23 +74,35 @@ const PostList = styled.section`
 `
 
 const PostTitle = styled.h1`
-  font-size: 38px;
-  letter-spacing: 6px;
+  font-size: 30px;
+  letter-spacing: 2px;
   line-height: 3;
   position: relative;
 
   :before {
     content: '';
     position: absolute;
-    top: 76px;
+    top: 44px;
     left: -54px;
     height: 2px;
-    width: 32px;
+    width: 28px;
     background-color: #7AA7AC;
   }
 
   @media (min-width: 720px) {
+    font-size: 32px;
+    text-transform: uppercase;
     line-height: 4;
+
+    :before {
+      content: '';
+      position: absolute;
+      top: 64px;
+      left: -54px;
+      height: 1px;
+      width: 28px;
+      background-color: #7AA7AC;
+    }
   }
 `
 
@@ -95,7 +115,7 @@ const ImageWrap = styled.div`
   }
   img {
     box-shadow: 6px 6px 1px 1px #E2FFF7;
-    margin: 1em;
+    margin-right: 1em;
   }
 `
 

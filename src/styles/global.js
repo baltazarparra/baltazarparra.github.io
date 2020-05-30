@@ -55,7 +55,7 @@ const GlobalStyles = createGlobalStyle`
     scroll-behavior: smooth;
     text-rendering: optimizeSpeed;
     line-height: 1.5;
-    font-family: 'Roboto Mono';
+    font-family: 'Open Sans';
     background-color: #0D2834;
     color: #E2FFF7;
   }

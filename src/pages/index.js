@@ -27,9 +27,9 @@ const IndexPage = () => {
     }
   }, [])
 
-  const translateAvatar = `translateY(-${scrollPosition / 5}px)`
+  const translateAvatar = `translateY(-${scrollPosition / 4}px)`
 
-  const translateHero = `translateY(-${scrollPosition}px)`
+  const translateHero = `translateY(-${scrollPosition / 5}px)`
 
   return (
     <>
