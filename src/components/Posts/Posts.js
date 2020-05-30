@@ -88,7 +88,6 @@ const PostTitle = styled.h1`
 
 const ImageWrap = styled.div`
   display: none;
-  box-shadow: 4px 4px 1px 1px #E2FFF7;
 
   @media (min-width: 720px) {
     display: block;

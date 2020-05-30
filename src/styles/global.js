@@ -21,6 +21,10 @@ const GlobalStyles = createGlobalStyle`
     outline: 1px solid #0D2834;
   }
 
+  a {
+    cursor: none !important;
+  }
+
   /* Remove default padding */
   ul[class],
   ol[class] {
