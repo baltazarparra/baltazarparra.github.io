@@ -5,7 +5,6 @@
   "version": "0.1.0",
   "author": "Baltazar Parra <baltazarparra@outlook.com>",
   "dependencies": {
-    "disqus-react": "^1.0.8",
     "eslint-config-standard": "^14.1.1",
     "eslint-config-standard-react": "^9.2.0",
     "eslint-plugin-import": "^2.20.2",
