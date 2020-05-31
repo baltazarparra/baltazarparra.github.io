@@ -22,14 +22,12 @@ const IndexPage = () => {
     window.addEventListener('scroll', handleScroll, { passive: true })
 
     isReady(true)
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const translateAvatar = `translateY(-${scrollPosition / 4}px)`
+  const translateAvatar = `translateY(-${scrollPosition / 2}px)`
 
-  const translateHero = `translateY(-${scrollPosition / 5}px)`
+  const translateHero = `translateY(-${scrollPosition / 4}px)`
 
   return (
     <>

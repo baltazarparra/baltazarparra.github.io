@@ -161,7 +161,7 @@ const Posts = () => {
                   <span>{resume}</span>
                 </div>
                 <ImageWrap>
-                  <Unsplash width='100' height='100' keywords={`${tags}`} img />
+                  <Unsplash width='100' height='100' keywords={`night, ${tags}`} img />
                 </ImageWrap>
               </AniLink>
             </li>
