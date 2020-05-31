@@ -27,49 +27,49 @@ const PostList = styled.section`
   animation-delay: 2s;
   margin-top: 4em;
 
-  li {
-    text-align: left;
-    padding: 1em;
-    opacity: 0;
-    position: relative;
-    animation: ${slide} 1s cubic-bezier(.12,.58,0,1.61) forwards;
-    animation-delay: 2.4s;
-    :hover {
-      box-shadow: 10px -20px 50px 4px rgba(0,0,0,0.12);
-    }
-    @media (min-width: 640px) {
-      margin-bottom: 2em;
-    }
-    @media (min-width: 1024px) {
-      margin-bottom: 4em;
-    }
-  }
-
   a {
     display: flex;
     text-decoration: none;
   }
+`
 
-  h2 {
-    font-size: 24px;
-    padding-bottom: .4em;
+const Post = styled.li`
+  text-align: left;
+  padding: 1em;
+  opacity: 0;
+  position: relative;
+  animation: ${slide} 1s cubic-bezier(.12,.58,0,1.61) forwards;
+  animation-delay: 2.4s;
+  :hover {
+    box-shadow: 10px -20px 50px 4px rgba(0,0,0,0.12);
+  }
+  @media (min-width: 640px) {
+    margin-bottom: 2em;
+  }
+  @media (min-width: 1024px) {
+    margin-bottom: 4em;
+  }
+`
+
+const LinkTitle = styled.h2`
+  font-size: 24px;
+  padding-bottom: .4em;
+`
+
+const LinkResume = styled.span`
+  display: block;
+  width: 240px;
+  margin-right: 1em;
+  font-size: 16px;
+
+  @media (min-width: 720px) {
+    width: 440px;
+    margin-right: 1em;
   }
 
-  span {
-    display: block;
-    width: 240px;
-    margin-right: 1em;
-    font-size: 14px;
-
-    @media (min-width: 720px) {
-      width: 440px;
-      margin-right: 1em;
-    }
-
-    @media (min-width: 1024px) {
-      width: 540px;
-      margin-right: 2em;
-    }
+  @media (min-width: 1024px) {
+    width: 540px;
+    margin-right: 2em;
   }
 `
 
@@ -152,20 +152,20 @@ const Posts = () => {
             fields: { slug }
           }
         }) => (
-          <Tilt key={slug} options={{ max: 2, scale: 1.02 }}>
-            <li>
-              <AniLink style={{ overflow: 'hidden' }} paintDrip to={slug} duration={1} hex='#0D2834'>
+          <Post key={slug}>
+            <Tilt options={{ max: 2, scale: 1.02 }}>
+              <AniLink paintDrip to={slug} duration={1} hex='#0D2834'>
                 <div>
-                  <h2>{title}</h2>
+                  <LinkTitle>{title}</LinkTitle>
                   <small>{date}</small>
-                  <span>{resume}</span>
+                  <LinkResume>{resume}</LinkResume>
                 </div>
                 <ImageWrap>
-                  <Unsplash width='100' height='100' keywords={`night, ${tags}`} img />
+                  <Unsplash width='100' height='100' keywords={`background, ${tags}`} img />
                 </ImageWrap>
               </AniLink>
-            </li>
-          </Tilt>
+            </Tilt>
+          </Post>
         ))}
       </ul>
     </PostList>

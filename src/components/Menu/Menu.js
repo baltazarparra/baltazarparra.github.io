@@ -38,25 +38,25 @@ const List = styled.ul`
     width: 30px;
     background-color: #7AA7AC;
   }
+`
 
-  li {
-    margin-right: 1rem;
-  }
+const Item = styled.li`
+  margin-right: 1rem;
+`
 
-  a {
-    display: block;
-    cursor: pointer;
-    transform: translateY(0px);
-    transition: .3s;
-    will-change: transform;
-    color: #7AA7AC;
-  }
+const Link = styled.a`
+  display: block;
+  cursor: pointer;
+  transform: translateY(0px);
+  transition: .3s;
+  will-change: transform;
+  color: #7AA7AC;
 
-  a:hover {
+  :hover {
     transform: translateY(-2px);
   }
 
-  a:visited {
+  :visited {
     color: #7AA7AC;
   }
 `
@@ -64,21 +64,21 @@ const List = styled.ul`
 const Menu = () => {
   return (
     <List>
-      <li>
-        <a href='https://github.com/baltazarparra' rel='noopener noreferrer' target='_blank'>
+      <Item>
+        <Link href='https://github.com/baltazarparra' rel='noopener noreferrer' target='_blank'>
           Github
-        </a>
-      </li>
-      <li>
-        <a href='https://codepen.io/baltazarparra' rel='noopener noreferrer' target='_blank'>
+        </Link>
+      </Item>
+      <Item>
+        <Link href='https://codepen.io/baltazarparra' rel='noopener noreferrer' target='_blank'>
           Codepen
-        </a>
-      </li>
-      <li>
-        <a href='https://www.linkedin.com/in/baltazarparra/' rel='noopener noreferrer' target='_blank'>
+        </Link>
+      </Item>
+      <Item>
+        <Link href='https://www.linkedin.com/in/baltazarparra/' rel='noopener noreferrer' target='_blank'>
           LinkedIn
-        </a>
-      </li>
+        </Link>
+      </Item>
     </List>
   )
 }

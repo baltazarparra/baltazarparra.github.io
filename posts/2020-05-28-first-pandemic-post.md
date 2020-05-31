@@ -1,6 +1,6 @@
 ---
 title: First pandemic post
-tags: home-office
+tags: moon
 resume: post explicando um pouco das tecnologias que usei para refazer a minha página pessoal
 date: 28 de Maio de 2020
 ---

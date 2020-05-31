@@ -1,6 +1,6 @@
 ---
 title: Second pandemic post
-tags: desktop
+tags: starts
 resume: testando novo layout do site, com mais posts, mais textos, mais tags e mais quebras de linha
 date: 29 de Maio de 2020
 ---

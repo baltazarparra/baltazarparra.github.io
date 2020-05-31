@@ -9,12 +9,15 @@ const Wrapper = styled.main`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+
   @media (min-width: 720px) {
     height: 80vh;
   }
+
   @media (min-width: 1024px) {
     height: 60vh;
   }
+
   @media (min-width: 1366px) {
     height: 80vh;
   }

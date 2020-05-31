@@ -71,7 +71,7 @@ const ImageWrap = styled.div`
   height: 300px;
   width: 90%;
   overflow: hidden;
-  margin-top: 3em;
+  margin-top: 1em;
   margin-bottom: 3em;
   box-shadow: 0 14px 28px rgba(0,0,0,0.05), 0 10px 10px rgba(0,0,0,0.02);
 
@@ -101,7 +101,18 @@ const Post = styled.main`
     font-size: 20px;
     line-height: 32px;
   }
-  `
+`
+
+const Alt = styled.small`
+  display: block;
+  text-align: center;
+  font-size: 10px;
+  margin-top: 2em;
+
+  @media (min-width: 1366px) {
+    font-size: 10px;
+  }
+`
 
 export const query = graphql`
   query Post($slug: String!) {
@@ -154,6 +165,9 @@ const BlogPost = ({ data }) => {
         <PostResume>{post.frontmatter.resume}</PostResume>
         <PostDate>{post.frontmatter.date}</PostDate>
         <Tilt key={post.frontmatter.slug} options={{ max: 16, scale: 1 }}>
+          <Alt>
+            random <a href='https://unsplash.com/' rel='noreferrer' target='_blank'>Unsplash</a> image | keywords: {post.frontmatter.tags}
+          </Alt>
           <ImageWrap style={{ transform: translate }}>
             <Unsplash keywords={post.frontmatter.tags} />
           </ImageWrap>
