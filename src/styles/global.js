@@ -99,15 +99,10 @@ const GlobalStyles = createGlobalStyle`
     list-style: none;
   }
 
+  .twitter-tweet,
   code {
-    font-family: monospace;
-    font-size: 16px;
-    color: #7AA7AC;
     background-color: rgba(0,0,0,.1);
     padding: 1em;
-    border-radius: 4px;
-    display: block;
-    margin: 1em 0;
   }
 
   /* Remove all animations and transitions for people that prefer not to see them */

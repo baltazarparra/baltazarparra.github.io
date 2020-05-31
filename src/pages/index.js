@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import Layout from '../components/Layout'
 import Seo from '../components/seo'
 import Menu from '../components/Menu'
@@ -13,17 +13,17 @@ const IndexPage = () => {
   const [ready, isReady] = useState(false)
   const [scrollPosition, setScrollPosition] = useState(0)
 
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     const position = window.pageYOffset
     setScrollPosition(position)
-  }
+  }, [])
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll, { passive: true })
 
     isReady(true)
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [handleScroll])
 
   const translateAvatar = `translateY(-${scrollPosition / 2}px)`
 

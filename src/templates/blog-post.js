@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { graphql } from 'gatsby'
 
 import GlobalStyles from '../../src/styles/global'
-import Seo from '../components/seo'
+import Seo from '../../src/components/seo'
 import Background from '../components/Background'
-
 import styled from 'styled-components'
 import Tilt from 'react-tilt'
 import Unsplash from 'react-unsplash-wrapper'
@@ -133,22 +132,23 @@ const BlogPost = ({ data }) => {
   const [ready, isReady] = useState(false)
   const [scrollPosition, setScrollPosition] = useState(0)
 
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     const position = window.pageYOffset
     setScrollPosition(position)
-  }
+  }, [])
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll, { passive: true })
 
     isReady(true)
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [handleScroll])
 
   const translate = `translateY(-${scrollPosition / 10}px)`
 
   return (
     <>
+      <Seo title={post.frontmatter.title} description={post.frontmatter.resume} image='https://avatars1.githubusercontent.com/u/7395304?s=400&u=7465db409250cca66de01bdec1cea22f7247a2cb&v=4' />
       {ready &&
         <AnimatedCursor
           color='122, 167, 172'
@@ -169,7 +169,7 @@ const BlogPost = ({ data }) => {
             random <a href='https://unsplash.com/' rel='noreferrer' target='_blank'>Unsplash</a> image | keywords: {post.frontmatter.tags}
           </Alt>
           <ImageWrap style={{ transform: translate }}>
-            <Unsplash keywords={post.frontmatter.tags} />
+            <Unsplash keywords={`background, ${post.frontmatter.tags}`} />
           </ImageWrap>
         </Tilt>
         <Seo title={`${post.frontmatter.title}`} />

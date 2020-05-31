@@ -74,26 +74,24 @@ const Subtitle = styled.h2`
   }
 `
 
-const Hero = ({ style }) => {
-  return (
-    <Container>
-      <div
-        style={{
-          transform: style?.transform
-        }}
-      >
-        <Title>
-          Creative
-          <span>developer</span>
-        </Title>
-        <Subtitle>
-          Hi, im Baltz.
-          <span>...just dive right in</span>
-        </Subtitle>
-      </div>
-    </Container>
-  )
-}
+const Hero = ({ style }) => (
+  <Container>
+    <div
+      style={{
+        transform: style?.transform
+      }}
+    >
+      <Title>
+        Creative
+        <span>developer</span>
+      </Title>
+      <Subtitle>
+        Hi, im Baltz.
+        <span>...just dive right in</span>
+      </Subtitle>
+    </div>
+  </Container>
+)
 
 Hero.propTypes = {
   style: PropTypes.object

@@ -26,6 +26,7 @@ function SEO ({ description, lang, meta, title }) {
   )
 
   const metaDescription = description || site.siteMetadata.description
+  const ogImage = 'https://avatars1.githubusercontent.com/u/7395304?s=400&u=7465db409250cca66de01bdec1cea22f7247a2cb&v=4'
 
   return (
     <Helmet
@@ -48,12 +49,16 @@ function SEO ({ description, lang, meta, title }) {
           content: metaDescription
         },
         {
+          property: 'og:image',
+          content: ogImage
+        },
+        {
           property: 'og:type',
           content: 'website'
         },
         {
           name: 'twitter:card',
-          content: 'summary'
+          content: 'summary_large_image'
         },
         {
           name: 'twitter:creator',
@@ -66,6 +71,10 @@ function SEO ({ description, lang, meta, title }) {
         {
           name: 'twitter:description',
           content: metaDescription
+        },
+        {
+          name: 'twitter:image:src',
+          content: ogImage
         }
       ].concat(meta)}
     />
