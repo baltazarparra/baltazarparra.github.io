@@ -1,5 +1,7 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled, { keyframes } from 'styled-components'
+import AniLink from 'gatsby-plugin-transition-link/AniLink'
 
 const slide = keyframes`
   0% {
@@ -29,14 +31,20 @@ const List = styled.ul`
     animation-delay: 1s;
   }
 
-  :before {
-    content: '';
-    position: absolute;
-    top: 18px;
-    right: 256px;
-    height: 1px;
-    width: 30px;
-    background-color: #7AA7AC;
+  li {
+    position: relative;
+  }
+
+  @media (min-width: 360px) {
+    li:first-child:before {
+      content: '';
+      position: absolute;
+      top:12px;
+      left: -60px;
+      height: 1px;
+      width: 30px;
+      background-color: #7AA7AC;
+    }
   }
 `
 
@@ -61,7 +69,7 @@ const Link = styled.a`
   }
 `
 
-const Menu = () => {
+const Menu = ({ postPage }) => {
   return (
     <List>
       <Item>
@@ -79,8 +87,17 @@ const Menu = () => {
           LinkedIn
         </Link>
       </Item>
+      <Item>
+        <Link>
+          {postPage && <AniLink paintDrip to='/' duration={1} hex='#0D2834'>Home</AniLink>}
+        </Link>
+      </Item>
     </List>
   )
+}
+
+Menu.propTypes = {
+  postPage: PropTypes.bool
 }
 
 export default Menu

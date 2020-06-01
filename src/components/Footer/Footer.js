@@ -31,10 +31,28 @@ const Info = styled.div`
   span {
     font-size: 12px;
     margin: .8em .5em;
+    text-align: left;
+    display: block;
+    width: 100%;
   }
 
   a {
+    display: block;
+    line-height: 4;
+    color: #E2FFF7;
+  }
+
+  small {
     color: #7AA7AC;
+    position: relative;
+    display: flex;
+
+    e {
+      display: block;
+      transform: rotate(135deg);
+      transform-origin: 4px;
+      margin: 0 .6em 0 .8em;
+    }
   }
 `
 
@@ -45,6 +63,7 @@ const Footer = () => {
         <a href='mailto:baltazarparra@outlook.com' rel='noopener noreferrer' target='_blank'>
           baltazarparra@outlook.com
         </a>
+        <small>sometimes antisocial <e>⇶</e> always antifacist</small>
       </span>
     </Info>
   )

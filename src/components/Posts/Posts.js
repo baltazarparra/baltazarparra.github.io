@@ -122,7 +122,9 @@ const ImageWrap = styled.div`
 const Posts = () => {
   const { allMarkdownRemark } = useStaticQuery(graphql`
     query PostList {
-      allMarkdownRemark {
+      allMarkdownRemark
+      (sort: { fields: [frontmatter___date] })
+      {
         edges {
           node {
             fields {

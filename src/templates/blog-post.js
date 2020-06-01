@@ -4,20 +4,14 @@ import { graphql } from 'gatsby'
 
 import GlobalStyles from '../../src/styles/global'
 import Seo from '../../src/components/seo'
+import Menu from '../components/Menu'
 import Background from '../components/Background'
+import Footer from '../components/Footer'
 import styled from 'styled-components'
 import Tilt from 'react-tilt'
 import Unsplash from 'react-unsplash-wrapper'
 
-import AniLink from 'gatsby-plugin-transition-link/AniLink'
-
 import AnimatedCursor from 'react-animated-cursor'
-
-const Back = styled(AniLink)`
-  display: block;
-  padding: 1em;
-  text-align: right;
-`
 
 const Wrapper = styled.main`
   display: flex;
@@ -159,7 +153,7 @@ const BlogPost = ({ data }) => {
           outlineScale={4}
         />}
       <GlobalStyles />
-      <Back paintDrip to='/' duration={1} hex='#0D2834'>Back to home</Back>
+      <Menu postPage />
       <Wrapper>
         <PostTitle>{post.frontmatter.title}</PostTitle>
         <PostResume>{post.frontmatter.resume}</PostResume>
@@ -176,6 +170,7 @@ const BlogPost = ({ data }) => {
         <Post dangerouslySetInnerHTML={{ __html: post.html }} />
         <Background />
       </Wrapper>
+      <Footer />
     </>
   )
 }
