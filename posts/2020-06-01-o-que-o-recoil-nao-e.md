@@ -1,7 +1,7 @@
 ---
 title: O que o Recoil não é
 tags: city
-resume: Recentemente Dan Abramov comentou sobre uma interpretação errada a cerca do novo experimento do Facebook, Recoil
+resume: Recentemente Dan Abramov comentou sobre uma interpretação errada a cerca do novo experimento do Facebook
 date: 01 de Junho de 2020
 ---
 
