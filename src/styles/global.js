@@ -99,12 +99,6 @@ const GlobalStyles = createGlobalStyle`
     list-style: none;
   }
 
-  .twitter-tweet,
-  code {
-    background-color: rgba(0,0,0,.1);
-    padding: 1em;
-  }
-
   /* Remove all animations and transitions for people that prefer not to see them */
   @media (prefers-reduced-motion: reduce) {
     * {
