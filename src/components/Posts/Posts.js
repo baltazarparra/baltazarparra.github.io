@@ -154,7 +154,7 @@ const Posts = () => {
         }) => (
           <Post key={slug}>
             <Tilt options={{ max: 2, scale: 1.02 }}>
-              <AniLink paintDrip to={slug} duration={1} hex='#0D2834'>
+              <AniLink cover to={slug} duration={3} bg='#0D2834'>
                 <div>
                   <LinkTitle>{title}</LinkTitle>
                   <small>{date}</small>
