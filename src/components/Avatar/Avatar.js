@@ -37,6 +37,7 @@ const Wrapper = styled(Tilt)`
   width: 220px;
   opacity: 0;
   animation: ${comeDown} 1.8s ease forwards;
+  animation-deplay: 2.8s;
 
   @media (min-width: 720px) {
     height: 400px;
