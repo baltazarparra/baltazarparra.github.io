@@ -2,7 +2,7 @@
 title: Deno substitui o Node?
 tags: dark
 resume: O novo runtime idealizado por Ryan Dahl também foi feito em cima da engine V8, prometendo foco total em segurança
-date: 07 de Julho de 2020
+date: 06 de Junho de 2020
 ---
 
 <a href='https://en.wikipedia.org/wiki/Ryan_Dahl'>Ryan Dahl</a> anunciou em 2012 que se afastaria do projeto Node, que vinha trabalhando desde 2009,
