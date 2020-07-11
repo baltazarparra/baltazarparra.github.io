@@ -1,8 +1,8 @@
 ---
-title: Nova funcionalidade para nosso perfil do github
-tags: sky
+title: Nova funcionalidade para o perfil do github
+tags: storm
 resume: Agora é possível adicionar um markdown como cabeçalho dentro do perfil do github de forma bastante simples
-date: 06 de Junho de 2020
+date: 07 de Julho de 2020
 ---
 
 Dica rápida sobre uma nova funcionalidade do github.
