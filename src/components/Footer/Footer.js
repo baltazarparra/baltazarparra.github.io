@@ -63,7 +63,7 @@ const Footer = () => {
         <a href='mailto:baltazarparra@outlook.com' rel='noopener noreferrer' target='_blank'>
           baltazarparra@outlook.com
         </a>
-        <small>antisocial<e>⇶</e> de periferia</small>
+        <small>de periferia <e>⇶</e></small>
       </span>
     </Info>
   )
