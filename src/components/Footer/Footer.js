@@ -47,10 +47,10 @@ const Info = styled.div`
     position: relative;
     display: flex;
 
-    e {
+    em {
       display: block;
       transform: rotate(135deg);
-      transform-origin: 4px;
+      transform-origin: center;
       margin: 0 .6em 0 .8em;
     }
   }
@@ -63,7 +63,7 @@ const Footer = () => {
         <a href='mailto:baltazarparra@outlook.com' rel='noopener noreferrer' target='_blank'>
           baltazarparra@outlook.com
         </a>
-        <small>de periferia <e>⇶</e></small>
+        <small>de periferia <em>⇶</em></small>
       </span>
     </Info>
   )

@@ -40,7 +40,7 @@ const PostTitle = styled.h1`
 
 const PostResume = styled.h3`
   font-size: 20px;
-  font-wight: 400;
+  font-weight: 400;
   margin-top: 1em;
   text-align: center;
 

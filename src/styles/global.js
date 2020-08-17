@@ -103,6 +103,12 @@ const GlobalStyles = createGlobalStyle`
     display: initial !important;
   }
 
+  video {
+    display: block;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
   /* Remove all animations and transitions for people that prefer not to see them */
   @media (prefers-reduced-motion: reduce) {
     * {

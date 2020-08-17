@@ -7,16 +7,16 @@ module.exports = {
   },
   plugins: [
     {
-      resolve: 'gatsby-plugin-prefetch-google-fonts',
+      resolve: 'gatsby-plugin-google-fonts-v2',
       options: {
         fonts: [
           {
             family: 'Sedgwick Ave Display',
-            variants: ['400', '700']
+            weights: ['400', '700']
           },
           {
             family: 'Open Sans',
-            variants: ['300', '400', '800']
+            weights: ['300', '400', '800']
           }
         ]
       }
