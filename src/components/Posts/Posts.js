@@ -5,6 +5,9 @@ import styled, { keyframes } from 'styled-components'
 import Tilt from 'react-tilt'
 import Unsplash from 'react-unsplash-wrapper'
 import AniLink from 'gatsby-plugin-transition-link/AniLink'
+import { defineCustomElements as deckDeckGoHighlightElement } from '@deckdeckgo/highlight-code/dist/loader'
+
+deckDeckGoHighlightElement()
 
 const slide = keyframes`
   0% {
