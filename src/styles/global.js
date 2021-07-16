@@ -4,12 +4,52 @@ const GlobalStyles = createGlobalStyle`
   pre {
     font-size: 14px !important;
     line-height: 1.6 !important;
+    position: relative !important;
+    padding-top: 50px !important;
+    border-radius: 10px !important;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.06), 0 3px 6px rgba(0,0,0,0.10) !important;
   }
   @media (min-width: 720px) {
     pre {
       font-size: 16px !important;
       line-height: 1.4 !important;
     }
+  }
+
+  pre:before {
+    content: '';
+    position: absolute;
+    top: 18px;
+    left: 13px;
+    width: 12px;
+    height: 12px;
+    background-color: #e85c53;
+    display: block;
+    border-radius: 100%;
+  }
+
+  code:before {
+    content: '';
+    position: absolute;
+    top: 18px;
+    left: 54px;
+    width: 12px;
+    height: 12px;
+    background-color: #61ca41;
+    display: block;
+    border-radius: 100%;
+  }
+
+  pre:after {
+    content: '';
+    position: absolute;
+    top: 18px;
+    left: 33px;
+    width: 12px;
+    height: 12px;
+    background-color: #f2bc2a;
+    display: block;
+    border-radius: 100%;
   }
 
   /* Box sizing rules */
