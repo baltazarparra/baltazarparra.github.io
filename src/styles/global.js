@@ -8,6 +8,8 @@ const GlobalStyles = createGlobalStyle`
     padding-top: 50px !important;
     border-radius: 10px !important;
     box-shadow: 0 3px 6px rgba(0,0,0,0.06), 0 3px 6px rgba(0,0,0,0.10) !important;
+    background-color: #151718 !important;
+    text-shadow: none !important;
   }
   @media (min-width: 720px) {
     pre {
