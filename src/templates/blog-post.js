@@ -27,7 +27,7 @@ const Wrapper = styled.main`
   }
 
   @media (min-width: 1024px) {
-    max-width: 100%;
+    max-width: 920px;
   }
 `
 
