@@ -43,7 +43,11 @@ module.exports = {
       options: {
         plugins: [
           {
-            resolve: 'gatsby-remark-highlight-code'
+            resolve: 'gatsby-remark-highlight-code',
+            options: {
+              terminal: 'carbon',
+              theme: 'blackboard'
+            }
           }
         ]
       }
