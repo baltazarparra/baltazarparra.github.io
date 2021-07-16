@@ -1,14 +1,14 @@
 import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyles = createGlobalStyle`
-  :root {
-    --deckgo-highlight-code-font-size: 14px;
-    --deckgo-highlight-code-line-height: 1.6;
+  pre {
+    font-size: 14px !important;
+    line-height: 1.6 !important;
   }
   @media (min-width: 720px) {
-    :root {
-      --deckgo-highlight-code-font-size: 16px;
-      --deckgo-highlight-code-line-height: 2;
+    pre {
+      font-size: 16px !important;
+      line-height: 1.4 !important;
     }
   }
 
