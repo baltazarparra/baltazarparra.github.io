@@ -8,6 +8,9 @@ import Posts from '../components/Posts'
 import Background from '../components/Background'
 import Footer from '../components/Footer'
 import AnimatedCursor from 'react-animated-cursor'
+import { defineCustomElements as deckDeckGoHighlightElement } from '@deckdeckgo/highlight-code/dist/loader'
+
+deckDeckGoHighlightElement()
 
 const IndexPage = () => {
   const [ready, isReady] = useState(false)
