@@ -25,6 +25,10 @@ const Wrapper = styled.main`
   @media (min-width: 720px) {
     max-width: 700px;
   }
+
+  @media (min-width: 1024px) {
+    max-width: 100%;
+  }
 `
 
 const PostTitle = styled.h1`
@@ -81,9 +85,18 @@ const Post = styled.main`
   font-size: 20px;
   line-height: 32px;
   text-align: left;
+  max-width: 320px;
+
+  @media (min-width: 420px) {
+    max-width: 400px;
+  }
 
   @media (min-width: 720px) {
     max-width: 700px;
+  }
+
+  @media (min-width: 1024px) {
+    max-width: 100%;
   }
 
   h1 {

@@ -1,6 +1,17 @@
 import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyles = createGlobalStyle`
+  :root {
+    --deckgo-highlight-code-font-size: 14px;
+    --deckgo-highlight-code-line-height: 1.6;
+  }
+  @media (min-width: 720px) {
+    :root {
+      --deckgo-highlight-code-font-size: 16px;
+      --deckgo-highlight-code-line-height: 2;
+    }
+  }
+
   /* Box sizing rules */
   *,
   *::before,
