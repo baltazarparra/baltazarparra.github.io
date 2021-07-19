@@ -34,7 +34,7 @@ const GlobalStyles = createGlobalStyle`
     content: '';
     position: absolute;
     top: 18px;
-    left: 54px;
+    left: 53px;
     width: 12px;
     height: 12px;
     background-color: #61ca41;
