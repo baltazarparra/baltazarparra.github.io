@@ -162,6 +162,10 @@ const GlobalStyles = createGlobalStyle`
     margin: 0 auto;
   }
 
+  .tl-wrapper {
+    overflow: hidden !important;
+  }
+
   /* Remove all animations and transitions for people that prefer not to see them */
   @media (prefers-reduced-motion: reduce) {
     * {

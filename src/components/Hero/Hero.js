@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import img from '../../images/bg.png'
 
 import styled, { keyframes } from 'styled-components'
 
@@ -12,6 +13,11 @@ const comeUp = keyframes`
     opacity: 1;
     transform: translateY(0px);
   }
+`
+
+const side = keyframes`
+  from { background-position: 0px 0; }
+  to { background-position: -1077px 0; }
 `
 
 const Container = styled.section`
@@ -74,23 +80,65 @@ const Subtitle = styled.h2`
   }
 `
 
+const Background = styled.div`
+  background-image: url(${img});
+  background-repeat-y: no-repeat;
+  position: absolute;
+  width: 100%;
+  height: 50px;
+  top: 70px;
+  left: 0;
+  background-size: auto 26px;
+  animation: ${side} 60s linear infinite;
+  &:after {
+    content: 'Worked with:';
+    position: absolute;
+    font-size: 10px;
+    top: -18px;
+    left: 6px;
+  }
+
+  @media (min-width: 720px) {
+    background-image: url(${img});
+    background-repeat-y: no-repeat;
+    position: fixed;
+    width: 100%;
+    height: 50px;
+    top: -50px;
+    left: 0;
+    animation: ${side} 60s linear infinite;
+    transform: rotate(90deg);
+    transform-origin: left bottom;
+    background-size: auto 48px;
+    &:after {
+      content: 'Worked with:';
+      position: absolute;
+      top: -30px;
+      left: 20px;
+      font-size: 16px;
+    }
+  }
+`
+
 const Hero = ({ style }) => (
-  <Container>
-    <div
-      style={{
-        transform: style?.transform
-      }}
-    >
-      <Title>
-        Creative
-        <span>developer</span>
-      </Title>
-      <Subtitle>
-        Hi, im Baltz.
-        <span>...just dive right in</span>
-      </Subtitle>
-    </div>
-  </Container>
+  <>
+    <Container>
+      <div
+        style={{
+          transform: style?.transform
+        }}
+      >
+        <Title>
+          Creative
+          <span>developer</span>
+        </Title>
+        <Subtitle>
+          i'm Baltz, Hi!
+        </Subtitle>
+      </div>
+      <Background />
+    </Container>
+  </>
 )
 
 Hero.propTypes = {

@@ -36,12 +36,6 @@ const Info = styled.div`
     width: 100%;
   }
 
-  a {
-    display: block;
-    line-height: 4;
-    color: #E2FFF7;
-  }
-
   small {
     color: #7AA7AC;
     position: relative;
@@ -56,14 +50,36 @@ const Info = styled.div`
   }
 `
 
+const Button = styled.button`
+  margin-left: 1em;
+  border: 0;
+  position: relative;
+  background-color: transparent;
+  transition: all .2s ease-in-out;
+  color: white;
+  border: solid 1px;
+  border-radius: 4px;
+
+  &:active, &:focus {
+    background-color: green;
+    border-color: transparent;
+    &:after {
+      content: '✓';
+      position: absolute;
+      bottom: -5px;
+      right: -20px;
+      font-size: 1.6em;
+      color: white;
+    }
+  }
+`
+
 const Footer = () => {
   return (
     <Info>
-      <span>
-        <a href='mailto:baltazarparra@outlook.com' rel='noopener noreferrer' target='_blank'>
-          baltazarparra@outlook.com
-        </a>
-        <small>de periferia <em>⇶</em></small>
+      <span onClick={() => navigator.clipboard.writeText('baltazarparra@outlook.com')}>
+        baltazarparra@outlook.com
+        <Button>Copy email</Button>
       </span>
     </Info>
   )
