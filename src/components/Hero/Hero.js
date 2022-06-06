@@ -17,7 +17,7 @@ const comeUp = keyframes`
 
 const side = keyframes`
   from { background-position: 0px 0; }
-  to { background-position: -1077px 0; }
+  to { background-position: 1077px 0; }
 `
 
 const Container = styled.section`
@@ -90,6 +90,7 @@ const Background = styled.div`
   left: 0;
   background-size: auto 26px;
   animation: ${side} 60s linear infinite;
+  
   &:after {
     content: 'Worked with:';
     position: absolute;
@@ -110,6 +111,7 @@ const Background = styled.div`
     transform: rotate(90deg);
     transform-origin: left bottom;
     background-size: auto 48px;
+
     &:after {
       content: 'Worked with:';
       position: absolute;
