@@ -76,39 +76,6 @@ const LinkResume = styled.span`
   }
 `
 
-const PostTitle = styled.h1`
-  font-size: 30px;
-  letter-spacing: 2px;
-  line-height: 3;
-  position: relative;
-
-  :before {
-    content: '';
-    position: absolute;
-    top: 44px;
-    left: -54px;
-    height: 2px;
-    width: 28px;
-    background-color: #7AA7AC;
-  }
-
-  @media (min-width: 720px) {
-    font-size: 32px;
-    text-transform: uppercase;
-    line-height: 4;
-
-    :before {
-      content: '';
-      position: absolute;
-      top: 64px;
-      left: -54px;
-      height: 1px;
-      width: 28px;
-      background-color: #7AA7AC;
-    }
-  }
-`
-
 const ImageWrap = styled.div`
   display: none;
 
@@ -149,7 +116,6 @@ const Posts = () => {
 
   return (
     <PostList>
-      <PostTitle>Escritas</PostTitle>
       <ul>
         {postList.map(({
           node: {
