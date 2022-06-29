@@ -38,6 +38,11 @@ const Wrapper = styled(Tilt)`
   opacity: 0;
   animation: ${comeDown} 1.8s ease forwards;
   animation-deplay: 2.8s;
+  border-radius: 2% 2% 40% 2%;
+
+  canvas {
+    border-radius: 2% 2% 40% 2%;
+  }
 
   @media (min-width: 720px) {
     height: 400px;
