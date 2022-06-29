@@ -37,7 +37,7 @@ const Wrapper = styled(Tilt)`
   width: 220px;
   opacity: 0;
   animation: ${comeDown} 1.8s ease forwards;
-  animation-deplay: 2.8s;
+  animation-delay: 2.8s;
   border-radius: 2% 2% 40% 2%;
 
   canvas {

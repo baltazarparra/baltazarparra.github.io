@@ -32,7 +32,7 @@ const Title = styled.h1`
   margin-top: 180px;
   opacity: 0;
   animation: ${comeUp} .8s ease forwards;
-  animation-delay: .4s;
+  animation-delay: 1.4s;
 
   span {
     display: block;
@@ -56,8 +56,8 @@ const Subtitle = styled.h2`
   margin-left: -120px;
   margin-top: 20px;
   opacity: 0;
-  animation: ${comeUp} .4s ease forwards;
-  animation-delay: .4s;
+  animation: ${comeUp} 1.4s ease forwards;
+  animation-delay: 2.4s;
 
   span {
     display: none;
