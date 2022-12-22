@@ -112,7 +112,7 @@ const Menu = ({ postPage }) => {
     <List>
       <Item>
         <Link href='https://open.spotify.com/artist/5lgem0AFESB7PQ4GRg67CX?si=1mHXRfcPQvmXg9kJZO589Q' rel='noopener noreferrer' target='_blank'>
-          <img src={spotify} alt='Spotify Logo' />Minhas músicas
+          <img src={spotify} alt='Spotify Logo' />rvnn
         </Link>
       </Item>
       <Item>
