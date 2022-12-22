@@ -4,6 +4,7 @@ import styled, { keyframes } from 'styled-components'
 import AniLink from 'gatsby-plugin-transition-link/AniLink'
 import github from '../../images/github.svg'
 import codepen from '../../images/codepen.svg'
+import spotify from '../../images/spotify.svg'
 import linkedin from '../../images/linkedin.svg'
 import home from '../../images/home.svg'
 
@@ -109,6 +110,11 @@ const Link = styled.a`
 const Menu = ({ postPage }) => {
   return (
     <List>
+      <Item>
+        <Link href='https://open.spotify.com/artist/5lgem0AFESB7PQ4GRg67CX?si=1mHXRfcPQvmXg9kJZO589Q' rel='noopener noreferrer' target='_blank'>
+          <img src={spotify} alt='Spotify Logo' />Minhas músicas
+        </Link>
+      </Item>
       <Item>
         <Link href='https://github.com/baltazarparra' rel='noopener noreferrer' target='_blank'>
           <img src={github} alt='Github Logo' /> Github
