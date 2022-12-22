@@ -46,7 +46,7 @@ const List = styled.ul`
     animation-delay: 2;
   }
 
-  @media (min-width: 360px) {
+  @media (min-width: 720px) {
     li:first-child:before {
       content: '';
       position: absolute;
@@ -60,7 +60,11 @@ const List = styled.ul`
 `
 
 const Item = styled.li`
-  margin-right: 1.4rem;
+  margin-right: 0.8rem;
+
+  @media (min-width: 720px) {
+    margin-right: 1.4em;
+  }
 
   &:last-child {
     position: absolute;
