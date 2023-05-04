@@ -1,10 +1,10 @@
 module.exports = {
+  root: true,
+  extends: ['standard'],
   globals: {
-    __PATH_PREFIX__: true,
+    'IS_DEVELOPMENT': 'readonly',
   },
-  extends: [
-    "react-app",
-    "standard",
-    "standard-react"
-  ]
+  parserOptions: {
+    ecmaVersion: 2020,
+  },
 }
