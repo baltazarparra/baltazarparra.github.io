@@ -1,5 +1,5 @@
 :root {
-  font-family: serif;
+  font-family: 'DM Serif Display', serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -19,11 +19,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  padding-bottom: 2em;
 }
 
 /*
@@ -90,17 +86,16 @@ h6 {
   isolation: isolate;
 }
 
-nav {
-  position: sticky;
-  top: 1em;
+.bar {
+  position: fixed;
+  bottom: 1em;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 6em;
 }
 
-ul {
+.bar ul {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -111,15 +106,65 @@ ul {
   background-color: #3c3c3c;
 }
 
-li {
+.bar li {
   list-style: none;
   padding: 0.4em 0;
 }
 
-a {
+.bar a {
   text-decoration: none;
   padding: 0.6em;
   color: white;
   font-size: 1.2em;
   font-family: sans-serif;
+}
+
+::-webkit-scrollbar {
+  height: 5px;
+  width: 5px;
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  -webkit-border-radius: 1ex;
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--background);
+}
+
+html {
+  scroll-snap-type: y mandatory;
+}
+
+.parallax {
+  position: fixed;
+  top: -160px;
+  left: 0;
+  letter-spacing: 0px;
+  line-height: 0.8;
+  margin: 0;
+  white-space: nowrap;
+  display: flex;
+  flex-wrap: nowrap;
+  transform: rotate(-2deg);
+  z-index: -1;
+}
+
+.parallax .scroller {
+  font-weight: 600;
+  font-size: 1.6em;
+  display: flex;
+  white-space: nowrap;
+  display: flex;
+  flex-wrap: nowrap;
+  padding: 0.3em;
+  margin-top: 4px;
+  border: solid 1px;
+}
+
+.parallax span {
+  display: block;
+  margin-right: 30px;
 }
