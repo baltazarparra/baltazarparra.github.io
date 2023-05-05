@@ -46,8 +46,10 @@ function App() {
         <h1 className="firstname">baltazar</h1>
         <div className="core">
           <Canvas flat linear camera={{ position: [4, 0, 0] }}>
-            <pointLight position={[10, 10, 10]} />
-            <directionalLight />
+            <directionalLight position={[10, 0, 0]} intensity={1} />
+            <directionalLight position={[10, 0, 0]} intensity={1} />
+            <pointLight position={[10, 0, 0]} intensity={1} />
+            <spotLight position={[10, 0, 0]} intensity={1} />
             <Model />
           </Canvas>
         </div>
