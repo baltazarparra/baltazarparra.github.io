@@ -48,10 +48,6 @@ function App() {
           <Canvas flat linear camera={{ position: [4, 0, 0] }}>
             <pointLight position={[10, 10, 10]} />
             <Model />
-            <mesh>
-              <boxGeometry args={[1, 1, 1]} />
-              <meshPhysicalMaterial color="blue" />
-            </mesh>
           </Canvas>
         </div>
         <h1 className="surname">parra</h1>
