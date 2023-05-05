@@ -1,0 +1,27 @@
+.firstname {
+  font-size: 6em;
+  text-align: center;
+  width: 220px;
+  margin: 0 auto;
+  line-height: 0.5;
+  margin-top: 1em;
+  margin-bottom: -2.3em;
+}
+
+.surname {
+  font-size: 6em;
+  text-align: center;
+  width: 180px;
+  margin: 0 auto;
+  line-height: 0.5;
+  margin-top: -2.5em;
+}
+
+.core {
+  height: 100vh;
+  width: 100vw;
+  background-image: url(../public/bg.png);
+  background-position: center;
+  background-size: 25%;
+  background-repeat: no-repeat;
+}
