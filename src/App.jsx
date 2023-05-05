@@ -8,7 +8,7 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { useGLTF } from '@react-three/drei'
 
 function Model() {
-  const { scene } = useGLTF('../public/smile.glb')
+  const { scene } = useGLTF('/smile.glb')
   const boxRef = useRef()
   const [position, setPosition] = useState(0)
 
