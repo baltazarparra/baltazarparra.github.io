@@ -8,7 +8,7 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { useGLTF } from '@react-three/drei'
 
 function Model() {
-  const { scene } = useGLTF('https://github.com/baltazarparra/baltazarparra.github.io/blob/creative/public/smile.glb')
+  const { scene } = useGLTF('https://cdn.jsdelivr.net/gh/Sean-Bradley/React-Three-Fiber-Boilerplate@useGLTF/public/models/hammer.glb')
   const boxRef = useRef()
   const [position, setPosition] = useState(0)
 
@@ -45,8 +45,9 @@ function App() {
       <main>
         <h1 className="firstname">baltazar</h1>
         <div className="core">
-          <Canvas flat linear camera={{ position: [4, 0, 0] }}>
+          <Canvas flat linear camera={{ position: [0.4, 0, 0] }}>
             <pointLight position={[10, 10, 10]} />
+            <directionalLight />
             <Model />
           </Canvas>
         </div>
