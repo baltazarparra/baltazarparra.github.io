@@ -5,7 +5,7 @@ import './App.css'
 
 import { useEffect, useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { useGLTF } from '@react-three/drei'
+import { useGLTF, Float } from '@react-three/drei'
 import { Bloom, EffectComposer, ChromaticAberration, DotScreen, Noise } from '@react-three/postprocessing'
 import { Resizer, KernelSize, BlendFunction } from 'postprocessing'
 
@@ -52,7 +52,9 @@ function App() {
             <directionalLight position={[10, 0, 0]} intensity={1} />
             <pointLight position={[10, 0, 0]} intensity={1} />
             <spotLight position={[10, 0, 0]} intensity={1} />
-            <Model />
+            <Float floatIntensity={1} speed={3}>
+              <Model />
+            </Float>
             <EffectComposer>
               <DotScreen
                 blendFunction={BlendFunction.NORMAL} // blend mode
