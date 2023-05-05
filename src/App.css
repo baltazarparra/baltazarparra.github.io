@@ -4,7 +4,6 @@
   width: 260px;
   margin: 0 auto;
   line-height: 0.6;
-  margin-bottom: -2.9em;
   letter-spacing: 8px;
 }
 
@@ -14,7 +13,6 @@
   width: 180px;
   margin: 0 auto;
   line-height: 0.6;
-  margin-top: -3.2em;
   letter-spacing: 8px;
 }
 
@@ -23,8 +21,10 @@
   background-position: center;
   background-size: 25%;
   background-repeat: no-repeat;
-  height: 100vh;
+  height: 600px;
   width: 100vw;
+  margin-top: -12em;
+  margin-bottom: -13em;
 }
 
 canvas {
