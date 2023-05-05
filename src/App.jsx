@@ -73,7 +73,7 @@ function ParallaxText({ children, baseVelocity = 100 }) {
 
   return (
     <div className="parallax">
-      <motion.div className="scroller" style={{ x }}>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="scroller" style={{ x }}>
         <span>{children} </span>
         <span>{children} </span>
         <span>{children} </span>
@@ -86,10 +86,6 @@ function ParallaxText({ children, baseVelocity = 100 }) {
 function App() {
   return (
     <>
-      <ParallaxText baseVelocity={1}>
-        React ━ Next.js ━ styled-components ━ strapi ━ Figma ━ agile ━ react-three-fiber ━ Framer Motion ━ React ━ Next.js ━
-        styled-components ━ strapi ━ Figma ━ agile ━ react-three-fiber ━ Framer Motion ━
-      </ParallaxText>
       <main>
         <h1 className="firstname">baltazar</h1>
         <div className="core">
@@ -123,26 +119,31 @@ function App() {
         </div>
         <h1 className="surname">parra</h1>
       </main>
-      <nav className="bar">
-        <ul>
-          <li>
-            <a href="https://github.com/baltazarparra" target="_blank" rel="noreferrer">
-              github
-            </a>
-          </li>
-          <li>
-            <a href="https://www.linkedin.com/in/baltazarparra/" target="_blank" rel="noreferrer">
-              linkedIn
-            </a>
-          </li>
-          <li>
-            <a href="https://open.spotify.com/album/6BFeIsMZ4zcuGbs5cugxLM?si=yWyn03SUQ_WhoSQtAqZzLQ" target="_blank" rel="noreferrer">
-              spotify
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <div style={{ height: '100vh' }}></div>
+      <div style={{ height: '100vh' }}>
+        <nav className="bar">
+          <ul>
+            <li>
+              <a href="https://github.com/baltazarparra" target="_blank" rel="noreferrer">
+                github
+              </a>
+            </li>
+            <li>
+              <a href="https://www.linkedin.com/in/baltazarparra/" target="_blank" rel="noreferrer">
+                linkedIn
+              </a>
+            </li>
+            <li>
+              <a href="https://open.spotify.com/album/6BFeIsMZ4zcuGbs5cugxLM?si=yWyn03SUQ_WhoSQtAqZzLQ" target="_blank" rel="noreferrer">
+                spotify
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <ParallaxText baseVelocity={1}>
+          React ━ Next.js ━ styled-components ━ strapi ━ Figma ━ agile ━ react-three-fiber ━ Framer Motion ━ React ━ Next.js ━
+          styled-components ━ strapi ━ Figma ━ agile ━ react-three-fiber ━ Framer Motion ━
+        </ParallaxText>
+      </div>
     </>
   )
 }
