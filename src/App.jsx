@@ -6,6 +6,8 @@ import './App.css'
 import { useEffect, useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { useGLTF } from '@react-three/drei'
+import { Bloom, EffectComposer, ChromaticAberration, DotScreen, Noise } from '@react-three/postprocessing'
+import { Resizer, KernelSize, BlendFunction } from 'postprocessing'
 
 function Model() {
   const { scene } = useGLTF('/smile.glb')
@@ -51,6 +53,24 @@ function App() {
             <pointLight position={[10, 0, 0]} intensity={1} />
             <spotLight position={[10, 0, 0]} intensity={1} />
             <Model />
+            <EffectComposer>
+              <DotScreen
+                blendFunction={BlendFunction.NORMAL} // blend mode
+                angle={Math.PI * 0.5} // angle of the dot pattern
+                scale={1.0} // scale of the dot pattern
+              />
+              <Noise premultiply blendFunction={BlendFunction.ADD} />
+              <ChromaticAberration offset={[0.002, 0.0002]} />
+              <Bloom
+                intensity={1.0} // The bloom intensity.
+                blurPass={undefined} // A blur pass.
+                width={Resizer.AUTO_SIZE} // render width
+                height={Resizer.AUTO_SIZE} // render height
+                kernelSize={KernelSize.LARGE} // blur kernel size
+                luminanceThreshold={0.9} // luminance threshold. Raise this value to mask out darker elements in the scene.
+                luminanceSmoothing={0.025} // smoothness of the luminance threshold. Range is [0, 1]
+              />
+            </EffectComposer>
           </Canvas>
         </div>
         <h1 className="surname">parra</h1>

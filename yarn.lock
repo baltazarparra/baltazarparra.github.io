@@ -823,6 +823,16 @@
     suspend-react "^0.0.8"
     zustand "^3.7.1"
 
+"@react-three/postprocessing@^2.10.0":
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/@react-three/postprocessing/-/postprocessing-2.10.0.tgz#51536e8f4d078b035a2c24ab8d6441b008494a23"
+  integrity sha512-39jzEJ4DkMoJPWiO6TeT0dmmToNKVMxDd0BbdbAxJrRgCcAEVjE/7zOSkKPiLZYqjIsmXB5izgTohTXw3vbANw==
+  dependencies:
+    maath "^0.5.3"
+    postprocessing "^6.30.2"
+    screen-space-reflections "2.5.0"
+    three-stdlib "^2.21.10"
+
 "@stitches/react@1.2.8":
   version "1.2.8"
   resolved "https://registry.yarnpkg.com/@stitches/react/-/react-1.2.8.tgz#954f8008be8d9c65c4e58efa0937f32388ce3a38"
@@ -2204,7 +2214,7 @@ lru-cache@^5.1.1:
   dependencies:
     yallist "^3.0.2"
 
-maath@^0.5.2:
+maath@^0.5.2, maath@^0.5.3:
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/maath/-/maath-0.5.3.tgz#777a1f9b8463c6ffb199ea43406874a357c0cd58"
   integrity sha512-ut63A4zTd9abtpi+sOHW1fPWPtAFrjK0E17eAthx1k93W/T2cWLKV5oaswyotJVDvvW1EXSdokAqhK5KOu0Qdw==
@@ -2490,6 +2500,11 @@ postcss@^8.4.23:
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
 
+postprocessing@^6.30.2:
+  version "6.30.2"
+  resolved "https://registry.yarnpkg.com/postprocessing/-/postprocessing-6.30.2.tgz#8cfb5561bfce63c983fae5d2cd8efa5bbd04fe6d"
+  integrity sha512-Vt77s5DkHyUOV4bmk10J46DHJLglBfIo9ARPI0o62UIAx9omANfuPJTKiLVoYlC1ApkV9y3ldBDipF3IldB7YA==
+
 potpack@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/potpack/-/potpack-1.0.2.tgz#23b99e64eb74f5741ffe7656b5b5c4ddce8dfc14"
@@ -2713,6 +2728,11 @@ scheduler@^0.23.0:
   integrity sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==
   dependencies:
     loose-envify "^1.1.0"
+
+screen-space-reflections@2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/screen-space-reflections/-/screen-space-reflections-2.5.0.tgz#2a6ea982da96f9c35f34a361b2555439f9fbb1f6"
+  integrity sha512-fWSDMhJS0xwD3LTxRRch7Lb9NzxsR66sCmtDmAA7i+OGnghUrBBsrha85ng7StnCBaLq/BKmZ97dLxWd1XgWdQ==
 
 screenfull@^5.1.0:
   version "5.2.0"
@@ -2941,7 +2961,7 @@ three-mesh-bvh@^0.5.23:
   resolved "https://registry.yarnpkg.com/three-mesh-bvh/-/three-mesh-bvh-0.5.23.tgz#08e5b629144b48b11acbd433519680e457d398ed"
   integrity sha512-nyk+MskdyDgECqkxdv57UjazqqhrMi+Al9PxJN6yFtx1CTW4r0eCQ27FtyYKY5gCIWhxjtNfWYDPVy8lzx6LkA==
 
-three-stdlib@^2.21.8:
+three-stdlib@^2.21.10, three-stdlib@^2.21.8:
   version "2.21.11"
   resolved "https://registry.yarnpkg.com/three-stdlib/-/three-stdlib-2.21.11.tgz#ee058f1522edf17f994b4a80307568dd553bd52e"
   integrity sha512-fFeaMOc3lpup4A/FrSKHmp/PNYmyxyV8dzMorJpYyZBdIGAn5BmokGSN9ei8t7Wv9thxCW+VLaxA6csxTl5MYg==
