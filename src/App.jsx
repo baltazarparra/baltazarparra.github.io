@@ -84,10 +84,26 @@ function ParallaxText({ children, baseVelocity = 100 }) {
 }
 
 function App() {
+  const [scrollY, setScrollY] = useState(0)
+
+  useEffect(() => {
+    function handleScroll() {
+      setScrollY(window.scrollY)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
+
   return (
     <>
       <main>
-        <h1 className="firstname">baltazar</h1>
+        <motion.h1 animate={{ x: -scrollY, opacity: 1 }} initial={{ opacity: 0, x: -50 }} className="firstname">
+          baltazar
+        </motion.h1>
         <div className="core">
           <Canvas flat linear camera={{ position: [4, 0, 0] }}>
             <directionalLight position={[10, 0, 0]} intensity={1} />
@@ -117,7 +133,9 @@ function App() {
             </EffectComposer>
           </Canvas>
         </div>
-        <h1 className="surname">parra</h1>
+        <motion.h1 animate={{ x: scrollY }} initial={{ x: 50 }} className="surname">
+          parra
+        </motion.h1>
       </main>
       <div style={{ height: '100vh' }}>
         <nav className="bar">
