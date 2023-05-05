@@ -19,6 +19,8 @@
     "@react-three/postprocessing": "^2.10.0",
     "framer-motion": "^10.12.8",
     "gh-pages": "^5.0.0",
+    "react-scroll-wheel-handler": "^2.2.0",
+    "react-spring": "^9.7.1",
     "three": "^0.151.3"
   },
   "devDependencies": {
