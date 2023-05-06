@@ -101,12 +101,18 @@ function App() {
   return (
     <>
       <main>
-        <motion.h1 animate={{ x: -scrollY, opacity: 1 }} initial={{ opacity: 0, x: -50 }} className="firstname">
+        <motion.h1
+          animate={{ x: -scrollY * 2, opacity: 1 }}
+          initial={{ opacity: 0, x: -200 }}
+          className="firstname"
+          transition={{
+            ease: 'easeOut',
+            duration: 0.3
+          }}>
           baltazar
         </motion.h1>
         <div className="core">
           <Canvas flat linear camera={{ position: [4, 0, 0] }}>
-            <directionalLight position={[10, 0, 0]} intensity={1} />
             <directionalLight position={[10, 0, 0]} intensity={1} />
             <pointLight position={[10, 0, 0]} intensity={1} />
             <spotLight position={[10, 0, 0]} intensity={1} />
@@ -133,7 +139,14 @@ function App() {
             </EffectComposer>
           </Canvas>
         </div>
-        <motion.h1 animate={{ x: scrollY }} initial={{ x: 50 }} className="surname">
+        <motion.h1
+          animate={{ x: scrollY * 2 }}
+          initial={{ x: 200 }}
+          className="surname"
+          transition={{
+            ease: 'easeOut',
+            duration: 0.3
+          }}>
           parra
         </motion.h1>
       </main>
