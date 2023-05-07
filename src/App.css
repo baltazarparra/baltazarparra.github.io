@@ -7,6 +7,13 @@
   letter-spacing: 8px;
 }
 
+@media (min-width: 768px) {
+  .firstname {
+    font-size: 10em;
+    width: 350px;
+  }
+}
+
 .surname {
   font-size: 6em;
   text-align: center;
@@ -14,6 +21,13 @@
   margin: 0 auto;
   line-height: 0.6;
   letter-spacing: 8px;
+}
+
+@media (min-width: 768px) {
+  .surname {
+    font-size: 10em;
+    width: 350px;
+  }
 }
 
 .core {
@@ -25,6 +39,13 @@
   width: 100vw;
   margin-top: -12em;
   margin-bottom: -13em;
+}
+
+
+@media (min-width: 768px) {
+  .core {
+    background-size: 120px;
+  }
 }
 
 canvas {
