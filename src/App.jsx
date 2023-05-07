@@ -156,26 +156,154 @@ function App() {
         <ul>
           <li>
             <a href='https://wa.me/+5514998248021' rel='noreferrer' target='_blank'>
-              +55 14 99824 8021
+              <motion.span
+                variants={
+                  {
+                    hidden: { opacity: 1 },
+                    visible: {
+                      opacity: 1,
+                      transition: {
+                        delay: 1,
+                        staggerChildren: 0.08
+                      }
+                    }
+                  }
+                }
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
+                {'+55 14 99824 8021'.split('').map((char, index) => {
+                  return (
+                    <motion.span key={char + '-' + index} variants={
+                      {
+                        hidden: { opacity: 0, y: 50 },
+                        visible: {
+                          opacity: 1,
+                          y: 0
+                        }
+                      }
+                    }>
+                      {char}
+                    </motion.span>
+                  )
+                })}
+              </motion.span>
             </a>
           </li>
           <li>
             <a href="mailto:baltazarparra@outlook.com" rel='noreferrer' target='_blank'>
-              baltazarparra@outlook.com
+            <motion.span
+                variants={
+                  {
+                    hidden: { opacity: 1 },
+                    visible: {
+                      opacity: 1,
+                      transition: {
+                        delay: 1,
+                        staggerChildren: 0.08
+                      }
+                    }
+                  }
+                }
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
+                {'baltazarparra@outlook.com'.split('').map((char, index) => {
+                  return (
+                    <motion.span key={char + '-' + index} variants={
+                      {
+                        hidden: { opacity: 0, y: 50 },
+                        visible: {
+                          opacity: 1,
+                          y: 0
+                        }
+                      }
+                    }>
+                      {char}
+                    </motion.span>
+                  )
+                })}
+              </motion.span>
             </a>
           </li>
           <li>
             <a href="https://codepen.io/baltazarparra" rel='noreferrer' target='_blank'>
-              codepen
+            <motion.span
+                variants={
+                  {
+                    hidden: { opacity: 1 },
+                    visible: {
+                      opacity: 1,
+                      transition: {
+                        delay: 1,
+                        staggerChildren: 0.08
+                      }
+                    }
+                  }
+                }
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
+                {'codepen'.split('').map((char, index) => {
+                  return (
+                    <motion.span key={char + '-' + index} variants={
+                      {
+                        hidden: { opacity: 0, y: 50 },
+                        visible: {
+                          opacity: 1,
+                          y: 0
+                        }
+                      }
+                    }>
+                      {char}
+                    </motion.span>
+                  )
+                })}
+              </motion.span>
             </a>
           </li>
           <li>
             <a href="https://codesandbox.io/u/baltazarparra" rel='noreferrer' target='_blank'>
-              codesandbox
+            <motion.span
+                variants={
+                  {
+                    hidden: { opacity: 1 },
+                    visible: {
+                      opacity: 1,
+                      transition: {
+                        delay: 1,
+                        staggerChildren: 0.08
+                      }
+                    }
+                  }
+                }
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
+                {'codesandbox'.split('').map((char, index) => {
+                  return (
+                    <motion.span key={char + '-' + index} variants={
+                      {
+                        hidden: { opacity: 0, y: 150 },
+                        visible: {
+                          opacity: 1,
+                          y: 0
+                        }
+                      }
+                    }>
+                      {char}
+                    </motion.span>
+                  )
+                })}
+              </motion.span>
             </a>
           </li>
         </ul>
-          <small>© baltazarparra ━ 2023</small>
+        <small>© baltazarparra ━ 2023</small>
       </footer>
       <nav className="bar">
           <ul>

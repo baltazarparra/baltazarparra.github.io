@@ -130,7 +130,7 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .anim {
@@ -149,4 +149,8 @@ footer a {
   text-decoration: none;
   font-family: sans-serif;
   text-transform: uppercase;
+}
+
+footer h1 {
+  color: white;
 }
