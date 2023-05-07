@@ -132,3 +132,21 @@ main {
   align-items: center;
   overflow-x: hidden;
 }
+
+.anim {
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+}
+
+footer li {
+  list-style: none;
+  padding: .4em 1em;
+}
+
+footer a {
+  color:#d6d6d6;
+  text-decoration: none;
+  font-family: sans-serif;
+  text-transform: uppercase;
+}

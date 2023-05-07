@@ -43,7 +43,7 @@ function Model() {
   )
 }
 
-function ParallaxText({ children, baseVelocity = 100 }) {
+function ParallaxText({ children, baseVelocity = 50 }) {
   const baseX = useMotionValue(0)
   const { scrollY } = useScroll()
   const scrollVelocity = useVelocity(scrollY)
@@ -137,6 +137,7 @@ function App() {
                 luminanceSmoothing={0.025} // smoothness of the luminance threshold. Range is [0, 1]
               />
             </EffectComposer>
+            
           </Canvas>
         </div>
         <motion.h1
@@ -150,8 +151,33 @@ function App() {
           parra
         </motion.h1>
       </main>
-      <div style={{ height: '100vh' }}>
-        <nav className="bar">
+      <footer>
+        <h2>baltz</h2>
+        <ul>
+          <li>
+            <a href='https://wa.me/+5514998248021' rel='noreferrer' target='_blank'>
+              +55 14 99824 8021
+            </a>
+          </li>
+          <li>
+            <a href="mailto:baltazarparra@outlook.com" rel='noreferrer' target='_blank'>
+              baltazarparra@outlook.com
+            </a>
+          </li>
+          <li>
+            <a href="https://codepen.io/baltazarparra" rel='noreferrer' target='_blank'>
+              codepen
+            </a>
+          </li>
+          <li>
+            <a href="https://codesandbox.io/u/baltazarparra" rel='noreferrer' target='_blank'>
+              codesandbox
+            </a>
+          </li>
+        </ul>
+          <small>© baltazarparra ━ 2023</small>
+      </footer>
+      <nav className="bar">
           <ul>
             <li>
               <a href="https://github.com/baltazarparra" target="_blank" rel="noreferrer">
@@ -174,7 +200,6 @@ function App() {
           React ━ Next.js ━ styled-components ━ strapi ━ Figma ━ agile ━ react-three-fiber ━ Framer Motion ━ React ━ Next.js ━
           styled-components ━ strapi ━ Figma ━ agile ━ react-three-fiber ━ Framer Motion ━
         </ParallaxText>
-      </div>
     </>
   )
 }
