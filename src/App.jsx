@@ -177,10 +177,10 @@ function App() {
                   return (
                     <motion.span key={char + '-' + index} variants={
                       {
-                        hidden: { opacity: 0, y: 50 },
+                        hidden: { opacity: 0, x: 50 },
                         visible: {
                           opacity: 1,
-                          y: 0
+                          x: 0
                         }
                       }
                     }>
@@ -201,7 +201,7 @@ function App() {
                       opacity: 1,
                       transition: {
                         delay: 1,
-                        staggerChildren: 0.08
+                        staggerChildren: 0.16
                       }
                     }
                   }
@@ -214,10 +214,10 @@ function App() {
                   return (
                     <motion.span key={char + '-' + index} variants={
                       {
-                        hidden: { opacity: 0, y: 50 },
+                        hidden: { opacity: 0, x: 70 },
                         visible: {
                           opacity: 1,
-                          y: 0
+                          x: 0
                         }
                       }
                     }>
@@ -238,7 +238,7 @@ function App() {
                       opacity: 1,
                       transition: {
                         delay: 1,
-                        staggerChildren: 0.08
+                        staggerChildren: 0.24
                       }
                     }
                   }
@@ -251,10 +251,10 @@ function App() {
                   return (
                     <motion.span key={char + '-' + index} variants={
                       {
-                        hidden: { opacity: 0, y: 50 },
+                        hidden: { opacity: 0, x: 90 },
                         visible: {
                           opacity: 1,
-                          y: 0
+                          x: 0
                         }
                       }
                     }>
@@ -275,7 +275,7 @@ function App() {
                       opacity: 1,
                       transition: {
                         delay: 1,
-                        staggerChildren: 0.08
+                        staggerChildren: 0.32
                       }
                     }
                   }
@@ -288,10 +288,10 @@ function App() {
                   return (
                     <motion.span key={char + '-' + index} variants={
                       {
-                        hidden: { opacity: 0, y: 150 },
+                        hidden: { opacity: 0, x: 120 },
                         visible: {
                           opacity: 1,
-                          y: 0
+                          x: 0
                         }
                       }
                     }>

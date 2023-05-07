@@ -14,6 +14,12 @@
   }
 }
 
+@media (min-width: 1024px) {
+  .firstname {
+    width: 400px;
+  }
+}
+
 .surname {
   font-size: 6em;
   text-align: center;
@@ -27,6 +33,12 @@
   .surname {
     font-size: 10em;
     width: 350px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .surname {
+    width: 450px;
   }
 }
 
