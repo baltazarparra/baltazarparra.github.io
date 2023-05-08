@@ -155,6 +155,6 @@ footer h1 {
   color: #d6d6d6;
 }
 
-footer canvas {
+footer > canvas {
   position: absolute;
 }

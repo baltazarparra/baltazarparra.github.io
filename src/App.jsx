@@ -85,7 +85,6 @@ function ParallaxText({ children, baseVelocity = 50 }) {
 
 function Dodecahedron() {
   const { viewport } = useThree()
-  // viewport = canvas in 3d units (meters)
 
   const ref = useRef()
   useFrame(({ mouse }) => {
@@ -98,7 +97,7 @@ function Dodecahedron() {
   return (
     <mesh ref={ref} castShadow>
       <dodecahedronBufferGeometry attach="geometry" />
-      <meshNormalMaterial attach="material" />
+      <meshStandardMaterial attach="material" />
     </mesh>
   )
 }
@@ -192,7 +191,7 @@ function App() {
       </main>
       <footer>
         <h2>baltz</h2>
-        <ul>
+        <ul style={{ zIndex: '2' }}>
           <li>
             <a href="https://wa.me/+5514998248021" rel="noreferrer" target="_blank">
               <motion.span
@@ -331,7 +330,7 @@ function App() {
           </li>
         </ul>
         <small>© baltazarparra ━ 2023</small>
-        <Canvas style={{ position: 'absolute' }}>
+        <Canvas style={{ position: 'absolute', zIndex: '0', opacity: '0.4' }}>
           <directionalLight position={[10, 0, 0]} intensity={1} />
           <pointLight position={[10, 0, 0]} intensity={1} />
           <spotLight position={[10, 0, 0]} intensity={1} />
