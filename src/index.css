@@ -141,11 +141,11 @@ main {
 
 footer li {
   list-style: none;
-  padding: .4em 1em;
+  padding: 0.4em 1em;
 }
 
 footer a {
-  color:#d6d6d6;
+  color: #d6d6d6;
   text-decoration: none;
   font-family: sans-serif;
   text-transform: uppercase;

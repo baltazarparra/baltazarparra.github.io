@@ -100,6 +100,25 @@ function App() {
 
   return (
     <>
+      <nav className="bar">
+        <ul>
+          <li>
+            <a href="https://github.com/baltazarparra" target="_blank" rel="noreferrer">
+              github
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/in/baltazarparra/" target="_blank" rel="noreferrer">
+              linkedIn
+            </a>
+          </li>
+          <li>
+            <a href="https://open.spotify.com/album/6BFeIsMZ4zcuGbs5cugxLM?si=yWyn03SUQ_WhoSQtAqZzLQ" target="_blank" rel="noreferrer">
+              spotify
+            </a>
+          </li>
+        </ul>
+      </nav>
       <main>
         <motion.h1
           animate={{ x: -scrollY * 2, opacity: 1 }}
@@ -137,7 +156,6 @@ function App() {
                 luminanceSmoothing={0.025} // smoothness of the luminance threshold. Range is [0, 1]
               />
             </EffectComposer>
-            
           </Canvas>
         </div>
         <motion.h1
@@ -155,35 +173,32 @@ function App() {
         <h2>baltz</h2>
         <ul>
           <li>
-            <a href='https://wa.me/+5514998248021' rel='noreferrer' target='_blank'>
+            <a href="https://wa.me/+5514998248021" rel="noreferrer" target="_blank">
               <motion.span
-                variants={
-                  {
-                    hidden: { opacity: 1 },
-                    visible: {
-                      opacity: 1,
-                      transition: {
-                        delay: 1,
-                        staggerChildren: 0.08
-                      }
+                variants={{
+                  hidden: { opacity: 1 },
+                  visible: {
+                    opacity: 1,
+                    transition: {
+                      delay: 1,
+                      staggerChildren: 0.08
                     }
                   }
-                }
+                }}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true }}
-              >
+                viewport={{ once: true }}>
                 {'+55 14 99824 8021'.split('').map((char, index) => {
                   return (
-                    <motion.span key={char + '-' + index} variants={
-                      {
+                    <motion.span
+                      key={char + '-' + index}
+                      variants={{
                         hidden: { opacity: 0, x: 50 },
                         visible: {
                           opacity: 1,
                           x: 0
                         }
-                      }
-                    }>
+                      }}>
                       {char}
                     </motion.span>
                   )
@@ -192,35 +207,32 @@ function App() {
             </a>
           </li>
           <li>
-            <a href="mailto:baltazarparra@outlook.com" rel='noreferrer' target='_blank'>
-            <motion.span
-                variants={
-                  {
-                    hidden: { opacity: 1 },
-                    visible: {
-                      opacity: 1,
-                      transition: {
-                        delay: 1,
-                        staggerChildren: 0.16
-                      }
+            <a href="mailto:baltazarparra@outlook.com" rel="noreferrer" target="_blank">
+              <motion.span
+                variants={{
+                  hidden: { opacity: 1 },
+                  visible: {
+                    opacity: 1,
+                    transition: {
+                      delay: 1,
+                      staggerChildren: 0.16
                     }
                   }
-                }
+                }}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true }}
-              >
+                viewport={{ once: true }}>
                 {'baltazarparra@outlook.com'.split('').map((char, index) => {
                   return (
-                    <motion.span key={char + '-' + index} variants={
-                      {
+                    <motion.span
+                      key={char + '-' + index}
+                      variants={{
                         hidden: { opacity: 0, x: 70 },
                         visible: {
                           opacity: 1,
                           x: 0
                         }
-                      }
-                    }>
+                      }}>
                       {char}
                     </motion.span>
                   )
@@ -229,35 +241,32 @@ function App() {
             </a>
           </li>
           <li>
-            <a href="https://codepen.io/baltazarparra" rel='noreferrer' target='_blank'>
-            <motion.span
-                variants={
-                  {
-                    hidden: { opacity: 1 },
-                    visible: {
-                      opacity: 1,
-                      transition: {
-                        delay: 1,
-                        staggerChildren: 0.24
-                      }
+            <a href="https://codepen.io/baltazarparra" rel="noreferrer" target="_blank">
+              <motion.span
+                variants={{
+                  hidden: { opacity: 1 },
+                  visible: {
+                    opacity: 1,
+                    transition: {
+                      delay: 1,
+                      staggerChildren: 0.24
                     }
                   }
-                }
+                }}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true }}
-              >
+                viewport={{ once: true }}>
                 {'codepen'.split('').map((char, index) => {
                   return (
-                    <motion.span key={char + '-' + index} variants={
-                      {
+                    <motion.span
+                      key={char + '-' + index}
+                      variants={{
                         hidden: { opacity: 0, x: 90 },
                         visible: {
                           opacity: 1,
                           x: 0
                         }
-                      }
-                    }>
+                      }}>
                       {char}
                     </motion.span>
                   )
@@ -266,35 +275,32 @@ function App() {
             </a>
           </li>
           <li>
-            <a href="https://codesandbox.io/u/baltazarparra" rel='noreferrer' target='_blank'>
-            <motion.span
-                variants={
-                  {
-                    hidden: { opacity: 1 },
-                    visible: {
-                      opacity: 1,
-                      transition: {
-                        delay: 1,
-                        staggerChildren: 0.32
-                      }
+            <a href="https://codesandbox.io/u/baltazarparra" rel="noreferrer" target="_blank">
+              <motion.span
+                variants={{
+                  hidden: { opacity: 1 },
+                  visible: {
+                    opacity: 1,
+                    transition: {
+                      delay: 1,
+                      staggerChildren: 0.32
                     }
                   }
-                }
+                }}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true }}
-              >
+                viewport={{ once: true }}>
                 {'codesandbox'.split('').map((char, index) => {
                   return (
-                    <motion.span key={char + '-' + index} variants={
-                      {
+                    <motion.span
+                      key={char + '-' + index}
+                      variants={{
                         hidden: { opacity: 0, x: 120 },
                         visible: {
                           opacity: 1,
                           x: 0
                         }
-                      }
-                    }>
+                      }}>
                       {char}
                     </motion.span>
                   )
@@ -305,29 +311,10 @@ function App() {
         </ul>
         <small>© baltazarparra ━ 2023</small>
       </footer>
-      <nav className="bar">
-          <ul>
-            <li>
-              <a href="https://github.com/baltazarparra" target="_blank" rel="noreferrer">
-                github
-              </a>
-            </li>
-            <li>
-              <a href="https://www.linkedin.com/in/baltazarparra/" target="_blank" rel="noreferrer">
-                linkedIn
-              </a>
-            </li>
-            <li>
-              <a href="https://open.spotify.com/album/6BFeIsMZ4zcuGbs5cugxLM?si=yWyn03SUQ_WhoSQtAqZzLQ" target="_blank" rel="noreferrer">
-                spotify
-              </a>
-            </li>
-          </ul>
-        </nav>
-        <ParallaxText baseVelocity={1}>
-          React ━ Next.js ━ styled-components ━ strapi ━ Figma ━ agile ━ react-three-fiber ━ Framer Motion ━ React ━ Next.js ━
-          styled-components ━ strapi ━ Figma ━ agile ━ react-three-fiber ━ Framer Motion ━
-        </ParallaxText>
+      <ParallaxText baseVelocity={1}>
+        React ━ Next.js ━ styled-components ━ strapi ━ Figma ━ agile ━ react-three-fiber ━ Framer Motion ━ React ━ Next.js ━
+        styled-components ━ strapi ━ Figma ━ agile ━ react-three-fiber ━ Framer Motion ━
+      </ParallaxText>
     </>
   )
 }
