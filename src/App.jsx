@@ -4,7 +4,7 @@
 import './App.css'
 
 import { useEffect, useRef, useState } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { useGLTF, Float } from '@react-three/drei'
 import { Bloom, EffectComposer, ChromaticAberration, DotScreen, Noise } from '@react-three/postprocessing'
 import { Resizer, KernelSize, BlendFunction } from 'postprocessing'
@@ -83,6 +83,26 @@ function ParallaxText({ children, baseVelocity = 50 }) {
   )
 }
 
+function Dodecahedron() {
+  const { viewport } = useThree()
+  // viewport = canvas in 3d units (meters)
+
+  const ref = useRef()
+  useFrame(({ mouse }) => {
+    const x = (mouse.x * viewport.width) / 2
+    const y = (mouse.y * viewport.height) / 2
+    ref.current.position.set(x, y, 0)
+    ref.current.rotation.set(-y, x, 0)
+  })
+
+  return (
+    <mesh ref={ref} castShadow>
+      <dodecahedronBufferGeometry attach="geometry" />
+      <meshNormalMaterial attach="material" />
+    </mesh>
+  )
+}
+
 function App() {
   const [scrollY, setScrollY] = useState(0)
 
@@ -138,6 +158,7 @@ function App() {
             <Float floatIntensity={1} speed={3}>
               <Model />
             </Float>
+
             <EffectComposer>
               <DotScreen
                 blendFunction={BlendFunction.NORMAL} // blend mode
@@ -310,6 +331,30 @@ function App() {
           </li>
         </ul>
         <small>© baltazarparra ━ 2023</small>
+        <Canvas style={{ position: 'absolute' }}>
+          <directionalLight position={[10, 0, 0]} intensity={1} />
+          <pointLight position={[10, 0, 0]} intensity={1} />
+          <spotLight position={[10, 0, 0]} intensity={1} />
+          <Dodecahedron />
+          <EffectComposer>
+            <DotScreen
+              blendFunction={BlendFunction.NORMAL} // blend mode
+              angle={Math.PI * 0.5} // angle of the dot pattern
+              scale={1.0} // scale of the dot pattern
+            />
+            <Noise premultiply blendFunction={BlendFunction.ADD} />
+            <ChromaticAberration offset={[0.002, 0.0002]} />
+            <Bloom
+              intensity={1.0} // The bloom intensity.
+              blurPass={undefined} // A blur pass.
+              width={Resizer.AUTO_SIZE} // render width
+              height={Resizer.AUTO_SIZE} // render height
+              kernelSize={KernelSize.LARGE} // blur kernel size
+              luminanceThreshold={0.9} // luminance threshold. Raise this value to mask out darker elements in the scene.
+              luminanceSmoothing={0.025} // smoothness of the luminance threshold. Range is [0, 1]
+            />
+          </EffectComposer>
+        </Canvas>
       </footer>
       <ParallaxText baseVelocity={1}>
         React ━ Next.js ━ styled-components ━ strapi ━ Figma ━ agile ━ react-three-fiber ━ Framer Motion ━ React ━ Next.js ━
