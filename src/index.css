@@ -159,10 +159,10 @@ footer > canvas {
   position: absolute;
 }
 
-footer {
-  cursor: url('https://make.studio/assets/images/cursor/pointer-c354874a.png') 32 32, pointer;
+main {
+  cursor: url('../public/point.png') 32 32, pointer;
 }
 
-main {
-  cursor: url('https://make.studio/assets/images/cursor/default-0e2139e7.png') 32 32, pointer;
+footer {
+  cursor: url('../public/pointer.png') 32 32, pointer;
 }
