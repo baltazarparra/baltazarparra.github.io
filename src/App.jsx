@@ -5,7 +5,7 @@ import './App.css'
 
 import { useEffect, useRef, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { useGLTF, Float, Stats } from '@react-three/drei'
+import { useGLTF, Float } from '@react-three/drei'
 import { Bloom, EffectComposer, ChromaticAberration, DotScreen, Noise } from '@react-three/postprocessing'
 import { Resizer, KernelSize, BlendFunction } from 'postprocessing'
 import { motion, useScroll, useSpring, useTransform, useMotionValue, useVelocity, useAnimationFrame } from 'framer-motion'
@@ -176,7 +176,6 @@ function App() {
                 luminanceSmoothing={0.025} // smoothness of the luminance threshold. Range is [0, 1]
               />
             </EffectComposer>
-            <Stats />
           </Canvas>
         </div>
         <motion.h1
