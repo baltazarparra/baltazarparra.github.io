@@ -8,8 +8,55 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { useGLTF, Float } from '@react-three/drei'
 import { Bloom, EffectComposer, ChromaticAberration, DotScreen, Noise } from '@react-three/postprocessing'
 import { Resizer, KernelSize, BlendFunction } from 'postprocessing'
-import { motion, useScroll, useSpring, useTransform, useMotionValue, useVelocity, useAnimationFrame } from 'framer-motion'
+import { motion, useScroll, useSpring, useTransform, useMotionValue, useVelocity, useAnimationFrame, cubicBezier } from 'framer-motion'
 import { wrap } from '@motionone/utils'
+
+const ProgressBar = ({ progress }) => {
+  const container = {
+    height: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '1em'
+  }
+
+  const containerStyles = {
+    height: '2em',
+    width: '100%',
+    borderRadius: '6px',
+    overflow: 'hidden'
+  }
+
+  const fillerStyles = {
+    height: '100%',
+    width: `${progress}%`,
+    backgroundColor: '#3c3c3c',
+    borderRadius: '6px',
+    position: 'relative'
+  }
+
+  const labelStyles = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    color: '#fff',
+    fontSize: '12px',
+    fontWeight: 'bold',
+    textShadow: '1px 1px 2px rgba(0, 0, 0, 0.5)'
+  }
+
+  return (
+    <div style={container}>
+      <div style={containerStyles}>
+        <motion.div style={fillerStyles} initial={{ width: '0%' }} animate={{ width: `${progress}%` }} transition={{ duration: 0.5 }}>
+          <motion.span style={labelStyles}>{progress}%</motion.span>
+        </motion.div>
+      </div>
+    </div>
+  )
+}
 
 function Model() {
   const { scene } = useGLTF('/smile.glb')
@@ -103,6 +150,29 @@ function Dodecahedron() {
 }
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    // Simulando um tempo de carregamento de 3 segundos
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 3000)
+  }, [])
+
+  const [progress, setProgress] = useState(0)
+
+  useEffect(() => {
+    // Simulação de progresso para a barra de progresso
+    const interval = setInterval(() => {
+      setProgress((prevProgress) => {
+        const newProgress = prevProgress + 3
+        return newProgress <= 100 ? newProgress : 100
+      })
+    }, 100)
+
+    return () => clearInterval(interval)
+  }, [])
+
   const [scrollY, setScrollY] = useState(0)
 
   useEffect(() => {
@@ -118,248 +188,254 @@ function App() {
   }, [])
 
   return (
-    <div className="all">
-      <nav className="bar">
-        <ul>
-          <li>
-            <a href="https://github.com/baltazarparra" target="_blank" rel="noreferrer">
-              github
-            </a>
-          </li>
-          <li>
-            <a href="https://www.linkedin.com/in/baltazarparra/" target="_blank" rel="noreferrer">
-              linkedIn
-            </a>
-          </li>
-          <li>
-            <a href="https://open.spotify.com/album/6BFeIsMZ4zcuGbs5cugxLM?si=yWyn03SUQ_WhoSQtAqZzLQ" target="_blank" rel="noreferrer">
-              spotify
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <main>
-        <motion.h1
-          animate={{ x: -scrollY * 2, opacity: 1 }}
-          initial={{ opacity: 0, x: -200 }}
-          className="firstname"
-          transition={{
-            ease: 'easeOut',
-            duration: 0.3
-          }}>
-          baltazar
-        </motion.h1>
-        <div className="core">
-          <Canvas flat linear camera={{ position: [4, 0, 0] }}>
-            <directionalLight position={[10, 0, 0]} intensity={1} />
-            <pointLight position={[10, 0, 0]} intensity={1} />
-            <spotLight position={[10, 0, 0]} intensity={1} />
-            <Float floatIntensity={1} speed={3}>
-              <Model />
-            </Float>
+    <>
+      {isLoading ? (
+        <ProgressBar progress={progress} />
+      ) : (
+        <div className="all">
+          <nav className="bar">
+            <ul>
+              <li>
+                <a href="https://github.com/baltazarparra" target="_blank" rel="noreferrer">
+                  github
+                </a>
+              </li>
+              <li>
+                <a href="https://www.linkedin.com/in/baltazarparra/" target="_blank" rel="noreferrer">
+                  linkedIn
+                </a>
+              </li>
+              <li>
+                <a href="https://open.spotify.com/album/6BFeIsMZ4zcuGbs5cugxLM?si=yWyn03SUQ_WhoSQtAqZzLQ" target="_blank" rel="noreferrer">
+                  spotify
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <main>
+            <motion.h1
+              animate={{ x: -scrollY, opacity: 1 }}
+              initial={{ opacity: 0, x: -130 }}
+              className="firstname"
+              transition={{
+                ease: cubicBezier(0.35, 0.17, 0.3, 0.86),
+                duration: 0.5
+              }}>
+              baltazar
+            </motion.h1>
+            <div className="core">
+              <Canvas flat linear camera={{ position: [4, 0, 0] }}>
+                <directionalLight position={[10, 0, 0]} intensity={1} />
+                <pointLight position={[10, 0, 0]} intensity={1} />
+                <spotLight position={[10, 0, 0]} intensity={1} />
+                <Float floatIntensity={1} speed={3}>
+                  <Model />
+                </Float>
 
-            <EffectComposer>
-              <DotScreen
-                blendFunction={BlendFunction.NORMAL} // blend mode
-                angle={Math.PI * 0.5} // angle of the dot pattern
-                scale={1.0} // scale of the dot pattern
-              />
-              <Noise premultiply blendFunction={BlendFunction.ADD} />
-              <ChromaticAberration offset={[0.002, 0.0002]} />
-              <Bloom
-                intensity={1.0} // The bloom intensity.
-                blurPass={undefined} // A blur pass.
-                width={Resizer.AUTO_SIZE} // render width
-                height={Resizer.AUTO_SIZE} // render height
-                kernelSize={KernelSize.LARGE} // blur kernel size
-                luminanceThreshold={0.9} // luminance threshold. Raise this value to mask out darker elements in the scene.
-                luminanceSmoothing={0.025} // smoothness of the luminance threshold. Range is [0, 1]
-              />
-            </EffectComposer>
-          </Canvas>
+                <EffectComposer>
+                  <DotScreen
+                    blendFunction={BlendFunction.NORMAL} // blend mode
+                    angle={Math.PI * 0.5} // angle of the dot pattern
+                    scale={1.0} // scale of the dot pattern
+                  />
+                  <Noise premultiply blendFunction={BlendFunction.ADD} />
+                  <ChromaticAberration offset={[0.002, 0.0002]} />
+                  <Bloom
+                    intensity={1.0} // The bloom intensity.
+                    blurPass={undefined} // A blur pass.
+                    width={Resizer.AUTO_SIZE} // render width
+                    height={Resizer.AUTO_SIZE} // render height
+                    kernelSize={KernelSize.LARGE} // blur kernel size
+                    luminanceThreshold={0.9} // luminance threshold. Raise this value to mask out darker elements in the scene.
+                    luminanceSmoothing={0.025} // smoothness of the luminance threshold. Range is [0, 1]
+                  />
+                </EffectComposer>
+              </Canvas>
+            </div>
+            <motion.h1
+              animate={{ x: scrollY, opacity: 1 }}
+              initial={{ opacity: 0, x: 130 }}
+              className="surname"
+              transition={{
+                ease: cubicBezier(0.35, 0.17, 0.3, 0.86),
+                duration: 0.5
+              }}>
+              parra
+            </motion.h1>
+          </main>
+          <footer>
+            <h2>baltz</h2>
+            <ul style={{ zIndex: '2' }}>
+              <li>
+                <a href="https://wa.me/+5514998248021" rel="noreferrer" target="_blank">
+                  <motion.span
+                    variants={{
+                      hidden: { opacity: 1 },
+                      visible: {
+                        opacity: 1,
+                        transition: {
+                          delay: 1,
+                          staggerChildren: 0.08
+                        }
+                      }
+                    }}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}>
+                    {'+55 14 99824 8021'.split('').map((char, index) => {
+                      return (
+                        <motion.span
+                          key={char + '-' + index}
+                          variants={{
+                            hidden: { opacity: 0, x: 50 },
+                            visible: {
+                              opacity: 1,
+                              x: 0
+                            }
+                          }}>
+                          {char}
+                        </motion.span>
+                      )
+                    })}
+                  </motion.span>
+                </a>
+              </li>
+              <li>
+                <a href="mailto:baltazarparra@outlook.com" rel="noreferrer" target="_blank">
+                  <motion.span
+                    variants={{
+                      hidden: { opacity: 1 },
+                      visible: {
+                        opacity: 1,
+                        transition: {
+                          delay: 1,
+                          staggerChildren: 0.16
+                        }
+                      }
+                    }}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}>
+                    {'baltazarparra@outlook.com'.split('').map((char, index) => {
+                      return (
+                        <motion.span
+                          key={char + '-' + index}
+                          variants={{
+                            hidden: { opacity: 0, x: 70 },
+                            visible: {
+                              opacity: 1,
+                              x: 0
+                            }
+                          }}>
+                          {char}
+                        </motion.span>
+                      )
+                    })}
+                  </motion.span>
+                </a>
+              </li>
+              <li>
+                <a href="https://codepen.io/baltazarparra" rel="noreferrer" target="_blank">
+                  <motion.span
+                    variants={{
+                      hidden: { opacity: 1 },
+                      visible: {
+                        opacity: 1,
+                        transition: {
+                          delay: 1,
+                          staggerChildren: 0.24
+                        }
+                      }
+                    }}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}>
+                    {'codepen'.split('').map((char, index) => {
+                      return (
+                        <motion.span
+                          key={char + '-' + index}
+                          variants={{
+                            hidden: { opacity: 0, x: 90 },
+                            visible: {
+                              opacity: 1,
+                              x: 0
+                            }
+                          }}>
+                          {char}
+                        </motion.span>
+                      )
+                    })}
+                  </motion.span>
+                </a>
+              </li>
+              <li>
+                <a href="https://codesandbox.io/u/baltazarparra" rel="noreferrer" target="_blank">
+                  <motion.span
+                    variants={{
+                      hidden: { opacity: 1 },
+                      visible: {
+                        opacity: 1,
+                        transition: {
+                          delay: 1,
+                          staggerChildren: 0.32
+                        }
+                      }
+                    }}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}>
+                    {'codesandbox'.split('').map((char, index) => {
+                      return (
+                        <motion.span
+                          key={char + '-' + index}
+                          variants={{
+                            hidden: { opacity: 0, x: 120 },
+                            visible: {
+                              opacity: 1,
+                              x: 0
+                            }
+                          }}>
+                          {char}
+                        </motion.span>
+                      )
+                    })}
+                  </motion.span>
+                </a>
+              </li>
+            </ul>
+            <small>© baltazarparra ━ 2023</small>
+            <Canvas style={{ position: 'absolute', zIndex: '0', opacity: '0.4' }}>
+              <directionalLight position={[10, 0, 0]} intensity={1} />
+              <pointLight position={[10, 0, 0]} intensity={1} />
+              <spotLight position={[10, 0, 0]} intensity={1} />
+              <Dodecahedron />
+              <EffectComposer>
+                <DotScreen
+                  blendFunction={BlendFunction.NORMAL} // blend mode
+                  angle={Math.PI * 0.5} // angle of the dot pattern
+                  scale={1.0} // scale of the dot pattern
+                />
+                <Noise premultiply blendFunction={BlendFunction.ADD} />
+                <ChromaticAberration offset={[0.002, 0.0002]} />
+                <Bloom
+                  intensity={1.0} // The bloom intensity.
+                  blurPass={undefined} // A blur pass.
+                  width={Resizer.AUTO_SIZE} // render width
+                  height={Resizer.AUTO_SIZE} // render height
+                  kernelSize={KernelSize.LARGE} // blur kernel size
+                  luminanceThreshold={0.9} // luminance threshold. Raise this value to mask out darker elements in the scene.
+                  luminanceSmoothing={0.025} // smoothness of the luminance threshold. Range is [0, 1]
+                />
+              </EffectComposer>
+            </Canvas>
+          </footer>
+          <ParallaxText baseVelocity={1}>
+            React ━ Next.js ━ styled-components ━ strapi ━ Figma ━ agile ━ react-three-fiber ━ Framer Motion ━ React ━ Next.js ━
+            styled-components ━ strapi ━ Figma ━ agile ━ react-three-fiber ━ Framer Motion ━
+          </ParallaxText>
         </div>
-        <motion.h1
-          animate={{ x: scrollY * 2 }}
-          initial={{ x: 200 }}
-          className="surname"
-          transition={{
-            ease: 'easeOut',
-            duration: 0.3
-          }}>
-          parra
-        </motion.h1>
-      </main>
-      <footer>
-        <h2>baltz</h2>
-        <ul style={{ zIndex: '2' }}>
-          <li>
-            <a href="https://wa.me/+5514998248021" rel="noreferrer" target="_blank">
-              <motion.span
-                variants={{
-                  hidden: { opacity: 1 },
-                  visible: {
-                    opacity: 1,
-                    transition: {
-                      delay: 1,
-                      staggerChildren: 0.08
-                    }
-                  }
-                }}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}>
-                {'+55 14 99824 8021'.split('').map((char, index) => {
-                  return (
-                    <motion.span
-                      key={char + '-' + index}
-                      variants={{
-                        hidden: { opacity: 0, x: 50 },
-                        visible: {
-                          opacity: 1,
-                          x: 0
-                        }
-                      }}>
-                      {char}
-                    </motion.span>
-                  )
-                })}
-              </motion.span>
-            </a>
-          </li>
-          <li>
-            <a href="mailto:baltazarparra@outlook.com" rel="noreferrer" target="_blank">
-              <motion.span
-                variants={{
-                  hidden: { opacity: 1 },
-                  visible: {
-                    opacity: 1,
-                    transition: {
-                      delay: 1,
-                      staggerChildren: 0.16
-                    }
-                  }
-                }}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}>
-                {'baltazarparra@outlook.com'.split('').map((char, index) => {
-                  return (
-                    <motion.span
-                      key={char + '-' + index}
-                      variants={{
-                        hidden: { opacity: 0, x: 70 },
-                        visible: {
-                          opacity: 1,
-                          x: 0
-                        }
-                      }}>
-                      {char}
-                    </motion.span>
-                  )
-                })}
-              </motion.span>
-            </a>
-          </li>
-          <li>
-            <a href="https://codepen.io/baltazarparra" rel="noreferrer" target="_blank">
-              <motion.span
-                variants={{
-                  hidden: { opacity: 1 },
-                  visible: {
-                    opacity: 1,
-                    transition: {
-                      delay: 1,
-                      staggerChildren: 0.24
-                    }
-                  }
-                }}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}>
-                {'codepen'.split('').map((char, index) => {
-                  return (
-                    <motion.span
-                      key={char + '-' + index}
-                      variants={{
-                        hidden: { opacity: 0, x: 90 },
-                        visible: {
-                          opacity: 1,
-                          x: 0
-                        }
-                      }}>
-                      {char}
-                    </motion.span>
-                  )
-                })}
-              </motion.span>
-            </a>
-          </li>
-          <li>
-            <a href="https://codesandbox.io/u/baltazarparra" rel="noreferrer" target="_blank">
-              <motion.span
-                variants={{
-                  hidden: { opacity: 1 },
-                  visible: {
-                    opacity: 1,
-                    transition: {
-                      delay: 1,
-                      staggerChildren: 0.32
-                    }
-                  }
-                }}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}>
-                {'codesandbox'.split('').map((char, index) => {
-                  return (
-                    <motion.span
-                      key={char + '-' + index}
-                      variants={{
-                        hidden: { opacity: 0, x: 120 },
-                        visible: {
-                          opacity: 1,
-                          x: 0
-                        }
-                      }}>
-                      {char}
-                    </motion.span>
-                  )
-                })}
-              </motion.span>
-            </a>
-          </li>
-        </ul>
-        <small>© baltazarparra ━ 2023</small>
-        <Canvas style={{ position: 'absolute', zIndex: '0', opacity: '0.4' }}>
-          <directionalLight position={[10, 0, 0]} intensity={1} />
-          <pointLight position={[10, 0, 0]} intensity={1} />
-          <spotLight position={[10, 0, 0]} intensity={1} />
-          <Dodecahedron />
-          <EffectComposer>
-            <DotScreen
-              blendFunction={BlendFunction.NORMAL} // blend mode
-              angle={Math.PI * 0.5} // angle of the dot pattern
-              scale={1.0} // scale of the dot pattern
-            />
-            <Noise premultiply blendFunction={BlendFunction.ADD} />
-            <ChromaticAberration offset={[0.002, 0.0002]} />
-            <Bloom
-              intensity={1.0} // The bloom intensity.
-              blurPass={undefined} // A blur pass.
-              width={Resizer.AUTO_SIZE} // render width
-              height={Resizer.AUTO_SIZE} // render height
-              kernelSize={KernelSize.LARGE} // blur kernel size
-              luminanceThreshold={0.9} // luminance threshold. Raise this value to mask out darker elements in the scene.
-              luminanceSmoothing={0.025} // smoothness of the luminance threshold. Range is [0, 1]
-            />
-          </EffectComposer>
-        </Canvas>
-      </footer>
-      <ParallaxText baseVelocity={1}>
-        React ━ Next.js ━ styled-components ━ strapi ━ Figma ━ agile ━ react-three-fiber ━ Framer Motion ━ React ━ Next.js ━
-        styled-components ━ strapi ━ Figma ━ agile ━ react-three-fiber ━ Framer Motion ━
-      </ParallaxText>
-    </div>
+      )}
+    </>
   )
 }
 

@@ -166,3 +166,14 @@ main {
 footer {
   cursor: url('../public/pointer.png') 32 32, pointer;
 }
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background-color: #f0f0f0;
+}
+
+.progress {
+  height: 100%;
+  background-color: #007bff;
+}
