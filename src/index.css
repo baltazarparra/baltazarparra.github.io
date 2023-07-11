@@ -95,7 +95,7 @@ h6 {
 
 .parallax {
   position: fixed;
-  top: -160px;
+  top: -237px;
   left: 0;
   letter-spacing: 0px;
   line-height: 0.8;
@@ -105,6 +105,7 @@ h6 {
   flex-wrap: nowrap;
   transform: rotate(-2deg);
   z-index: -1;
+  font-size: 24px;
 }
 
 .parallax .scroller {

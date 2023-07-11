@@ -11,53 +11,6 @@ import { Resizer, KernelSize, BlendFunction } from 'postprocessing'
 import { motion, useScroll, useSpring, useTransform, useMotionValue, useVelocity, useAnimationFrame, cubicBezier } from 'framer-motion'
 import { wrap } from '@motionone/utils'
 
-const ProgressBar = ({ progress }) => {
-  const container = {
-    height: '100vh',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '1em'
-  }
-
-  const containerStyles = {
-    height: '2em',
-    width: '100%',
-    borderRadius: '6px',
-    overflow: 'hidden'
-  }
-
-  const fillerStyles = {
-    height: '100%',
-    width: `${progress}%`,
-    backgroundColor: '#3c3c3c',
-    borderRadius: '6px',
-    position: 'relative'
-  }
-
-  const labelStyles = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    color: '#fff',
-    fontSize: '12px',
-    fontWeight: 'bold',
-    textShadow: '1px 1px 2px rgba(0, 0, 0, 0.5)'
-  }
-
-  return (
-    <div style={container}>
-      <div style={containerStyles}>
-        <motion.div style={fillerStyles} initial={{ width: '0%' }} animate={{ width: `${progress}%` }} transition={{ duration: 0.5 }}>
-          <motion.span style={labelStyles}>{progress}%</motion.span>
-        </motion.div>
-      </div>
-    </div>
-  )
-}
-
 function Model() {
   const { scene } = useGLTF('/smile.glb')
   const boxRef = useRef()
@@ -98,14 +51,14 @@ function ParallaxText({ children, baseVelocity = 50 }) {
     damping: 50,
     stiffness: 400
   })
-  const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 5], {
+  const velocityFactor = useTransform(smoothVelocity, [0, 100], [0, 5], {
     clamp: false
   })
   const x = useTransform(baseX, (v) => `${wrap(-20, -45, v)}%`)
 
   const directionFactor = useRef(1)
   useAnimationFrame((t, delta) => {
-    let moveBy = directionFactor.current * baseVelocity * (delta / 1000)
+    let moveBy = directionFactor.current * baseVelocity * (delta / 5000)
 
     if (velocityFactor.get() < 0) {
       directionFactor.current = -1
@@ -190,7 +143,7 @@ function App() {
   return (
     <>
       {isLoading ? (
-        <ProgressBar progress={progress} />
+        <h1>{progress}</h1>
       ) : (
         <div className="all">
           <nav className="bar">
@@ -429,7 +382,7 @@ function App() {
               </EffectComposer>
             </Canvas>
           </footer>
-          <ParallaxText baseVelocity={1}>
+          <ParallaxText baseVelocity={4}>
             React ━ Next.js ━ styled-components ━ strapi ━ Figma ━ agile ━ react-three-fiber ━ Framer Motion ━ React ━ Next.js ━
             styled-components ━ strapi ━ Figma ━ agile ━ react-three-fiber ━ Framer Motion ━
           </ParallaxText>
