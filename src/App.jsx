@@ -43,7 +43,7 @@ function Model() {
   )
 }
 
-function ParallaxText({ children, baseVelocity = 50 }) {
+function ParallaxText({ children, baseVelocity = 40 }) {
   const baseX = useMotionValue(0)
   const { scrollY } = useScroll()
   const scrollVelocity = useVelocity(scrollY)
@@ -382,7 +382,7 @@ function App() {
               </EffectComposer>
             </Canvas>
           </footer>
-          <ParallaxText baseVelocity={4}>
+          <ParallaxText baseVelocity={2}>
             React ━ Next.js ━ styled-components ━ strapi ━ Figma ━ agile ━ react-three-fiber ━ Framer Motion ━ React ━ Next.js ━
             styled-components ━ strapi ━ Figma ━ agile ━ react-three-fiber ━ Framer Motion ━
           </ParallaxText>
