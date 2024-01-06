@@ -109,8 +109,12 @@ function App() {
     // Simulando um tempo de carregamento de 3 segundos
     setTimeout(() => {
       setIsLoading(false)
-    }, 3000)
+    }, 900)
   }, [])
+
+  useEffect(() => {
+    window.scrollTo(0, 200)
+  }, [isLoading])
 
   const [progress, setProgress] = useState(0)
 
@@ -118,10 +122,10 @@ function App() {
     // Simulação de progresso para a barra de progresso
     const interval = setInterval(() => {
       setProgress((prevProgress) => {
-        const newProgress = prevProgress + 3
+        const newProgress = prevProgress + 4
         return newProgress <= 100 ? newProgress : 100
       })
-    }, 100)
+    }, 50)
 
     return () => clearInterval(interval)
   }, [])
@@ -146,6 +150,8 @@ function App() {
         <h1>{progress}</h1>
       ) : (
         <div className="all">
+          <div className="gato">
+          </div>
           <nav className="bar">
             <ul>
               <li>
@@ -168,11 +174,10 @@ function App() {
           <main>
             <motion.h1
               animate={{ x: -scrollY, opacity: 1 }}
-              initial={{ opacity: 0, x: -130 }}
+              initial={{ opacity: 0, x: -100 }}
               className="firstname"
               transition={{
-                ease: cubicBezier(0.35, 0.17, 0.3, 0.86),
-                duration: 0.5
+                duration: 0.3
               }}>
               baltazar
             </motion.h1>
@@ -207,11 +212,10 @@ function App() {
             </div>
             <motion.h1
               animate={{ x: scrollY, opacity: 1 }}
-              initial={{ opacity: 0, x: 130 }}
+              initial={{ opacity: 0, x: 100 }}
               className="surname"
               transition={{
-                ease: cubicBezier(0.35, 0.17, 0.3, 0.86),
-                duration: 0.5
+                duration: 0.3
               }}>
               parra
             </motion.h1>
@@ -383,8 +387,8 @@ function App() {
             </Canvas>
           </footer>
           <ParallaxText baseVelocity={2}>
-            React ━ Next.js ━ styled-components ━ strapi ━ Figma ━ agile ━ react-three-fiber ━ Framer Motion ━ React ━ Next.js ━
-            styled-components ━ strapi ━ Figma ━ agile ━ react-three-fiber ━ Framer Motion ━
+            React ━ Next.js ━ styled-components ━ strapi ━ Figma ━ agile ━ react-three-fiber ━ Framer Motion ━ React ━ Next.js ━ Angular ━ 
+            styled-components ━ strapi ━ Figma ━ agile ━ react-three-fiber ━ Framer Motion ━ JAVA ━ Spring ━ Docker ━ Kubernetes ━ 
           </ParallaxText>
         </div>
       )}
