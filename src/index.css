@@ -60,11 +60,6 @@ h6 {
   isolation: isolate;
 }
 
-.all {
-  scroll-timeline-name: --disapear;
-  position: relative;
-}
-
 .bar {
   position: fixed;
   bottom: 1em;
@@ -75,7 +70,6 @@ h6 {
 }
 
 .bar ul {
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -97,36 +91,6 @@ h6 {
   color: white;
   font-size: 1.2em;
   font-family: sans-serif;
-}
-
-.bar ul:before {
-  content: 'scroll down';
-  font-family: sans-serif;
-  font-size: 1em;
-  color: rgb(131 130 126);
-  position: fixed;
-  bottom: 60px;
-  text-align: center;
-  width: 100px;
-  height: 50px;
-  background-image: url('https://content.invisioncic.com/p289038/monthly_2020_05/arrow-down.gif.8d9aec7b8f92f2a50a1a64fce1733f3a.gif');
-  background-position: bottom;
-  background-size: 30px;
-  background-repeat: repeat-x;
-  animation-name: disapearAnimation;
-  animation-duration: 1ms;
-  animation-direction: alternate;
-  animation-timeline: --disapear;
-  animation-timeline: scroll(block nearest);
-}
-
-@keyframes disapearAnimation {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
 }
 
 .parallax {

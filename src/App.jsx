@@ -106,10 +106,10 @@ function App() {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    // Simulando um tempo de carregamento de 3 segundos
+    // Simulando um tempo de carregamento de 1.2 segundos
     setTimeout(() => {
       setIsLoading(false)
-    }, 900)
+    }, 1200)
   }, [])
 
   useEffect(() => {
