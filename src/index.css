@@ -117,7 +117,7 @@ h6 {
   flex-wrap: nowrap;
   padding: 0.3em;
   margin-top: 4px;
-  border: solid 8px;
+  border: solid 3px #bb0000;
 }
 
 .parallax span {
@@ -156,7 +156,7 @@ footer h1 {
   color: #d6d6d6;
 }
 
-footer > canvas {
+footer>canvas {
   position: absolute;
   z-index: 2;
 }
