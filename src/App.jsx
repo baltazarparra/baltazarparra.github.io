@@ -388,7 +388,7 @@ function App() {
           </footer>
           <ParallaxText baseVelocity={2}>
             React ━ Next.js ━ styled-components ━ strapi ━ Figma ━ agile ━ react-three-fiber ━ Framer Motion ━ React ━ Next.js ━ Angular ━ 
-            styled-components ━ strapi ━ Figma ━ agile ━ react-three-fiber ━ Framer Motion ━ JAVA ━ Spring ━ Docker ━ Kubernetes ━ 
+            styled-components ━ strapi ━ Figma ━ agile ━ react-three-fiber ━ Framer Motion ━ JAVA ━ Spring ━ Docker ━ Kubernetes ━ Rxjs ━
           </ParallaxText>
         </div>
       )}
