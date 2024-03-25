@@ -8,7 +8,7 @@ function App() {
           baltazarparra
           <img src="https://avatars.githubusercontent.com/u/7395304?v=4" />
         </h3>
-        <span>― developer</span>
+        <span>― enabler</span>
         <ul>
           <li>linkedIn</li>
           <li>github</li>
@@ -24,13 +24,13 @@ function App() {
         <h1>
           I'm currently working for the{" "}
           <a href="https://www.gft.com/int/en" target="_blank">
-            GFT group
+            ― GFT group
           </a>
           , focused on create great experiences, enthusiastic about agile, with
           extensive software engineering background
         </h1>
       </main>
-      <footer>baltazarparra ― 2024</footer>
+      <footer>― 2024</footer>
     </section>
   );
 }
