@@ -13,6 +13,8 @@ import {
   DotScreen,
   Noise,
   Glitch,
+  Pixelation,
+  SMAA,
 } from "@react-three/postprocessing";
 
 const Model = () => {
@@ -66,32 +68,38 @@ function App() {
             <Model />
           </Suspense>
           {!toggle && (
-            <EffectComposer>
-              <DotScreen
-                angle={Math.PI * 0.5} // angle of the dot pattern
-                scale={1.0} // scale of the dot pattern
-              />
-              <Noise premultiply />
-              <ChromaticAberration offset={[0.002, 0.0002]} />
-              <DepthOfField
-                focusDistance={0}
-                focalLength={0.02}
-                bokehScale={2}
-                height={480}
-              />
-              <Bloom
-                luminanceThreshold={0}
-                luminanceSmoothing={0.9}
-                height={300}
-              />
-              <Glitch
-                delay={[1, 3]} // min and max glitch delay
-                duration={[0.2, 0.4]} // min and max glitch duration
-                strength={[0.1, 0.3]} // min and max glitch strength
-                active // turn on/off the effect (switches between "mode" prop and GlitchMode.DISABLED)
-                ratio={0} // Threshold for strong glitches, 0 - no weak glitches, 1 - no strong glitches.
-              />
-            </EffectComposer>
+            <Suspense fallback={"loading..."}>
+              <EffectComposer multisampling={0}>
+                <DotScreen
+                  angle={Math.PI * 0.5} // angle of the dot pattern
+                  scale={1.0} // scale of the dot pattern
+                />
+                <Noise premultiply />
+                <ChromaticAberration offset={[0.002, 0.0002]} />
+                <DepthOfField
+                  focusDistance={0}
+                  focalLength={0.02}
+                  bokehScale={2}
+                  height={480}
+                />
+                <Bloom
+                  luminanceThreshold={0}
+                  luminanceSmoothing={0.9}
+                  height={300}
+                />
+                <Glitch
+                  delay={[1, 3]} // min and max glitch delay
+                  duration={[0.08, 0.04]} // min and max glitch duration
+                  strength={[0.1, 0.2]} // min and max glitch strength
+                  active // turn on/off the effect (switches between "mode" prop and GlitchMode.DISABLED)
+                  ratio={1} // Threshold for strong glitches, 0 - no weak glitches, 1 - no strong glitches.
+                />
+                <Pixelation
+                  granularity={1} // pixel granularity
+                />
+                <SMAA />
+              </EffectComposer>
+            </Suspense>
           )}
         </Canvas>
       </aside>
