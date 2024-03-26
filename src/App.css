@@ -49,17 +49,18 @@
 
 .container {
     height: 100vh;
+    position: relative;
 }
 
 .container:after {
     content: "";
     background-image: url("https://upload.wikimedia.org/wikipedia/commons/7/76/1k_Dissolve_Noise_Texture.png");
-    height: 300%;
-    width: 300%;
+    height: 200%;
+    width: 200%;
     top: 0;
     left: 0;
     position: fixed;
-    opacity: 0.06;
+    opacity: 0.10;
     animation: animateGrain 12s steps(10) infinite;
     z-index: -1;
 }
@@ -70,13 +71,23 @@ header {
     justify-content: space-between;
     font-size: 1.6em;
     z-index: 9;
-    padding: 1em;
+    padding: .2em;
 }
 
 .avatar {
     width: 60px;
     border-radius: 100%;
     transition: width .3s;
+}
+
+.name {
+    display: flex;
+    align-items: center;
+}
+
+.name span {
+    margin-left: .6em;
+    display: none;
 }
 
 nav {
@@ -155,4 +166,124 @@ h2 {
     font-size: 2em;
 }
 
-article {}
+.toggle {
+    width: 48px;
+    height: 24px;
+    margin: 0 .4em;
+    border: solid 1px #666;
+    background-color: rgb(11, 75, 11);
+    border-radius: 4px;
+}
+
+.toggle span {
+    width: 22px;
+    height: 18px;
+    background-color: #aaa;
+    border-radius: 4px;
+    display: block;
+    margin: .08em;
+    transform: translateX(0);
+    transition: transform .3s;
+
+}
+
+.performance {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.toggle.off {
+    background-color: #333;
+}
+
+.off span {
+    transform: translateX(20px);
+    transition: transform .3s;
+}
+
+@media (min-width: 768px) {
+    .name span {
+        display: block;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 8em;
+    }
+
+    h2 {
+        font-size: 3em;
+        margin: 1em auto !important;
+    }
+}
+
+@media (max-height: 608px) {
+    .name span {
+        display: block;
+    }
+
+    h1 {
+        flex: 1;
+        text-align: left;
+        font-size: 6em;
+        margin-left: .2em !important;
+    }
+
+    h2 {
+        flex: 2;
+        font-size: 3em;
+        margin-left: 1em !important;
+    }
+
+    main {
+        flex-direction: row;
+        display: flex;
+        align-items: flex-end;
+        margin-top: 4em;
+    }
+
+    aside {
+        height: 100vh;
+        top: 0;
+    }
+}
+
+@media (min-width: 1024px) and (min-height: 608px) {
+    .name span {
+        display: block;
+    }
+
+    h1 {
+        text-align: left;
+        font-size: 10em;
+        margin-left: .2em !important;
+    }
+
+    h2 {
+        margin-left: .4em !important;
+        font-size: 4em;
+    }
+
+    nav {
+        font-size: 1.4em;
+    }
+}
+
+@media (min-width: 1600px) and (min-height: 608px) {
+    .container {
+        max-width: 1600px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) and (min-height: 668px) {
+    h1 {
+        margin-top: 1em !important;
+        margin-bottom: .6em !important;
+    }
+
+    h2 {
+        font-size: 2.4em;
+    }
+}

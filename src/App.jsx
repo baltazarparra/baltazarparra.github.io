@@ -2,13 +2,16 @@
 /* eslint-disable react/no-unknown-property */
 import "./App.css";
 
-import { Suspense, useRef } from "react";
+import { useState, Suspense, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import {
   Bloom,
   EffectComposer,
   DepthOfField,
+  ChromaticAberration,
+  DotScreen,
+  Noise,
 } from "@react-three/postprocessing";
 
 const Model = () => {
@@ -16,8 +19,8 @@ const Model = () => {
 
   useFrame(({ clock }) => {
     const a = clock.getElapsedTime();
-    myMesh.current.rotation.z = a * 0.09;
-    myMesh.current.rotation.y = a * 0.12;
+    myMesh.current.rotation.z = a * 0.21;
+    myMesh.current.rotation.y = a * 0.18;
     myMesh.current.rotation.x = a * 0.15;
   });
 
@@ -31,35 +34,57 @@ const Model = () => {
 };
 
 function App() {
+  const [toggle, setToggle] = useState(true);
+
   return (
     <div className="container">
       <header>
-        <img
-          className="avatar"
-          src="https://avatars.githubusercontent.com/u/7395304?v=4"
-        />
-        <span>― baltazarparra</span>
+        <div className="name">
+          <img
+            className="avatar"
+            src="https://avatars.githubusercontent.com/u/7395304?v=4"
+          />
+          <span>― baltazarparra</span>
+        </div>
+        <div className="performance" onClick={() => setToggle(!toggle)}>
+          performance
+          <div className={toggle ? "toggle" : "toggle off"}>
+            <span></span>
+          </div>
+        </div>
       </header>
       <aside>
         <Canvas flat linear camera={{ position: [3, 0, 0] }}>
-          <directionalLight position={[4, 0, 0]} intensity={10} />
+          <directionalLight
+            position={[6, 0, 0]}
+            castShadow
+            intensity={Math.PI * 3}
+          />
 
           <Suspense fallback={"loading..."}>
             <Model />
           </Suspense>
-          <EffectComposer>
-            <DepthOfField
-              focusDistance={0}
-              focalLength={0.02}
-              bokehScale={2}
-              height={480}
-            />
-            <Bloom
-              luminanceThreshold={0}
-              luminanceSmoothing={0.9}
-              height={300}
-            />
-          </EffectComposer>
+          {!toggle && (
+            <EffectComposer>
+              <DotScreen
+                angle={Math.PI * 0.5} // angle of the dot pattern
+                scale={1.0} // scale of the dot pattern
+              />
+              <Noise premultiply />
+              <ChromaticAberration offset={[0.002, 0.0002]} />
+              <DepthOfField
+                focusDistance={0}
+                focalLength={0.02}
+                bokehScale={2}
+                height={480}
+              />
+              <Bloom
+                luminanceThreshold={0}
+                luminanceSmoothing={0.9}
+                height={300}
+              />
+            </EffectComposer>
+          )}
         </Canvas>
       </aside>
       <main>
