@@ -1,4 +1,33 @@
+/* eslint-disable react/no-unknown-property */
 import "./App.css";
+
+import { Suspense, useRef } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { useGLTF } from "@react-three/drei";
+import {
+  Bloom,
+  EffectComposer,
+  DepthOfField,
+} from "@react-three/postprocessing";
+
+const Model = () => {
+  const myMesh = useRef();
+
+  useFrame(({ clock }) => {
+    const a = clock.getElapsedTime();
+    myMesh.current.rotation.z = a * 0.1;
+    myMesh.current.rotation.y = a * 0.2;
+    myMesh.current.rotation.x = a * 0.3;
+  });
+
+  const { scene } = useGLTF("./smile.glb");
+
+  return (
+    <>
+      <primitive ref={myMesh} object={scene} scale={1} />
+    </>
+  );
+};
 
 function App() {
   return (
@@ -10,19 +39,62 @@ function App() {
         </h3>
         <span>― enabler</span>
         <ul>
-          <li>linkedIn</li>
-          <li>github</li>
-          <li>spotify</li>
+          <li>
+            <a
+              href="https://www.linkedin.com/in/baltazarparra/"
+              target="_blank"
+            >
+              linkedIn
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/baltazarparra" target="_blank">
+              github
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://open.spotify.com/intl-pt/album/6BFeIsMZ4zcuGbs5cugxLM?si=8g7V-wvuSlyE9nC9tRoUKQ"
+              target="_blank"
+            >
+              spotify
+            </a>
+          </li>
         </ul>
       </header>
       <main>
+        <aside>
+          <Canvas flat linear camera={{ position: [4, 0, 0] }}>
+            <directionalLight position={[4, 0, 0]} intensity={10} />
+
+            <Suspense fallback={"loading..."}>
+              <Model />
+            </Suspense>
+            <EffectComposer>
+              <DepthOfField
+                focusDistance={0}
+                focalLength={0.02}
+                bokehScale={2}
+                height={480}
+              />
+              <Bloom
+                luminanceThreshold={0}
+                luminanceSmoothing={0.9}
+                height={300}
+              />
+            </EffectComposer>
+          </Canvas>
+        </aside>
         <h2>
-          <div>hey, I'm Baltz</div>
-          <div>a tech leader</div>
-          <div>based in Brasil</div>
+          hey, Im Baltz
+          <br />
+          a tech leader
+          <br />
+          based in Brasil
+          <br />
         </h2>
         <h1>
-          I'm currently working for the{" "}
+          Im currently working for the{" "}
           <a href="https://www.gft.com/int/en" target="_blank">
             ― GFT group
           </a>
@@ -30,7 +102,7 @@ function App() {
           extensive software engineering background
         </h1>
       </main>
-      <footer>― 2024</footer>
+      <footer>― was mich nicht umbringt, macht mich stärker</footer>
     </section>
   );
 }
