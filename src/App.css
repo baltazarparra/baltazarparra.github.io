@@ -324,7 +324,7 @@ h2 {
     }
 }
 
-@media (max-width: 374px) {
+@media (max-width: 375px) {
     .name span {
         display: none;
     }
