@@ -12,6 +12,7 @@ import {
   ChromaticAberration,
   DotScreen,
   Noise,
+  Glitch,
 } from "@react-three/postprocessing";
 
 const Model = () => {
@@ -82,6 +83,13 @@ function App() {
                 luminanceThreshold={0}
                 luminanceSmoothing={0.9}
                 height={300}
+              />
+              <Glitch
+                delay={[1, 3]} // min and max glitch delay
+                duration={[0.2, 0.4]} // min and max glitch duration
+                strength={[0.1, 0.3]} // min and max glitch strength
+                active // turn on/off the effect (switches between "mode" prop and GlitchMode.DISABLED)
+                ratio={0} // Threshold for strong glitches, 0 - no weak glitches, 1 - no strong glitches.
               />
             </EffectComposer>
           )}
