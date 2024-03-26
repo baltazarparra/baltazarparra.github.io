@@ -47,6 +47,18 @@
 
 }
 
+@keyframes appears {
+    0% {
+        opacity: 0;
+        transform: translateY(100px) rotate3d(2, -1, 0, 20deg);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) rotate3d(0);
+    }
+}
+
 .container {
     height: 100vh;
     position: relative;
@@ -87,6 +99,9 @@ header {
 .name {
     display: flex;
     align-items: center;
+    opacity: 0;
+    animation: appears 1s forwards;
+    animation-delay: .6s;
 }
 
 .name span {
@@ -99,6 +114,9 @@ nav {
     bottom: 0;
     width: 100%;
     left: 0;
+    opacity: 0;
+    animation: appears 1s forwards;
+    animation-delay: 2.5s;
 }
 
 
@@ -140,7 +158,9 @@ aside {
     left: 0;
     width: 100%;
     z-index: -1;
-    opacity: 0.6;
+    opacity: 0;
+    animation: appears 1s forwards;
+    animation-delay: 4s;
 }
 
 main {
@@ -154,6 +174,9 @@ h1 {
     font-size: 4.6em;
     line-height: 1;
     margin: .4em 0 !important;
+    opacity: 0;
+    animation: appears 1s forwards;
+    animation-delay: 1.9s;
 }
 
 h1 span {
@@ -168,6 +191,9 @@ h1 b {
 
 h2 {
     font-size: 2em;
+    opacity: 0;
+    animation: appears 1s forwards;
+    animation-delay: 2.2s;
 }
 
 .toggle {
@@ -195,6 +221,9 @@ h2 {
     display: flex;
     align-items: center;
     cursor: pointer;
+    opacity: 0;
+    animation: appears 1s forwards;
+    animation-delay: 3s;
 }
 
 .toggle.off {
