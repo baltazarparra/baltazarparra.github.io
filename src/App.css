@@ -50,6 +50,10 @@
 .container {
     height: 100vh;
     position: relative;
+
+    @supports (height: 100svh) {
+        height: 100svh;
+    }
 }
 
 .container:after {
