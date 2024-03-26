@@ -62,18 +62,11 @@
 .container {
     height: 100vh;
     position: relative;
-    min-height: 100vh;
 
-    @supports (min-height: 100dvh) {
-        min-height: 100dvh;
-    }
-
-    @supports (height: 100svh) {
-        height: 100svh;
+    @supports (height: 100dvh) {
+        height: 100dvh;
     }
 }
-
-
 
 .container:after {
     content: "";
