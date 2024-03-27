@@ -76,7 +76,7 @@
     top: 0;
     left: 0;
     position: fixed;
-    opacity: 0.06;
+    opacity: 0.10;
     animation: animateGrain 12s steps(10) infinite;
     z-index: -1;
 }
