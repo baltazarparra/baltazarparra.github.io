@@ -205,7 +205,7 @@ h2 {
     height: 24px;
     margin: 0 .4em;
     border: solid 1px #666;
-    background-color: rgb(11, 75, 11);
+    background-color: #333;
     border-radius: 4px;
 }
 
@@ -231,7 +231,7 @@ h2 {
 }
 
 .toggle.off {
-    background-color: #333;
+    background-color: rgb(11, 75, 11);
 }
 
 .off span {

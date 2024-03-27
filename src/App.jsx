@@ -50,7 +50,7 @@ function App() {
           <span>― baltazarparra</span>
         </div>
         <div className="performance" onClick={() => setToggle(!toggle)}>
-          performance
+          effects
           <div className={toggle ? "toggle" : "toggle off"}>
             <span></span>
           </div>
