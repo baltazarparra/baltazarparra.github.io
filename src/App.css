@@ -60,10 +60,11 @@
 }
 
 .container {
+    height: 100dvh;
     height: 100vh;
-    position: relative;
-
-    @supports (height: 100dvh) {}
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .container:after {
@@ -83,9 +84,9 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 1.6em;
-    padding: .2em;
     z-index: 7;
+    padding: .4em;
+    border-bottom: solid 1px #333;
 }
 
 .avatar {
@@ -103,15 +104,11 @@ header {
 }
 
 .name span {
-    margin-left: .6em;
     display: none;
 }
 
 nav {
-    position: absolute;
-    bottom: 0;
     width: 100%;
-    left: 0;
     opacity: 0;
     animation: appears 1s forwards;
     animation-delay: 2.5s;
@@ -121,6 +118,17 @@ nav {
 
 nav a {
     text-decoration: none;
+}
+
+nav li {
+    border: solid 1px #333;
+
+    padding: .4em;
+}
+
+nav img {
+    max-width: 16px;
+    margin-left: 4px;
 }
 
 ul {
@@ -138,16 +146,6 @@ li a {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.4em;
-}
-
-li span {
-    padding: .4em;
-}
-
-footer {
-    font-size: 1em;
-    z-index: 9;
 }
 
 aside {
@@ -171,42 +169,39 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    padding: .4em;
 }
 
 h1 {
-    font-size: 4.6em;
-    line-height: 1;
-    margin: .4em 0 !important;
     opacity: 0;
     animation: appears 1s forwards;
     animation-delay: 1.9s;
-}
-
-h1 span {
-    font-size: .6em;
+    display: block;
+    border-bottom: solid 1px #333;
+    border-right: solid 1px #333;
 }
 
 h1 b {
     text-decoration: line-through;
     font-weight: normal;
-    color: #666;
 }
 
 h2 {
-    font-size: 2em;
     opacity: 0;
     animation: appears 1s forwards;
     animation-delay: 2.2s;
     z-index: 8;
+    border-bottom: solid 1px #333;
 }
 
 .toggle {
     width: 48px;
     height: 24px;
-    margin: 0 .4em;
+
     border: solid 1px #666;
     background-color: #333;
     border-radius: 4px;
+    margin-left: .4em;
 }
 
 .toggle span {
@@ -215,9 +210,10 @@ h2 {
     background-color: #aaa;
     border-radius: 4px;
     display: block;
-    margin: .08em;
+
     transform: translateX(0);
     transition: transform .3s;
+    margin: 2px;
 
 }
 
@@ -229,6 +225,10 @@ h2 {
     animation: appears 1s forwards;
     animation-delay: 3s;
     z-index: 6;
+
+    font-size: 1.2em;
+
+    border-left: solid 1px #333;
 }
 
 .toggle.off {
@@ -240,113 +240,48 @@ h2 {
     transition: transform .3s;
 }
 
+hr {
+    opacity: 0;
+}
+
+@media (min-width: 375px) {
+    h1 {
+        font-size: 3em;
+    }
+}
+
 @media (min-width: 768px) {
-    .name span {
-        display: block;
+    main {
+        padding: 1em;
     }
 
     h1 {
-        text-align: center;
+        font-size: 4em;
+    }
+
+    h2 {
+        font-size: 2em;
+        max-width: 1024px;
+    }
+}
+
+@media (min-width: 1600px) {
+    h1 {
         font-size: 8em;
     }
 
     h2 {
         font-size: 3em;
-        margin: 1em auto !important;
-    }
-}
-
-@media (min-width: 1024px) and (min-height: 654px) {
-    .name span {
-        display: block;
     }
 
-    h1 {
-        text-align: left;
-        font-size: 10em;
-        margin-left: .2em !important;
-    }
-
-    h2 {
-        margin-left: .4em !important;
-        font-size: 4em;
-    }
-
-    nav {
+    nav span {
         font-size: 1.4em;
     }
 }
 
-@media (min-width: 1600px) and (min-height: 654px) {
+@media (min-width: 1920px) {
     .container {
-        max-width: 1600px;
+        width: 1600px;
         margin: 0 auto;
     }
-}
-
-@media (max-width: 768px) and (min-height: 668px) {
-    h1 {
-        margin-top: 1em !important;
-        margin-bottom: .6em !important;
-    }
-
-    h2 {
-        font-size: 2.4em;
-    }
-}
-
-@media (max-height: 654px) {
-    .name span {
-        display: block;
-    }
-
-    h1 {
-        flex: 1;
-        text-align: left;
-        font-size: 5em;
-        margin-left: .2em !important;
-    }
-
-    h2 {
-        flex: 2;
-        font-size: 2.4em;
-    }
-
-    main {
-        flex-direction: row;
-        display: flex;
-        align-items: flex-end;
-        margin-top: 4em;
-    }
-
-    aside {
-        height: 100vh;
-        top: 0;
-    }
-}
-
-@media (max-width: 375px) {
-    .name span {
-        display: none;
-    }
-
-    main {
-        flex-direction: column;
-        margin-top: 1em;
-        align-items: flex-start;
-    }
-
-    h1 {
-        font-size: 3.4em;
-        margin-left: 0 !important;
-    }
-
-    h2 {
-        font-size: 1.6em;
-    }
-
-    nav a {
-        font-size: 1.2em;
-    }
-
 }

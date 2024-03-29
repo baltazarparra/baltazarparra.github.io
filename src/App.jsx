@@ -43,22 +43,7 @@ function App() {
   const [toggle, setToggle] = useState(true);
 
   return (
-    <div className="container">
-      <header>
-        <div className="name">
-          <img
-            className="avatar"
-            src="https://avatars.githubusercontent.com/u/7395304?v=4"
-          />
-          <span>― baltazarparra</span>
-        </div>
-        <div className="performance" onClick={() => setToggle(!toggle)}>
-          effects
-          <div className={toggle ? "toggle" : "toggle off"}>
-            <span></span>
-          </div>
-        </div>
-      </header>
+    <>
       <aside>
         <Canvas flat linear camera={{ position: [3, 0, 0] }}>
           <directionalLight
@@ -106,61 +91,79 @@ function App() {
           )}
         </Canvas>
       </aside>
-      <main>
-        <h1>
-          hi, I'm baltz<span>🤙</span>
-          <br />
-          a tech leader
-          <br />
-          based in Bra<b>z</b>sil
-          <br />
-        </h1>
-        <h2>
-          I'm currently working for the{" "}
-          <a href="https://www.gft.com/int/en" target="_blank">
-            GFT group―
-          </a>
-          , focused on create great experiences, enthusiastic about agile, with
-          extensive software engineering background
-        </h2>
-      </main>
-      <nav>
-        <ul>
-          <li>
-            <a
-              href="https://www.linkedin.com/in/baltazarparra/"
-              target="_blank"
-            >
-              <span>linkedIn</span>
-              <img className="icon" src="in.png" />
+      <div className="container">
+        <header>
+          <div className="name">
+            <img
+              className="avatar"
+              src="https://avatars.githubusercontent.com/u/7395304?v=4"
+            />
+            <span>― baltazarparra</span>
+          </div>
+          <div className="performance" onClick={() => setToggle(!toggle)}>
+            effects
+            <div className={toggle ? "toggle" : "toggle off"}>
+              <span></span>
+            </div>
+          </div>
+        </header>
+        <main>
+          <h1>
+            hi, I'm baltz<span>🤙</span>
+            <br />
+            a tech leader
+            <br />
+            based in Bra<b>z</b>sil
+            <br />
+          </h1>
+          <hr></hr>
+          <h2>
+            I'm currently working for the{" "}
+            <a href="https://www.gft.com/int/en" target="_blank">
+              GFT group―
             </a>
-          </li>
-          <li>
-            <a href="https://github.com/baltazarparra" target="_blank">
-              <span>github</span>
-              <img className="icon" src="gh.png" />
-            </a>
-          </li>
-          <li>
-            <a href="https://dev.to/baltz" target="_blank">
-              <span>dev.to</span>
-              <img className="icon" src="dt.png" />
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://open.spotify.com/intl-pt/album/6BFeIsMZ4zcuGbs5cugxLM?si=8g7V-wvuSlyE9nC9tRoUKQ"
-              target="_blank"
-            >
-              <span>spotify</span>
-              <img className="icon" src="sp.png" />
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <SmoothScrollbar />
-      <GlobalCanvas />
-    </div>
+            , focused on create great experiences, enthusiastic about agile,
+            with extensive software engineering background
+          </h2>
+        </main>
+        <nav>
+          <ul>
+            <li>
+              <a
+                href="https://www.linkedin.com/in/baltazarparra/"
+                target="_blank"
+              >
+                <span>linkedIn</span>
+                <img className="icon" src="in.png" />
+              </a>
+            </li>
+            <li>
+              <a href="https://github.com/baltazarparra" target="_blank">
+                <span>github</span>
+                <img className="icon" src="gh.png" />
+              </a>
+            </li>
+            <li>
+              <a href="https://dev.to/baltz" target="_blank">
+                <span>dev.to</span>
+                <img className="icon" src="dt.png" />
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://open.spotify.com/intl-pt/album/6BFeIsMZ4zcuGbs5cugxLM?si=8g7V-wvuSlyE9nC9tRoUKQ"
+                target="_blank"
+              >
+                <span>spotify</span>
+                <img className="icon" src="sp.png" />
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <SmoothScrollbar />
+        <GlobalCanvas />
+      </div>
+    </>
   );
 }
 
