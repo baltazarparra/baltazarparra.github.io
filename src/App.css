@@ -279,7 +279,7 @@ hr {
     }
 }
 
-@media (min-width: 1920px) {
+@media (min-width: 2048px) {
     h1 {
         font-size: 8em;
     }
