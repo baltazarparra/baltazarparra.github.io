@@ -60,8 +60,8 @@
 }
 
 .container {
-    height: 100dvh;
     height: 100vh;
+    height: 100dvh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -267,7 +267,7 @@ hr {
 
 @media (min-width: 1600px) {
     h1 {
-        font-size: 8em;
+        font-size: 6em;
     }
 
     h2 {
@@ -280,6 +280,10 @@ hr {
 }
 
 @media (min-width: 1920px) {
+    h1 {
+        font-size: 8em;
+    }
+
     .container {
         width: 1600px;
         margin: 0 auto;
