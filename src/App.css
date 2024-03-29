@@ -60,9 +60,10 @@
 }
 
 .container {
+    height: 100vh;
     position: relative;
-    min-height: 100dvh;
-    min-height: 100vh;
+
+    @supports (height: 100dvh) {}
 }
 
 .container:after {
@@ -122,10 +123,6 @@ nav a {
     text-decoration: none;
 }
 
-nav li {
-    font-size: 1.2em;
-}
-
 ul {
     display: flex;
     flex-direction: row;
@@ -141,11 +138,11 @@ li a {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.2em;
+    font-size: 1.4em;
 }
 
 li span {
-    padding: .2em;
+    padding: .4em;
 }
 
 footer {
@@ -259,7 +256,7 @@ h2 {
     }
 }
 
-@media (min-width: 1024px) and (min-height: 620px) {
+@media (min-width: 1024px) and (min-height: 654px) {
     .name span {
         display: block;
     }
@@ -276,16 +273,11 @@ h2 {
     }
 
     nav {
-        font-size: 1.2em;
-        margin-bottom: .4em;
-    }
-
-    nav img {
-        width: 20px;
+        font-size: 1.4em;
     }
 }
 
-@media (min-width: 1600px) and (min-height: 620px) {
+@media (min-width: 1600px) and (min-height: 654px) {
     .container {
         max-width: 1600px;
         margin: 0 auto;
@@ -303,7 +295,7 @@ h2 {
     }
 }
 
-@media (max-height: 620px) {
+@media (max-height: 654px) {
     .name span {
         display: block;
     }
@@ -346,27 +338,15 @@ h2 {
 
     h1 {
         font-size: 3.4em;
-        margin: 8px 0 !important;
+        margin-left: 0 !important;
     }
 
     h2 {
         font-size: 1.6em;
     }
 
-    nav {
-        margin-bottom: .6em;
-    }
-
     nav a {
-        font-size: 1em;
-        color: #ccc;
+        font-size: 1.2em;
     }
 
-    nav span {
-        padding: 2px 2px 2px 6px;
-    }
-
-    nav img {
-        max-width: 16px;
-    }
 }
