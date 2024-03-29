@@ -60,12 +60,9 @@
 }
 
 .container {
-    height: 100vh;
     position: relative;
-
-    @supports (height: 100dvh) {
-        height: 100dvh;
-    }
+    height: 100svh;
+    height: 100vh;
 }
 
 .container:after {
@@ -123,6 +120,10 @@ nav {
 
 nav a {
     text-decoration: none;
+}
+
+nav li {
+    font-size: 1.2em;
 }
 
 ul {
@@ -345,6 +346,10 @@ h2 {
 
     h2 {
         font-size: 1.6em;
+    }
+
+    nav a {
+        font-size: 1.2em;
     }
 
 }
