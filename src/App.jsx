@@ -17,6 +17,9 @@ import {
   SMAA,
 } from "@react-three/postprocessing";
 
+import { GlobalCanvas, SmoothScrollbar } from "@14islands/r3f-scroll-rig";
+import "@14islands/r3f-scroll-rig/css";
+
 const Model = () => {
   const myMesh = useRef();
 
@@ -139,6 +142,12 @@ function App() {
             </a>
           </li>
           <li>
+            <a href="https://dev.to/baltz" target="_blank">
+              <span>dev.to</span>
+              <img className="icon" src="dt.png" />
+            </a>
+          </li>
+          <li>
             <a
               href="https://open.spotify.com/intl-pt/album/6BFeIsMZ4zcuGbs5cugxLM?si=8g7V-wvuSlyE9nC9tRoUKQ"
               target="_blank"
@@ -149,6 +158,8 @@ function App() {
           </li>
         </ul>
       </nav>
+      <SmoothScrollbar />
+      <GlobalCanvas />
     </div>
   );
 }
