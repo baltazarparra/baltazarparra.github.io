@@ -14,7 +14,7 @@ import {
   Noise,
   Glitch,
   Pixelation,
-  SMAA,
+  SMAA
 } from "@react-three/postprocessing";
 
 import { GlobalCanvas, SmoothScrollbar } from "@14islands/r3f-scroll-rig";
@@ -111,7 +111,7 @@ function App() {
           <h1>
             hi, I'm baltz<span>🤙</span>
             <br />
-            a tech leader
+            a tech manager
             <br />
             based in Bra<b>z</b>sil
             <br />
@@ -119,8 +119,11 @@ function App() {
           <hr></hr>
           <h2>
             I'm currently working for the{" "}
-            <a href="https://www.gft.com/int/en" target="_blank">
-              GFT group―
+            <a
+              href="https://groupe.up.coop/en/who-are-we/international-presence"
+              target="_blank"
+            >
+              groupe UP ―
             </a>
             , focused on create great experiences, enthusiastic about agile,
             with extensive software engineering background

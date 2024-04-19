@@ -1,9 +1,5 @@
 @keyframes animateGrain {
 
-    0%,
-    100% {
-        transform: translate(0, 0)
-    }
 
     10% {
         transform: translate(-5%, -10%)
@@ -42,7 +38,8 @@
     }
 
     100% {
-        transform: translate(-15%, -20%)
+        transform: translate(-15%, -20%);
+        opacity: .1;
     }
 
 }
@@ -78,6 +75,7 @@
     opacity: 0.10;
     animation: animateGrain 12s steps(10) infinite;
     z-index: -1;
+    animation-delay: 4s;
 }
 
 header {
