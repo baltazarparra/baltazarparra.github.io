@@ -120,10 +120,10 @@ function App() {
           <h2>
             I'm currently working for the{" "}
             <a
-              href="https://groupe.up.coop/en/who-are-we/international-presence"
+              href="https://tanto.vc"
               target="_blank"
             >
-              groupe UP ―
+              Tanto ―
             </a>
             , focused on create great experiences, enthusiastic about agile,
             with extensive software engineering background
