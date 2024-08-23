@@ -142,7 +142,7 @@ nav img {
 nav:before {
     content: "";
     position: absolute;
-    height: 30px;
+    height: 38px;
     width: 100%;
     background-image: url("/brands.png");
     bottom: 60px;
@@ -309,6 +309,7 @@ hr {
 
     nav:before {
         bottom: 90px;
+        height: 50px;
     }
 
     .tanto {
