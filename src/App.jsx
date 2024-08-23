@@ -120,7 +120,7 @@ function App() {
           <h2>
             I'm currently working for the{" "}
             <a href="https://tanto.vc" target="_blank">
-              Tanto ―
+              <img className="tanto" src="/tanto.svg" />
             </a>
             , focused on create great experiences, enthusiastic about agile,
             with extensive software engineering background

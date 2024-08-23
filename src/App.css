@@ -265,6 +265,10 @@ hr {
     opacity: 0;
 }
 
+.tanto {
+    width: 90px;
+}
+
 @media (min-width: 375px) {
     h1 {
         font-size: 3em;
@@ -284,6 +288,10 @@ hr {
         font-size: 2em;
         max-width: 1024px;
     }
+
+    .tanto {
+        width: 128px;
+    }
 }
 
 @media (min-width: 1600px) {
@@ -301,6 +309,10 @@ hr {
 
     nav:before {
         bottom: 90px;
+    }
+
+    .tanto {
+        width: 188px;
     }
 }
 
