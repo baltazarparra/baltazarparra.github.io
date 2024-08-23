@@ -56,6 +56,16 @@
     }
 }
 
+@keyframes scroll-infinite {
+    0% {
+        background-position: -3% 50%;
+    }
+
+    100% {
+        background-position: 103% 50%;
+    }
+}
+
 .container {
     height: 100vh;
     height: 100dvh;
@@ -129,6 +139,18 @@ nav img {
     margin-left: 4px;
 }
 
+nav:before {
+    content: "";
+    position: absolute;
+    height: 30px;
+    width: 100%;
+    background-image: url("/brands.png");
+    bottom: 60px;
+    animation: scroll-infinite 180s linear infinite;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
 ul {
     display: flex;
     flex-direction: row;
@@ -168,6 +190,7 @@ main {
     flex-direction: column;
     justify-content: space-around;
     padding: .4em;
+    margin-top: -90px;
 }
 
 h1 {
@@ -274,6 +297,10 @@ hr {
 
     nav span {
         font-size: 1.4em;
+    }
+
+    nav:before {
+        bottom: 90px;
     }
 }
 

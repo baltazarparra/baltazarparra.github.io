@@ -119,10 +119,7 @@ function App() {
           <hr></hr>
           <h2>
             I'm currently working for the{" "}
-            <a
-              href="https://tanto.vc"
-              target="_blank"
-            >
+            <a href="https://tanto.vc" target="_blank">
               Tanto ―
             </a>
             , focused on create great experiences, enthusiastic about agile,

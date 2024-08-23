@@ -1,6 +1,6 @@
 html {
     height: 100vh;
-    cursor: url("../public/point.png") 10 10, pointer;
+    cursor: url("../point.png") 10 10, pointer;
     box-sizing: border-box;
     font-size: 20px;
     background-color: #222;
@@ -57,5 +57,5 @@ b {
 
 a:hover,
 .toggle {
-    cursor: url("../public/pointer.png") 10 10, pointer !important;
+    cursor: url("../pointer.png") 10 10, pointer !important;
 }
