@@ -111,7 +111,7 @@ function App() {
           <h1>
             hi, I'm baltz<span>🤙</span>
             <br />
-            a tech manager
+            a tech lead
             <br />
             based in Bra<b>z</b>sil
             <br />
