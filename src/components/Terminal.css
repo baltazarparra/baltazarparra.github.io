@@ -104,6 +104,8 @@
     .terminal-window {
         width: 100% !important;
         height: 100vh !important;
+        height: 100dvh !important;
+        /* Usando dynamic viewport height para melhor suporte em dispositivos móveis */
         max-height: 100vh !important;
         max-width: 100% !important;
         position: fixed !important;
@@ -114,6 +116,7 @@
         border-radius: 0;
         margin: 0;
         padding: 0;
+        z-index: 100;
     }
 
     .terminal-content {
@@ -121,6 +124,7 @@
         padding: 1em;
         height: calc(100% - 44px);
         /* Altura total menos a altura do header */
+        overflow-y: auto;
     }
 
     .terminal-header {
