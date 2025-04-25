@@ -1,49 +1,4 @@
-@keyframes animateGrain {
-
-
-    10% {
-        transform: translate(-5%, -10%)
-    }
-
-    20% {
-        transform: translate(-15%, -20%)
-    }
-
-    30% {
-        transform: translate(-5%, -10%)
-    }
-
-    40% {
-        transform: translate(-15%, -20%)
-    }
-
-    50% {
-        transform: translate(-5%, -10%)
-    }
-
-    60% {
-        transform: translate(-15%, -20%)
-    }
-
-    70% {
-        transform: translate(-5%, -10%)
-    }
-
-    80% {
-        transform: translate(-15%, -20%)
-    }
-
-    90% {
-        transform: translate(-5%, -10%)
-    }
-
-    100% {
-        transform: translate(-15%, -20%);
-        opacity: .1;
-    }
-
-}
-
+/* Reset algumas animações que não vamos utilizar mais */
 @keyframes appears {
     from {
         opacity: 0;
@@ -56,274 +11,137 @@
     }
 }
 
-@keyframes scroll-infinite {
-    0% {
-        background-position: -3% 50%;
-    }
-
-    100% {
-        background-position: 103% 50%;
-    }
-}
-
-.container {
+/* Novos estilos para o layout reformulado */
+.app {
+    width: 100%;
     height: 100vh;
     height: 100dvh;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
 }
 
-.container:after {
-    content: "";
-    background-image: url("https://upload.wikimedia.org/wikipedia/commons/7/76/1k_Dissolve_Noise_Texture.png");
-    height: 200%;
-    width: 200%;
+.canvas-container {
+    position: fixed;
     top: 0;
     left: 0;
-    position: fixed;
-    opacity: 0.10;
-    animation: animateGrain 12s steps(10) infinite;
-    z-index: -1;
-    animation-delay: 4s;
-}
-
-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    z-index: 7;
-    padding: .4em;
-    border-bottom: solid 1px #333;
-}
-
-.avatar {
-    width: 60px;
-    border-radius: 100%;
-    transition: width .3s;
-}
-
-.name {
-    display: flex;
-    align-items: center;
-    opacity: 0;
-    animation: appears 1s forwards;
-    animation-delay: .6s;
-}
-
-.name span {
-    display: none;
-}
-
-nav {
     width: 100%;
-    opacity: 0;
-    animation: appears 1s forwards;
-    animation-delay: 2.5s;
-    z-index: 9;
+    height: 100%;
+    z-index: 0;
 }
 
-
-nav a {
-    text-decoration: none;
-}
-
-nav li {
-    border: solid 1px #333;
-
-    padding: .4em;
-}
-
-nav img {
-    max-width: 16px;
-    margin-left: 4px;
-}
-
-nav:before {
-    content: "";
-    position: absolute;
-    height: 38px;
-    width: 100%;
-    background-image: url("/brands.png");
-    bottom: 60px;
-    animation: scroll-infinite 180s linear infinite;
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-
-ul {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-}
-
-li {
-    flex: 1;
-}
-
-li a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-aside {
-    position: fixed;
-    bottom: 100px;
-    height: 100vh;
-    left: 0;
-    width: 100%;
-    z-index: -1;
-    opacity: 0;
-    animation: appears 1s forwards;
-    animation-delay: 4s;
-}
-
-aside canvas {
-    opacity: .6;
-}
-
-main {
+.terminal-container {
+    position: relative;
     z-index: 1;
     display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    padding: .4em;
-    margin-top: -90px;
-}
-
-h1 {
-    opacity: 0;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
     animation: appears 1s forwards;
-    animation-delay: 1.9s;
-    display: block;
-    border-bottom: solid 1px #333;
-    border-right: solid 1px #333;
 }
 
-h1 b {
+.terminal-content-main {
+    padding: 10px;
+    font-family: 'Courier New', monospace;
+}
+
+.terminal-content-main h1 {
+    margin-bottom: 20px;
+    color: #3f3;
+    font-size: 24px;
+    line-height: 1.4;
+    border: none;
+}
+
+.terminal-content-main h1 span {
+    margin-left: 5px;
+}
+
+.terminal-content-main h1 b {
     text-decoration: line-through;
     font-weight: normal;
+    color: #ff5f56;
 }
 
-h2 {
-    opacity: 0;
-    animation: appears 1s forwards;
-    animation-delay: 2.2s;
-    z-index: 8;
-    border-bottom: solid 1px #333;
+.terminal-content-main p {
+    margin-bottom: 20px;
+    line-height: 1.6;
 }
 
-.toggle {
-    width: 48px;
-    height: 24px;
-
-    border: solid 1px #666;
-    background-color: #333;
-    border-radius: 4px;
-    margin-left: .4em;
+.terminal-links {
+    margin-top: 20px;
 }
 
-.toggle span {
-    width: 22px;
-    height: 18px;
-    background-color: #aaa;
-    border-radius: 4px;
-    display: block;
-
-    transform: translateX(0);
-    transition: transform .3s;
-    margin: 2px;
-
+.terminal-links p {
+    color: #ffbd2e;
+    margin-bottom: 10px;
 }
 
-.performance {
+.terminal-links ul {
+    list-style-type: none;
+    padding: 0;
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.terminal-links li {
+    padding: 0;
+    margin: 0;
+}
+
+.terminal-links a {
+    color: #27c93f;
+    text-decoration: none;
+    transition: color 0.3s, text-shadow 0.3s;
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+.terminal-links a:hover {
+    color: #fff;
+    text-shadow: 0 0 5px #3f3;
+    background-color: rgba(63, 255, 51, 0.1);
+}
+
+.pixel-toggle {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 1px solid #3f3;
+    color: #3f3;
+    padding: 8px 12px;
+    font-family: 'Courier New', monospace;
     cursor: pointer;
-    opacity: 0;
-    animation: appears 1s forwards;
-    animation-delay: 3s;
-    z-index: 6;
-
-    font-size: 1.2em;
-
-    border-left: solid 1px #333;
+    border-radius: 4px;
+    z-index: 10;
+    transition: all 0.3s;
 }
 
-.toggle.off {
-    background-color: rgb(11, 75, 11);
+.pixel-toggle:hover {
+    background-color: rgba(63, 255, 51, 0.2);
 }
 
-.off span {
-    transform: translateX(20px);
-    transition: transform .3s;
-}
+@media (max-width: 768px) {
+    .terminal-content-main h1 {
+        font-size: 20px;
+    }
 
-hr {
-    opacity: 0;
-}
+    .terminal-content-main p {
+        font-size: 14px;
+    }
 
-.tanto {
-    width: 90px;
-}
-
-@media (min-width: 375px) {
-    h1 {
-        font-size: 3em;
+    .terminal-links ul {
+        flex-direction: column;
+        gap: 8px;
     }
 }
 
-@media (min-width: 768px) {
-    main {
-        padding: 1em;
-    }
-
-    h1 {
-        font-size: 4em;
-    }
-
-    h2 {
-        font-size: 2em;
-        max-width: 1024px;
-    }
-
-    .tanto {
-        width: 128px;
-    }
-}
-
-@media (min-width: 1600px) {
-    h1 {
-        font-size: 6em;
-    }
-
-    h2 {
-        font-size: 3em;
-    }
-
-    nav span {
-        font-size: 1.4em;
-    }
-
-    nav:before {
-        bottom: 90px;
-        height: 50px;
-    }
-
-    .tanto {
-        width: 188px;
-    }
-}
-
-@media (min-width: 2048px) {
-    h1 {
-        font-size: 8em;
-    }
-
-    .container {
-        width: 1600px;
-        margin: 0 auto;
+@media (min-width: 1024px) {
+    .terminal-content-main h1 {
+        font-size: 28px;
     }
 }

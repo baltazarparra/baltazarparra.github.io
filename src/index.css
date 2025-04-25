@@ -2,13 +2,10 @@ html {
     height: 100vh;
     cursor: url("../point.png") 10 10, pointer;
     box-sizing: border-box;
-    font-size: 20px;
-    background-color: #222;
-    color: #ccc;
-    font-family: "Imbue", serif;
-    font-optical-sizing: auto;
-    text-shadow: 1px 7px 5px rgba(0, 0, 0, 0.6),
-        0px -4px 10px rgba(255, 255, 255, 0.2);
+    font-size: 16px;
+    background-color: #000;
+    color: #ddd;
+    font-family: "Courier New", monospace;
 }
 
 *,
@@ -32,6 +29,12 @@ ul {
     font-weight: normal;
 }
 
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
 ol,
 ul {
     list-style: none;
@@ -43,8 +46,8 @@ img {
 }
 
 a {
-    color: #999;
-    transition: .6s;
+    color: #3f3;
+    transition: .3s;
 }
 
 a:hover {
@@ -52,10 +55,9 @@ a:hover {
 }
 
 b {
-    color: #666;
+    color: #ff5f56;
 }
 
-a:hover,
-.toggle {
-    cursor: url("../pointer.png") 10 10, pointer !important;
+button {
+    cursor: pointer;
 }
