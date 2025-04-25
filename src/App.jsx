@@ -2,7 +2,7 @@
 /* eslint-disable react/no-unknown-property */
 import "./App.css";
 
-import { useState, Suspense, useRef } from "react";
+import { Suspense, useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Stars, useGLTF } from "@react-three/drei";
 import {
@@ -17,13 +17,13 @@ import Terminal from "./components/Terminal";
 const StarBackground = () => {
   return (
     <Stars 
-      radius={50}
-      depth={50}
-      count={5000}
-      factor={4}
+      radius={30}
+      depth={20}
+      count={1000}
+      factor={5}
       saturation={0}
       fade
-      speed={1}
+      speed={0.5}
     />
   );
 };
@@ -55,13 +55,11 @@ const Model = () => {
 };
 
 function App() {
-  const [pixelEffect, setPixelEffect] = useState(true);
-
   return (
     <div className="app">
       <div className="canvas-container">
         <Canvas>
-          <color attach="background" args={['#000']} />
+          <color attach="background" args={['#121212']} />
           <ambientLight intensity={0.2} />
           <directionalLight
             position={[2, 1, 2]}
@@ -74,11 +72,9 @@ function App() {
           </Suspense>
 
           <EffectComposer>
-            {pixelEffect && (
-              <Pixelation 
-                granularity={6} // stronger pixelation effect
-              />
-            )}
+            <Pixelation 
+              granularity={8} // increased pixelation for cozy effect
+            />
             <Noise opacity={0.3} />
             <Bloom 
               luminanceThreshold={0.2} 
@@ -87,13 +83,6 @@ function App() {
             />
           </EffectComposer>
         </Canvas>
-
-        <button 
-          className="pixel-toggle" 
-          onClick={() => setPixelEffect(!pixelEffect)}
-        >
-          {pixelEffect ? "Pixel: ON" : "Pixel: OFF"}
-        </button>
       </div>
 
       <div className="terminal-container">

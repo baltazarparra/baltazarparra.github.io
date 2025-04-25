@@ -3,24 +3,24 @@
     max-width: 700px;
     height: auto;
     max-height: 80vh;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(30, 30, 30, 0.9);
     border-radius: 6px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-    color: #ddd;
+    color: #aaa;
     font-family: 'Courier New', monospace;
     overflow: hidden;
     z-index: 10;
     position: relative;
     backdrop-filter: blur(3px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(100, 100, 100, 0.2);
 }
 
 .terminal-header {
-    background-color: #111;
+    background-color: #222;
     padding: 8px;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(100, 100, 100, 0.2);
 }
 
 .terminal-buttons {
@@ -36,20 +36,21 @@
 }
 
 .terminal-circle.red {
-    background-color: #ff5f56;
+    background-color: #666;
 }
 
 .terminal-circle.yellow {
-    background-color: #ffbd2e;
+    background-color: #555;
 }
 
 .terminal-circle.green {
-    background-color: #27c93f;
+    background-color: #777;
 }
 
 .terminal-title {
-    color: #aaa;
+    color: #888;
     font-size: 12px;
+    font-family: 'Courier New', monospace;
 }
 
 .terminal-content {
@@ -58,6 +59,7 @@
     overflow-y: auto;
     font-size: 14px;
     line-height: 1.5;
+    font-family: 'Courier New', monospace;
 }
 
 .terminal-line {
@@ -65,21 +67,23 @@
 }
 
 .terminal-prompt {
-    color: #3f3;
+    color: #bbb;
     margin-right: 8px;
+    font-family: 'Courier New', monospace;
 }
 
 .terminal-output {
     margin: 15px 0;
-    color: #fff;
+    color: #ccc;
     white-space: pre-wrap;
+    font-family: 'Courier New', monospace;
 }
 
 .terminal-cursor {
     display: inline-block;
     height: 14px;
     width: 8px;
-    background-color: #ddd;
+    background-color: #aaa;
     margin-left: 2px;
     vertical-align: middle;
 }
