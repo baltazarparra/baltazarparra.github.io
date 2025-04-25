@@ -102,11 +102,28 @@
 
 @media (max-width: 768px) {
     .terminal-window {
-        width: 95%;
-        max-height: 70vh;
+        width: 100% !important;
+        height: 100vh !important;
+        max-height: 100vh !important;
+        max-width: 100% !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        border-radius: 0;
+        margin: 0;
+        padding: 0;
     }
 
     .terminal-content {
         font-size: 14px;
+        padding: 1em;
+        height: calc(100% - 44px);
+        /* Altura total menos a altura do header */
+    }
+
+    .terminal-header {
+        padding: 10px 1em;
     }
 }

@@ -3,6 +3,7 @@ import "./Terminal.css";
 
 const Terminal = memo(({ children }) => {
   const [blinkCursor, setBlinkCursor] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
   
   useEffect(() => {
     const interval = setInterval(() => {
@@ -10,6 +11,23 @@ const Terminal = memo(({ children }) => {
     }, 500);
     
     return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    // Função para verificar se é dispositivo móvel
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    // Checa inicialmente
+    checkMobile();
+    
+    // Adiciona listener para redimensionamento
+    window.addEventListener('resize', checkMobile);
+    
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
   }, []);
 
   return (
