@@ -1,14 +1,82 @@
 // eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/no-unknown-property */
 import "./App.css";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useRef } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { useGLTF, Html } from "@react-three/drei";
+import {
+  EffectComposer,
+  Bloom
+} from "@react-three/postprocessing";
 
 // Importação com lazy loading
 const Terminal = lazy(() => import("./components/Terminal"));
 
+// Componente de carregamento para o modelo 3D
+const ModelLoader = () => (
+  <Html center>
+    <div style={{ color: 'white', background: '#121212', padding: '10px', borderRadius: '4px' }}>
+      Carregando modelo...
+    </div>
+  </Html>
+);
+
+const Model = () => {
+  const myMesh = useRef();
+  const { viewport } = useThree();
+
+  useFrame(({ clock }) => {
+    const a = clock.getElapsedTime();
+    myMesh.current.rotation.z = a * 0.1;
+    myMesh.current.rotation.y = a * 0.1;
+    myMesh.current.position.y = Math.sin(a * 0.5) * 0.2;
+  });
+
+  // Usando draco loader para compressão do modelo
+  const { scene } = useGLTF("/smile.glb", true);
+  
+  // Scale model to fit viewport height
+  const scale = viewport.height * 0.5;
+  
+  return (
+    <primitive 
+      ref={myMesh} 
+      object={scene} 
+      scale={scale} 
+      position={[0, 0, -2]}
+    />
+  );
+};
+
+// Pré-carregamento do modelo para evitar FOUC (Flash of Unstyled Content)
+useGLTF.preload("/smile.glb");
+
 function App() {
   return (
     <div className="app">
+      {/* Canvas para o modelo 3D */}
+      <div className="model-container">
+        <Canvas>
+          <ambientLight intensity={0.2} />
+          <directionalLight
+            position={[2, 1, 2]}
+            intensity={1}
+          />
+
+          <Suspense fallback={<ModelLoader />}>
+            <Model />
+          </Suspense>
+
+          <EffectComposer>
+            <Bloom 
+              luminanceThreshold={0.2} 
+              luminanceSmoothing={0.9} 
+              height={200} 
+            />
+          </EffectComposer>
+        </Canvas>
+      </div>
+
       <Suspense fallback={<div>Carregando...</div>}>
         <div className="terminal-container">
           <Terminal>
@@ -25,8 +93,8 @@ function App() {
                 I'm currently working for{" "}
                 <a href="https://tanto.vc" target="_blank" rel="noreferrer">
                   tanto.vc
-                </a>
-                , A decade in web development, shaping interfaces and experiences. Enthusiastic about genAI, with extensive agile and software engineering background
+                </a><br/>
+                A decade in web development, shaping interfaces and experiences. Enthusiastic about genAI, with extensive agile and software engineering background
               </p>
 
               <div className="terminal-links">
