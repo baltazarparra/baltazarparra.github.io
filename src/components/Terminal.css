@@ -6,7 +6,7 @@
     background-color: rgba(30, 30, 30, 0.9);
     border-radius: 6px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-    color: #aaa;
+    color: #f0f0f0;
     font-family: 'Courier New', monospace;
     overflow: hidden;
     z-index: 10;
@@ -48,9 +48,10 @@
 }
 
 .terminal-title {
-    color: #888;
-    font-size: 12px;
+    color: #f0f0f0;
+    font-size: 14px;
     font-family: 'Courier New', monospace;
+    text-shadow: 0 0 3px rgba(255, 255, 255, 0.2);
 }
 
 .terminal-content {
@@ -60,6 +61,8 @@
     font-size: 14px;
     line-height: 1.5;
     font-family: 'Courier New', monospace;
+    color: #f0f0f0;
+    text-shadow: 0 0 3px rgba(255, 255, 255, 0.2);
 }
 
 .terminal-line {
@@ -67,16 +70,18 @@
 }
 
 .terminal-prompt {
-    color: #bbb;
+    color: #f0f0f0;
     margin-right: 8px;
     font-family: 'Courier New', monospace;
+    text-shadow: 0 0 3px rgba(255, 255, 255, 0.2);
 }
 
 .terminal-output {
     margin: 15px 0;
-    color: #ccc;
+    color: #f0f0f0;
     white-space: pre-wrap;
     font-family: 'Courier New', monospace;
+    text-shadow: 0 0 3px rgba(255, 255, 255, 0.2);
 }
 
 .terminal-cursor {
@@ -103,6 +108,6 @@
     }
 
     .terminal-content {
-        font-size: 12px;
+        font-size: 14px;
     }
 }

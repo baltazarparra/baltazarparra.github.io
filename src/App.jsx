@@ -2,17 +2,34 @@
 /* eslint-disable react/no-unknown-property */
 import "./App.css";
 
-import { Suspense, useRef } from "react";
+import { Suspense, useRef, lazy } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Stars, useGLTF } from "@react-three/drei";
+import { Stars, useGLTF, Html } from "@react-three/drei";
 import {
   EffectComposer,
   Pixelation,
-  Noise,
   Bloom
 } from "@react-three/postprocessing";
 
 import Terminal from "./components/Terminal";
+
+// Componente de carregamento para o modelo 3D
+const ModelLoader = () => (
+  <Html center>
+    <div style={{ color: 'white', background: '#121212', padding: '10px', borderRadius: '4px' }}>
+      Carregando modelo...
+    </div>
+  </Html>
+);
+
+// Componente de erro para o modelo 3D
+const ModelError = () => (
+  <Html center>
+    <div style={{ color: 'white', background: '#121212', padding: '10px', borderRadius: '4px' }}>
+      Erro ao carregar o modelo. Por favor, recarregue a página.
+    </div>
+  </Html>
+);
 
 const StarBackground = () => {
   return (
@@ -39,7 +56,8 @@ const Model = () => {
     myMesh.current.position.y = Math.sin(a * 0.5) * 0.2;
   });
 
-  const { scene } = useGLTF("./smile.glb");
+  // Usando draco loader para compressão do modelo
+  const { scene } = useGLTF("./smile.glb", true);
   
   // Scale model to fit viewport height
   const scale = viewport.height * 0.5;
@@ -49,10 +67,13 @@ const Model = () => {
       ref={myMesh} 
       object={scene} 
       scale={scale} 
-      position={[0, 0, -2]} 
+      position={[0, 0, -2]}
     />
   );
 };
+
+// Pré-carregamento do modelo para evitar FOUC (Flash of Unstyled Content)
+useGLTF.preload("./smile.glb");
 
 function App() {
   return (
@@ -66,7 +87,7 @@ function App() {
             intensity={1}
           />
 
-          <Suspense fallback={null}>
+          <Suspense fallback={<ModelLoader />}>
             <StarBackground />
             <Model />
           </Suspense>
@@ -75,7 +96,6 @@ function App() {
             <Pixelation 
               granularity={8} // increased pixelation for cozy effect
             />
-            <Noise opacity={0.3} />
             <Bloom 
               luminanceThreshold={0.2} 
               luminanceSmoothing={0.9} 
@@ -89,7 +109,7 @@ function App() {
         <Terminal>
           <div className="terminal-content-main">
             <h1>
-              hi, I'm baltz<span>🤙</span>
+              hi, I'm baltz
               <br />
               a tech lead
               <br />

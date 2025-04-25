@@ -47,28 +47,27 @@
 
 .terminal-content-main h1 {
     margin-bottom: 20px;
-    color: #bbb;
-    font-size: 24px;
+    color: #f0f0f0;
+    font-size: 14px;
     line-height: 1.4;
     border: none;
     font-family: 'Courier New', monospace;
     font-weight: normal;
-}
-
-.terminal-content-main h1 span {
-    margin-left: 5px;
+    text-shadow: 0 0 3px rgba(255, 255, 255, 0.2);
 }
 
 .terminal-content-main h1 b {
     text-decoration: line-through;
     font-weight: normal;
-    color: #777;
+    color: #f0f0f0;
 }
 
 .terminal-content-main p {
     margin-bottom: 20px;
     line-height: 1.6;
-    color: #aaa;
+    color: #f0f0f0;
+    font-size: 14px;
+    text-shadow: 0 0 3px rgba(255, 255, 255, 0.2);
 }
 
 .terminal-links {
@@ -76,8 +75,10 @@
 }
 
 .terminal-links p {
-    color: #999;
+    color: #f0f0f0;
     margin-bottom: 10px;
+    font-size: 14px;
+    text-shadow: 0 0 3px rgba(255, 255, 255, 0.2);
 }
 
 .terminal-links ul {
@@ -94,23 +95,25 @@
 }
 
 .terminal-links a {
-    color: #999;
+    color: #f0f0f0;
     text-decoration: none;
     transition: color 0.3s, text-shadow 0.3s;
     padding: 2px 5px;
     border-radius: 3px;
     font-family: 'Courier New', monospace;
+    font-size: 14px;
+    text-shadow: 0 0 3px rgba(255, 255, 255, 0.2);
 }
 
 .terminal-links a:hover {
-    color: #ddd;
-    text-shadow: 0 0 5px #777;
+    color: #fff;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
     background-color: rgba(100, 100, 100, 0.1);
 }
 
 @media (max-width: 768px) {
     .terminal-content-main h1 {
-        font-size: 20px;
+        font-size: 14px;
     }
 
     .terminal-content-main p {
@@ -125,6 +128,6 @@
 
 @media (min-width: 1024px) {
     .terminal-content-main h1 {
-        font-size: 28px;
+        font-size: 14px;
     }
 }
