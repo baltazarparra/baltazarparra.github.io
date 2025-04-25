@@ -1,5 +1,5 @@
-// Service Worker para melhorar a performance do site
-const CACHE_NAME = 'baltazar-parra-v1';
+// Service Worker otimizado para melhor performance do site
+const CACHE_NAME = 'baltazar-parra-v3';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -9,67 +9,102 @@ const urlsToCache = [
   '/src/index.css',
   '/src/components/Terminal.jsx',
   '/src/components/Terminal.css',
-  '/public/smile.glb',
-  '/public/icons/nirvana.svg',
-  '/public/icons/nirvana-192x192.png',
-  '/public/icons/nirvana-512x512.png'
+  '/smile.glb',
+  '/icons/favicon.svg',
+  '/og.jpg',
+  'https://fonts.googleapis.com/css2?family=Imbue:opsz,wght@10..100,100..900&display=swap&font-display=swap'
 ];
 
-// Instalação do service worker e cache dos recursos estáticos
+// Instalação e pré-cache dos recursos essenciais
 self.addEventListener('install', (event) => {
+  // Force waiting service worker to become active
+  self.skipWaiting();
+  
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
-        console.log('Cached resources');
+        console.log('Caching essential resources');
         return cache.addAll(urlsToCache);
       })
   );
 });
 
-// Interceptação de requisições para usar o cache quando possível
+// Estratégia de cache: Network First com fallback para cache
 self.addEventListener('fetch', (event) => {
+  // Apenas interceptar requisições HTTP/HTTPS
+  if (!event.request.url.startsWith('http')) return;
+  
+  // Requisições de API não são cacheadas
+  if (event.request.url.includes('/api/')) {
+    return;
+  }
+  
   event.respondWith(
-    caches.match(event.request)
-      .then((response) => {
-        // Cache hit - retorna a resposta do cache
-        if (response) {
-          return response;
+    fetch(event.request)
+      .then((networkResponse) => {
+        // Se a resposta da rede for válida, atualiza o cache
+        if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
+          // Clone a resposta para poder usá-la e armazená-la no cache
+          const responseToCache = networkResponse.clone();
+          
+          caches.open(CACHE_NAME)
+            .then((cache) => {
+              cache.put(event.request, responseToCache);
+            });
         }
-        return fetch(event.request)
+        
+        return networkResponse;
+      })
+      .catch(() => {
+        // Se falhar a requisição de rede, tenta buscar do cache
+        return caches.match(event.request)
           .then((response) => {
-            // Verifica se é uma resposta válida
-            if (!response || response.status !== 200 || response.type !== 'basic') {
+            if (response) {
               return response;
             }
-
-            // Clona a resposta
-            const responseToCache = response.clone();
-
-            // Adiciona a resposta ao cache
-            caches.open(CACHE_NAME)
-              .then((cache) => {
-                cache.put(event.request, responseToCache);
-              });
-
-            return response;
+            
+            // Se não encontrar no cache e for uma página HTML, retorna a página inicial
+            if (event.request.headers.get('accept').includes('text/html')) {
+              return caches.match('/');
+            }
+            
+            // Se não for uma página HTML e não estiver no cache, lança um erro
+            return new Response('Offline - Conteúdo não disponível', {
+              status: 503,
+              statusText: 'Service Unavailable'
+            });
           });
       })
   );
 });
 
-// Limpeza de caches antigos quando uma nova versão do service worker for ativada
+// Limpeza de caches antigos e notificação ao cliente
 self.addEventListener('activate', (event) => {
   const cacheWhitelist = [CACHE_NAME];
 
+  // Torna o service worker ativo em todas as abas abertas sem necessidade de recarregar
+  self.clients.claim();
+  
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
           if (cacheWhitelist.indexOf(cacheName) === -1) {
+            console.log('Deleting old cache:', cacheName);
             return caches.delete(cacheName);
           }
         })
       );
+    }).then(() => {
+      // Notifica todas as páginas abertas que o site foi atualizado
+      self.clients.matchAll().then(clients => {
+        clients.forEach(client => {
+          client.postMessage({
+            type: 'CACHE_UPDATED',
+            message: 'Site atualizado para a versão mais recente!'
+          });
+        });
+      });
     })
   );
 });

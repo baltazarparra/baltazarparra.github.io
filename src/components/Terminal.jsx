@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 import "./Terminal.css";
 
-const Terminal = ({ children }) => {
+const Terminal = memo(({ children }) => {
   const [blinkCursor, setBlinkCursor] = useState(true);
   
   useEffect(() => {
@@ -20,12 +20,8 @@ const Terminal = ({ children }) => {
           <span className="terminal-circle yellow"></span>
           <span className="terminal-circle green"></span>
         </div>
-        <div className="terminal-title">baltz@terminal ~ </div>
       </div>
       <div className="terminal-content">
-        <div className="terminal-line">
-          <span className="terminal-prompt">baltz@terminal:~$</span> cat baltazar-profile.txt
-        </div>
         <div className="terminal-output">
           {children}
         </div>
@@ -36,6 +32,8 @@ const Terminal = ({ children }) => {
       </div>
     </div>
   );
-};
+});
+
+Terminal.displayName = "Terminal";
 
 export default Terminal;

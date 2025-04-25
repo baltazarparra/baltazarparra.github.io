@@ -7,11 +7,11 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Stars, useGLTF, Html } from "@react-three/drei";
 import {
   EffectComposer,
-  Pixelation,
   Bloom
 } from "@react-three/postprocessing";
 
-import Terminal from "./components/Terminal";
+// Importação com lazy loading
+const Terminal = lazy(() => import("./components/Terminal"));
 
 // Componente de carregamento para o modelo 3D
 const ModelLoader = () => (
@@ -22,21 +22,12 @@ const ModelLoader = () => (
   </Html>
 );
 
-// Componente de erro para o modelo 3D
-const ModelError = () => (
-  <Html center>
-    <div style={{ color: 'white', background: '#121212', padding: '10px', borderRadius: '4px' }}>
-      Erro ao carregar o modelo. Por favor, recarregue a página.
-    </div>
-  </Html>
-);
-
 const StarBackground = () => {
   return (
     <Stars 
       radius={30}
       depth={20}
-      count={1000}
+      count={800} // Reduzido de 1000 para 800 para melhorar performance
       factor={5}
       saturation={0}
       fade
@@ -57,7 +48,7 @@ const Model = () => {
   });
 
   // Usando draco loader para compressão do modelo
-  const { scene } = useGLTF("./smile.glb", true);
+  const { scene } = useGLTF("/smile.glb", true);
   
   // Scale model to fit viewport height
   const scale = viewport.height * 0.5;
@@ -73,7 +64,7 @@ const Model = () => {
 };
 
 // Pré-carregamento do modelo para evitar FOUC (Flash of Unstyled Content)
-useGLTF.preload("./smile.glb");
+useGLTF.preload("/smile.glb");
 
 function App() {
   return (
@@ -93,9 +84,6 @@ function App() {
           </Suspense>
 
           <EffectComposer>
-            <Pixelation 
-              granularity={8} // increased pixelation for cozy effect
-            />
             <Bloom 
               luminanceThreshold={0.2} 
               luminanceSmoothing={0.9} 
@@ -105,38 +93,39 @@ function App() {
         </Canvas>
       </div>
 
-      <div className="terminal-container">
-        <Terminal>
-          <div className="terminal-content-main">
-            <h1>
-              hi, I'm baltz
-              <br />
-              a tech lead
-              <br />
-              based in Bra<b>z</b>sil
-            </h1>
-            
-            <p>
-              I'm currently working for the{" "}
-              <a href="https://tanto.vc" target="_blank" rel="noreferrer">
-                tanto.vc
-              </a>
-              , focused on creating great experiences, enthusiastic about agile,
-              with extensive software engineering background
-            </p>
+      <Suspense fallback={<div>Carregando...</div>}>
+        <div className="terminal-container">
+          <Terminal>
+            <div className="terminal-content-main">
+              <h1>
+                hi, I'm baltz
+                <br />
+                a tech lead
+                <br />
+                based in Bra<b>z</b>sil
+              </h1>
+              
+              <p>
+                I'm currently working for{" "}
+                <a href="https://tanto.vc" target="_blank" rel="noreferrer">
+                  tanto.vc
+                </a>
+                , A decade in web development, shaping interfaces and experiences. Enthusiastic about genAI, with extensive agile and software engineering background
+              </p>
 
-            <div className="terminal-links">
-              <p>Find me at:</p>
-              <ul>
-                <li><a href="https://www.linkedin.com/in/baltazarparra/" target="_blank" rel="noreferrer">linkedIn</a></li>
-                <li><a href="https://github.com/baltazarparra" target="_blank" rel="noreferrer">github</a></li>
-                <li><a href="https://dev.to/baltz" target="_blank" rel="noreferrer">dev.to</a></li>
-                <li><a href="https://open.spotify.com/intl-pt/album/6BFeIsMZ4zcuGbs5cugxLM?si=8g7V-wvuSlyE9nC9tRoUKQ" target="_blank" rel="noreferrer">spotify</a></li>
-              </ul>
+              <div className="terminal-links">
+                <p>Find me at:</p>
+                <ul>
+                  <li><a href="https://www.linkedin.com/in/baltazarparra/" target="_blank" rel="noreferrer">linkedIn</a></li>
+                  <li><a href="https://github.com/baltazarparra" target="_blank" rel="noreferrer">github</a></li>
+                  <li><a href="https://dev.to/baltz" target="_blank" rel="noreferrer">dev.to</a></li>
+                  <li><a href="https://open.spotify.com/intl-pt/album/6BFeIsMZ4zcuGbs5cugxLM?si=8g7V-wvuSlyE9nC9tRoUKQ" target="_blank" rel="noreferrer">spotify</a></li>
+                </ul>
+              </div>
             </div>
-          </div>
-        </Terminal>
-      </div>
+          </Terminal>
+        </div>
+      </Suspense>
     </div>
   );
 }

@@ -7,23 +7,20 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'robots.txt', 'og.jpg', 'smile.glb'],
+      includeAssets: ['robots.txt', 'og.jpg', 'smile.glb', 'icons/favicon.svg'],
       manifest: {
         name: 'Baltazar Parra',
         short_name: 'Baltz',
-        description: 'Baltazar Parra - Tech Lead',
+        description: 'Baltazar Parra - Tech Lead especialista em React, NextJS e otimização de performance',
         theme_color: '#121212',
+        background_color: '#121212',
+        display: 'standalone',
         icons: [
           {
-            src: 'pwa-192x192.png',
-            sizes: '192x192',
-            type: 'image/png',
-          },
-          {
-            src: 'pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'any maskable',
+            src: 'icons/favicon.svg',
+            sizes: 'any',
+            type: 'image/svg+xml',
+            purpose: 'any'
           }
         ]
       }
@@ -45,12 +42,20 @@ export default defineConfig({
           react: ['react', 'react-dom'],
           'react-three': ['@react-three/fiber', '@react-three/drei', '@react-three/postprocessing'],
         },
+        // Reduzindo tamanho dos nomes de arquivos
+        entryFileNames: 'assets/[name].[hash].js',
+        chunkFileNames: 'assets/[name].[hash].js',
+        assetFileNames: 'assets/[name].[hash].[ext]'
       },
     },
     // Otimização de assets
     assetsInlineLimit: 4096,
     // Habilitar compressão Gzip e Brotli
     brotliSize: true,
+    // Melhor otimização de CSS
+    cssCodeSplit: true,
+    // Código mais limpo
+    sourcemap: false
   },
   // Otimizações para desenvolvimento
   server: {
