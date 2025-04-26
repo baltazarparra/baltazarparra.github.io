@@ -16,11 +16,16 @@
 }
 
 .terminal-header {
+    cursor: grab;
     background: linear-gradient(90deg, #222222 0%, #1a1a1a 100%);
     padding: 8px;
     display: flex;
     align-items: center;
     border-bottom: 1px solid rgba(100, 100, 100, 0.2);
+}
+
+.terminal-header:active {
+    cursor: grabbing;
 }
 
 .terminal-buttons {
@@ -89,7 +94,6 @@
     width: 8px;
     background-color: #aaa;
     margin-left: 2px;
-    vertical-align: middle;
 }
 
 .terminal-cursor.blink {

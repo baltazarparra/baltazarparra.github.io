@@ -19,6 +19,7 @@ Este é meu site pessoal/portfólio desenvolvido com React e tecnologias 3D mode
 - Modelo 3D interativo renderizado com Three.js
 - Efeitos visuais avançados com shaders e post-processing
 - Design responsivo para desktop e dispositivos móveis
+- Janela de terminal arrastável pelo cabeçalho, com suporte a dispositivo móvel e navegação por teclado
 - Toggle para habilitar/desabilitar efeitos visuais pesados
 - Animações suaves de entrada e transição
 
