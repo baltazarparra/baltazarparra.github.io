@@ -94,7 +94,8 @@ function App() {
                 <a href="https://tanto.vc" target="_blank" rel="noreferrer">
                   tanto.vc
                 </a><br/>
-                A decade in web development, shaping interfaces and experiences. Enthusiastic about genAI, with extensive agile and software engineering background
+                A decade in web development, shaping interfaces and experiences. Enthusiastic about genAI, with extensive agile and software engineering background.<br/>
+I have collaborated with major market players such as XP Investimentos, Serasa, Dasa, MRV Construtora, CVC Viagens, GFT Technologies, CI&T, among others.
               </p>
 
               <div className="terminal-links">
