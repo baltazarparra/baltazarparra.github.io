@@ -20,7 +20,7 @@
     overflow: hidden;
     position: relative;
     /* Degradê elegante de preto e tons de cinza escuro */
-    background: radial-gradient(ellipse at top, #222222 0%, #1e1e1e 15%, #1a1a1a 30%, #171717 45%, #141414 60%, #111111 75%, #0a0a0a 90%, #050505 100%);
+    background: radial-gradient(ellipse at top, #222222 100%, #1e1e1e 15%, #1a1a1a 30%, #171717 45%, #141414 60%, #111111 75%, #0a0a0a 90%, #050505 100%);
 }
 
 .app::before {
