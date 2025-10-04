@@ -123,6 +123,35 @@ const Hero3D = () => {
     };
   }, []);
 
+  // Global touch event for mobile - react to touch anywhere on screen
+  useEffect(() => {
+    const handleGlobalTouch = (e) => {
+      if (!containerRef.current) return;
+
+      const rect = containerRef.current.getBoundingClientRect();
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        lastMouseRef.current.x = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
+        lastMouseRef.current.y = -((touch.clientY - rect.top) / rect.height) * 2 + 1;
+
+        if (!rafIdRef.current) {
+          rafIdRef.current = requestAnimationFrame(() => {
+            setMouse({ ...lastMouseRef.current });
+            rafIdRef.current = null;
+          });
+        }
+      }
+    };
+
+    window.addEventListener("touchmove", handleGlobalTouch, { passive: true });
+    window.addEventListener("touchstart", handleGlobalTouch, { passive: true });
+
+    return () => {
+      window.removeEventListener("touchmove", handleGlobalTouch);
+      window.removeEventListener("touchstart", handleGlobalTouch);
+    };
+  }, []);
+
   const handlePointerMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
     lastMouseRef.current.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
@@ -154,6 +183,19 @@ const Hero3D = () => {
     }
   };
 
+  const handleTouchStart = (e) => {
+    if (e.touches.length > 0) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const touch = e.touches[0];
+      lastMouseRef.current.x =
+        ((touch.clientX - rect.left) / rect.width) * 2 - 1;
+      lastMouseRef.current.y =
+        -((touch.clientY - rect.top) / rect.height) * 2 + 1;
+
+      setMouse({ ...lastMouseRef.current });
+    }
+  };
+
   // Calculate responsive camera settings - Apple-inspired viewport (memoized)
   const cameraSettings = useMemo(() => {
     if (containerSize.width <= 280) {
@@ -175,6 +217,7 @@ const Hero3D = () => {
       className="hero-3d-container"
       onPointerMove={handlePointerMove}
       onTouchMove={handleTouchMove}
+      onTouchStart={handleTouchStart}
     >
       <Canvas
         camera={{
@@ -195,7 +238,7 @@ const Hero3D = () => {
           castShadow={false}
         />
         <spotLight
-          position={[0, 10, 0]}
+          position={[10, 20, 10]}
           angle={0.3}
           penumbra={1}
           intensity={1.5}
@@ -206,14 +249,14 @@ const Hero3D = () => {
           <FloatingModel mouse={mouse} containerSize={containerSize} />
         </Suspense>
 
-        <EffectComposer multisampling={0} disableNormalPass={true}>
+        <EffectComposer multisampling={1} disableNormalPass={true}>
           <Bloom
-            intensity={0.6}
-            luminanceThreshold={0.4}
-            luminanceSmoothing={0.8}
+            intensity={1.6}
+            luminanceThreshold={1.4}
+            luminanceSmoothing={1.8}
             mipmapBlur={true}
           />
-          <ChromaticAberration offset={[0.0008, 0.0008]} />
+          <ChromaticAberration offset={[0.001, 0.001]} />
         </EffectComposer>
       </Canvas>
     </div>
