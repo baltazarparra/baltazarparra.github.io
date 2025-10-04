@@ -3,6 +3,7 @@
 import { useRef, useMemo, useState, useEffect, memo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
+import Particles from "./Particles";
 
 const NoiseShader = memo(({ mouse }) => {
   const meshRef = useRef();
@@ -16,7 +17,7 @@ const NoiseShader = memo(({ mouse }) => {
   `;
 
   const fragmentShader = `
-    #define LAYER_COUNT 100
+    #define LAYER_COUNT 40
 
     uniform float uTime;
     uniform vec2 uMouse;
@@ -115,8 +116,7 @@ const NoiseShader = memo(({ mouse }) => {
         vec3 samplePos = vec3(rotated * (1.4 + t * 1.2), time + t * 1.5);
 
         float base = snoise(samplePos);
-        float sharpen = snoise(samplePos * 1.8 + 2.8);
-        float density = smoothstep(-0.4, 0.85, mix(base, sharpen, 0.5));
+        float density = smoothstep(-0.4, 0.85, base);
 
         vec3 shade = mix(deep, mid, density);
         shade += highlight * smoothstep(0.38, 0.72, density) * 0.55;
@@ -133,12 +133,6 @@ const NoiseShader = memo(({ mouse }) => {
 
       float vignette = smoothstep(1.38, 0.58, length(uv));
       color *= vignette;
-
-      float grain = snoise(vec3(uv * 9.0, uTime * 0.1));
-      color += vec3(grain * 0.1);
-
-      float dots = snoise(vec3(uv * 20.0, uTime * 0.15));
-      color += vec3(0.32, 0.12, 0.05) * dots * 0.28;
 
       gl_FragColor = vec4(color, 1.0);
     }
@@ -163,12 +157,13 @@ const NoiseShader = memo(({ mouse }) => {
   });
 
   return (
-    <mesh ref={meshRef}>
+    <mesh ref={meshRef} position={[0, 0, -20]}>
       <planeGeometry args={[100, 100, 1, 1]} />
       <shaderMaterial
         vertexShader={vertexShader}
         fragmentShader={fragmentShader}
         uniforms={uniforms}
+        depthWrite={false}
       />
     </mesh>
   );
@@ -178,13 +173,21 @@ NoiseShader.displayName = "NoiseShader";
 
 const NoiseBackground = () => {
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [connectProgress, setConnectProgress] = useState(0);
+
+  // Adaptive performance settings
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const dpr = isMobile ? [0.3, 0.6] : [0.7, 1.2];
+  const particleCount = isMobile ? 600 : 1200;
 
   useEffect(() => {
     let rafId = null;
     let lastX = 0;
     let lastY = 0;
 
-    const handleMouseMove = (e) => {
+    // Throttle mouse updates on mobile
+    const handleMouseMove = isMobile ? null : (e) => {
       lastX = e.clientX / window.innerWidth;
       lastY = -(e.clientY / window.innerHeight);
 
@@ -211,15 +214,63 @@ const NoiseBackground = () => {
       }
     };
 
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    const handleScroll = () => {
+      // Calculate scroll progress (0 to 1)
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight - windowHeight;
+      const scrolled = window.scrollY;
+      const progress = Math.min(scrolled / documentHeight, 1);
+
+      // Calculate CONNECT section progress with smoother transition
+      const connectSection = document.querySelector('.connect-section');
+      if (connectSection) {
+        const rect = connectSection.getBoundingClientRect();
+        const sectionTop = rect.top + scrolled;
+        const sectionHeight = rect.height;
+
+        // Extended trigger range for smoother transition
+        const triggerStart = sectionTop - windowHeight * 1.5;
+        const triggerEnd = sectionTop + sectionHeight * 0.5;
+        const triggerRange = triggerEnd - triggerStart;
+
+        const rawProgress = Math.max(0, Math.min(1, (scrolled - triggerStart) / triggerRange));
+
+        // Apply easing for smoother transition
+        const connectScroll = rawProgress * rawProgress * (3 - 2 * rawProgress); // Smoothstep easing
+
+        if (!rafId) {
+          rafId = requestAnimationFrame(() => {
+            setScrollProgress(progress);
+            setConnectProgress(connectScroll);
+            rafId = null;
+          });
+        }
+      } else if (!rafId) {
+        rafId = requestAnimationFrame(() => {
+          setScrollProgress(progress);
+          rafId = null;
+        });
+      }
+    };
+
+    if (handleMouseMove) {
+      window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    }
     window.addEventListener("touchmove", handleTouchMove, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    // Trigger initial scroll calculation
+    handleScroll();
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
+      if (handleMouseMove) {
+        window.removeEventListener("mousemove", handleMouseMove);
+      }
       window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("scroll", handleScroll);
       if (rafId) cancelAnimationFrame(rafId);
     };
-  }, []);
+  }, [isMobile]);
 
   return (
     <div
@@ -234,17 +285,19 @@ const NoiseBackground = () => {
       }}
     >
       <Canvas
-        camera={{ position: [0, 0, 8] }}
-        dpr={[0, 0.2]}
-        performance={{ min: 0.7, max: 1 }}
+        camera={{ position: [0, 0, 8], fov: 75 }}
+        dpr={dpr}
+        performance={{ min: 0.5, max: 1 }}
         gl={{
           antialias: false,
           powerPreference: "high-performance",
           alpha: false,
           stencil: false,
-          depth: false
+          depth: true
         }}
+        frameloop="always"
       >
+        <Particles count={particleCount} scrollProgress={scrollProgress} connectProgress={connectProgress} />
         <NoiseShader mouse={mouse} />
       </Canvas>
     </div>

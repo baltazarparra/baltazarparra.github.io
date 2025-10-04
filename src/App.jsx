@@ -71,43 +71,98 @@ function App() {
           "-=0.2"
         );
 
-      // Advanced scroll animation for CONNECT section
+      // Refined and intensified scroll animation for CONNECT section
       const connectTimeline = gsap.timeline({
         scrollTrigger: {
           trigger: ".connect-section",
-          start: "top 75%",
-          end: "top 25%",
-          scrub: 2,
+          start: "top 80%",
+          end: "top 20%",
+          scrub: 1.5,
         }
       });
 
       connectTimeline
         .fromTo(".connect-section .section-number",
-          { opacity: 0, x: -50, rotate: -10 },
-          { opacity: 1, x: 0, rotate: 0, duration: 0.675 }
+          {
+            opacity: 0,
+            x: -80,
+            rotate: -20,
+            scale: 0.5,
+            filter: "blur(15px)"
+          },
+          {
+            opacity: 1,
+            x: 0,
+            rotate: 0,
+            scale: 1,
+            filter: "blur(0px)",
+            duration: 0.5,
+            ease: "power3.out"
+          }
         )
         .fromTo(".connect-section .section-title",
-          { opacity: 0, y: 30, filter: "blur(10px)" },
-          { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.9 },
-          "-=0.1"
+          {
+            opacity: 0,
+            y: 50,
+            scale: 0.8,
+            filter: "blur(20px)",
+            rotateX: -45
+          },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            filter: "blur(0px)",
+            rotateX: 0,
+            duration: 0.7,
+            ease: "power3.out"
+          },
+          "-=0.2"
         )
         .fromTo(".connect-section .connect-link",
           {
             opacity: 0,
-            x: -60,
-            rotateY: -15,
-            scale: 0.9
+            x: -100,
+            rotateY: -25,
+            rotateX: 15,
+            scale: 0.7,
+            filter: "blur(12px)"
           },
           {
             opacity: 1,
             x: 0,
             rotateY: 0,
+            rotateX: 0,
             scale: 1,
-            duration: 1.35,
-            stagger: 0.1
+            filter: "blur(0px)",
+            duration: 1,
+            stagger: {
+              each: 0.12,
+              ease: "power2.out"
+            },
+            ease: "power3.out"
           },
-          "-=0.2"
+          "-=0.3"
         );
+
+      // Add individual link hover effects with scroll trigger
+      // Only on desktop for performance
+      const isDesktop = window.innerWidth >= 768;
+      if (isDesktop) {
+        gsap.utils.toArray(".connect-link").forEach((link, index) => {
+          gsap.to(link, {
+            scrollTrigger: {
+              trigger: ".connect-section",
+              start: "top 60%",
+              end: "top 30%",
+              scrub: 0.5,
+            },
+            "--glow-intensity": "1",
+            duration: 0.3,
+            delay: index * 0.05
+          });
+        });
+      }
     });
 
     return () => ctx.revert();
