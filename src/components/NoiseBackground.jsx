@@ -4,6 +4,7 @@ import { useRef, useMemo, useState, useEffect, memo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import Particles from "./Particles";
+import PerformanceMonitor from "./PerformanceMonitor";
 
 const NoiseShader = memo(({ mouse }) => {
   const meshRef = useRef();
@@ -17,7 +18,7 @@ const NoiseShader = memo(({ mouse }) => {
   `;
 
   const fragmentShader = `
-    #define LAYER_COUNT 40
+    #define LAYER_COUNT 25
 
     uniform float uTime;
     uniform vec2 uMouse;
@@ -146,24 +147,30 @@ const NoiseShader = memo(({ mouse }) => {
     []
   );
 
+  const mouseVector = useRef(new THREE.Vector2(0, 0));
+
   useFrame(({ clock }) => {
     if (meshRef.current) {
       meshRef.current.material.uniforms.uTime.value = clock.getElapsedTime();
+
+      // Reuse vector instead of creating new one
+      mouseVector.current.set(mouse.x, mouse.y);
       meshRef.current.material.uniforms.uMouse.value.lerp(
-        new THREE.Vector2(mouse.x, mouse.y),
+        mouseVector.current,
         0.1
       );
     }
   });
 
   return (
-    <mesh ref={meshRef} position={[0, 0, -20]}>
+    <mesh ref={meshRef} position={[0, 0, -20]} renderOrder={-1}>
       <planeGeometry args={[100, 100, 1, 1]} />
       <shaderMaterial
         vertexShader={vertexShader}
         fragmentShader={fragmentShader}
         uniforms={uniforms}
         depthWrite={false}
+        depthTest={false}
       />
     </mesh>
   );
@@ -178,8 +185,8 @@ const NoiseBackground = () => {
 
   // Adaptive performance settings
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-  const dpr = isMobile ? [0.3, 0.6] : [0.7, 1.2];
-  const particleCount = isMobile ? 600 : 1200;
+  const dpr = isMobile ? [0.3, 0.5] : [0.5, 0.8];
+  const particleCount = isMobile ? 400 : 800;
 
   useEffect(() => {
     let rafId = null;
@@ -287,16 +294,18 @@ const NoiseBackground = () => {
       <Canvas
         camera={{ position: [0, 0, 8], fov: 75 }}
         dpr={dpr}
-        performance={{ min: 0.5, max: 1 }}
+        performance={{ min: 0.3, max: 0.8, debounce: 200 }}
         gl={{
           antialias: false,
           powerPreference: "high-performance",
           alpha: false,
           stencil: false,
-          depth: true
+          depth: false,
+          logarithmicDepthBuffer: false
         }}
         frameloop="always"
       >
+        <PerformanceMonitor />
         <Particles count={particleCount} scrollProgress={scrollProgress} connectProgress={connectProgress} />
         <NoiseShader mouse={mouse} />
       </Canvas>

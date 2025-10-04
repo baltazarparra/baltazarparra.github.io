@@ -442,7 +442,6 @@ body {
   border-bottom: 2px solid var(--black);
 }
 
-.connect-link:hover,
 .connect-link:active {
   padding-left: 30px;
   background: rgba(255, 107, 53, 0.08);
@@ -451,7 +450,6 @@ body {
     inset 0 0 60px rgba(255, 107, 53, calc(var(--glow-intensity) * 0.15));
 }
 
-.connect-link:hover .connect-link-arrow,
 .connect-link:active .connect-link-arrow {
   transform: translateX(20px);
 }
@@ -462,12 +460,6 @@ body {
   letter-spacing: -0.02em;
   text-transform: uppercase;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.connect-link:hover .connect-link-text {
-  text-shadow:
-    0 0 20px rgba(255, 107, 53, calc(var(--glow-intensity) * 0.4)),
-    0 0 40px rgba(255, 76, 0, calc(var(--glow-intensity) * 0.2));
 }
 
 .connect-link-arrow {

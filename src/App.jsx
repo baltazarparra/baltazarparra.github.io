@@ -8,6 +8,12 @@ import Hero3D from "./components/Hero3D";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Configure ScrollTrigger for better performance
+ScrollTrigger.config({
+  limitCallbacks: true,
+  syncInterval: 150,
+});
+
 function App() {
   const heroRef = useRef();
 
@@ -46,6 +52,7 @@ function App() {
           start: "top 75%",
           end: "top 25%",
           scrub: 2,
+          invalidateOnRefresh: false,
         }
       });
 
@@ -78,6 +85,7 @@ function App() {
           start: "top 80%",
           end: "top 20%",
           scrub: 1.5,
+          invalidateOnRefresh: false,
         }
       });
 

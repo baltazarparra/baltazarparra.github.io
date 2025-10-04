@@ -4,7 +4,11 @@ import { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
-const Particles = ({ count = 12, scrollProgress = 0, connectProgress = 0 }) => {
+const Particles = ({
+  count = 800,
+  scrollProgress = 0,
+  connectProgress = 0
+}) => {
   const pointsRef = useRef();
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
@@ -51,8 +55,8 @@ const Particles = ({ count = 12, scrollProgress = 0, connectProgress = 0 }) => {
       float easedSize = 1.0 + easedConnect * 2.2;
       gl_PointSize = uSize * aScale * (300.0 / -mvPosition.z) * easedSize;
 
-      // Smooth alpha with easing
-      vAlpha = (1.0 - length(pos) * 0.08) * (0.8 + easedConnect * 0.2);
+      // Higher alpha for better visibility
+      vAlpha = (1.0 - length(pos) * 0.06) * (0.9 + easedConnect * 0.1);
       vIntensity = easedConnect;
     }
   `;
@@ -83,8 +87,8 @@ const Particles = ({ count = 12, scrollProgress = 0, connectProgress = 0 }) => {
       // Smooth pulsing
       float pulse = sin(uTime * 2.0) * 0.25 + 0.75;
 
-      // Final optimized alpha
-      float alpha = strength * vAlpha * pulse * (0.75 + vIntensity * 0.25);
+      // Higher alpha for visibility
+      float alpha = strength * vAlpha * pulse * (0.85 + vIntensity * 0.15);
       gl_FragColor = vec4(color, alpha);
     }
   `;
@@ -126,7 +130,7 @@ const Particles = ({ count = 12, scrollProgress = 0, connectProgress = 0 }) => {
   const uniforms = useMemo(
     () => ({
       uTime: { value: 0 },
-      uSize: { value: isMobile ? 7.2 : 9.6 },
+      uSize: { value: isMobile ? 9.0 : 12.0 },
       uScrollProgress: { value: 0 },
       uConnectProgress: { value: 0 },
       uColor1: { value: new THREE.Color("#FF6B35") },

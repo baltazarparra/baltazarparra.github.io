@@ -226,11 +226,11 @@ const Hero3D = () => {
           position: cameraSettings.position,
           fov: cameraSettings.fov
         }}
-        dpr={[0.8, 1.5]}
-        performance={{ min: 0.5, max: 0.9 }}
+        dpr={[0.5, 1]}
+        performance={{ min: 0.4, max: 0.8, debounce: 200 }}
         gl={{
           powerPreference: "high-performance",
-          antialias: true
+          antialias: false
         }}
       >
         <ambientLight intensity={60} />
@@ -251,14 +251,14 @@ const Hero3D = () => {
           <FloatingModel mouse={mouse} containerSize={containerSize} />
         </Suspense>
 
-        <EffectComposer multisampling={1} disableNormalPass={true}>
+        <EffectComposer multisampling={0} disableNormalPass={true}>
           <Bloom
-            intensity={2.6}
+            intensity={2.4}
             luminanceThreshold={2.4}
-            luminanceSmoothing={2.8}
-            mipmapBlur={true}
+            luminanceSmoothing={2.6}
+            mipmapBlur={false}
           />
-          <ChromaticAberration offset={[0.01, 0.01]} />
+          <ChromaticAberration offset={[0.008, 0.008]} />
         </EffectComposer>
       </Canvas>
     </div>
