@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import "./App.css";
 import { useEffect, useRef } from "react";
 import { Lenis } from "lenis/react";
@@ -11,7 +10,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 function App() {
   const heroRef = useRef();
-  const lenisRef = useRef();
 
   useEffect(() => {
     // Hero animation with delay to ensure DOM is ready

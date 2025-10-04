@@ -1,14 +1,35 @@
-import { useRef, Suspense, useState } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { useGLTF, MeshTransmissionMaterial } from '@react-three/drei';
-import { EffectComposer, Bloom, ChromaticAberration } from '@react-three/postprocessing';
-import * as THREE from 'three';
+/* eslint-disable react/prop-types */
+/* eslint-disable react/no-unknown-property */
+import { useRef, Suspense, useState, useEffect } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { useGLTF } from "@react-three/drei";
+import {
+  EffectComposer,
+  Bloom,
+  ChromaticAberration
+} from "@react-three/postprocessing";
+import * as THREE from "three";
 
-const FloatingModel = ({ mouse }) => {
+const FloatingModel = ({ mouse, containerSize }) => {
   const meshRef = useRef();
   const lightRef = useRef();
-  const { scene } = useGLTF('/smile.glb');
+  const { scene } = useGLTF("/smile.glb");
   const { viewport } = useThree();
+
+  // Calculate responsive scale based on container size - Apple-inspired proportions
+  const getResponsiveScale = () => {
+    if (containerSize.width <= 280) {
+      return 2.4; // Mobile - muito mais conservador
+    } else if (containerSize.width <= 320) {
+      return 2.5; // Tablet small
+    } else if (containerSize.width <= 400) {
+      return 1.8; // Desktop
+    } else if (containerSize.width <= 480) {
+      return 2.2; // Large Desktop
+    } else {
+      return 2.85; // Extra Large
+    }
+  };
 
   useFrame(({ clock }) => {
     if (meshRef.current) {
@@ -31,6 +52,12 @@ const FloatingModel = ({ mouse }) => {
 
       // Subtle rotation
       meshRef.current.rotation.z = Math.cos(t * 0.4) * 0.1;
+
+      // Update scale responsively
+      const targetScale = getResponsiveScale();
+      meshRef.current.scale.setScalar(
+        THREE.MathUtils.lerp(meshRef.current.scale.x, targetScale, 0.1)
+      );
     }
 
     // Dynamic light following mouse
@@ -45,7 +72,7 @@ const FloatingModel = ({ mouse }) => {
       <primitive
         ref={meshRef}
         object={scene}
-        scale={2.2}
+        scale={getResponsiveScale()}
         position={[0, 0, 0]}
       />
       <pointLight
@@ -59,10 +86,28 @@ const FloatingModel = ({ mouse }) => {
   );
 };
 
-useGLTF.preload('/smile.glb');
+useGLTF.preload("/smile.glb");
 
 const Hero3D = () => {
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
+  const [containerSize, setContainerSize] = useState({
+    width: 400,
+    height: 400
+  });
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const updateSize = () => {
+      if (containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        setContainerSize({ width: rect.width, height: rect.height });
+      }
+    };
+
+    updateSize();
+    window.addEventListener("resize", updateSize);
+    return () => window.removeEventListener("resize", updateSize);
+  }, []);
 
   const handlePointerMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -81,14 +126,35 @@ const Hero3D = () => {
     }
   };
 
+  // Calculate responsive camera settings - Apple-inspired viewport
+  const getCameraSettings = () => {
+    if (containerSize.width <= 280) {
+      return { position: [0, 0, 7.5], fov: 45 }; // Mobile - câmera mais afastada, FOV controlado
+    } else if (containerSize.width <= 320) {
+      return { position: [0, 0, 7], fov: 45 }; // Tablet small
+    } else if (containerSize.width <= 400) {
+      return { position: [0, 0, 6.5], fov: 42 }; // Desktop
+    } else if (containerSize.width <= 480) {
+      return { position: [0, 0, 6], fov: 40 }; // Large Desktop
+    } else {
+      return { position: [0, 0, 5.8], fov: 38 }; // Extra Large - FOV mais apertado para controle
+    }
+  };
+
+  const cameraSettings = getCameraSettings();
+
   return (
     <div
+      ref={containerRef}
       className="hero-3d-container"
       onPointerMove={handlePointerMove}
       onTouchMove={handleTouchMove}
     >
       <Canvas
-        camera={{ position: [0, 0, 6], fov: 45 }}
+        camera={{
+          position: cameraSettings.position,
+          fov: cameraSettings.fov
+        }}
         dpr={[1, 2]}
         performance={{ min: 0.5 }}
       >
@@ -103,7 +169,7 @@ const Hero3D = () => {
         />
 
         <Suspense fallback={null}>
-          <FloatingModel mouse={mouse} />
+          <FloatingModel mouse={mouse} containerSize={containerSize} />
         </Suspense>
 
         <EffectComposer>
@@ -112,9 +178,7 @@ const Hero3D = () => {
             luminanceThreshold={0.3}
             luminanceSmoothing={0.9}
           />
-          <ChromaticAberration
-            offset={[0.001, 0.001]}
-          />
+          <ChromaticAberration offset={[0.001, 0.001]} />
         </EffectComposer>
       </Canvas>
     </div>
