@@ -39,20 +39,75 @@ function App() {
         ease: "power3.out"
       });
 
-      // Scroll animations
-      gsap.utils.toArray(".section").forEach((section) => {
-        gsap.from(section, {
-          y: 60,
-          opacity: 0,
-          duration: 0.8,
-          scrollTrigger: {
-            trigger: section,
-            start: "top 85%",
-            end: "top 60%",
-            toggleActions: "play none none reverse"
-          }
-        });
+      // Advanced scroll animation for ABOUT section
+      const aboutTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".about-section",
+          start: "top 75%",
+          end: "top 25%",
+          scrub: 2,
+        }
       });
+
+      aboutTimeline
+        .fromTo(".about-section .section-number",
+          { opacity: 0, x: -50, rotate: -10 },
+          { opacity: 1, x: 0, rotate: 0, duration: 0.675 }
+        )
+        .fromTo(".about-section .section-title",
+          { opacity: 0, y: 30, filter: "blur(10px)" },
+          { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.9 },
+          "-=0.1"
+        )
+        .fromTo(".about-section .section-text p",
+          { opacity: 0, y: 40, scale: 0.95 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 1.125,
+            stagger: 0.15
+          },
+          "-=0.2"
+        );
+
+      // Advanced scroll animation for CONNECT section
+      const connectTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".connect-section",
+          start: "top 75%",
+          end: "top 25%",
+          scrub: 2,
+        }
+      });
+
+      connectTimeline
+        .fromTo(".connect-section .section-number",
+          { opacity: 0, x: -50, rotate: -10 },
+          { opacity: 1, x: 0, rotate: 0, duration: 0.675 }
+        )
+        .fromTo(".connect-section .section-title",
+          { opacity: 0, y: 30, filter: "blur(10px)" },
+          { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.9 },
+          "-=0.1"
+        )
+        .fromTo(".connect-section .connect-link",
+          {
+            opacity: 0,
+            x: -60,
+            rotateY: -15,
+            scale: 0.9
+          },
+          {
+            opacity: 1,
+            x: 0,
+            rotateY: 0,
+            scale: 1,
+            duration: 1.35,
+            stagger: 0.1
+          },
+          "-=0.2"
+        );
     });
 
     return () => ctx.revert();
