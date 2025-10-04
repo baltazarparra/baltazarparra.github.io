@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unknown-property */
-import { useRef, Suspense, useState, useEffect } from "react";
+import { useRef, Suspense, useState, useEffect, memo, useMemo } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import {
@@ -10,7 +10,7 @@ import {
 } from "@react-three/postprocessing";
 import * as THREE from "three";
 
-const FloatingModel = ({ mouse, containerSize }) => {
+const FloatingModel = memo(({ mouse, containerSize }) => {
   const meshRef = useRef();
   const lightRef = useRef();
   const { scene } = useGLTF("/smile.glb");
@@ -25,7 +25,7 @@ const FloatingModel = ({ mouse, containerSize }) => {
     } else if (containerSize.width <= 400) {
       return 1.8; // Desktop
     } else if (containerSize.width <= 480) {
-      return 2.2; // Large Desktop
+      return 1.6; // Large Desktop
     } else {
       return 2.85; // Extra Large
     }
@@ -84,7 +84,9 @@ const FloatingModel = ({ mouse, containerSize }) => {
       />
     </>
   );
-};
+});
+
+FloatingModel.displayName = "FloatingModel";
 
 useGLTF.preload("/smile.glb");
 
@@ -95,39 +97,65 @@ const Hero3D = () => {
     height: 400
   });
   const containerRef = useRef(null);
+  const rafIdRef = useRef(null);
+  const lastMouseRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
+    let resizeRafId = null;
+
     const updateSize = () => {
-      if (containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect();
-        setContainerSize({ width: rect.width, height: rect.height });
+      if (!resizeRafId) {
+        resizeRafId = requestAnimationFrame(() => {
+          if (containerRef.current) {
+            const rect = containerRef.current.getBoundingClientRect();
+            setContainerSize({ width: rect.width, height: rect.height });
+          }
+          resizeRafId = null;
+        });
       }
     };
 
     updateSize();
-    window.addEventListener("resize", updateSize);
-    return () => window.removeEventListener("resize", updateSize);
+    window.addEventListener("resize", updateSize, { passive: true });
+    return () => {
+      window.removeEventListener("resize", updateSize);
+      if (resizeRafId) cancelAnimationFrame(resizeRafId);
+    };
   }, []);
 
   const handlePointerMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-    const y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
-    setMouse({ x, y });
+    lastMouseRef.current.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    lastMouseRef.current.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+    if (!rafIdRef.current) {
+      rafIdRef.current = requestAnimationFrame(() => {
+        setMouse({ ...lastMouseRef.current });
+        rafIdRef.current = null;
+      });
+    }
   };
 
   const handleTouchMove = (e) => {
     if (e.touches.length > 0) {
       const rect = e.currentTarget.getBoundingClientRect();
       const touch = e.touches[0];
-      const x = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
-      const y = -((touch.clientY - rect.top) / rect.height) * 2 + 1;
-      setMouse({ x, y });
+      lastMouseRef.current.x =
+        ((touch.clientX - rect.left) / rect.width) * 2 - 1;
+      lastMouseRef.current.y =
+        -((touch.clientY - rect.top) / rect.height) * 2 + 1;
+
+      if (!rafIdRef.current) {
+        rafIdRef.current = requestAnimationFrame(() => {
+          setMouse({ ...lastMouseRef.current });
+          rafIdRef.current = null;
+        });
+      }
     }
   };
 
-  // Calculate responsive camera settings - Apple-inspired viewport
-  const getCameraSettings = () => {
+  // Calculate responsive camera settings - Apple-inspired viewport (memoized)
+  const cameraSettings = useMemo(() => {
     if (containerSize.width <= 280) {
       return { position: [0, 0, 7.5], fov: 45 }; // Mobile - câmera mais afastada, FOV controlado
     } else if (containerSize.width <= 320) {
@@ -139,9 +167,7 @@ const Hero3D = () => {
     } else {
       return { position: [0, 0, 5.8], fov: 38 }; // Extra Large - FOV mais apertado para controle
     }
-  };
-
-  const cameraSettings = getCameraSettings();
+  }, [containerSize.width]);
 
   return (
     <div
@@ -155,30 +181,39 @@ const Hero3D = () => {
           position: cameraSettings.position,
           fov: cameraSettings.fov
         }}
-        dpr={[1, 2]}
-        performance={{ min: 0.5 }}
+        dpr={[0.8, 1.5]}
+        performance={{ min: 0.5, max: 0.9 }}
+        gl={{
+          powerPreference: "high-performance",
+          antialias: true
+        }}
       >
         <ambientLight intensity={0.6} />
-        <directionalLight position={[5, 5, 5]} intensity={1} />
+        <directionalLight
+          position={[5, 5, 5]}
+          intensity={1}
+          castShadow={false}
+        />
         <spotLight
           position={[0, 10, 0]}
           angle={0.3}
           penumbra={1}
           intensity={1.5}
-          castShadow
+          castShadow={false}
         />
 
         <Suspense fallback={null}>
           <FloatingModel mouse={mouse} containerSize={containerSize} />
         </Suspense>
 
-        <EffectComposer>
+        <EffectComposer multisampling={0} disableNormalPass={true}>
           <Bloom
-            intensity={0.8}
-            luminanceThreshold={0.3}
-            luminanceSmoothing={0.9}
+            intensity={0.6}
+            luminanceThreshold={0.4}
+            luminanceSmoothing={0.8}
+            mipmapBlur={true}
           />
-          <ChromaticAberration offset={[0.001, 0.001]} />
+          <ChromaticAberration offset={[0.0008, 0.0008]} />
         </EffectComposer>
       </Canvas>
     </div>

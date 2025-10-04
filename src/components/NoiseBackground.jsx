@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unknown-property */
-import { useRef, useMemo, useState, useEffect } from 'react';
+import { useRef, useMemo, useState, useEffect, memo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
-const NoiseShader = ({ mouse }) => {
+const NoiseShader = memo(({ mouse }) => {
   const meshRef = useRef();
 
   const vertexShader = `
@@ -16,7 +16,7 @@ const NoiseShader = ({ mouse }) => {
   `;
 
   const fragmentShader = `
-    #define LAYER_COUNT 18
+    #define LAYER_COUNT 8
 
     uniform float uTime;
     uniform vec2 uMouse;
@@ -169,33 +169,52 @@ const NoiseShader = ({ mouse }) => {
       />
     </mesh>
   );
-};
+});
+
+NoiseShader.displayName = "NoiseShader";
 
 const NoiseBackground = () => {
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
+    let rafId = null;
+    let lastX = 0;
+    let lastY = 0;
+
     const handleMouseMove = (e) => {
-      const x = (e.clientX / window.innerWidth) * 2 - 1;
-      const y = -(e.clientY / window.innerHeight) * 2 + 1;
-      setMouse({ x, y });
+      lastX = (e.clientX / window.innerWidth) * 2 - 1;
+      lastY = -(e.clientY / window.innerHeight) * 2 + 1;
+
+      if (!rafId) {
+        rafId = requestAnimationFrame(() => {
+          setMouse({ x: lastX, y: lastY });
+          rafId = null;
+        });
+      }
     };
 
     const handleTouchMove = (e) => {
       if (e.touches.length > 0) {
         const touch = e.touches[0];
-        const x = (touch.clientX / window.innerWidth) * 2 - 1;
-        const y = -(touch.clientY / window.innerHeight) * 2 + 1;
-        setMouse({ x, y });
+        lastX = (touch.clientX / window.innerWidth) * 2 - 1;
+        lastY = -(touch.clientY / window.innerHeight) * 2 + 1;
+
+        if (!rafId) {
+          rafId = requestAnimationFrame(() => {
+            setMouse({ x: lastX, y: lastY });
+            rafId = null;
+          });
+        }
       }
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('touchmove', handleTouchMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('touchmove', handleTouchMove);
+      if (rafId) cancelAnimationFrame(rafId);
     };
   }, []);
 
@@ -211,9 +230,15 @@ const NoiseBackground = () => {
     }}>
       <Canvas
         camera={{ position: [0, 0, 5] }}
-        dpr={[1, 1.5]}
-        performance={{ min: 0.6 }}
-        gl={{ antialias: false, powerPreference: 'high-performance' }}
+        dpr={[0.8, 1.2]}
+        performance={{ min: 0.5, max: 0.9 }}
+        gl={{
+          antialias: false,
+          powerPreference: 'high-performance',
+          alpha: false,
+          stencil: false,
+          depth: false
+        }}
       >
         <NoiseShader mouse={mouse} />
       </Canvas>
