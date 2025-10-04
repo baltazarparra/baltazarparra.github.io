@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unknown-property */
-import { useRef, useMemo, useState, useEffect, memo } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import * as THREE from 'three';
+import { useRef, useMemo, useState, useEffect, memo } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import * as THREE from "three";
 
 const NoiseShader = memo(({ mouse }) => {
   const meshRef = useRef();
@@ -16,7 +16,7 @@ const NoiseShader = memo(({ mouse }) => {
   `;
 
   const fragmentShader = `
-    #define LAYER_COUNT 8
+    #define LAYER_COUNT 100
 
     uniform float uTime;
     uniform vec2 uMouse;
@@ -129,12 +129,12 @@ const NoiseShader = memo(({ mouse }) => {
 
       float distToMouse = length((vUv - 0.5) - mouse * 0.25);
       float mouseGlow = exp(-distToMouse * 2.4);
-      color += highlight * mouseGlow * 0.35;
+      color += highlight * mouseGlow * 0.95;
 
       float vignette = smoothstep(1.38, 0.58, length(uv));
       color *= vignette;
 
-      float grain = snoise(vec3(uv * 9.0, uTime * 0.2));
+      float grain = snoise(vec3(uv * 9.0, uTime * 0.1));
       color += vec3(grain * 0.1);
 
       float dots = snoise(vec3(uv * 20.0, uTime * 0.15));
@@ -144,17 +144,20 @@ const NoiseShader = memo(({ mouse }) => {
     }
   `;
 
-  const uniforms = useMemo(() => ({
-    uTime: { value: 0 },
-    uMouse: { value: new THREE.Vector2(0, 0) }
-  }), []);
+  const uniforms = useMemo(
+    () => ({
+      uTime: { value: 0 },
+      uMouse: { value: new THREE.Vector2(0, 0) }
+    }),
+    []
+  );
 
   useFrame(({ clock }) => {
     if (meshRef.current) {
       meshRef.current.material.uniforms.uTime.value = clock.getElapsedTime();
       meshRef.current.material.uniforms.uMouse.value.lerp(
         new THREE.Vector2(mouse.x, mouse.y),
-        0.05
+        0.1
       );
     }
   });
@@ -182,8 +185,8 @@ const NoiseBackground = () => {
     let lastY = 0;
 
     const handleMouseMove = (e) => {
-      lastX = (e.clientX / window.innerWidth) * 2 - 1;
-      lastY = -(e.clientY / window.innerHeight) * 2 + 1;
+      lastX = e.clientX / window.innerWidth;
+      lastY = -(e.clientY / window.innerHeight);
 
       if (!rafId) {
         rafId = requestAnimationFrame(() => {
@@ -196,8 +199,8 @@ const NoiseBackground = () => {
     const handleTouchMove = (e) => {
       if (e.touches.length > 0) {
         const touch = e.touches[0];
-        lastX = (touch.clientX / window.innerWidth) * 2 - 1;
-        lastY = -(touch.clientY / window.innerHeight) * 2 + 1;
+        lastX = touch.clientX / window.innerWidth - 1;
+        lastY = -(touch.clientY / window.innerHeight) + 1;
 
         if (!rafId) {
           rafId = requestAnimationFrame(() => {
@@ -208,33 +211,35 @@ const NoiseBackground = () => {
       }
     };
 
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("touchmove", handleTouchMove);
       if (rafId) cancelAnimationFrame(rafId);
     };
   }, []);
 
   return (
-    <div style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      zIndex: 0,
-      pointerEvents: 'none'
-    }}>
+    <div
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        zIndex: 0,
+        pointerEvents: "none"
+      }}
+    >
       <Canvas
-        camera={{ position: [0, 0, 5] }}
-        dpr={[0.8, 1.2]}
-        performance={{ min: 0.5, max: 0.9 }}
+        camera={{ position: [0, 0, 8] }}
+        dpr={[0, 0.2]}
+        performance={{ min: 0.7, max: 1 }}
         gl={{
           antialias: false,
-          powerPreference: 'high-performance',
+          powerPreference: "high-performance",
           alpha: false,
           stencil: false,
           depth: false

@@ -131,8 +131,10 @@ const Hero3D = () => {
       const rect = containerRef.current.getBoundingClientRect();
       if (e.touches.length > 0) {
         const touch = e.touches[0];
-        lastMouseRef.current.x = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
-        lastMouseRef.current.y = -((touch.clientY - rect.top) / rect.height) * 2 + 1;
+        lastMouseRef.current.x =
+          ((touch.clientX - rect.left) / rect.width) * 2 - 1;
+        lastMouseRef.current.y =
+          -((touch.clientY - rect.top) / rect.height) * 2 + 1;
 
         if (!rafIdRef.current) {
           rafIdRef.current = requestAnimationFrame(() => {
@@ -199,15 +201,15 @@ const Hero3D = () => {
   // Calculate responsive camera settings - Apple-inspired viewport (memoized)
   const cameraSettings = useMemo(() => {
     if (containerSize.width <= 280) {
-      return { position: [0, 0, 7.5], fov: 45 }; // Mobile - câmera mais afastada, FOV controlado
+      return { position: [1, -2, 7.5], fov: 45 }; // Mobile - câmera mais afastada, FOV controlado
     } else if (containerSize.width <= 320) {
-      return { position: [0, 0, 7], fov: 45 }; // Tablet small
+      return { position: [1, -2, 7], fov: 45 }; // Tablet small
     } else if (containerSize.width <= 400) {
-      return { position: [0, 0, 6.5], fov: 42 }; // Desktop
+      return { position: [1, -2, 6.5], fov: 42 }; // Desktop
     } else if (containerSize.width <= 480) {
-      return { position: [0, 0, 6], fov: 40 }; // Large Desktop
+      return { position: [1, -2, 6], fov: 40 }; // Large Desktop
     } else {
-      return { position: [0, 0, 5.8], fov: 38 }; // Extra Large - FOV mais apertado para controle
+      return { position: [1, -2, 5.8], fov: 38 }; // Extra Large - FOV mais apertado para controle
     }
   }, [containerSize.width]);
 
@@ -231,18 +233,18 @@ const Hero3D = () => {
           antialias: true
         }}
       >
-        <ambientLight intensity={0.6} />
+        <ambientLight intensity={60} />
         <directionalLight
-          position={[5, 5, 5]}
-          intensity={1}
-          castShadow={false}
+          position={[15, 15, 15]}
+          intensity={10}
+          castShadow={true}
         />
         <spotLight
-          position={[10, 20, 10]}
-          angle={0.3}
+          position={[1, 2, 1]}
+          angle={1}
           penumbra={1}
           intensity={1.5}
-          castShadow={false}
+          castShadow={true}
         />
 
         <Suspense fallback={null}>
@@ -251,12 +253,12 @@ const Hero3D = () => {
 
         <EffectComposer multisampling={1} disableNormalPass={true}>
           <Bloom
-            intensity={1.6}
-            luminanceThreshold={1.4}
-            luminanceSmoothing={1.8}
+            intensity={2.6}
+            luminanceThreshold={2.4}
+            luminanceSmoothing={2.8}
             mipmapBlur={true}
           />
-          <ChromaticAberration offset={[0.001, 0.001]} />
+          <ChromaticAberration offset={[0.01, 0.01]} />
         </EffectComposer>
       </Canvas>
     </div>
