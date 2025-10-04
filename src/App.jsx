@@ -1,117 +1,181 @@
-// eslint-disable react/no-unescaped-entities */
-/* eslint-disable react/no-unknown-property */
+/* eslint-disable react/no-unescaped-entities */
 import "./App.css";
-import { Suspense, lazy, useRef } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { useGLTF, Html } from "@react-three/drei";
-import {
-  EffectComposer,
-  Bloom
-} from "@react-three/postprocessing";
+import { useEffect, useRef } from "react";
+import { Lenis } from "lenis/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import NoiseBackground from "./components/NoiseBackground";
+import Hero3D from "./components/Hero3D";
 
-// Importação com lazy loading
-const Terminal = lazy(() => import("./components/Terminal"));
-
-// Componente de carregamento para o modelo 3D
-const ModelLoader = () => (
-  <Html center>
-    <div style={{ color: 'white', background: '#121212', padding: '10px', borderRadius: '4px' }}>
-      Carregando modelo...
-    </div>
-  </Html>
-);
-
-const Model = () => {
-  const myMesh = useRef();
-  const { viewport } = useThree();
-
-  useFrame(({ clock }) => {
-    const a = clock.getElapsedTime();
-    myMesh.current.rotation.z = a * 0.1;
-    myMesh.current.rotation.y = a * 0.1;
-    myMesh.current.position.y = Math.sin(a * 0.5) * 0.2;
-  });
-
-  // Usando draco loader para compressão do modelo
-  const { scene } = useGLTF("/smile.glb", true);
-  
-  // Scale model to fit viewport height
-  const scale = viewport.height * 0.5;
-  
-  return (
-    <primitive 
-      ref={myMesh} 
-      object={scene} 
-      scale={scale} 
-      position={[0, 0, -2]}
-    />
-  );
-};
-
-// Pré-carregamento do modelo para evitar FOUC (Flash of Unstyled Content)
-useGLTF.preload("/smile.glb");
+gsap.registerPlugin(ScrollTrigger);
 
 function App() {
+  const heroRef = useRef();
+  const lenisRef = useRef();
+
+  useEffect(() => {
+    // Hero animation with delay to ensure DOM is ready
+    const ctx = gsap.context(() => {
+      gsap.from(".hero-label", {
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        delay: 0.2,
+        ease: "power3.out"
+      });
+
+      gsap.from(".hero-title-line", {
+        y: 100,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.15,
+        delay: 0.4,
+        ease: "power3.out"
+      });
+
+      gsap.from(".hero-subtitle", {
+        y: 30,
+        opacity: 0,
+        duration: 1,
+        delay: 0.8,
+        ease: "power3.out"
+      });
+
+      // Scroll animations
+      gsap.utils.toArray(".section").forEach((section) => {
+        gsap.from(section, {
+          y: 60,
+          opacity: 0,
+          duration: 0.8,
+          scrollTrigger: {
+            trigger: section,
+            start: "top 85%",
+            end: "top 60%",
+            toggleActions: "play none none reverse"
+          }
+        });
+      });
+    });
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <div className="app">
-      {/* Canvas para o modelo 3D */}
-      <div className="model-container">
-        <Canvas>
-          <ambientLight intensity={0.2} />
-          <directionalLight
-            position={[2, 1, 2]}
-            intensity={1}
-          />
+    <>
+      <NoiseBackground />
 
-          <Suspense fallback={<ModelLoader />}>
-            <Model />
-          </Suspense>
+      <Lenis root>
+        <main className="main-container">
+          {/* Hero Section */}
+          <section className="hero" ref={heroRef}>
+            <div className="hero-content">
+              <div className="hero-label">TECH LEAD / FRONT END</div>
 
-          <EffectComposer>
-            <Bloom 
-              luminanceThreshold={0.2} 
-              luminanceSmoothing={0.9} 
-              height={200} 
-            />
-          </EffectComposer>
-        </Canvas>
-      </div>
-
-      <Suspense fallback={<div>Carregando...</div>}>
-        <div className="terminal-container">
-          <Terminal>
-            <div className="terminal-content-main">
-              <h1>
-                hi, I'm baltz
-                <br />
-                a tech lead
-                <br />
-                based in Bra<b>z</b>sil
+              <h1 className="hero-title">
+                <div className="hero-title-line hero-title-main">
+                  <span className="hero-title-avatar">
+                    <img
+                      src="/baltz-portrait.jpg"
+                      alt="Retrato de Baltz"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </span>
+                  <span className="hero-title-text">baltz</span>
+                </div>
               </h1>
-              
-              <p>
-                I'm currently working for{" "}
-                <a href="https://tanto.vc" target="_blank" rel="noreferrer">
-                  tanto.vc
-                </a><br/>
-                A decade in web development, shaping interfaces and experiences. Enthusiastic about genAI, with extensive agile and software engineering background.<br/>
-I have collaborated with major market players such as XP Investimentos, Serasa, Dasa, MRV Construtora, CVC Viagens, GFT Technologies, CI&T, among others.
-              </p>
 
-              <div className="terminal-links">
-                <p>Find me at:</p>
-                <ul>
-                  <li><a href="https://www.linkedin.com/in/baltazarparra/" target="_blank" rel="noreferrer">linkedIn</a></li>
-                  <li><a href="https://github.com/baltazarparra" target="_blank" rel="noreferrer">github</a></li>
-                  <li><a href="https://dev.to/baltz" target="_blank" rel="noreferrer">dev.to</a></li>
-                  <li><a href="https://open.spotify.com/intl-pt/album/6BFeIsMZ4zcuGbs5cugxLM?si=8g7V-wvuSlyE9nC9tRoUKQ" target="_blank" rel="noreferrer">spotify</a></li>
-                </ul>
+              <div className="hero-subtitle">
+                Based in Brasil <br /> Currently @
+                <a href="https://tanto.vc" target="_blank" rel="noreferrer">
+                  TANTO.VC
+                </a>
               </div>
             </div>
-          </Terminal>
-        </div>
-      </Suspense>
-    </div>
+
+            <Hero3D />
+          </section>
+
+          {/* About Section */}
+          <section className="section about-section">
+            <div className="section-grid">
+              <div className="section-number">01</div>
+              <div className="section-content">
+                <h2 className="section-title">ABOUT</h2>
+                <div className="section-text">
+                  <p>
+                    A decade in web development, shaping interfaces and
+                    experiences with a focus on web development and cutting-edge
+                    technologies.
+                  </p>
+                  <p>
+                    Enthusiastic about genAI, with extensive agile and software
+                    engineering background. Collaborated with major players: XP
+                    Investimentos, Serasa, Dasa, MRV Construtora, CVC Viagens,
+                    GFT Technologies, CI&T
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Connect Section */}
+          <section className="section connect-section">
+            <div className="section-grid">
+              <div className="section-number">02</div>
+              <div className="section-content">
+                <h2 className="section-title">CONNECT</h2>
+                <nav className="connect-links">
+                  <a
+                    href="https://www.linkedin.com/in/baltazarparra/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="connect-link"
+                  >
+                    <span className="connect-link-text">LINKEDIN</span>
+                    <span className="connect-link-arrow">→</span>
+                  </a>
+                  <a
+                    href="https://github.com/baltazarparra"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="connect-link"
+                  >
+                    <span className="connect-link-text">GITHUB</span>
+                    <span className="connect-link-arrow">→</span>
+                  </a>
+                  <a
+                    href="https://dev.to/baltz"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="connect-link"
+                  >
+                    <span className="connect-link-text">DEV.TO</span>
+                    <span className="connect-link-arrow">→</span>
+                  </a>
+                  <a
+                    href="https://open.spotify.com/intl-pt/album/6BFeIsMZ4zcuGbs5cugxLM?si=8g7V-wvuSlyE9nC9tRoUKQ"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="connect-link"
+                  >
+                    <span className="connect-link-text">SPOTIFY</span>
+                    <span className="connect-link-arrow">→</span>
+                  </a>
+                </nav>
+              </div>
+            </div>
+          </section>
+
+          {/* Footer */}
+          <footer className="footer">
+            <div className="footer-content">
+              <div className="footer-copy">© 2025 BALTAZAR PARRA</div>
+            </div>
+          </footer>
+        </main>
+      </Lenis>
+    </>
   );
 }
 

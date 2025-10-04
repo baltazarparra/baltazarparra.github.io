@@ -1,64 +1,41 @@
 html {
-    height: 100vh;
-    box-sizing: border-box;
-    font-size: 14px;
-    background-color: #000;
-    color: #f0f0f0;
-    font-family: "Courier New", monospace;
+  box-sizing: border-box;
+  background-color: #FF4C00;
 }
 
 *,
 *:before,
 *:after {
-    box-sizing: inherit;
-}
-
-body,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-ol,
-ul {
-    margin: 0;
-    padding: 0;
-    font-weight: normal;
-    font-size: 14px;
-    text-shadow: 0 0 3px rgba(255, 255, 255, 0.2);
+  box-sizing: inherit;
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
 
-ol,
-ul {
-    list-style: none;
+#root {
+  min-height: 100vh;
 }
 
-img {
-    max-width: 100%;
-    height: auto;
+/* Lenis Smooth Scroll */
+html.lenis {
+  height: auto;
 }
 
-a {
-    color: #e0e0e0;
-    transition: .3s;
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
 }
 
-a:hover {
-    color: white;
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
 }
 
-b {
-    color: #e0e0e0;
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
-button {
-    cursor: pointer;
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
 }
