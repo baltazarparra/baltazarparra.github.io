@@ -5,6 +5,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import Particles from "./Particles";
 import PerformanceMonitor from "./PerformanceMonitor";
+import { TVNoiseEffect } from "./TVNoiseEffect";
 
 const NoiseShader = memo(({ mouse }) => {
   const meshRef = useRef();
@@ -100,9 +101,10 @@ const NoiseShader = memo(({ mouse }) => {
       vec2 uv = vUv * 2.0 - 1.0;
       vec2 mouse = vec2(uMouse.x, -uMouse.y);
 
-    vec3 deep = vec3(0.24, 0.05, 0.0);
-    vec3 mid = vec3(0.95, 0.32, 0.05);
-    vec3 highlight = vec3(1.0, 0.78, 0.36);
+    // Nova paleta refinada para melhor harmonia
+    vec3 deep = vec3(0.47, 0.0, 0.0);          // #780000 - vermelho escuro (base)
+    vec3 mid = vec3(0.0, 0.188, 0.286);        // #003049 - azul escuro (camada média)
+    vec3 highlight = vec3(0.4, 0.608, 0.737);  // #669BBC - azul claro (destaques)
 
       vec3 accum = vec3(0.0);
       float weight = 0.0;
@@ -306,6 +308,7 @@ const NoiseBackground = () => {
         frameloop="always"
       >
         <PerformanceMonitor />
+        <TVNoiseEffect particleCount={isMobile ? 100 : 200} />
         <Particles count={particleCount} scrollProgress={scrollProgress} connectProgress={connectProgress} />
         <NoiseShader mouse={mouse} />
       </Canvas>

@@ -79,7 +79,7 @@ const FloatingModel = memo(({ mouse, containerSize }) => {
         ref={lightRef}
         position={[0, 0, 5]}
         intensity={2}
-        color="#FF4C00"
+        color="#C1121F"
         distance={8}
       />
     </>
@@ -248,7 +248,10 @@ const Hero3D = () => {
         />
 
         <Suspense fallback={null}>
-          <FloatingModel mouse={mouse} containerSize={containerSize} />
+          <FloatingModel
+            mouse={mouse}
+            containerSize={containerSize}
+          />
         </Suspense>
 
         <EffectComposer multisampling={0} disableNormalPass={true}>

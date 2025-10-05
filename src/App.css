@@ -7,9 +7,24 @@
 }
 
 :root {
-  --orange: #ffd15c;
-  --black: #000000;
-  --white: #FFFFFF;
+  /* Nova paleta de cores refinada */
+  --color-red-dark: #003049;
+  --color-red-vibrant: #669BBC;
+  --color-cream: #FDF0D5;
+  --color-blue-dark: #003049;
+  --color-blue-light: #669BBC;
+
+  /* Sistema de cores com hierarquia */
+  --color-background: var(--color-cream);
+  --color-text: var(--color-blue-dark);
+  --color-accent: var(--color-red-vibrant);
+  --color-border: var(--color-blue-dark);
+
+  /* Aliases para compatibilidade */
+  --orange: var(--color-background);
+  --black: var(--color-text);
+  --white: var(--color-cream);
+
   --layout-max-width: 1440px;
   --layout-gutter: clamp(24px, 8vw, 120px);
   --section-padding-y: clamp(80px, 14vh, 180px);
@@ -24,7 +39,7 @@ body {
 }
 
 body {
-  background: var(--orange);
+  background: #ccffff;
   color: var(--black);
   font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -96,7 +111,7 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.12em;
   margin-bottom: 0;
-  color: var(--black);
+
   opacity: 0.7;
 }
 
@@ -167,15 +182,16 @@ body {
 }
 
 .hero-subtitle a {
-  color: var(--black);
+  color: initial;
   text-decoration: underline;
   text-decoration-thickness: 2px;
   text-underline-offset: 4px;
-  transition: opacity 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .hero-subtitle a:hover {
-  opacity: 0.6;
+  color: var(--color-red-dark);
+  text-decoration-color: var(--color-red-dark);
 }
 
 /* Tablet - 768px+ */
@@ -426,9 +442,9 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: clamp(28px, 4vw, 48px) 0;
-  border-top: 2px solid var(--black);
+  border-top: 2px solid var(--color-border);
   text-decoration: none;
-  color: var(--black);
+  color: var(--color-text);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   -webkit-tap-highlight-color: transparent;
@@ -439,15 +455,22 @@ body {
 }
 
 .connect-link:last-child {
-  border-bottom: 2px solid var(--black);
+  border-bottom: 2px solid var(--color-border);
+}
+
+.connect-link:hover {
+  color: var(--color-accent);
 }
 
 .connect-link:active {
   padding-left: 30px;
-  background: rgba(255, 107, 53, 0.08);
+  color: var(--color-accent);
+  background: linear-gradient(90deg,
+      rgba(193, 18, 31, 0.05) 0%,
+      rgba(193, 18, 31, 0.02) 100%);
   box-shadow:
-    0 4px 20px rgba(255, 107, 53, calc(var(--glow-intensity) * 0.2)),
-    inset 0 0 60px rgba(255, 107, 53, calc(var(--glow-intensity) * 0.15));
+    0 4px 20px rgba(193, 18, 31, 0.1),
+    inset 0 0 60px rgba(193, 18, 31, 0.08);
 }
 
 .connect-link:active .connect-link-arrow {

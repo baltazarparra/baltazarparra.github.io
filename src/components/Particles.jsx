@@ -80,9 +80,10 @@ const Particles = ({
       float strength = 1.0 - dist * 2.0;
       strength = pow(strength, 1.5 - vIntensity * vIntensity * 0.25);
 
-      // Smooth color mixing
+      // Smooth color mixing com gradiente harmonioso
       vec3 color = mix(uColor1, uColor2, dist);
-      color += vec3(0.3, 0.15, 0.05) * vIntensity * vIntensity * strength;
+      // Adiciona sutil destaque vermelho nas partes mais intensas
+      color += vec3(0.757, 0.071, 0.122) * vIntensity * vIntensity * strength * 0.15;
 
       // Smooth pulsing
       float pulse = sin(uTime * 2.0) * 0.25 + 0.75;
@@ -133,8 +134,9 @@ const Particles = ({
       uSize: { value: isMobile ? 9.0 : 12.0 },
       uScrollProgress: { value: 0 },
       uConnectProgress: { value: 0 },
-      uColor1: { value: new THREE.Color("#FF6B35") },
-      uColor2: { value: new THREE.Color("#FF4C00") }
+      // Nova paleta: #780000, #C1121F, #FDF0D5, #003049, #669BBC
+      uColor1: { value: new THREE.Color("#669BBC") }, // azul claro
+      uColor2: { value: new THREE.Color("#003049") }  // azul escuro
     }),
     [isMobile]
   );
