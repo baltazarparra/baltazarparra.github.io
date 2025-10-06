@@ -5,7 +5,6 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import {
   EffectComposer,
-  Bloom,
   ChromaticAberration
 } from "@react-three/postprocessing";
 import * as THREE from "three";
@@ -15,6 +14,19 @@ const FloatingModel = memo(({ mouse, containerSize }) => {
   const lightRef = useRef();
   const { scene } = useGLTF("/smile.glb");
   const { viewport } = useThree();
+
+  // Apply smooth shading to all meshes for better quality
+  useEffect(() => {
+    scene.traverse((child) => {
+      if (child.isMesh) {
+        child.geometry.computeVertexNormals();
+        if (child.material) {
+          child.material.flatShading = false;
+          child.material.needsUpdate = true;
+        }
+      }
+    });
+  }, [scene]);
 
   // Calculate responsive scale based on container size - Apple-inspired proportions
   const getResponsiveScale = () => {
@@ -226,42 +238,28 @@ const Hero3D = () => {
           position: cameraSettings.position,
           fov: cameraSettings.fov
         }}
-        dpr={[0.5, 1]}
-        performance={{ min: 0.4, max: 0.8, debounce: 200 }}
+        dpr={[1, 2]}
         gl={{
+          antialias: true,
+          alpha: true,
           powerPreference: "high-performance",
-          antialias: false
+          toneMapping: THREE.ACESFilmicToneMapping,
+          toneMappingExposure: 1.2,
+          outputColorSpace: THREE.SRGBColorSpace
         }}
       >
-        <ambientLight intensity={60} />
         <directionalLight
-          position={[15, 15, 15]}
-          intensity={10}
-          castShadow={true}
-        />
-        <spotLight
-          position={[1, 2, 1]}
-          angle={1}
-          penumbra={1}
-          intensity={1.5}
+          position={[10, 15, 15]}
+          intensity={25}
           castShadow={true}
         />
 
         <Suspense fallback={null}>
-          <FloatingModel
-            mouse={mouse}
-            containerSize={containerSize}
-          />
+          <FloatingModel mouse={mouse} containerSize={containerSize} />
         </Suspense>
 
-        <EffectComposer multisampling={0} disableNormalPass={true}>
-          <Bloom
-            intensity={2.4}
-            luminanceThreshold={2.4}
-            luminanceSmoothing={2.6}
-            mipmapBlur={false}
-          />
-          <ChromaticAberration offset={[0.008, 0.008]} />
+        <EffectComposer multisampling={8} disableNormalPass={true}>
+          <ChromaticAberration offset={[0.004, 0.004]} />
         </EffectComposer>
       </Canvas>
     </div>

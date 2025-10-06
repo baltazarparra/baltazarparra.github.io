@@ -1,6 +1,7 @@
 html {
   box-sizing: border-box;
-  background-color: #FDF0D5; /* Nova paleta: creme */
+  background-color: rgb(7, 27, 64);
+  /* Nova paleta: creme */
 }
 
 *,
