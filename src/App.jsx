@@ -1,17 +1,19 @@
 import "./App.css";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, lazy, Suspense } from "react";
 import { Lenis } from "lenis/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import NoiseBackground from "./components/NoiseBackground";
-import Hero3D from "./components/Hero3D";
+
+// Lazy load Hero3D para melhor performance inicial
+const Hero3D = lazy(() => import("./components/Hero3D"));
 
 gsap.registerPlugin(ScrollTrigger);
 
 // Configure ScrollTrigger for better performance
 ScrollTrigger.config({
   limitCallbacks: true,
-  syncInterval: 150,
+  syncInterval: 150
 });
 
 function App() {
@@ -52,21 +54,24 @@ function App() {
           start: "top 75%",
           end: "top 25%",
           scrub: 2,
-          invalidateOnRefresh: false,
+          invalidateOnRefresh: false
         }
       });
 
       aboutTimeline
-        .fromTo(".about-section .section-number",
+        .fromTo(
+          ".about-section .section-number",
           { opacity: 0, x: -50, rotate: -10 },
           { opacity: 1, x: 0, rotate: 0, duration: 0.675 }
         )
-        .fromTo(".about-section .section-title",
+        .fromTo(
+          ".about-section .section-title",
           { opacity: 0, y: 30, filter: "blur(10px)" },
           { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.9 },
           "-=0.1"
         )
-        .fromTo(".about-section .section-text p",
+        .fromTo(
+          ".about-section .section-text p",
           { opacity: 0, y: 40, scale: 0.95 },
           {
             opacity: 1,
@@ -85,12 +90,13 @@ function App() {
           start: "top 80%",
           end: "top 20%",
           scrub: 1.5,
-          invalidateOnRefresh: false,
+          invalidateOnRefresh: false
         }
       });
 
       connectTimeline
-        .fromTo(".connect-section .section-number",
+        .fromTo(
+          ".connect-section .section-number",
           {
             opacity: 0,
             x: -80,
@@ -108,7 +114,8 @@ function App() {
             ease: "power3.out"
           }
         )
-        .fromTo(".connect-section .section-title",
+        .fromTo(
+          ".connect-section .section-title",
           {
             opacity: 0,
             y: 50,
@@ -127,7 +134,8 @@ function App() {
           },
           "-=0.2"
         )
-        .fromTo(".connect-section .connect-link",
+        .fromTo(
+          ".connect-section .connect-link",
           {
             opacity: 0,
             x: -100,
@@ -163,7 +171,7 @@ function App() {
               trigger: ".connect-section",
               start: "top 60%",
               end: "top 30%",
-              scrub: 0.5,
+              scrub: 0.5
             },
             "--glow-intensity": "1",
             duration: 0.3,
@@ -209,7 +217,11 @@ function App() {
               </div>
             </div>
 
-            <Hero3D />
+            <Suspense
+              fallback={<div style={{ width: "100%", height: "280px" }} />}
+            >
+              <Hero3D />
+            </Suspense>
           </section>
 
           {/* About Section */}
