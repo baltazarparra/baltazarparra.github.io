@@ -1,13 +1,14 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unknown-property */
-import { useRef, useMemo, useState, useEffect, memo } from "react";
+import { useRef, useMemo, useState, useEffect, memo, useCallback } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import Particles from "./Particles";
 import PerformanceMonitor from "./PerformanceMonitor";
 import { TVNoiseEffect } from "./TVNoiseEffect";
+import { getQualityConfig } from "../config/qualityConfig";
 
-const NoiseShader = memo(({ mouse }) => {
+const NoiseShader = memo(({ mouse, layerCount = 15 }) => {
   const meshRef = useRef();
 
   const vertexShader = `
@@ -18,8 +19,9 @@ const NoiseShader = memo(({ mouse }) => {
     }
   `;
 
-  const fragmentShader = `
-    #define LAYER_COUNT 15
+  // Generate shader dynamically with configurable layer count
+  const createFragmentShader = (layers) => `
+    #define LAYER_COUNT ${layers}
 
     uniform float uTime;
     uniform vec2 uMouse;
@@ -101,15 +103,18 @@ const NoiseShader = memo(({ mouse }) => {
       vec2 uv = vUv * 2.0 - 1.0;
       vec2 mouse = vec2(uMouse.x, -uMouse.y);
 
-    // Paleta realista de FOGO com gradiente suave
-    // Preto → Marrom Escuro → Vermelho Escuro → Vermelho → Laranja → Amarelo
-    vec3 black = vec3(0.0, 0.0, 0.0);                   // #000000 - base preta
-    vec3 darkRed = vec3(0.4, 0.05, 0.02);               // #661005 - vermelho escuro quente
-    vec3 red = vec3(0.8, 0.1, 0.0);                     // #CC1A00 - vermelho vivo
-    vec3 deepRed = vec3(1.0, 0.2, 0.0);                 // #FF3300 - vermelho quente
-    vec3 orange = vec3(1.0, 0.4, 0.0);                  // #FF6600 - laranja
-    vec3 yellow = vec3(1.0, 0.7, 0.0);                  // #FFB300 - amarelo ouro
-    vec3 bright = vec3(1.0, 0.9, 0.3);                  // #FFFF4D - amarelo brilhante
+    // Paleta realista e refinada de FOGO com gradiente suave
+    // Preto → Marrom Escuro → Vermelho Escuro → Vermelho → Vermelho Quente → Laranja → Amarelo Ouro → Amarelo Brilhante
+    vec3 black = vec3(0.0, 0.0, 0.0);                    // #000000 - base preta
+    vec3 brownDark = vec3(0.2, 0.03, 0.01);              // #330805 - marrom escuro (novo)
+    vec3 darkRed = vec3(0.4, 0.05, 0.02);                // #661005 - vermelho escuro quente
+    vec3 red = vec3(0.8, 0.1, 0.0);                      // #CC1A00 - vermelho vivo
+    vec3 deepRed = vec3(1.0, 0.2, 0.0);                  // #FF3300 - vermelho quente
+    vec3 orangeRed = vec3(1.0, 0.3, 0.0);                // #FF4D00 - laranja-vermelho (novo)
+    vec3 orange = vec3(1.0, 0.4, 0.0);                   // #FF6600 - laranja
+    vec3 orangeLight = vec3(1.0, 0.55, 0.0);             // #FF8C00 - laranja claro (novo)
+    vec3 yellow = vec3(1.0, 0.7, 0.0);                   // #FFB300 - amarelo ouro
+    vec3 bright = vec3(1.0, 0.9, 0.3);                   // #FFFF4D - amarelo brilhante
 
       vec3 accum = vec3(0.0);
       float weight = 0.0;
@@ -126,18 +131,24 @@ const NoiseShader = memo(({ mouse }) => {
         float base = snoise(samplePos);
         float density = smoothstep(-0.4, 0.85, base);
 
-        // Gradiente suave realista de fogo
+        // Gradiente suave realista de fogo com cores intermediárias
         vec3 shade;
-        if (density < 0.15) {
-          shade = mix(black, darkRed, density / 0.15);
-        } else if (density < 0.35) {
-          shade = mix(darkRed, red, (density - 0.15) / 0.2);
-        } else if (density < 0.55) {
-          shade = mix(red, deepRed, (density - 0.35) / 0.2);
-        } else if (density < 0.75) {
-          shade = mix(deepRed, orange, (density - 0.55) / 0.2);
+        if (density < 0.1) {
+          shade = mix(black, brownDark, density / 0.1);
+        } else if (density < 0.2) {
+          shade = mix(brownDark, darkRed, (density - 0.1) / 0.1);
+        } else if (density < 0.3) {
+          shade = mix(darkRed, red, (density - 0.2) / 0.1);
+        } else if (density < 0.45) {
+          shade = mix(red, deepRed, (density - 0.3) / 0.15);
+        } else if (density < 0.6) {
+          shade = mix(deepRed, orangeRed, (density - 0.45) / 0.15);
+        } else if (density < 0.7) {
+          shade = mix(orangeRed, orange, (density - 0.6) / 0.1);
+        } else if (density < 0.8) {
+          shade = mix(orange, orangeLight, (density - 0.7) / 0.1);
         } else if (density < 0.9) {
-          shade = mix(orange, yellow, (density - 0.75) / 0.15);
+          shade = mix(orangeLight, yellow, (density - 0.8) / 0.1);
         } else {
           shade = mix(yellow, bright, (density - 0.9) / 0.1);
         }
@@ -148,23 +159,31 @@ const NoiseShader = memo(({ mouse }) => {
 
       vec3 color = accum / max(weight, 0.0001);
 
+      // Enhanced mouse glow with elegant falloff
       float distToMouse = length((vUv - 0.5) - mouse * 0.25);
-      float mouseGlow = exp(-distToMouse * 2.4);
-      color += bright * mouseGlow * 0.6;
+      float mouseGlow = exp(-distToMouse * 3.5);
+      // Glow colors gradient: bright yellow center → orange → deep red edges
+      vec3 glowColor = mix(bright, orangeRed, distToMouse * 0.8);
+      color += glowColor * mouseGlow * 0.85;
 
-      float vignette = smoothstep(1.38, 0.58, length(uv));
+      // Elegant vignette with softer edges
+      float dist = length(uv);
+      float vignette = smoothstep(1.5, 0.4, dist);
+      vignette = mix(vignette, 1.0, 0.15); // Prevent total darkness at edges
       color *= vignette;
 
       gl_FragColor = vec4(color, 1.0);
     }
   `;
 
+  const fragmentShader = createFragmentShader(layerCount);
+
   const uniforms = useMemo(
     () => ({
       uTime: { value: 0 },
       uMouse: { value: new THREE.Vector2(0, 0) }
     }),
-    []
+    [layerCount]
   );
 
   const mouseVector = useRef(new THREE.Vector2(0, 0));
@@ -203,10 +222,16 @@ const NoiseBackground = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [connectProgress, setConnectProgress] = useState(0);
 
-  // Adaptive performance settings - Improved quality while maintaining performance
+  // Get quality configuration based on device capabilities
+  const qualityConfig = useMemo(() => getQualityConfig(), []);
+
+  // Adaptive performance settings from quality config
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-  const dpr = isMobile ? [0.4, 0.6] : [0.5, 0.8];
-  const particleCount = isMobile ? 400 : 800;
+  const dpr = qualityConfig.dprRange;
+  const particleCount = qualityConfig.particleCount;
+  const tvParticleCount = qualityConfig.tvParticleCount;
+  const noiseLayerCount = qualityConfig.noiseLayerCount;
+  const enableTVNoise = qualityConfig.enableTVNoise;
 
   useEffect(() => {
     let rafId = null;
@@ -326,9 +351,9 @@ const NoiseBackground = () => {
         frameloop="always"
       >
         <PerformanceMonitor />
-        <TVNoiseEffect particleCount={isMobile ? 100 : 200} />
+        {enableTVNoise && <TVNoiseEffect particleCount={tvParticleCount} />}
         <Particles count={particleCount} scrollProgress={scrollProgress} connectProgress={connectProgress} />
-        <NoiseShader mouse={mouse} />
+        <NoiseShader mouse={mouse} layerCount={noiseLayerCount} />
       </Canvas>
     </div>
   );
