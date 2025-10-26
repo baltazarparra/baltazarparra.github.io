@@ -7,23 +7,23 @@
 }
 
 :root {
-  /* Nova paleta de cores refinada */
-  --color-red-dark: #003049;
-  --color-red-vibrant: #669BBC;
-  --color-cream: #FDF0D5;
-  --color-blue-dark: #003049;
-  --color-blue-light: #669BBC;
+  /* Paleta de cores tema FOGO - Realista */
+  --color-red-dark: #FF3300;
+  --color-red-vibrant: #FF6600;
+  --color-yellow-gold: #FFB300;
+  --color-white: #FFFFFF;
+  --color-black: #000000;
 
   /* Sistema de cores com hierarquia */
-  --color-background: var(--color-cream);
-  --color-text: var(--color-blue-dark);
+  --color-background: var(--color-white);
+  --color-text: var(--color-black);
   --color-accent: var(--color-red-vibrant);
-  --color-border: var(--color-blue-dark);
+  --color-border: var(--color-red-dark);
 
   /* Aliases para compatibilidade */
-  --orange: var(--color-background);
-  --black: var(--color-text);
-  --white: var(--color-cream);
+  --orange: var(--color-red-vibrant);
+  --black: var(--color-black);
+  --white: var(--color-white);
 
   --layout-max-width: 1440px;
   --layout-gutter: clamp(24px, 8vw, 120px);
@@ -39,7 +39,7 @@ body {
 }
 
 body {
-  background: #031f2d;
+  background: #000000;
   color: var(--black);
   font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
   -webkit-font-smoothing: antialiased;

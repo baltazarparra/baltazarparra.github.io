@@ -134,9 +134,9 @@ const Particles = ({
       uSize: { value: isMobile ? 9.0 : 12.0 },
       uScrollProgress: { value: 0 },
       uConnectProgress: { value: 0 },
-      // Nova paleta: #780000, #C1121F, #FDF0D5, #003049, #669BBC
-      uColor1: { value: new THREE.Color("#669BBC") }, // azul claro
-      uColor2: { value: new THREE.Color("#003049") }  // azul escuro
+      // Paleta tema FOGO: vermelho → laranja → amarelo
+      uColor1: { value: new THREE.Color("#FF6600") }, // laranja vibrante
+      uColor2: { value: new THREE.Color("#CC1A00") }  // vermelho vivo
     }),
     [isMobile]
   );

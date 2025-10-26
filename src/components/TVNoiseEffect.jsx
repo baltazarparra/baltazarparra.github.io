@@ -134,9 +134,9 @@ const particleFragmentShader = `
     float alpha = 1.0 - smoothstep(0.0, 0.5, dist);
     alpha = pow(alpha, 2.5);
 
-    // Gradiente harmonioso: azul claro para vermelho escuro
-    vec3 colorLight = vec3(0.4, 0.608, 0.737);  // #669BBC - azul claro
-    vec3 colorDark = vec3(0.47, 0.0, 0.0);      // #780000 - vermelho escuro
+    // Gradiente tema FOGO: amarelo ouro para vermelho quente
+    vec3 colorLight = vec3(1.0, 0.7, 0.0);      // #FFB300 - amarelo ouro
+    vec3 colorDark = vec3(1.0, 0.2, 0.0);       // #FF3300 - vermelho quente
     vec3 color = mix(colorLight, colorDark, dist * 0.6);
 
     gl_FragColor = vec4(color, alpha * vAlpha * 0.12);

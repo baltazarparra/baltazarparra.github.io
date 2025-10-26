@@ -19,7 +19,7 @@ const NoiseShader = memo(({ mouse }) => {
   `;
 
   const fragmentShader = `
-    #define LAYER_COUNT 25
+    #define LAYER_COUNT 15
 
     uniform float uTime;
     uniform vec2 uMouse;
@@ -101,10 +101,15 @@ const NoiseShader = memo(({ mouse }) => {
       vec2 uv = vUv * 2.0 - 1.0;
       vec2 mouse = vec2(uMouse.x, -uMouse.y);
 
-    // Nova paleta refinada para melhor harmonia
-    vec3 deep = vec3(0.47, 0.0, 0.0);          // #780000 - vermelho escuro (base)
-    vec3 mid = vec3(0.0, 0.188, 0.286);        // #003049 - azul escuro (camada média)
-    vec3 highlight = vec3(0.4, 0.608, 0.737);  // #669BBC - azul claro (destaques)
+    // Paleta realista de FOGO com gradiente suave
+    // Preto → Marrom Escuro → Vermelho Escuro → Vermelho → Laranja → Amarelo
+    vec3 black = vec3(0.0, 0.0, 0.0);                   // #000000 - base preta
+    vec3 darkRed = vec3(0.4, 0.05, 0.02);               // #661005 - vermelho escuro quente
+    vec3 red = vec3(0.8, 0.1, 0.0);                     // #CC1A00 - vermelho vivo
+    vec3 deepRed = vec3(1.0, 0.2, 0.0);                 // #FF3300 - vermelho quente
+    vec3 orange = vec3(1.0, 0.4, 0.0);                  // #FF6600 - laranja
+    vec3 yellow = vec3(1.0, 0.7, 0.0);                  // #FFB300 - amarelo ouro
+    vec3 bright = vec3(1.0, 0.9, 0.3);                  // #FFFF4D - amarelo brilhante
 
       vec3 accum = vec3(0.0);
       float weight = 0.0;
@@ -121,8 +126,21 @@ const NoiseShader = memo(({ mouse }) => {
         float base = snoise(samplePos);
         float density = smoothstep(-0.4, 0.85, base);
 
-        vec3 shade = mix(deep, mid, density);
-        shade += highlight * smoothstep(0.38, 0.72, density) * 0.55;
+        // Gradiente suave realista de fogo
+        vec3 shade;
+        if (density < 0.15) {
+          shade = mix(black, darkRed, density / 0.15);
+        } else if (density < 0.35) {
+          shade = mix(darkRed, red, (density - 0.15) / 0.2);
+        } else if (density < 0.55) {
+          shade = mix(red, deepRed, (density - 0.35) / 0.2);
+        } else if (density < 0.75) {
+          shade = mix(deepRed, orange, (density - 0.55) / 0.2);
+        } else if (density < 0.9) {
+          shade = mix(orange, yellow, (density - 0.75) / 0.15);
+        } else {
+          shade = mix(yellow, bright, (density - 0.9) / 0.1);
+        }
 
         accum += shade * density;
         weight += density;
@@ -132,7 +150,7 @@ const NoiseShader = memo(({ mouse }) => {
 
       float distToMouse = length((vUv - 0.5) - mouse * 0.25);
       float mouseGlow = exp(-distToMouse * 2.4);
-      color += highlight * mouseGlow * 0.95;
+      color += bright * mouseGlow * 0.6;
 
       float vignette = smoothstep(1.38, 0.58, length(uv));
       color *= vignette;
@@ -185,9 +203,9 @@ const NoiseBackground = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [connectProgress, setConnectProgress] = useState(0);
 
-  // Adaptive performance settings
+  // Adaptive performance settings - Improved quality while maintaining performance
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-  const dpr = isMobile ? [0.3, 0.5] : [0.5, 0.8];
+  const dpr = isMobile ? [0.4, 0.6] : [0.5, 0.8];
   const particleCount = isMobile ? 400 : 800;
 
   useEffect(() => {
