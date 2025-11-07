@@ -193,7 +193,7 @@ function App() {
           {/* Hero Section */}
           <section className="hero" ref={heroRef}>
             <div className="hero-content">
-              <div className="hero-label">TECH LEAD / FRONT END</div>
+              <div className="hero-label">LEAD DEVELOPER / FULLSTACK / UX-UI</div>
 
               <h1 className="hero-title">
                 <div className="hero-title-line hero-title-main">
@@ -210,9 +210,9 @@ function App() {
               </h1>
 
               <div className="hero-subtitle">
-                Based in Brasil <br /> Currently @
-                <a href="https://tanto.vc" target="_blank" rel="noreferrer">
-                  TANTO.VC
+                Based in Brasil <br /> Currently at @
+                <a href="https://www.thoughtworks.com/" target="_blank" rel="noreferrer">
+                  THOUGHTWORKS
                 </a>
               </div>
             </div>
