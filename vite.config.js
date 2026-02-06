@@ -7,6 +7,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
+      injectRegister: false,
       includeAssets: ['robots.txt', 'og.jpg', 'smile.glb', 'icons/favicon.svg'],
       manifest: {
         name: 'Baltazar Parra',

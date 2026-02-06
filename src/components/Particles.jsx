@@ -6,8 +6,8 @@ import * as THREE from "three";
 
 const Particles = ({
   count = 800,
-  scrollProgress = 0,
-  connectProgress = 0
+  scrollRef,
+  connectRef
 }) => {
   const pointsRef = useRef();
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
@@ -144,6 +144,8 @@ const Particles = ({
   useFrame(({ clock }) => {
     if (pointsRef.current) {
       const time = clock.getElapsedTime();
+      const scrollProgress = scrollRef?.current ?? 0;
+      const connectProgress = connectRef?.current ?? 0;
       pointsRef.current.material.uniforms.uTime.value = time;
       pointsRef.current.material.uniforms.uScrollProgress.value =
         scrollProgress;

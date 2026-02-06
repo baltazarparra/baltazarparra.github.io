@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unknown-property */
-import { useRef, useMemo, useState, useEffect, memo, useCallback } from "react";
+import { useRef, useMemo, useState, useEffect, memo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import Particles from "./Particles";
@@ -8,7 +8,7 @@ import PerformanceMonitor from "./PerformanceMonitor";
 import { TVNoiseEffect } from "./TVNoiseEffect";
 import { getQualityConfig } from "../config/qualityConfig";
 
-const NoiseShader = memo(({ mouse, layerCount = 15 }) => {
+const NoiseShader = memo(({ mouseRef, layerCount = 15 }) => {
   const meshRef = useRef();
 
   const vertexShader = `
@@ -191,13 +191,15 @@ const NoiseShader = memo(({ mouse, layerCount = 15 }) => {
   useFrame(({ clock }) => {
     if (meshRef.current) {
       meshRef.current.material.uniforms.uTime.value = clock.getElapsedTime();
-
-      // Reuse vector instead of creating new one
-      mouseVector.current.set(mouse.x, mouse.y);
-      meshRef.current.material.uniforms.uMouse.value.lerp(
-        mouseVector.current,
-        0.1
-      );
+      const mouse = mouseRef?.current;
+      if (mouse) {
+        // Reuse vector instead of creating new one
+        mouseVector.current.set(mouse.x, mouse.y);
+        meshRef.current.material.uniforms.uMouse.value.lerp(
+          mouseVector.current,
+          0.1
+        );
+      }
     }
   });
 
@@ -217,10 +219,14 @@ const NoiseShader = memo(({ mouse, layerCount = 15 }) => {
 
 NoiseShader.displayName = "NoiseShader";
 
-const NoiseBackground = () => {
-  const [mouse, setMouse] = useState({ x: 0, y: 0 });
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [connectProgress, setConnectProgress] = useState(0);
+const NoiseBackground = ({ reduceMotion = false }) => {
+  const mouseRef = useRef({ x: 0, y: 0 });
+  const scrollRef = useRef(0);
+  const connectRef = useRef(0);
+  const [isActive, setIsActive] = useState(() => {
+    if (typeof document === "undefined") return true;
+    return !document.hidden;
+  });
 
   // Get quality configuration based on device capabilities
   const qualityConfig = useMemo(() => getQualityConfig(), []);
@@ -231,24 +237,44 @@ const NoiseBackground = () => {
   const particleCount = qualityConfig.particleCount;
   const tvParticleCount = qualityConfig.tvParticleCount;
   const noiseLayerCount = qualityConfig.noiseLayerCount;
-  const enableTVNoise = qualityConfig.enableTVNoise;
+  const enableTVNoise = qualityConfig.enableTVNoise && !reduceMotion;
+  const motionEnabled = !reduceMotion && isActive;
 
   useEffect(() => {
+    if (typeof document === "undefined") return undefined;
+    const handleVisibility = () => {
+      setIsActive(!document.hidden);
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
+    return () => document.removeEventListener("visibilitychange", handleVisibility);
+  }, []);
+
+  useEffect(() => {
+    if (reduceMotion) return undefined;
     let rafId = null;
     let lastX = 0;
     let lastY = 0;
+    let nextScroll = scrollRef.current;
+    let nextConnect = connectRef.current;
+
+    const scheduleUpdate = () => {
+      if (!rafId) {
+        rafId = requestAnimationFrame(() => {
+          mouseRef.current.x = lastX;
+          mouseRef.current.y = lastY;
+          scrollRef.current = nextScroll;
+          connectRef.current = nextConnect;
+          rafId = null;
+        });
+      }
+    };
 
     // Throttle mouse updates on mobile
     const handleMouseMove = isMobile ? null : (e) => {
       lastX = e.clientX / window.innerWidth;
       lastY = -(e.clientY / window.innerHeight);
 
-      if (!rafId) {
-        rafId = requestAnimationFrame(() => {
-          setMouse({ x: lastX, y: lastY });
-          rafId = null;
-        });
-      }
+      scheduleUpdate();
     };
 
     const handleTouchMove = (e) => {
@@ -256,13 +282,7 @@ const NoiseBackground = () => {
         const touch = e.touches[0];
         lastX = touch.clientX / window.innerWidth - 1;
         lastY = -(touch.clientY / window.innerHeight) + 1;
-
-        if (!rafId) {
-          rafId = requestAnimationFrame(() => {
-            setMouse({ x: lastX, y: lastY });
-            rafId = null;
-          });
-        }
+        scheduleUpdate();
       }
     };
 
@@ -290,18 +310,12 @@ const NoiseBackground = () => {
         // Apply easing for smoother transition
         const connectScroll = rawProgress * rawProgress * (3 - 2 * rawProgress); // Smoothstep easing
 
-        if (!rafId) {
-          rafId = requestAnimationFrame(() => {
-            setScrollProgress(progress);
-            setConnectProgress(connectScroll);
-            rafId = null;
-          });
-        }
-      } else if (!rafId) {
-        rafId = requestAnimationFrame(() => {
-          setScrollProgress(progress);
-          rafId = null;
-        });
+        nextScroll = progress;
+        nextConnect = connectScroll;
+        scheduleUpdate();
+      } else {
+        nextScroll = progress;
+        scheduleUpdate();
       }
     };
 
@@ -322,7 +336,7 @@ const NoiseBackground = () => {
       window.removeEventListener("scroll", handleScroll);
       if (rafId) cancelAnimationFrame(rafId);
     };
-  }, [isMobile]);
+  }, [isMobile, reduceMotion]);
 
   return (
     <div
@@ -348,12 +362,12 @@ const NoiseBackground = () => {
           depth: false,
           logarithmicDepthBuffer: false
         }}
-        frameloop="always"
+        frameloop={motionEnabled ? "always" : "demand"}
       >
-        <PerformanceMonitor />
+        {motionEnabled && <PerformanceMonitor />}
         {enableTVNoise && <TVNoiseEffect particleCount={tvParticleCount} />}
-        <Particles count={particleCount} scrollProgress={scrollProgress} connectProgress={connectProgress} />
-        <NoiseShader mouse={mouse} layerCount={noiseLayerCount} />
+        <Particles count={particleCount} scrollRef={scrollRef} connectRef={connectRef} />
+        <NoiseShader mouseRef={mouseRef} layerCount={noiseLayerCount} />
       </Canvas>
     </div>
   );

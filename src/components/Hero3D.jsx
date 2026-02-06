@@ -8,8 +8,9 @@ import {
   ChromaticAberration
 } from "@react-three/postprocessing";
 import * as THREE from "three";
+import { getQualityConfig } from "../config/qualityConfig";
 
-const FloatingModel = memo(({ mouse, containerSize }) => {
+const FloatingModel = memo(({ mouseRef, containerSize }) => {
   const meshRef = useRef();
   const lightRef = useRef();
   const { scene } = useGLTF("/smile.glb");
@@ -46,6 +47,7 @@ const FloatingModel = memo(({ mouse, containerSize }) => {
   useFrame(({ clock }) => {
     if (meshRef.current) {
       const t = clock.getElapsedTime();
+      const mouse = mouseRef.current || { x: 0, y: 0 };
 
       // Floating animation
       meshRef.current.position.y = Math.sin(t * 0.6) * 0.15;
@@ -74,6 +76,7 @@ const FloatingModel = memo(({ mouse, containerSize }) => {
 
     // Dynamic light following mouse
     if (lightRef.current) {
+      const mouse = mouseRef.current || { x: 0, y: 0 };
       lightRef.current.position.x = mouse.x * viewport.width * 0.5;
       lightRef.current.position.y = mouse.y * viewport.height * 0.5;
     }
@@ -102,15 +105,22 @@ FloatingModel.displayName = "FloatingModel";
 
 useGLTF.preload("/smile.glb");
 
-const Hero3D = () => {
-  const [mouse, setMouse] = useState({ x: 0, y: 0 });
+const Hero3D = ({ reduceMotion = false }) => {
   const [containerSize, setContainerSize] = useState({
     width: 400,
     height: 400
   });
   const containerRef = useRef(null);
   const rafIdRef = useRef(null);
+  const mouseRef = useRef({ x: 0, y: 0 });
   const lastMouseRef = useRef({ x: 0, y: 0 });
+  const qualityConfig = useMemo(() => getQualityConfig(), []);
+  const isLowPower =
+    qualityConfig?.name === "LOW" || qualityConfig?.name === "MEDIUM";
+  const enablePost = !isLowPower && !reduceMotion;
+  const antialias = !isLowPower;
+  const dpr = isLowPower ? [0.7, 1.2] : [1, 2];
+  const multisampling = enablePost ? 4 : 0;
 
   useEffect(() => {
     let resizeRafId = null;
@@ -135,6 +145,16 @@ const Hero3D = () => {
     };
   }, []);
 
+  const scheduleMouseUpdate = () => {
+    if (!rafIdRef.current) {
+      rafIdRef.current = requestAnimationFrame(() => {
+        mouseRef.current.x = lastMouseRef.current.x;
+        mouseRef.current.y = lastMouseRef.current.y;
+        rafIdRef.current = null;
+      });
+    }
+  };
+
   // Global touch event for mobile - react to touch anywhere on screen
   useEffect(() => {
     const handleGlobalTouch = (e) => {
@@ -148,12 +168,7 @@ const Hero3D = () => {
         lastMouseRef.current.y =
           -((touch.clientY - rect.top) / rect.height) * 2 + 1;
 
-        if (!rafIdRef.current) {
-          rafIdRef.current = requestAnimationFrame(() => {
-            setMouse({ ...lastMouseRef.current });
-            rafIdRef.current = null;
-          });
-        }
+        scheduleMouseUpdate();
       }
     };
 
@@ -170,13 +185,7 @@ const Hero3D = () => {
     const rect = e.currentTarget.getBoundingClientRect();
     lastMouseRef.current.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
     lastMouseRef.current.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
-
-    if (!rafIdRef.current) {
-      rafIdRef.current = requestAnimationFrame(() => {
-        setMouse({ ...lastMouseRef.current });
-        rafIdRef.current = null;
-      });
-    }
+    scheduleMouseUpdate();
   };
 
   const handleTouchMove = (e) => {
@@ -188,12 +197,7 @@ const Hero3D = () => {
       lastMouseRef.current.y =
         -((touch.clientY - rect.top) / rect.height) * 2 + 1;
 
-      if (!rafIdRef.current) {
-        rafIdRef.current = requestAnimationFrame(() => {
-          setMouse({ ...lastMouseRef.current });
-          rafIdRef.current = null;
-        });
-      }
+      scheduleMouseUpdate();
     }
   };
 
@@ -206,7 +210,8 @@ const Hero3D = () => {
       lastMouseRef.current.y =
         -((touch.clientY - rect.top) / rect.height) * 2 + 1;
 
-      setMouse({ ...lastMouseRef.current });
+      mouseRef.current.x = lastMouseRef.current.x;
+      mouseRef.current.y = lastMouseRef.current.y;
     }
   };
 
@@ -238,29 +243,32 @@ const Hero3D = () => {
           position: cameraSettings.position,
           fov: cameraSettings.fov
         }}
-        dpr={[1, 2]}
+        dpr={dpr}
         gl={{
-          antialias: true,
+          antialias: antialias,
           alpha: true,
           powerPreference: "high-performance",
           toneMapping: THREE.ACESFilmicToneMapping,
           toneMappingExposure: 1.2,
           outputColorSpace: THREE.SRGBColorSpace
         }}
+        frameloop={reduceMotion ? "demand" : "always"}
       >
         <directionalLight
           position={[10, 15, 15]}
           intensity={25}
-          castShadow={true}
+          castShadow={false}
         />
 
         <Suspense fallback={null}>
-          <FloatingModel mouse={mouse} containerSize={containerSize} />
+          <FloatingModel mouseRef={mouseRef} containerSize={containerSize} />
         </Suspense>
 
-        <EffectComposer multisampling={8} disableNormalPass={true}>
-          <ChromaticAberration offset={[0.004, 0.004]} />
-        </EffectComposer>
+        {enablePost && (
+          <EffectComposer multisampling={multisampling} disableNormalPass={true}>
+            <ChromaticAberration offset={[0.004, 0.004]} />
+          </EffectComposer>
+        )}
       </Canvas>
     </div>
   );
