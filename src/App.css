@@ -46,6 +46,11 @@ body {
   touch-action: pan-y;
 }
 
+body.cursor-enabled,
+body.cursor-enabled * {
+  cursor: none !important;
+}
+
 .main-container {
   position: relative;
   z-index: 1;
@@ -531,10 +536,99 @@ body {
   opacity: 0.6;
 }
 
+/* Custom Cursor */
+.cursor-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.cursor-dot,
+.cursor-trail,
+.cursor-trail-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  margin-left: -4px;
+  margin-top: -4px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #120909 0%, #070404 60%, #000000 100%);
+  border: 1px solid rgba(255, 102, 0, 0.65);
+  box-shadow:
+    0 0 6px rgba(255, 102, 0, 0.35),
+    0 0 14px rgba(255, 51, 0, 0.2);
+}
+
+.cursor-trail {
+  width: 96px;
+  height: 96px;
+  margin-left: -48px;
+  margin-top: -48px;
+  border-radius: 50%;
+  border: none;
+  background: radial-gradient(
+    circle,
+    rgba(140, 130, 125, 0.18) 0%,
+    rgba(80, 70, 65, 0.12) 35%,
+    rgba(40, 35, 30, 0.06) 60%,
+    rgba(10, 8, 7, 0.03) 72%,
+    rgba(0, 0, 0, 0) 85%
+  );
+  box-shadow:
+    0 0 30px rgba(100, 90, 85, 0.28),
+    inset 0 0 24px rgba(0, 0, 0, 0.35);
+  filter: blur(6px);
+}
+
+.cursor-trail-dot {
+  width: 26px;
+  height: 26px;
+  margin-left: -13px;
+  margin-top: -13px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(160, 150, 145, 0.18) 0%,
+    rgba(90, 82, 78, 0.16) 45%,
+    rgba(40, 35, 32, 0.1) 70%,
+    rgba(15, 12, 10, 0.06) 85%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  border: none;
+  box-shadow:
+    0 0 22px rgba(80, 70, 65, 0.22),
+    inset 0 0 12px rgba(0, 0, 0, 0.35);
+  filter: blur(9px);
+}
+
+.cursor-layer.is-pressed .cursor-dot {
+  box-shadow:
+    0 0 12px rgba(255, 102, 0, 0.55),
+    0 0 28px rgba(255, 51, 0, 0.35);
+}
+
+@media (pointer: coarse) {
+  .cursor-layer {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .connect-link,
   .connect-link-arrow,
   .hero-subtitle a {
     transition: none !important;
+  }
+  .cursor-layer {
+    display: none;
   }
 }

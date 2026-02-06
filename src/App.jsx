@@ -4,6 +4,7 @@ import { Lenis } from "lenis/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import NoiseBackground from "./components/NoiseBackground";
+import CustomCursor from "./components/CustomCursor";
 
 // Lazy load Hero3D para melhor performance inicial
 const Hero3D = lazy(() => import("./components/Hero3D"));
@@ -13,7 +14,7 @@ gsap.registerPlugin(ScrollTrigger);
 // Configure ScrollTrigger for better performance
 ScrollTrigger.config({
   limitCallbacks: true,
-  syncInterval: 150
+  syncInterval: 150,
 });
 
 function App() {
@@ -32,7 +33,7 @@ function App() {
         opacity: 0,
         duration: 0.8,
         delay: 0.2,
-        ease: "power3.out"
+        ease: "power3.out",
       });
 
       gsap.from(".hero-title-line", {
@@ -41,7 +42,7 @@ function App() {
         duration: 1,
         stagger: 0.15,
         delay: 0.4,
-        ease: "power3.out"
+        ease: "power3.out",
       });
 
       gsap.from(".hero-subtitle", {
@@ -49,7 +50,7 @@ function App() {
         opacity: 0,
         duration: 1,
         delay: 0.8,
-        ease: "power3.out"
+        ease: "power3.out",
       });
 
       // Advanced scroll animation for ABOUT section
@@ -59,21 +60,21 @@ function App() {
           start: "top 75%",
           end: "top 25%",
           scrub: 2,
-          invalidateOnRefresh: false
-        }
+          invalidateOnRefresh: false,
+        },
       });
 
       aboutTimeline
         .fromTo(
           ".about-section .section-number",
           { opacity: 0, x: -50, rotate: -10 },
-          { opacity: 1, x: 0, rotate: 0, duration: 0.675 }
+          { opacity: 1, x: 0, rotate: 0, duration: 0.675 },
         )
         .fromTo(
           ".about-section .section-title",
           { opacity: 0, y: 30, filter: "blur(10px)" },
           { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.9 },
-          "-=0.1"
+          "-=0.1",
         )
         .fromTo(
           ".about-section .section-text p",
@@ -83,9 +84,9 @@ function App() {
             y: 0,
             scale: 1,
             duration: 1.125,
-            stagger: 0.15
+            stagger: 0.15,
           },
-          "-=0.2"
+          "-=0.2",
         );
 
       // Refined and intensified scroll animation for CONNECT section
@@ -95,8 +96,8 @@ function App() {
           start: "top 80%",
           end: "top 20%",
           scrub: 1.5,
-          invalidateOnRefresh: false
-        }
+          invalidateOnRefresh: false,
+        },
       });
 
       connectTimeline
@@ -107,7 +108,7 @@ function App() {
             x: -80,
             rotate: -20,
             scale: 0.5,
-            filter: "blur(15px)"
+            filter: "blur(15px)",
           },
           {
             opacity: 1,
@@ -116,8 +117,8 @@ function App() {
             scale: 1,
             filter: "blur(0px)",
             duration: 0.5,
-            ease: "power3.out"
-          }
+            ease: "power3.out",
+          },
         )
         .fromTo(
           ".connect-section .section-title",
@@ -126,7 +127,7 @@ function App() {
             y: 50,
             scale: 0.8,
             filter: "blur(20px)",
-            rotateX: -45
+            rotateX: -45,
           },
           {
             opacity: 1,
@@ -135,9 +136,9 @@ function App() {
             filter: "blur(0px)",
             rotateX: 0,
             duration: 0.7,
-            ease: "power3.out"
+            ease: "power3.out",
           },
-          "-=0.2"
+          "-=0.2",
         )
         .fromTo(
           ".connect-section .connect-link",
@@ -147,7 +148,7 @@ function App() {
             rotateY: -25,
             rotateX: 15,
             scale: 0.7,
-            filter: "blur(12px)"
+            filter: "blur(12px)",
           },
           {
             opacity: 1,
@@ -159,11 +160,11 @@ function App() {
             duration: 1,
             stagger: {
               each: 0.12,
-              ease: "power2.out"
+              ease: "power2.out",
             },
-            ease: "power3.out"
+            ease: "power3.out",
           },
-          "-=0.3"
+          "-=0.3",
         );
 
       // Add individual link hover effects with scroll trigger
@@ -176,11 +177,11 @@ function App() {
               trigger: ".connect-section",
               start: "top 60%",
               end: "top 30%",
-              scrub: 0.5
+              scrub: 0.5,
             },
             "--glow-intensity": "1",
             duration: 0.3,
-            delay: index * 0.05
+            delay: index * 0.05,
           });
         });
       }
@@ -198,22 +199,26 @@ function App() {
 
           <h1 className="hero-title">
             <div className="hero-title-line hero-title-main">
-              <span className="hero-title-avatar">
-                <img
-                  src="/baltz-portrait.jpg"
-                  alt="Retrato de Baltz"
-                  loading="eager"
-                  decoding="async"
-                  fetchpriority="high"
-                />
-              </span>
+                  <span className="hero-title-avatar">
+                    <img
+                      src="/baltz-portrait.jpg"
+                      alt="Retrato de Baltz"
+                      loading="eager"
+                      decoding="async"
+                      fetchPriority="high"
+                    />
+                  </span>
               <span className="hero-title-text">baltz</span>
             </div>
           </h1>
 
           <div className="hero-subtitle">
             Based in Brasil <br /> Currently at @
-            <a href="https://www.thoughtworks.com/" target="_blank" rel="noreferrer">
+            <a
+              href="https://www.thoughtworks.com/"
+              target="_blank"
+              rel="noreferrer"
+            >
               THOUGHTWORKS
             </a>
           </div>
@@ -237,9 +242,9 @@ function App() {
               </p>
               <p>
                 Enthusiastic about genAI, with extensive agile and software
-                engineering background. Collaborated with major players: XP
-                Investimentos, Serasa, Dasa, MRV Construtora, CVC Viagens, GFT
-                Technologies, CI&T
+                engineering background. Collaborated with major players: Nike,
+                Thoughtworks, XP Investimentos, Serasa, Dasa, MRV Construtora,
+                CVC Viagens, GFT Technologies, CI&T
               </p>
             </div>
           </div>
@@ -305,13 +310,10 @@ function App() {
 
   return (
     <>
+      <CustomCursor reduceMotion={prefersReducedMotion} />
       <NoiseBackground reduceMotion={prefersReducedMotion} />
 
-      {prefersReducedMotion ? (
-        mainContent
-      ) : (
-        <Lenis root>{mainContent}</Lenis>
-      )}
+      {prefersReducedMotion ? mainContent : <Lenis root>{mainContent}</Lenis>}
     </>
   );
 }

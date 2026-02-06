@@ -176,14 +176,17 @@ const NoiseShader = memo(({ mouseRef, layerCount = 15 }) => {
     }
   `;
 
-  const fragmentShader = createFragmentShader(layerCount);
+  const fragmentShader = useMemo(
+    () => createFragmentShader(layerCount),
+    [layerCount]
+  );
 
   const uniforms = useMemo(
     () => ({
       uTime: { value: 0 },
       uMouse: { value: new THREE.Vector2(0, 0) }
     }),
-    [layerCount]
+    []
   );
 
   const mouseVector = useRef(new THREE.Vector2(0, 0));
