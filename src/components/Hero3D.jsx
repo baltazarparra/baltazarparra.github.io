@@ -105,22 +105,24 @@ FloatingModel.displayName = "FloatingModel";
 
 useGLTF.preload("/smile.glb");
 
-const Hero3D = ({ reduceMotion = false }) => {
+const Hero3D = ({ reduceMotion = false, isMobile = false }) => {
   const [containerSize, setContainerSize] = useState({
     width: 400,
     height: 400
   });
+  const [isInView, setIsInView] = useState(true);
   const containerRef = useRef(null);
   const rafIdRef = useRef(null);
   const mouseRef = useRef({ x: 0, y: 0 });
   const lastMouseRef = useRef({ x: 0, y: 0 });
   const qualityConfig = useMemo(() => getQualityConfig(), []);
   const isLowPower =
-    qualityConfig?.name === "LOW" || qualityConfig?.name === "MEDIUM";
+    qualityConfig?.name === "LOW" || qualityConfig?.name === "MEDIUM" || isMobile;
   const enablePost = !isLowPower && !reduceMotion;
   const antialias = !isLowPower;
-  const dpr = isLowPower ? [0.7, 1.2] : [1, 2];
+  const dpr = isLowPower ? [0.6, 1] : [1, 2];
   const multisampling = enablePost ? 4 : 0;
+  const shouldAnimate = !reduceMotion && isInView;
 
   useEffect(() => {
     let resizeRafId = null;
@@ -143,6 +145,18 @@ const Hero3D = ({ reduceMotion = false }) => {
       window.removeEventListener("resize", updateSize);
       if (resizeRafId) cancelAnimationFrame(resizeRafId);
     };
+  }, []);
+
+  useEffect(() => {
+    if (!containerRef.current) return undefined;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { rootMargin: "200px 0px", threshold: 0.1 }
+    );
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
   }, []);
 
   const scheduleMouseUpdate = () => {
@@ -252,7 +266,7 @@ const Hero3D = ({ reduceMotion = false }) => {
           toneMappingExposure: 1.2,
           outputColorSpace: THREE.SRGBColorSpace
         }}
-        frameloop={reduceMotion ? "demand" : "always"}
+        frameloop={shouldAnimate ? "always" : "demand"}
       >
         <directionalLight
           position={[10, 15, 15]}

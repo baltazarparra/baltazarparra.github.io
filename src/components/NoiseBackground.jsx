@@ -222,7 +222,7 @@ const NoiseShader = memo(({ mouseRef, layerCount = 15 }) => {
 
 NoiseShader.displayName = "NoiseShader";
 
-const NoiseBackground = ({ reduceMotion = false }) => {
+const NoiseBackground = ({ reduceMotion = false, isMobile = false }) => {
   const mouseRef = useRef({ x: 0, y: 0 });
   const scrollRef = useRef(0);
   const connectRef = useRef(0);
@@ -233,14 +233,23 @@ const NoiseBackground = ({ reduceMotion = false }) => {
 
   // Get quality configuration based on device capabilities
   const qualityConfig = useMemo(() => getQualityConfig(), []);
+  const isMobileViewport =
+    isMobile || (typeof window !== "undefined" && window.innerWidth < 768);
 
   // Adaptive performance settings from quality config
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-  const dpr = qualityConfig.dprRange;
-  const particleCount = qualityConfig.particleCount;
-  const tvParticleCount = qualityConfig.tvParticleCount;
-  const noiseLayerCount = qualityConfig.noiseLayerCount;
-  const enableTVNoise = qualityConfig.enableTVNoise && !reduceMotion;
+  const baseDpr = qualityConfig.dprRange;
+  const dpr = isMobileViewport ? [0.35, 0.6] : baseDpr;
+  const particleCount = isMobileViewport
+    ? Math.max(120, Math.floor(qualityConfig.particleCount * 0.6))
+    : qualityConfig.particleCount;
+  const tvParticleCount = isMobileViewport
+    ? 0
+    : Math.floor(qualityConfig.tvParticleCount * 0.8);
+  const noiseLayerCount = isMobileViewport
+    ? Math.max(4, Math.floor(qualityConfig.noiseLayerCount * 0.7))
+    : qualityConfig.noiseLayerCount;
+  const enableTVNoise =
+    qualityConfig.enableTVNoise && !reduceMotion && !isMobileViewport;
   const motionEnabled = !reduceMotion && isActive;
 
   useEffect(() => {
@@ -273,7 +282,7 @@ const NoiseBackground = ({ reduceMotion = false }) => {
     };
 
     // Throttle mouse updates on mobile
-    const handleMouseMove = isMobile ? null : (e) => {
+    const handleMouseMove = isMobileViewport ? null : (e) => {
       lastX = e.clientX / window.innerWidth;
       lastY = -(e.clientY / window.innerHeight);
 
@@ -339,7 +348,7 @@ const NoiseBackground = ({ reduceMotion = false }) => {
       window.removeEventListener("scroll", handleScroll);
       if (rafId) cancelAnimationFrame(rafId);
     };
-  }, [isMobile, reduceMotion]);
+  }, [isMobileViewport, reduceMotion]);
 
   return (
     <div
@@ -356,7 +365,11 @@ const NoiseBackground = ({ reduceMotion = false }) => {
       <Canvas
         camera={{ position: [0, 0, 8], fov: 75 }}
         dpr={dpr}
-        performance={{ min: 0.3, max: 0.8, debounce: 200 }}
+        performance={{
+          min: isMobileViewport ? 0.2 : 0.3,
+          max: isMobileViewport ? 0.6 : 0.8,
+          debounce: 250
+        }}
         gl={{
           antialias: false,
           powerPreference: "high-performance",

@@ -1,5 +1,5 @@
 import "./App.css";
-import { useEffect, useRef, useMemo, lazy, Suspense } from "react";
+import { useEffect, useRef, useMemo, useState, lazy, Suspense } from "react";
 import { Lenis } from "lenis/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -19,13 +19,36 @@ ScrollTrigger.config({
 
 function App() {
   const heroRef = useRef();
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(max-width: 767px)").matches;
+  });
   const prefersReducedMotion = useMemo(() => {
     if (typeof window === "undefined") return false;
     return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   }, []);
+  const enableAnimations = !prefersReducedMotion && !isMobile;
 
   useEffect(() => {
-    if (prefersReducedMotion) return undefined;
+    if (typeof window === "undefined") return undefined;
+    const mql = window.matchMedia("(max-width: 767px)");
+    const handleChange = (event) => setIsMobile(event.matches);
+    if (mql.addEventListener) {
+      mql.addEventListener("change", handleChange);
+    } else {
+      mql.addListener(handleChange);
+    }
+    return () => {
+      if (mql.removeEventListener) {
+        mql.removeEventListener("change", handleChange);
+      } else {
+        mql.removeListener(handleChange);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!enableAnimations) return undefined;
     // Hero animation with delay to ensure DOM is ready
     const ctx = gsap.context(() => {
       gsap.from(".hero-label", {
@@ -188,7 +211,7 @@ function App() {
     });
 
     return () => ctx.revert();
-  }, [prefersReducedMotion]);
+  }, [enableAnimations]);
 
   const mainContent = (
     <main className="main-container">
@@ -225,7 +248,7 @@ function App() {
         </div>
 
         <Suspense fallback={<div style={{ width: "100%", height: "280px" }} />}>
-          <Hero3D reduceMotion={prefersReducedMotion} />
+          <Hero3D reduceMotion={prefersReducedMotion} isMobile={isMobile} />
         </Suspense>
       </section>
 
@@ -311,9 +334,9 @@ function App() {
   return (
     <>
       <CustomCursor reduceMotion={prefersReducedMotion} />
-      <NoiseBackground reduceMotion={prefersReducedMotion} />
+      <NoiseBackground reduceMotion={prefersReducedMotion} isMobile={isMobile} />
 
-      {prefersReducedMotion ? mainContent : <Lenis root>{mainContent}</Lenis>}
+      {enableAnimations ? <Lenis root>{mainContent}</Lenis> : mainContent}
     </>
   );
 }
