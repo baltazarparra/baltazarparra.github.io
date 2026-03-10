@@ -246,12 +246,21 @@ function App() {
                         >
                             THOUGHTWORKS
                         </a>
+                        <br />
+                        <span className="hero-subtitle-role">
+                            ai native engineer
+                        </span>
                     </div>
                 </div>
 
                 <Suspense
                     fallback={
-                        <div style={{ width: "100%", height: "280px" }} />
+                        <div
+                            style={{
+                                width: "min(100%, 340px)",
+                                aspectRatio: "1 / 1",
+                            }}
+                        />
                     }
                 >
                     <Hero3D
