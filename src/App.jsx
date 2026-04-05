@@ -5,6 +5,8 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import NoiseBackground from "./components/NoiseBackground";
 import CustomCursor from "./components/CustomCursor";
+import LatestPostsSection from "./components/LatestPostsSection";
+import FeaturedProjectsSection from "./components/FeaturedProjectsSection";
 
 // Lazy load Hero3D para melhor performance inicial
 const Hero3D = lazy(() => import("./components/Hero3D"));
@@ -51,6 +53,50 @@ function App() {
         if (!enableAnimations) return undefined;
         // Hero animation with delay to ensure DOM is ready
         const ctx = gsap.context(() => {
+            const createSectionTimeline = ({
+                trigger,
+                itemSelector,
+                itemFrom,
+                itemTo,
+                start = "top 75%",
+                end = "top 25%",
+                scrub = 1.4,
+            }) => {
+                const timeline = gsap.timeline({
+                    scrollTrigger: {
+                        trigger,
+                        start,
+                        end,
+                        scrub,
+                        invalidateOnRefresh: false,
+                    },
+                });
+
+                timeline
+                    .fromTo(
+                        `${trigger} .section-number`,
+                        { opacity: 0, x: -50, rotate: -10 },
+                        { opacity: 1, x: 0, rotate: 0, duration: 0.675 },
+                    )
+                    .fromTo(
+                        `${trigger} .section-title`,
+                        { opacity: 0, y: 30, filter: "blur(10px)" },
+                        {
+                            opacity: 1,
+                            y: 0,
+                            filter: "blur(0px)",
+                            duration: 0.9,
+                        },
+                        "-=0.1",
+                    );
+
+                if (itemSelector && itemFrom && itemTo) {
+                    timeline.fromTo(itemSelector, itemFrom, itemTo, "-=0.2");
+                }
+
+                return timeline;
+            };
+
             gsap.from(".hero-label", {
                 y: 30,
                 opacity: 0,
@@ -76,41 +122,58 @@ function App() {
                 ease: "power3.out",
             });
 
-            // Advanced scroll animation for ABOUT section
-            const aboutTimeline = gsap.timeline({
-                scrollTrigger: {
-                    trigger: ".about-section",
-                    start: "top 75%",
-                    end: "top 25%",
-                    scrub: 2,
-                    invalidateOnRefresh: false,
+            createSectionTimeline({
+                trigger: ".about-section",
+                itemSelector: ".about-section .section-text p",
+                itemFrom: { opacity: 0, y: 40, scale: 0.95 },
+                itemTo: {
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    duration: 1.125,
+                    stagger: 0.15,
                 },
+                scrub: 2,
             });
 
-            aboutTimeline
-                .fromTo(
-                    ".about-section .section-number",
-                    { opacity: 0, x: -50, rotate: -10 },
-                    { opacity: 1, x: 0, rotate: 0, duration: 0.675 },
-                )
-                .fromTo(
-                    ".about-section .section-title",
-                    { opacity: 0, y: 30, filter: "blur(10px)" },
-                    { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.9 },
-                    "-=0.1",
-                )
-                .fromTo(
-                    ".about-section .section-text p",
-                    { opacity: 0, y: 40, scale: 0.95 },
-                    {
-                        opacity: 1,
-                        y: 0,
-                        scale: 1,
-                        duration: 1.125,
-                        stagger: 0.15,
-                    },
-                    "-=0.2",
-                );
+            createSectionTimeline({
+                trigger: ".writing-section",
+                itemSelector:
+                    ".writing-section .section-intro, .writing-section .writing-item",
+                itemFrom: { opacity: 0, y: 48, scale: 0.96, filter: "blur(8px)" },
+                itemTo: {
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    filter: "blur(0px)",
+                    duration: 1,
+                    stagger: 0.14,
+                },
+                scrub: 1.5,
+            });
+
+            createSectionTimeline({
+                trigger: ".projects-section",
+                itemSelector:
+                    ".projects-section .section-intro, .projects-section .project-card",
+                itemFrom: {
+                    opacity: 0,
+                    y: 52,
+                    scale: 0.95,
+                    rotateX: 8,
+                    filter: "blur(10px)",
+                },
+                itemTo: {
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    rotateX: 0,
+                    filter: "blur(0px)",
+                    duration: 1,
+                    stagger: 0.12,
+                },
+                scrub: 1.35,
+            });
 
             // Refined and intensified scroll animation for CONNECT section
             const connectTimeline = gsap.timeline({
@@ -295,10 +358,14 @@ function App() {
                 </div>
             </section>
 
+            <LatestPostsSection />
+
+            <FeaturedProjectsSection />
+
             {/* Connect Section */}
             <section className="section connect-section">
                 <div className="section-grid">
-                    <div className="section-number">02</div>
+                    <div className="section-number">04</div>
                     <div className="section-content">
                         <h2 className="section-title">CONNECT</h2>
                         <nav className="connect-links">
