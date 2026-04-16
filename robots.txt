@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://baltazarparra.github.io/sitemap.xml
