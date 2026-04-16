@@ -1,31 +1,9 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
-import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
   plugins: [
-    react(),
-    VitePWA({
-      registerType: 'autoUpdate',
-      injectRegister: false,
-      includeAssets: ['robots.txt', 'og.jpg', 'smile.glb', 'icons/favicon.svg'],
-      manifest: {
-        name: 'Baltazar Parra',
-        short_name: 'Baltz',
-        description: 'Baltazar Parra - Tech Lead especialista em React, NextJS e otimização de performance',
-        theme_color: '#121212',
-        background_color: '#121212',
-        display: 'standalone',
-        icons: [
-          {
-            src: 'icons/favicon.svg',
-            sizes: 'any',
-            type: 'image/svg+xml',
-            purpose: 'any'
-          }
-        ]
-      }
-    })
+    react()
   ],
   build: {
     // Otimização para build
