@@ -18,10 +18,6 @@ function LatestPostsSection() {
                 <div className="section-number">02</div>
                 <div className="section-content">
                     <h2 className="section-title">WRITING</h2>
-                    <p className="section-intro">
-                        Recent essays on AI-native engineering, eval-driven
-                        development, and better ways to shape software work.
-                    </p>
 
                     <div className="writing-list">
                         {writingPosts.map((post) => (

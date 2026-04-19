@@ -1,19 +1,5 @@
 export const writingPosts = [
     {
-        title: "Stop Vibing, Start Eval-ing: EDD in Practice",
-        url: "https://dev.to/baltz/stop-vibing-start-eval-ing-edd-in-practice-46ba",
-        publishedAt: "2026-04-05",
-        readingTimeMinutes: 3,
-        category: "AI / EDD",
-    },
-    {
-        title: "Stop Vibing, Start Eval-ing: EDD for AI-Native Engineers",
-        url: "https://dev.to/baltz/stop-vibing-start-eval-ing-edd-for-ai-native-engineers-3468",
-        publishedAt: "2026-04-05",
-        readingTimeMinutes: 3,
-        category: "AI / EDD",
-    },
-    {
         title: "What is 'Harness Design' and why does it matter",
         url: "https://dev.to/baltz/what-is-harness-design-and-why-does-it-matter-2dbj",
         publishedAt: "2026-03-30",
@@ -24,11 +10,11 @@ export const writingPosts = [
 
 export const featuredProjects = [
     {
-        name: "guia",
-        description: "Development flow with code agents.",
-        url: "https://github.com/baltazarparra/guia",
+        name: "AI-Native Engineering",
+        description: "An educational, interactive website that teaches AI-native engineering.",
+        url: "https://baltazarparra.github.io/ai-native-engineering",
         language: "JavaScript",
-        category: "Protocol",
+        category: "Learning",
     },
     {
         name: "dark-pixels",

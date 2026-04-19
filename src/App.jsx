@@ -282,7 +282,7 @@ function App() {
             <section className="hero" ref={heroRef}>
                 <div className="hero-content">
                     <div className="hero-label">
-                        LEAD DEVELOPER / FULLSTACK / UX-UI
+                        AI-Native Engineer / +10y Javascript, React, next.js
                     </div>
 
                     <h1 className="hero-title">
@@ -301,7 +301,7 @@ function App() {
                     </h1>
 
                     <div className="hero-subtitle">
-                        Based in Brasil <br /> Currently at @
+                        Lead Engineer at @
                         <a
                             href="https://www.thoughtworks.com/"
                             target="_blank"
@@ -309,10 +309,8 @@ function App() {
                         >
                             THOUGHTWORKS
                         </a>
-                        <br />
-                        <span className="hero-subtitle-role">
-                            ai native engineer
-                        </span>
+                        <br /> 
+                        Based in Brasil <br />
                     </div>
                 </div>
 
@@ -341,17 +339,13 @@ function App() {
                         <h2 className="section-title">ABOUT</h2>
                         <div className="section-text">
                             <p>
-                                A decade in web development, shaping interfaces
-                                and experiences with a focus on web development
-                                and cutting-edge technologies.
-                            </p>
-                            <p>
-                                Enthusiastic about genAI, with extensive agile
+                                designs software with code agents as a core architectural component, with extensive agile
                                 and software engineering background.
-                                Collaborated with major players: Nike,
+                                <br />
+                                Collaborated with <b>Nike,
                                 Thoughtworks, XP Investimentos, Serasa, Dasa,
                                 MRV Construtora, CVC Viagens, GFT Technologies,
-                                CI&T
+                                CI&T</b>
                             </p>
                         </div>
                     </div>
@@ -421,7 +415,7 @@ function App() {
             {/* Footer */}
             <footer className="footer">
                 <div className="footer-content">
-                    <div className="footer-copy">© 2025 BALTAZAR PARRA</div>
+                    <div className="footer-copy">baltz</div>
                 </div>
             </footer>
         </main>
