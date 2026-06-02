@@ -7,10 +7,6 @@ function FeaturedProjectsSection() {
                 <div className="section-number">03</div>
                 <div className="section-content">
                     <h2 className="section-title">PROJECTS</h2>
-                    <p className="section-intro">
-                        Three selected builds spanning protocol design,
-                        experimental interaction, and web3 product work.
-                    </p>
 
                     <div className="projects-grid">
                         {featuredProjects.map((project) => (
