@@ -16,6 +16,13 @@ export const writingPosts = [
 ];
 
 export const featuredProjects = [
+    {
+    name: "Caipora",
+    description: "Grid Classic Roguelike, Dark Brazilian Folklore.",
+    url: "https://github.com/baltazarparra/caipora",
+    language: "Godot",
+    category: "Game",
+  },
   {
     name: "AI-Native Engineering",
     description:
@@ -31,12 +38,5 @@ export const featuredProjects = [
     url: "https://github.com/baltazarparra/dark-pixels",
     language: "JavaScript",
     category: "Game",
-  },
-  {
-    name: "crypto-transfer",
-    description: "A DApp made with web3 tools for transferring cryptocurrency.",
-    url: "https://github.com/baltazarparra/crypto-transfer",
-    language: "CSS",
-    category: "Web3",
   },
 ];
