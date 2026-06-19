@@ -16,13 +16,6 @@ export const writingPosts = [
 ];
 
 export const featuredProjects = [
-    {
-    name: "Caipora",
-    description: "Grid Classic Roguelike, Dark Brazilian Folklore.",
-    url: "https://github.com/baltazarparra/caipora",
-    language: "Godot",
-    category: "Game",
-  },
   {
     name: "AI-Native Engineering",
     description:
@@ -32,11 +25,19 @@ export const featuredProjects = [
     category: "Learning",
   },
   {
-    name: "dark-pixels",
+    name: "Crypto Transfer DApp",
     description:
-      "A vintage platform game with a souls-like spirit, made in JavaScript.",
-    url: "https://github.com/baltazarparra/dark-pixels",
+      "ĐApp for transfer cryptocurrency",
+    url: "https://github.com/baltazarparra/crypto-transfer",
     language: "JavaScript",
-    category: "Game",
+    category: "Web3",
   },
+  {
+    name: "Subtitle Scraping",
+    description:
+      "Data extraction with puppeteer and node.js",
+    url: "https://github.com/baltazarparra/subtitle-scraping",
+    language: "JavaScript",
+    category: "Learning",
+  }
 ];
