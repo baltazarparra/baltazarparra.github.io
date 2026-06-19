@@ -17,9 +17,14 @@ export default defineConfig({
     // Divisão do código
     rollupOptions: {
       output: {
-        manualChunks: {
-          react: ['react', 'react-dom'],
-          'react-three': ['@react-three/fiber', '@react-three/drei', '@react-three/postprocessing'],
+        // Vite 8 usa Rolldown, que só aceita manualChunks como função.
+        // three + fiber são eager (NoiseBackground). drei e postprocessing são
+        // usados só pelo Hero3D (lazy): não recebem chunk nomeado aqui, então
+        // o bundler os mantém no chunk lazy do Hero3D, fora do critical path.
+        manualChunks(id) {
+          if (!id.includes('node_modules')) return;
+          if (/[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/.test(id)) return 'react';
+          if (/[\\/]node_modules[\\/](three|@react-three[\\/]fiber)[\\/]/.test(id)) return 'three';
         },
         // Reduzindo tamanho dos nomes de arquivos
         entryFileNames: 'assets/[name].[hash].js',
@@ -29,8 +34,6 @@ export default defineConfig({
     },
     // Otimização de assets
     assetsInlineLimit: 4096,
-    // Habilitar compressão Gzip e Brotli
-    brotliSize: true,
     // Melhor otimização de CSS
     cssCodeSplit: true,
     // Código mais limpo

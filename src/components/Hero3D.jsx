@@ -10,6 +10,10 @@ import {
 import * as THREE from "three";
 import { getQualityConfig } from "../config/qualityConfig";
 
+// postprocessing v3 espera offset como Vector2 (o wrapper aceita Vector2 ou array,
+// mas Vector2 é o formato canônico). Constante de módulo evita recriar a cada render.
+const CHROMATIC_OFFSET = new THREE.Vector2(0.004, 0.004);
+
 const ZERO_POINTER = { x: 0, y: 0 };
 
 const HERO_RENDER_PROFILES = {
@@ -708,9 +712,8 @@ const Hero3D = ({ reduceMotion = false, isMobile = false }) => {
         {renderSettings.enablePost && (
           <EffectComposer
             multisampling={renderSettings.multisampling}
-            disableNormalPass={true}
           >
-            <ChromaticAberration offset={[0.004, 0.004]} />
+            <ChromaticAberration offset={CHROMATIC_OFFSET} />
           </EffectComposer>
         )}
       </Canvas>

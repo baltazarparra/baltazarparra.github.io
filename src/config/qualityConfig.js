@@ -86,13 +86,6 @@ export function detectDeviceTier() {
   if (!isMobile) score += 2; // Desktop penalty reversal
   if (isTablet) score += 1; // Tablet gets slight boost
 
-  // Battery saver mode (if available)
-  if ('getBattery' in navigator) {
-    navigator.getBattery().then((battery) => {
-      if (battery.level < 0.2) score -= 2; // Low battery = reduce quality
-    }).catch(() => {});
-  }
-
   // Determine tier based on score
   if (score >= 9) return 'ULTRA';
   if (score >= 6) return 'HIGH';
