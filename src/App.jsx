@@ -405,7 +405,18 @@ function App() {
                                 <span className="connect-link-text">
                                     SPOTIFY
                                 </span>
-                                <span className="connect-link-arrow">→</span>
+                                <span className="connect-link-arrow">🎵</span>
+                            </a>
+                            <a
+                                href="https://baltazarparra.itch.io/"
+                                target="_blank"
+                                rel="noreferrer"
+                                className="connect-link"
+                            >
+                                <span className="connect-link-text">
+                                    itch.io
+                                </span>
+                                <span className="connect-link-arrow">🎮</span>
                             </a>
                         </nav>
                     </div>
