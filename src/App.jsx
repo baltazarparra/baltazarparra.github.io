@@ -289,7 +289,7 @@ function App() {
                         <div className="hero-title-line hero-title-main">
                             <span className="hero-title-avatar">
                                 <img
-                                    src="https://avatars.githubusercontent.com/u/7395304?v=4"
+                                    src="/avatar.jpg"
                                     alt="Retrato de Baltz"
                                     loading="eager"
                                     decoding="async"
