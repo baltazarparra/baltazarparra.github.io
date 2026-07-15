@@ -8,6 +8,7 @@ import CustomCursor from "./components/CustomCursor";
 import LatestPostsSection from "./components/LatestPostsSection";
 import FeaturedProjectsSection from "./components/FeaturedProjectsSection";
 import CaiporaGameSection from "./components/CaiporaGameSection";
+import CloudsEpSection from "./components/CloudsEpSection";
 
 // Lazy load Hero3D para melhor performance inicial
 const Hero3D = lazy(() => import("./components/Hero3D"));
@@ -425,6 +426,8 @@ function App() {
                     </div>
                 </div>
             </section>
+
+            <CloudsEpSection />
 
             {/* Footer */}
             <footer className="footer">
