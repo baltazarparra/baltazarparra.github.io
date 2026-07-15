@@ -1,0 +1,23 @@
+{
+  "notFound": {
+    "h1": "This page does not exist.",
+    "canonical": "https://baltz.dev/404.html",
+    "returnLabel": "Back to baltz.dev",
+    "returnHref": "http://127.0.0.1:4100/",
+    "status": 404,
+    "returnedTo": "http://127.0.0.1:4100/"
+  },
+  "assetFailure": {
+    "coverState": "error",
+    "coverImageOpacity": "0",
+    "coverFallbackText": "CLOUDS",
+    "smileState": "interactive",
+    "smileFallbackVisible": true,
+    "smileCanvasCount": 0,
+    "failedRequests": [
+      "",
+      "",
+      ""
+    ]
+  }
+}

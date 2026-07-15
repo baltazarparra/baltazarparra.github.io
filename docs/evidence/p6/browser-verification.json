@@ -1,0 +1,302 @@
+[
+  {
+    "profile": "desktop",
+    "consoleErrors": [],
+    "failedRequests": [],
+    "initial": {
+      "bodyTextLength": 1191,
+      "h1": "baltz.",
+      "canonical": "https://baltz.dev/",
+      "navLinks": 3,
+      "overlay": false,
+      "smileState": "poster",
+      "smileCanvas": 0,
+      "pageHeight": 9397,
+      "smileStateAfterInteraction": "interactive",
+      "smileCanvasAfterInteraction": 1
+    },
+    "writing": {
+      "entries": 2,
+      "titles": [
+        "Sharing skills with NPX",
+        "What is 'Harness Design' and why does it matter"
+      ],
+      "dates": [
+        "2026-05-04",
+        "2026-03-30"
+      ],
+      "links": [
+        "https://dev.to/baltz/sharing-skills-with-npx-2nbc",
+        "https://dev.to/baltz/what-is-harness-design-and-why-does-it-matter-2dbj"
+      ]
+    },
+    "thermal": {
+      "thermalState": "interactive",
+      "thermalCanvas": 1,
+      "fallbackVisible": true,
+      "fallbackDisplay": "block",
+      "fallbackOpacity": "0.82"
+    },
+    "navigation": {
+      "hash": "#caipora",
+      "caiporaTop": 72,
+      "caiporaImageLoaded": true
+    },
+    "keyboard": [
+      {
+        "tag": "A",
+        "label": "Skip to content",
+        "href": "http://127.0.0.1:4100/#main",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Baltz, back to the beginning",
+        "href": "http://127.0.0.1:4100/#hero",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Work",
+        "href": "http://127.0.0.1:4100/#work",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Caipora",
+        "href": "http://127.0.0.1:4100/#caipora",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Elsewhere",
+        "href": "http://127.0.0.1:4100/#elsewhere",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Read Sharing skills with NPX on dev.to",
+        "href": "https://dev.to/baltz/sharing-skills-with-npx-2nbc",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Read What is 'Harness Design' and why does it matter on dev.to",
+        "href": "https://dev.to/baltz/what-is-harness-design-and-why-does-it-matter-2dbj",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Open project",
+        "href": "https://baltazarparra.github.io/ai-native-engineering",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Open project",
+        "href": "https://github.com/baltazarparra/crypto-transfer",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Open project",
+        "href": "https://github.com/baltazarparra/subtitle-scraping",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Play in browser",
+        "href": "https://baltazarparra.github.io/caipora/",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Listen on Spotify",
+        "href": "https://open.spotify.com/album/6BFeIsMZ4zcuGbs5cugxLM",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "LinkedIn",
+        "href": "https://www.linkedin.com/in/baltazarparra/",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "GitHub",
+        "href": "https://github.com/baltazarparra",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "dev.to",
+        "href": "https://dev.to/baltz",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Spotify",
+        "href": "https://open.spotify.com/album/6BFeIsMZ4zcuGbs5cugxLM",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "itch.io",
+        "href": "https://baltazarparra.itch.io/",
+        "visible": true,
+        "outlineWidth": "2px"
+      }
+    ]
+  },
+  {
+    "profile": "mobile",
+    "consoleErrors": [],
+    "failedRequests": [],
+    "initial": {
+      "bodyTextLength": 1191,
+      "h1": "baltz.",
+      "canonical": "https://baltz.dev/",
+      "navLinks": 3,
+      "overlay": false,
+      "smileState": "poster",
+      "smileCanvas": 0,
+      "pageHeight": 7308,
+      "smileStateAfterInteraction": "poster",
+      "smileCanvasAfterInteraction": 0
+    },
+    "writing": {
+      "entries": 2,
+      "titles": [
+        "Sharing skills with NPX",
+        "What is 'Harness Design' and why does it matter"
+      ],
+      "dates": [
+        "2026-05-04",
+        "2026-03-30"
+      ],
+      "links": [
+        "https://dev.to/baltz/sharing-skills-with-npx-2nbc",
+        "https://dev.to/baltz/what-is-harness-design-and-why-does-it-matter-2dbj"
+      ]
+    },
+    "thermal": {
+      "thermalState": "fallback",
+      "thermalCanvas": 0,
+      "fallbackVisible": true,
+      "fallbackDisplay": "block",
+      "fallbackOpacity": "0.82"
+    },
+    "navigation": {
+      "hash": "#caipora",
+      "caiporaTop": 64,
+      "caiporaImageLoaded": true
+    },
+    "keyboard": []
+  },
+  {
+    "profile": "reduced",
+    "consoleErrors": [],
+    "failedRequests": [],
+    "initial": {
+      "bodyTextLength": 1191,
+      "h1": "baltz.",
+      "canonical": "https://baltz.dev/",
+      "navLinks": 3,
+      "overlay": false,
+      "smileState": "poster",
+      "smileCanvas": 0,
+      "pageHeight": 9397,
+      "smileStateAfterInteraction": "poster",
+      "smileCanvasAfterInteraction": 0
+    },
+    "writing": {
+      "entries": 2,
+      "titles": [
+        "Sharing skills with NPX",
+        "What is 'Harness Design' and why does it matter"
+      ],
+      "dates": [
+        "2026-05-04",
+        "2026-03-30"
+      ],
+      "links": [
+        "https://dev.to/baltz/sharing-skills-with-npx-2nbc",
+        "https://dev.to/baltz/what-is-harness-design-and-why-does-it-matter-2dbj"
+      ]
+    },
+    "thermal": {
+      "thermalState": "fallback",
+      "thermalCanvas": 0,
+      "fallbackVisible": true,
+      "fallbackDisplay": "block",
+      "fallbackOpacity": "0.82"
+    },
+    "navigation": {
+      "hash": "#caipora",
+      "caiporaTop": 72,
+      "caiporaImageLoaded": true
+    },
+    "keyboard": []
+  },
+  {
+    "profile": "no-js",
+    "consoleErrors": [],
+    "failedRequests": [],
+    "initial": {
+      "bodyTextLength": 1191,
+      "h1": "baltz.",
+      "canonical": "https://baltz.dev/",
+      "navLinks": 3,
+      "overlay": false,
+      "smileState": "poster",
+      "smileCanvas": 0,
+      "pageHeight": 9397,
+      "smileStateAfterInteraction": "poster",
+      "smileCanvasAfterInteraction": 0
+    },
+    "writing": {
+      "entries": 2,
+      "titles": [
+        "Sharing skills with NPX",
+        "What is 'Harness Design' and why does it matter"
+      ],
+      "dates": [
+        "2026-05-04",
+        "2026-03-30"
+      ],
+      "links": [
+        "https://dev.to/baltz/sharing-skills-with-npx-2nbc",
+        "https://dev.to/baltz/what-is-harness-design-and-why-does-it-matter-2dbj"
+      ]
+    },
+    "thermal": {
+      "thermalState": "fallback",
+      "thermalCanvas": 0,
+      "fallbackVisible": true,
+      "fallbackDisplay": "block",
+      "fallbackOpacity": "0.82"
+    },
+    "navigation": {
+      "hash": "#caipora",
+      "caiporaTop": 72,
+      "caiporaImageLoaded": true
+    },
+    "keyboard": []
+  }
+]

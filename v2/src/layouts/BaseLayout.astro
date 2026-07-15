@@ -1,0 +1,89 @@
+---
+import "../generated/tokens.css";
+import "../styles/global.css";
+import { site } from "../data/site";
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonicalPath?: string;
+  robots?: string;
+}
+
+const {
+  title = site.title,
+  description = site.description,
+  canonicalPath = "/",
+  robots = "index, follow",
+} = Astro.props;
+const canonicalUrl = new URL(canonicalPath, site.canonicalUrl);
+const socialImageUrl = new URL("/og.png", site.canonicalUrl);
+const portraitUrl = new URL("/baltz-portrait.jpg", site.canonicalUrl);
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${site.canonicalUrl}#website`,
+      url: site.canonicalUrl,
+      name: "baltz.dev",
+      description: site.description,
+      inLanguage: "en",
+    },
+    {
+      "@type": "Person",
+      "@id": `${site.canonicalUrl}#person`,
+      name: site.fullName,
+      alternateName: site.shortName,
+      url: site.canonicalUrl,
+      image: portraitUrl.href,
+      jobTitle: "AI-native engineer",
+      sameAs: site.profiles.map((profile) => profile.url),
+    },
+  ],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0c0d0f" />
+    <meta name="description" content={description} />
+    <meta name="robots" content={robots} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml" />
+    <link
+      rel="preload"
+      href="/fonts/InstrumentSans.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="baltz.dev" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={socialImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Baltz portfolio preview" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImageUrl} />
+    <meta name="twitter:image:alt" content="Baltz portfolio preview" />
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify(structuredData)}
+    />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

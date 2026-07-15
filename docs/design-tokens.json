@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json.schemastore.org/design-tokens.json",
+  "meta": {
+    "project": "baltz.dev v2",
+    "concept": "C2 - The Edit",
+    "status": "P3 and P4 approved",
+    "updated": "2026-07-15"
+  },
+  "color": {
+    "canvas": { "value": "#0C0D0F" },
+    "surface": { "value": "#15171A" },
+    "surfaceRaised": { "value": "#1D2024" },
+    "text": { "value": "#F2F0EA" },
+    "textMuted": { "value": "#AAA9A4" },
+    "line": { "value": "#34363B" },
+    "accent": { "value": "#E65B2F" },
+    "accentStrong": { "value": "#FF7448" },
+    "onAccent": { "value": "#0C0D0F" }
+  },
+  "type": {
+    "family": {
+      "display": { "value": "Instrument Sans, Arial, sans-serif" },
+      "body": { "value": "Instrument Sans, Arial, sans-serif" }
+    },
+    "weight": {
+      "regular": { "value": 400 },
+      "medium": { "value": 500 },
+      "semibold": { "value": 600 },
+      "bold": { "value": 700 }
+    },
+    "size": {
+      "hero": { "value": "clamp(4rem, 10vw, 9rem)" },
+      "display": { "value": "clamp(3rem, 7vw, 7rem)" },
+      "heading": { "value": "clamp(2rem, 4vw, 4.5rem)" },
+      "lead": { "value": "clamp(1.5rem, 2.5vw, 2.75rem)" },
+      "body": { "value": "clamp(1rem, 1.2vw, 1.25rem)" },
+      "meta": { "value": "0.75rem" }
+    },
+    "lineHeight": {
+      "display": { "value": 0.9 },
+      "heading": { "value": 0.98 },
+      "body": { "value": 1.45 }
+    },
+    "tracking": {
+      "display": { "value": "-0.045em" },
+      "body": { "value": "-0.015em" },
+      "meta": { "value": "0.08em" }
+    }
+  },
+  "space": {
+    "unit": { "value": "0.5rem" },
+    "sectionDesktop": { "value": "10rem" },
+    "sectionTablet": { "value": "6rem" },
+    "sectionMobile": { "value": "4rem" },
+    "gutterDesktop": { "value": "clamp(2rem, 4vw, 5rem)" },
+    "gutterMobile": { "value": "1.25rem" }
+  },
+  "layout": {
+    "maxWidth": { "value": "100rem" },
+    "gridColumns": { "value": 12 },
+    "breakpointMobile": { "value": "48rem" },
+    "breakpointWide": { "value": "90rem" }
+  },
+  "shape": {
+    "radius": { "value": "0px" },
+    "rule": { "value": "1px" },
+    "focus": { "value": "2px" }
+  },
+  "motion": {
+    "duration": {
+      "fast": { "value": "160ms" },
+      "medium": { "value": "520ms" },
+      "slow": { "value": "900ms" },
+      "headerEnter": { "value": "560ms" },
+      "heroEnter": { "value": "720ms" },
+      "heroObject": { "value": "920ms" },
+      "settle": { "value": "780ms" },
+      "mediaCut": { "value": "950ms" },
+      "thermalCut": { "value": "650ms" }
+    },
+    "easing": {
+      "cut": { "value": "cubic-bezier(0.16, 1, 0.3, 1)" },
+      "entranceGsap": { "value": "power3.out" },
+      "maskGsap": { "value": "power4.inOut" },
+      "linear": { "value": "linear" }
+    },
+    "stagger": {
+      "copy": { "value": "70ms" },
+      "list": { "value": "60ms" }
+    },
+    "scrub": {
+      "thermal": { "value": "350ms" },
+      "project": { "value": "450ms" },
+      "media": { "value": "500ms" }
+    },
+    "touch": { "value": "no pin; settle and cut only" },
+    "lowCapacity": { "value": "opacity and short translate only; static media" },
+    "reducedMotion": { "value": "instant final states; no pin, scrub, clip-path or parallax" }
+  },
+  "layer": {
+    "content": { "value": 0 },
+    "nav": { "value": 10 },
+    "focus": { "value": 20 }
+  }
+}

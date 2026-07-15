@@ -1,0 +1,37 @@
+{
+  "date": "2026-07-15",
+  "lighthouse": {
+    "desktop": {
+      "runs": 3,
+      "performance": { "median": 100, "min": 100, "max": 100 },
+      "accessibility": 100,
+      "bestPractices": 100,
+      "seo": 100,
+      "fcpMs": { "median": 354, "min": 349, "max": 365 },
+      "lcpMs": { "median": 533, "min": 530, "max": 541 },
+      "tbtMs": { "median": 0, "min": 0, "max": 0 },
+      "cls": 0
+    },
+    "mobile": {
+      "runs": 3,
+      "performance": { "median": 97, "min": 97, "max": 97 },
+      "accessibility": 100,
+      "bestPractices": 100,
+      "seo": 100,
+      "fcpMs": { "median": 1446, "min": 1432, "max": 1480 },
+      "lcpMs": { "median": 2414, "min": 2411, "max": 2571 },
+      "tbtMs": { "median": 0, "min": 0, "max": 5 },
+      "cls": 0
+    }
+  },
+  "budgets": {
+    "initialExternalJsGzipBytes": 46710,
+    "additionalWebglJsGzipBytesApprox": 307000,
+    "smileGlbBytes": 216936,
+    "frameP95Ms": { "desktopMedian": 16.8, "mobileMedian": 16.7 },
+    "longTasksAcrossSevenRuntimeRuns": 0,
+    "consoleErrorsAcrossFourSmokeProfiles": 0,
+    "failedRequestsAcrossFourSmokeProfiles": 0
+  },
+  "local404Status": 404
+}

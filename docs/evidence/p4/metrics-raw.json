@@ -1,0 +1,802 @@
+[
+  {
+    "key": "cut-desktop",
+    "repeat": 1,
+    "consoleErrors": [],
+    "metrics": {
+      "prototype": "cut",
+      "reducedMotion": false,
+      "viewport": "1440x1000",
+      "devicePixelRatio": 1,
+      "touchFallback": false,
+      "environment": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "throttling": "none; viewport emulation only",
+      "measurementMs": 5356.4,
+      "scrollDistancePx": 7141,
+      "initialization": {
+        "motionReadyMs": 1098,
+        "domContentLoadedMs": 1277.8,
+        "loadMs": 1278.9,
+        "firstContentfulPaintMs": 500
+      },
+      "frames": {
+        "samples": 321,
+        "fpsApprox": 60,
+        "timeP50Ms": 16.7,
+        "timeP95Ms": 16.7,
+        "over20msPct": 0
+      },
+      "longTasks": {
+        "count": 0,
+        "totalMs": 0,
+        "maxMs": 0
+      },
+      "memory": {
+        "supported": true,
+        "startMiB": 9.24,
+        "endMiB": 9.62,
+        "deltaMiB": 0.38
+      }
+    }
+  },
+  {
+    "key": "cut-desktop",
+    "repeat": 2,
+    "consoleErrors": [],
+    "metrics": {
+      "prototype": "cut",
+      "reducedMotion": false,
+      "viewport": "1440x1000",
+      "devicePixelRatio": 1,
+      "touchFallback": false,
+      "environment": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "throttling": "none; viewport emulation only",
+      "measurementMs": 5358.5,
+      "scrollDistancePx": 7141,
+      "initialization": {
+        "motionReadyMs": 1016,
+        "domContentLoadedMs": 1034,
+        "loadMs": 1035.1,
+        "firstContentfulPaintMs": 164
+      },
+      "frames": {
+        "samples": 321,
+        "fpsApprox": 60,
+        "timeP50Ms": 16.7,
+        "timeP95Ms": 16.8,
+        "over20msPct": 0
+      },
+      "longTasks": {
+        "count": 0,
+        "totalMs": 0,
+        "maxMs": 0
+      },
+      "memory": {
+        "supported": true,
+        "startMiB": 9.26,
+        "endMiB": 9.64,
+        "deltaMiB": 0.38
+      }
+    }
+  },
+  {
+    "key": "cut-desktop",
+    "repeat": 3,
+    "consoleErrors": [],
+    "metrics": {
+      "prototype": "cut",
+      "reducedMotion": false,
+      "viewport": "1440x1000",
+      "devicePixelRatio": 1,
+      "touchFallback": false,
+      "environment": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "throttling": "none; viewport emulation only",
+      "measurementMs": 5358.4,
+      "scrollDistancePx": 7141,
+      "initialization": {
+        "motionReadyMs": 1034.9,
+        "domContentLoadedMs": 1062.8,
+        "loadMs": 1064.1,
+        "firstContentfulPaintMs": 260
+      },
+      "frames": {
+        "samples": 321,
+        "fpsApprox": 60,
+        "timeP50Ms": 16.7,
+        "timeP95Ms": 16.7,
+        "over20msPct": 0
+      },
+      "longTasks": {
+        "count": 0,
+        "totalMs": 0,
+        "maxMs": 0
+      },
+      "memory": {
+        "supported": true,
+        "startMiB": 9.23,
+        "endMiB": 9.6,
+        "deltaMiB": 0.37
+      }
+    }
+  },
+  {
+    "key": "cut-mobile",
+    "repeat": 1,
+    "consoleErrors": [],
+    "metrics": {
+      "prototype": "cut",
+      "reducedMotion": false,
+      "viewport": "390x844",
+      "devicePixelRatio": 1,
+      "touchFallback": true,
+      "environment": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "throttling": "none; viewport emulation only",
+      "measurementMs": 5359.2,
+      "scrollDistancePx": 4861,
+      "initialization": {
+        "motionReadyMs": 920.6,
+        "domContentLoadedMs": 936.8,
+        "loadMs": 937.9,
+        "firstContentfulPaintMs": 200
+      },
+      "frames": {
+        "samples": 321,
+        "fpsApprox": 60,
+        "timeP50Ms": 16.7,
+        "timeP95Ms": 16.8,
+        "over20msPct": 0
+      },
+      "longTasks": {
+        "count": 0,
+        "totalMs": 0,
+        "maxMs": 0
+      },
+      "memory": {
+        "supported": true,
+        "startMiB": 9.33,
+        "endMiB": 9.73,
+        "deltaMiB": 0.4
+      }
+    }
+  },
+  {
+    "key": "cut-mobile",
+    "repeat": 2,
+    "consoleErrors": [],
+    "metrics": {
+      "prototype": "cut",
+      "reducedMotion": false,
+      "viewport": "390x844",
+      "devicePixelRatio": 1,
+      "touchFallback": true,
+      "environment": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "throttling": "none; viewport emulation only",
+      "measurementMs": 5354.5,
+      "scrollDistancePx": 4861,
+      "initialization": {
+        "motionReadyMs": 814.5,
+        "domContentLoadedMs": 835,
+        "loadMs": 836,
+        "firstContentfulPaintMs": 180
+      },
+      "frames": {
+        "samples": 321,
+        "fpsApprox": 60,
+        "timeP50Ms": 16.7,
+        "timeP95Ms": 16.7,
+        "over20msPct": 0
+      },
+      "longTasks": {
+        "count": 0,
+        "totalMs": 0,
+        "maxMs": 0
+      },
+      "memory": {
+        "supported": true,
+        "startMiB": 9.32,
+        "endMiB": 9.72,
+        "deltaMiB": 0.4
+      }
+    }
+  },
+  {
+    "key": "cut-mobile",
+    "repeat": 3,
+    "consoleErrors": [],
+    "metrics": {
+      "prototype": "cut",
+      "reducedMotion": false,
+      "viewport": "390x844",
+      "devicePixelRatio": 1,
+      "touchFallback": true,
+      "environment": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "throttling": "none; viewport emulation only",
+      "measurementMs": 5356.4,
+      "scrollDistancePx": 4861,
+      "initialization": {
+        "motionReadyMs": 881.7,
+        "domContentLoadedMs": 901.4,
+        "loadMs": 902.5,
+        "firstContentfulPaintMs": 144
+      },
+      "frames": {
+        "samples": 321,
+        "fpsApprox": 60,
+        "timeP50Ms": 16.7,
+        "timeP95Ms": 16.8,
+        "over20msPct": 0
+      },
+      "longTasks": {
+        "count": 0,
+        "totalMs": 0,
+        "maxMs": 0
+      },
+      "memory": {
+        "supported": true,
+        "startMiB": 9.29,
+        "endMiB": 9.88,
+        "deltaMiB": 0.59
+      }
+    }
+  },
+  {
+    "key": "pin-desktop",
+    "repeat": 1,
+    "consoleErrors": [],
+    "metrics": {
+      "prototype": "pin",
+      "reducedMotion": false,
+      "viewport": "1440x1000",
+      "devicePixelRatio": 1,
+      "touchFallback": false,
+      "environment": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "throttling": "none; viewport emulation only",
+      "measurementMs": 5362.5,
+      "scrollDistancePx": 7644,
+      "initialization": {
+        "motionReadyMs": 957.5,
+        "domContentLoadedMs": 974.1,
+        "loadMs": 977.6,
+        "firstContentfulPaintMs": 156
+      },
+      "frames": {
+        "samples": 321,
+        "fpsApprox": 60,
+        "timeP50Ms": 16.7,
+        "timeP95Ms": 16.8,
+        "over20msPct": 0
+      },
+      "longTasks": {
+        "count": 0,
+        "totalMs": 0,
+        "maxMs": 0
+      },
+      "memory": {
+        "supported": true,
+        "startMiB": 9.31,
+        "endMiB": 9.73,
+        "deltaMiB": 0.43
+      }
+    }
+  },
+  {
+    "key": "pin-desktop",
+    "repeat": 2,
+    "consoleErrors": [],
+    "metrics": {
+      "prototype": "pin",
+      "reducedMotion": false,
+      "viewport": "1440x1000",
+      "devicePixelRatio": 1,
+      "touchFallback": false,
+      "environment": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "throttling": "none; viewport emulation only",
+      "measurementMs": 5362.5,
+      "scrollDistancePx": 7644,
+      "initialization": {
+        "motionReadyMs": 914,
+        "domContentLoadedMs": 934.5,
+        "loadMs": 938.6,
+        "firstContentfulPaintMs": 156
+      },
+      "frames": {
+        "samples": 321,
+        "fpsApprox": 60,
+        "timeP50Ms": 16.7,
+        "timeP95Ms": 16.7,
+        "over20msPct": 0
+      },
+      "longTasks": {
+        "count": 0,
+        "totalMs": 0,
+        "maxMs": 0
+      },
+      "memory": {
+        "supported": true,
+        "startMiB": 9.31,
+        "endMiB": 9.73,
+        "deltaMiB": 0.43
+      }
+    }
+  },
+  {
+    "key": "pin-desktop",
+    "repeat": 3,
+    "consoleErrors": [],
+    "metrics": {
+      "prototype": "pin",
+      "reducedMotion": false,
+      "viewport": "1440x1000",
+      "devicePixelRatio": 1,
+      "touchFallback": false,
+      "environment": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "throttling": "none; viewport emulation only",
+      "measurementMs": 5365.1,
+      "scrollDistancePx": 7644,
+      "initialization": {
+        "motionReadyMs": 730.9,
+        "domContentLoadedMs": 752.8,
+        "loadMs": 759.2,
+        "firstContentfulPaintMs": 112
+      },
+      "frames": {
+        "samples": 321,
+        "fpsApprox": 60,
+        "timeP50Ms": 16.7,
+        "timeP95Ms": 16.7,
+        "over20msPct": 0
+      },
+      "longTasks": {
+        "count": 0,
+        "totalMs": 0,
+        "maxMs": 0
+      },
+      "memory": {
+        "supported": true,
+        "startMiB": 9.35,
+        "endMiB": 9.78,
+        "deltaMiB": 0.43
+      }
+    }
+  },
+  {
+    "key": "pin-mobile",
+    "repeat": 1,
+    "consoleErrors": [],
+    "metrics": {
+      "prototype": "pin",
+      "reducedMotion": false,
+      "viewport": "390x844",
+      "devicePixelRatio": 1,
+      "touchFallback": true,
+      "environment": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "throttling": "none; viewport emulation only",
+      "measurementMs": 5356.5,
+      "scrollDistancePx": 4861,
+      "initialization": {
+        "motionReadyMs": 957.2,
+        "domContentLoadedMs": 977.6,
+        "loadMs": 978.5,
+        "firstContentfulPaintMs": 176
+      },
+      "frames": {
+        "samples": 321,
+        "fpsApprox": 60,
+        "timeP50Ms": 16.7,
+        "timeP95Ms": 16.8,
+        "over20msPct": 0
+      },
+      "longTasks": {
+        "count": 0,
+        "totalMs": 0,
+        "maxMs": 0
+      },
+      "memory": {
+        "supported": true,
+        "startMiB": 9.31,
+        "endMiB": 9.72,
+        "deltaMiB": 0.42
+      }
+    }
+  },
+  {
+    "key": "pin-mobile",
+    "repeat": 2,
+    "consoleErrors": [],
+    "metrics": {
+      "prototype": "pin",
+      "reducedMotion": false,
+      "viewport": "390x844",
+      "devicePixelRatio": 1,
+      "touchFallback": true,
+      "environment": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "throttling": "none; viewport emulation only",
+      "measurementMs": 5360.1,
+      "scrollDistancePx": 4861,
+      "initialization": {
+        "motionReadyMs": 715.8,
+        "domContentLoadedMs": 731.9,
+        "loadMs": 732.7,
+        "firstContentfulPaintMs": 148
+      },
+      "frames": {
+        "samples": 321,
+        "fpsApprox": 60,
+        "timeP50Ms": 16.7,
+        "timeP95Ms": 16.8,
+        "over20msPct": 0
+      },
+      "longTasks": {
+        "count": 0,
+        "totalMs": 0,
+        "maxMs": 0
+      },
+      "memory": {
+        "supported": true,
+        "startMiB": 9.29,
+        "endMiB": 9.89,
+        "deltaMiB": 0.6
+      }
+    }
+  },
+  {
+    "key": "pin-mobile",
+    "repeat": 3,
+    "consoleErrors": [],
+    "metrics": {
+      "prototype": "pin",
+      "reducedMotion": false,
+      "viewport": "390x844",
+      "devicePixelRatio": 1,
+      "touchFallback": true,
+      "environment": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "throttling": "none; viewport emulation only",
+      "measurementMs": 5353.8,
+      "scrollDistancePx": 4861,
+      "initialization": {
+        "motionReadyMs": 1118.4,
+        "domContentLoadedMs": 1137.2,
+        "loadMs": 1138.2,
+        "firstContentfulPaintMs": 128
+      },
+      "frames": {
+        "samples": 321,
+        "fpsApprox": 60,
+        "timeP50Ms": 16.7,
+        "timeP95Ms": 16.7,
+        "over20msPct": 0
+      },
+      "longTasks": {
+        "count": 0,
+        "totalMs": 0,
+        "maxMs": 0
+      },
+      "memory": {
+        "supported": true,
+        "startMiB": 9.24,
+        "endMiB": 9.66,
+        "deltaMiB": 0.42
+      }
+    }
+  },
+  {
+    "key": "words-desktop",
+    "repeat": 1,
+    "consoleErrors": [],
+    "metrics": {
+      "prototype": "words",
+      "reducedMotion": false,
+      "viewport": "1440x1000",
+      "devicePixelRatio": 1,
+      "touchFallback": false,
+      "environment": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "throttling": "none; viewport emulation only",
+      "measurementMs": 5367.9,
+      "scrollDistancePx": 7141,
+      "initialization": {
+        "motionReadyMs": 1039.8,
+        "domContentLoadedMs": 1058.5,
+        "loadMs": 1060.4,
+        "firstContentfulPaintMs": 172
+      },
+      "frames": {
+        "samples": 322,
+        "fpsApprox": 60,
+        "timeP50Ms": 16.7,
+        "timeP95Ms": 16.7,
+        "over20msPct": 0
+      },
+      "longTasks": {
+        "count": 0,
+        "totalMs": 0,
+        "maxMs": 0
+      },
+      "memory": {
+        "supported": true,
+        "startMiB": 9.52,
+        "endMiB": 10.13,
+        "deltaMiB": 0.61
+      }
+    }
+  },
+  {
+    "key": "words-desktop",
+    "repeat": 2,
+    "consoleErrors": [],
+    "metrics": {
+      "prototype": "words",
+      "reducedMotion": false,
+      "viewport": "1440x1000",
+      "devicePixelRatio": 1,
+      "touchFallback": false,
+      "environment": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "throttling": "none; viewport emulation only",
+      "measurementMs": 5351.8,
+      "scrollDistancePx": 7141,
+      "initialization": {
+        "motionReadyMs": 857,
+        "domContentLoadedMs": 872.6,
+        "loadMs": 874.9,
+        "firstContentfulPaintMs": 136
+      },
+      "frames": {
+        "samples": 321,
+        "fpsApprox": 60,
+        "timeP50Ms": 16.7,
+        "timeP95Ms": 16.7,
+        "over20msPct": 0
+      },
+      "longTasks": {
+        "count": 0,
+        "totalMs": 0,
+        "maxMs": 0
+      },
+      "memory": {
+        "supported": true,
+        "startMiB": 9.53,
+        "endMiB": 10.12,
+        "deltaMiB": 0.59
+      }
+    }
+  },
+  {
+    "key": "words-desktop",
+    "repeat": 3,
+    "consoleErrors": [],
+    "metrics": {
+      "prototype": "words",
+      "reducedMotion": false,
+      "viewport": "1440x1000",
+      "devicePixelRatio": 1,
+      "touchFallback": false,
+      "environment": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "throttling": "none; viewport emulation only",
+      "measurementMs": 5353.3,
+      "scrollDistancePx": 7141,
+      "initialization": {
+        "motionReadyMs": 873.9,
+        "domContentLoadedMs": 900.7,
+        "loadMs": 902.6,
+        "firstContentfulPaintMs": 144
+      },
+      "frames": {
+        "samples": 321,
+        "fpsApprox": 60,
+        "timeP50Ms": 16.7,
+        "timeP95Ms": 16.7,
+        "over20msPct": 0
+      },
+      "longTasks": {
+        "count": 0,
+        "totalMs": 0,
+        "maxMs": 0
+      },
+      "memory": {
+        "supported": true,
+        "startMiB": 9.5,
+        "endMiB": 10.09,
+        "deltaMiB": 0.59
+      }
+    }
+  },
+  {
+    "key": "words-mobile",
+    "repeat": 1,
+    "consoleErrors": [],
+    "metrics": {
+      "prototype": "words",
+      "reducedMotion": false,
+      "viewport": "390x844",
+      "devicePixelRatio": 1,
+      "touchFallback": true,
+      "environment": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "throttling": "none; viewport emulation only",
+      "measurementMs": 5364.4,
+      "scrollDistancePx": 4861,
+      "initialization": {
+        "motionReadyMs": 912.1,
+        "domContentLoadedMs": 927,
+        "loadMs": 929,
+        "firstContentfulPaintMs": 164
+      },
+      "frames": {
+        "samples": 321,
+        "fpsApprox": 60,
+        "timeP50Ms": 16.7,
+        "timeP95Ms": 16.7,
+        "over20msPct": 0
+      },
+      "longTasks": {
+        "count": 0,
+        "totalMs": 0,
+        "maxMs": 0
+      },
+      "memory": {
+        "supported": true,
+        "startMiB": 9.7,
+        "endMiB": 10.36,
+        "deltaMiB": 0.66
+      }
+    }
+  },
+  {
+    "key": "words-mobile",
+    "repeat": 2,
+    "consoleErrors": [],
+    "metrics": {
+      "prototype": "words",
+      "reducedMotion": false,
+      "viewport": "390x844",
+      "devicePixelRatio": 1,
+      "touchFallback": true,
+      "environment": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "throttling": "none; viewport emulation only",
+      "measurementMs": 5354.6,
+      "scrollDistancePx": 4861,
+      "initialization": {
+        "motionReadyMs": 837.7,
+        "domContentLoadedMs": 860,
+        "loadMs": 862.9,
+        "firstContentfulPaintMs": 136
+      },
+      "frames": {
+        "samples": 321,
+        "fpsApprox": 60,
+        "timeP50Ms": 16.7,
+        "timeP95Ms": 16.7,
+        "over20msPct": 0
+      },
+      "longTasks": {
+        "count": 0,
+        "totalMs": 0,
+        "maxMs": 0
+      },
+      "memory": {
+        "supported": true,
+        "startMiB": 9.57,
+        "endMiB": 10.29,
+        "deltaMiB": 0.72
+      }
+    }
+  },
+  {
+    "key": "words-mobile",
+    "repeat": 3,
+    "consoleErrors": [],
+    "metrics": {
+      "prototype": "words",
+      "reducedMotion": false,
+      "viewport": "390x844",
+      "devicePixelRatio": 1,
+      "touchFallback": true,
+      "environment": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "throttling": "none; viewport emulation only",
+      "measurementMs": 5364.6,
+      "scrollDistancePx": 4861,
+      "initialization": {
+        "motionReadyMs": 836.9,
+        "domContentLoadedMs": 856.9,
+        "loadMs": 861.2,
+        "firstContentfulPaintMs": 116
+      },
+      "frames": {
+        "samples": 321,
+        "fpsApprox": 60,
+        "timeP50Ms": 16.7,
+        "timeP95Ms": 16.8,
+        "over20msPct": 0
+      },
+      "longTasks": {
+        "count": 0,
+        "totalMs": 0,
+        "maxMs": 0
+      },
+      "memory": {
+        "supported": true,
+        "startMiB": 9.53,
+        "endMiB": 10.25,
+        "deltaMiB": 0.71
+      }
+    }
+  },
+  {
+    "key": "cut-desktop-reduced",
+    "repeat": 1,
+    "consoleErrors": [],
+    "metrics": {
+      "prototype": "cut",
+      "reducedMotion": true,
+      "viewport": "1440x1000",
+      "devicePixelRatio": 1,
+      "touchFallback": false,
+      "environment": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "throttling": "none; viewport emulation only",
+      "measurementMs": 5365.4,
+      "scrollDistancePx": 7141,
+      "initialization": {
+        "motionReadyMs": 970.3,
+        "domContentLoadedMs": 988,
+        "loadMs": 988.5,
+        "firstContentfulPaintMs": 164
+      },
+      "frames": {
+        "samples": 321,
+        "fpsApprox": 60,
+        "timeP50Ms": 16.7,
+        "timeP95Ms": 16.7,
+        "over20msPct": 0
+      },
+      "longTasks": {
+        "count": 0,
+        "totalMs": 0,
+        "maxMs": 0
+      },
+      "memory": {
+        "supported": true,
+        "startMiB": 8.7,
+        "endMiB": 8.85,
+        "deltaMiB": 0.14
+      }
+    }
+  },
+  {
+    "key": "cut-mobile-reduced",
+    "repeat": 1,
+    "consoleErrors": [],
+    "metrics": {
+      "prototype": "cut",
+      "reducedMotion": true,
+      "viewport": "390x844",
+      "devicePixelRatio": 1,
+      "touchFallback": true,
+      "environment": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "throttling": "none; viewport emulation only",
+      "measurementMs": 5356.5,
+      "scrollDistancePx": 4861,
+      "initialization": {
+        "motionReadyMs": 758.2,
+        "domContentLoadedMs": 772.9,
+        "loadMs": 773.4,
+        "firstContentfulPaintMs": 136
+      },
+      "frames": {
+        "samples": 321,
+        "fpsApprox": 60,
+        "timeP50Ms": 16.7,
+        "timeP95Ms": 16.7,
+        "over20msPct": 0
+      },
+      "longTasks": {
+        "count": 0,
+        "totalMs": 0,
+        "maxMs": 0
+      },
+      "memory": {
+        "supported": true,
+        "startMiB": 8.76,
+        "endMiB": 8.91,
+        "deltaMiB": 0.15
+      }
+    }
+  }
+]

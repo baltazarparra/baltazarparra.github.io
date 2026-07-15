@@ -1,0 +1,118 @@
+[
+  {
+    "profile": "desktop",
+    "consoleErrors": [],
+    "failedRequests": [],
+    "initial": {
+      "bodyTextLength": 1026,
+      "h1": "baltz.",
+      "canonical": "https://baltz.dev/",
+      "navLinks": 3,
+      "overlay": false,
+      "smileState": "poster",
+      "smileCanvas": 0,
+      "pageHeight": 8394,
+      "smileStateAfterInteraction": "interactive",
+      "smileCanvasAfterInteraction": 1
+    },
+    "thermal": {
+      "thermalState": "interactive",
+      "thermalCanvas": 1,
+      "fallbackVisible": true,
+      "fallbackDisplay": "block",
+      "fallbackOpacity": "0.82"
+    },
+    "navigation": {
+      "hash": "#caipora",
+      "caiporaTop": 72,
+      "caiporaImageLoaded": true
+    }
+  },
+  {
+    "profile": "mobile",
+    "consoleErrors": [],
+    "failedRequests": [],
+    "initial": {
+      "bodyTextLength": 1026,
+      "h1": "baltz.",
+      "canonical": "https://baltz.dev/",
+      "navLinks": 3,
+      "overlay": false,
+      "smileState": "poster",
+      "smileCanvas": 0,
+      "pageHeight": 6543,
+      "smileStateAfterInteraction": "poster",
+      "smileCanvasAfterInteraction": 0
+    },
+    "thermal": {
+      "thermalState": "fallback",
+      "thermalCanvas": 0,
+      "fallbackVisible": true,
+      "fallbackDisplay": "block",
+      "fallbackOpacity": "0.82"
+    },
+    "navigation": {
+      "hash": "#caipora",
+      "caiporaTop": 64,
+      "caiporaImageLoaded": true
+    }
+  },
+  {
+    "profile": "reduced",
+    "consoleErrors": [],
+    "failedRequests": [],
+    "initial": {
+      "bodyTextLength": 1026,
+      "h1": "baltz.",
+      "canonical": "https://baltz.dev/",
+      "navLinks": 3,
+      "overlay": false,
+      "smileState": "poster",
+      "smileCanvas": 0,
+      "pageHeight": 8394,
+      "smileStateAfterInteraction": "poster",
+      "smileCanvasAfterInteraction": 0
+    },
+    "thermal": {
+      "thermalState": "fallback",
+      "thermalCanvas": 0,
+      "fallbackVisible": true,
+      "fallbackDisplay": "block",
+      "fallbackOpacity": "0.82"
+    },
+    "navigation": {
+      "hash": "#caipora",
+      "caiporaTop": 72,
+      "caiporaImageLoaded": true
+    }
+  },
+  {
+    "profile": "no-js",
+    "consoleErrors": [],
+    "failedRequests": [],
+    "initial": {
+      "bodyTextLength": 1026,
+      "h1": "baltz.",
+      "canonical": "https://baltz.dev/",
+      "navLinks": 3,
+      "overlay": false,
+      "smileState": "poster",
+      "smileCanvas": 0,
+      "pageHeight": 8394,
+      "smileStateAfterInteraction": "poster",
+      "smileCanvasAfterInteraction": 0
+    },
+    "thermal": {
+      "thermalState": "fallback",
+      "thermalCanvas": 0,
+      "fallbackVisible": true,
+      "fallbackDisplay": "block",
+      "fallbackOpacity": "0.82"
+    },
+    "navigation": {
+      "hash": "#caipora",
+      "caiporaTop": 72,
+      "caiporaImageLoaded": true
+    }
+  }
+]

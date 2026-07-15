@@ -1,0 +1,513 @@
+[
+  {
+    "profile": "desktop",
+    "consoleErrors": [],
+    "failedRequests": [],
+    "initial": {
+      "bodyTextLength": 1202,
+      "h1": "baltz.",
+      "canonical": "https://baltz.dev/",
+      "navLinks": 3,
+      "overlay": false,
+      "smileState": "poster",
+      "smileCanvas": 0,
+      "pageHeight": 9397,
+      "clientWidth": 1425,
+      "scrollWidth": 1425,
+      "horizontalOverflow": 0,
+      "headings": [
+        {
+          "level": 1,
+          "text": "baltz."
+        },
+        {
+          "level": 2,
+          "text": "I design software with code agents as architectural components."
+        },
+        {
+          "level": 2,
+          "text": "Writing."
+        },
+        {
+          "level": 3,
+          "text": "Sharing skills with NPX"
+        },
+        {
+          "level": 3,
+          "text": "What is 'Harness Design' and why does it matter"
+        },
+        {
+          "level": 2,
+          "text": "Work that explains how I think."
+        },
+        {
+          "level": 3,
+          "text": "AI-Native Engineering"
+        },
+        {
+          "level": 3,
+          "text": "Crypto Transfer DApp"
+        },
+        {
+          "level": 3,
+          "text": "Subtitle Scraping"
+        },
+        {
+          "level": 2,
+          "text": "Caipora"
+        },
+        {
+          "level": 2,
+          "text": "Clouds."
+        },
+        {
+          "level": 2,
+          "text": "Elsewhere."
+        }
+      ],
+      "landmarks": {
+        "main": 1,
+        "header": 1,
+        "nav": 2,
+        "footer": 1
+      },
+      "images": [
+        {
+          "alt": "Portrait of Baltz",
+          "width": 398,
+          "height": 1280
+        },
+        {
+          "alt": "Caipora game title screen",
+          "width": 1425,
+          "height": 1000
+        },
+        {
+          "alt": "Clouds EP cover",
+          "width": 486,
+          "height": 768
+        }
+      ],
+      "robots": "index, follow",
+      "socialImage": "https://baltz.dev/og.png",
+      "socialImageSize": [
+        "1200",
+        "630"
+      ],
+      "structuredDataTypes": [
+        "WebSite",
+        "Person"
+      ],
+      "smileStateAfterInteraction": "interactive",
+      "smileCanvasAfterInteraction": 1
+    },
+    "writing": {
+      "entries": 2,
+      "titles": [
+        "Sharing skills with NPX",
+        "What is 'Harness Design' and why does it matter"
+      ],
+      "dates": [
+        "2026-05-04",
+        "2026-03-30"
+      ],
+      "links": [
+        "https://dev.to/baltz/sharing-skills-with-npx-2nbc",
+        "https://dev.to/baltz/what-is-harness-design-and-why-does-it-matter-2dbj"
+      ]
+    },
+    "thermal": {
+      "thermalState": "interactive",
+      "thermalCanvas": 1,
+      "fallbackVisible": true,
+      "fallbackDisplay": "block",
+      "fallbackOpacity": "0.82"
+    },
+    "navigation": {
+      "hash": "#caipora",
+      "caiporaTop": 72,
+      "caiporaImageLoaded": true
+    },
+    "clouds": {
+      "mediaState": "ready",
+      "imageLoaded": true,
+      "imageOpacity": "1",
+      "fallbackText": "CLOUDS"
+    },
+    "privacy": {
+      "resources": [
+        {
+          "origin": "http://127.0.0.1:4100",
+          "initiatorType": "link",
+          "transferSize": 50856
+        },
+        {
+          "origin": "http://127.0.0.1:4100",
+          "initiatorType": "script",
+          "transferSize": 938
+        },
+        {
+          "origin": "http://127.0.0.1:4100",
+          "initiatorType": "script",
+          "transferSize": 983
+        },
+        {
+          "origin": "http://127.0.0.1:4100",
+          "initiatorType": "img",
+          "transferSize": 153688
+        },
+        {
+          "origin": "http://127.0.0.1:4100",
+          "initiatorType": "script",
+          "transferSize": 693
+        },
+        {
+          "origin": "http://127.0.0.1:4100",
+          "initiatorType": "script",
+          "transferSize": 994
+        },
+        {
+          "origin": "http://127.0.0.1:4100",
+          "initiatorType": "script",
+          "transferSize": 1033
+        },
+        {
+          "origin": "http://127.0.0.1:4100",
+          "initiatorType": "script",
+          "transferSize": 44515
+        },
+        {
+          "origin": "http://127.0.0.1:4100",
+          "initiatorType": "other",
+          "transferSize": 596
+        },
+        {
+          "origin": "http://127.0.0.1:4100",
+          "initiatorType": "script",
+          "transferSize": 3177
+        },
+        {
+          "origin": "http://127.0.0.1:4100",
+          "initiatorType": "script",
+          "transferSize": 1860
+        },
+        {
+          "origin": "http://127.0.0.1:4100",
+          "initiatorType": "script",
+          "transferSize": 55784
+        },
+        {
+          "origin": "http://127.0.0.1:4100",
+          "initiatorType": "script",
+          "transferSize": 14189
+        },
+        {
+          "origin": "http://127.0.0.1:4100",
+          "initiatorType": "script",
+          "transferSize": 232831
+        },
+        {
+          "origin": "http://127.0.0.1:4100",
+          "initiatorType": "fetch",
+          "transferSize": 217236
+        },
+        {
+          "origin": "http://127.0.0.1:4100",
+          "initiatorType": "img",
+          "transferSize": 45969
+        },
+        {
+          "origin": "https://image-cdn-ak.spotifycdn.com",
+          "initiatorType": "img",
+          "transferSize": 12875
+        },
+        {
+          "origin": "http://127.0.0.1:4100",
+          "initiatorType": "script",
+          "transferSize": 2156
+        }
+      ],
+      "externalScripts": [],
+      "iframeCount": 0,
+      "documentCookie": "",
+      "localStorageEntries": 0,
+      "sessionStorageEntries": 0,
+      "networkCookies": []
+    },
+    "accessibility": [
+      {
+        "role": "link",
+        "name": "Skip to content"
+      },
+      {
+        "role": "main",
+        "name": ""
+      },
+      {
+        "role": "link",
+        "name": "Baltz, back to the beginning"
+      },
+      {
+        "role": "navigation",
+        "name": "Primary navigation"
+      },
+      {
+        "role": "link",
+        "name": "Work"
+      },
+      {
+        "role": "link",
+        "name": "Caipora"
+      },
+      {
+        "role": "link",
+        "name": "Elsewhere"
+      },
+      {
+        "role": "heading",
+        "name": "I design software with code agents as architectural components.",
+        "level": 2
+      },
+      {
+        "role": "heading",
+        "name": "Writing.",
+        "level": 2
+      },
+      {
+        "role": "heading",
+        "name": "Work that explains how I think.",
+        "level": 2
+      },
+      {
+        "role": "heading",
+        "name": "Clouds.",
+        "level": 2
+      },
+      {
+        "role": "link",
+        "name": "Listen on Spotify ↗"
+      },
+      {
+        "role": "heading",
+        "name": "Elsewhere.",
+        "level": 2
+      },
+      {
+        "role": "navigation",
+        "name": "External profiles"
+      },
+      {
+        "role": "heading",
+        "name": "baltz.",
+        "level": 1
+      },
+      {
+        "role": "image",
+        "name": "Portrait of Baltz"
+      },
+      {
+        "role": "heading",
+        "name": "Sharing skills with NPX",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Read Sharing skills with NPX on dev.to"
+      },
+      {
+        "role": "heading",
+        "name": "What is 'Harness Design' and why does it matter",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Read What is 'Harness Design' and why does it matter on dev.to"
+      },
+      {
+        "role": "heading",
+        "name": "AI-Native Engineering",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Open AI-Native Engineering"
+      },
+      {
+        "role": "heading",
+        "name": "Crypto Transfer DApp",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Open Crypto Transfer DApp"
+      },
+      {
+        "role": "heading",
+        "name": "Subtitle Scraping",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Open Subtitle Scraping"
+      },
+      {
+        "role": "image",
+        "name": "Caipora game title screen"
+      },
+      {
+        "role": "heading",
+        "name": "Caipora",
+        "level": 2
+      },
+      {
+        "role": "link",
+        "name": "Play in browser ↗"
+      },
+      {
+        "role": "image",
+        "name": "Clouds EP cover"
+      },
+      {
+        "role": "link",
+        "name": "LinkedIn ↗"
+      },
+      {
+        "role": "link",
+        "name": "GitHub ↗"
+      },
+      {
+        "role": "link",
+        "name": "dev.to ↗"
+      },
+      {
+        "role": "link",
+        "name": "Spotify ↗"
+      },
+      {
+        "role": "link",
+        "name": "itch.io ↗"
+      }
+    ],
+    "keyboard": [
+      {
+        "tag": "A",
+        "label": "Skip to content",
+        "href": "http://127.0.0.1:4100/#main",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Baltz, back to the beginning",
+        "href": "http://127.0.0.1:4100/#hero",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Work",
+        "href": "http://127.0.0.1:4100/#work",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Caipora",
+        "href": "http://127.0.0.1:4100/#caipora",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Elsewhere",
+        "href": "http://127.0.0.1:4100/#elsewhere",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Read Sharing skills with NPX on dev.to",
+        "href": "https://dev.to/baltz/sharing-skills-with-npx-2nbc",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Read What is 'Harness Design' and why does it matter on dev.to",
+        "href": "https://dev.to/baltz/what-is-harness-design-and-why-does-it-matter-2dbj",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Open AI-Native Engineering",
+        "href": "https://baltazarparra.github.io/ai-native-engineering",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Open Crypto Transfer DApp",
+        "href": "https://github.com/baltazarparra/crypto-transfer",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Open Subtitle Scraping",
+        "href": "https://github.com/baltazarparra/subtitle-scraping",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Play in browser",
+        "href": "https://baltazarparra.github.io/caipora/",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Listen on Spotify",
+        "href": "https://open.spotify.com/album/6BFeIsMZ4zcuGbs5cugxLM",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "LinkedIn",
+        "href": "https://www.linkedin.com/in/baltazarparra/",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "GitHub",
+        "href": "https://github.com/baltazarparra",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "dev.to",
+        "href": "https://dev.to/baltz",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Spotify",
+        "href": "https://open.spotify.com/album/6BFeIsMZ4zcuGbs5cugxLM",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "itch.io",
+        "href": "https://baltazarparra.itch.io/",
+        "visible": true,
+        "outlineWidth": "2px"
+      }
+    ]
+  }
+]

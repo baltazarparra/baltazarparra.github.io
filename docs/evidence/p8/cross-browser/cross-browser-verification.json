@@ -1,0 +1,376 @@
+[
+  {
+    "profile": "firefox-desktop",
+    "homeConsoleErrors": [],
+    "homeFailedRequests": [],
+    "notFoundConsoleErrors": [],
+    "notFoundFailedRequests": [],
+    "initial": {
+      "statusText": "complete",
+      "bodyTextLength": 1202,
+      "h1": "baltz.",
+      "links": 17,
+      "horizontalOverflow": 0,
+      "smileCanvas": 0,
+      "thermalCanvas": 0,
+      "status": 200
+    },
+    "navigation": {
+      "hash": "#caipora",
+      "caiporaTop": 72,
+      "horizontalOverflow": 0
+    },
+    "resilience": {
+      "cloudsState": "ready",
+      "imageOpacity": "0.965901",
+      "fallbackText": "CLOUDS",
+      "fallbackVisible": true
+    },
+    "keyboard": [
+      {
+        "label": "Skip to content",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "label": "Baltz, back to the beginning",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "label": "Work",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "label": "Caipora",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "label": "Elsewhere",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "label": "Read Sharing skills with NPX on dev.to",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "label": "Read What is 'Harness Design' and why does it matter on dev.to",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "label": "Open AI-Native Engineering",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "label": "Open Crypto Transfer DApp",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "label": "Open Subtitle Scraping",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "label": "Play in browser",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "label": "Listen on Spotify",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "label": "LinkedIn",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "label": "GitHub",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "label": "dev.to",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "label": "Spotify",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "label": "itch.io",
+        "visible": true,
+        "outlineWidth": "2px"
+      }
+    ],
+    "notFound": {
+      "h1": "This page does not exist.",
+      "robots": "noindex, follow",
+      "returnLabel": "Back to baltz.dev",
+      "status": 404
+    }
+  },
+  {
+    "profile": "firefox-mobile",
+    "homeConsoleErrors": [],
+    "homeFailedRequests": [],
+    "notFoundConsoleErrors": [],
+    "notFoundFailedRequests": [],
+    "initial": {
+      "statusText": "complete",
+      "bodyTextLength": 1202,
+      "h1": "baltz.",
+      "links": 17,
+      "horizontalOverflow": 0,
+      "smileCanvas": 0,
+      "thermalCanvas": 0,
+      "status": 200
+    },
+    "navigation": {
+      "hash": "#caipora",
+      "caiporaTop": 65,
+      "horizontalOverflow": 0
+    },
+    "resilience": {
+      "cloudsState": "ready",
+      "imageOpacity": "1",
+      "fallbackText": "CLOUDS",
+      "fallbackVisible": true
+    },
+    "keyboard": [],
+    "notFound": {
+      "h1": "This page does not exist.",
+      "robots": "noindex, follow",
+      "returnLabel": "Back to baltz.dev",
+      "status": 404
+    }
+  },
+  {
+    "profile": "webkit-desktop",
+    "homeConsoleErrors": [
+      "Failed to load resource: Unspecified proxy lookup failure"
+    ],
+    "homeFailedRequests": [
+      {
+        "url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e022e3ffa46097b7171b02c7176",
+        "error": "Unspecified proxy lookup failure"
+      }
+    ],
+    "notFoundConsoleErrors": [
+      "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    ],
+    "notFoundFailedRequests": [],
+    "initial": {
+      "statusText": "complete",
+      "bodyTextLength": 1202,
+      "h1": "baltz.",
+      "links": 17,
+      "horizontalOverflow": 0,
+      "smileCanvas": 0,
+      "thermalCanvas": 0,
+      "status": 200
+    },
+    "navigation": {
+      "hash": "#caipora",
+      "caiporaTop": 72,
+      "horizontalOverflow": 0
+    },
+    "resilience": {
+      "cloudsState": "error",
+      "imageOpacity": "0",
+      "fallbackText": "CLOUDS",
+      "fallbackVisible": true
+    },
+    "keyboard": [
+      {
+        "label": "Skip to content",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "label": "Baltz, back to the beginning",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "label": "Work",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "label": "Caipora",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "label": "Elsewhere",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "label": "Read Sharing skills with NPX on dev.to",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "label": "Read What is 'Harness Design' and why does it matter on dev.to",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "label": "Open AI-Native Engineering",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "label": "Open Crypto Transfer DApp",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "label": "Open Subtitle Scraping",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "label": "Play in browser",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "label": "Listen on Spotify",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "label": "LinkedIn",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "label": "GitHub",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "label": "dev.to",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "label": "Spotify",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "label": "itch.io",
+        "visible": true,
+        "outlineWidth": "2px"
+      }
+    ],
+    "notFound": {
+      "h1": "This page does not exist.",
+      "robots": "noindex, follow",
+      "returnLabel": "Back to baltz.dev",
+      "status": 404
+    }
+  },
+  {
+    "profile": "webkit-mobile",
+    "homeConsoleErrors": [
+      "Failed to load resource: Unspecified proxy lookup failure"
+    ],
+    "homeFailedRequests": [
+      {
+        "url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e022e3ffa46097b7171b02c7176",
+        "error": "Unspecified proxy lookup failure"
+      }
+    ],
+    "notFoundConsoleErrors": [
+      "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    ],
+    "notFoundFailedRequests": [],
+    "initial": {
+      "statusText": "complete",
+      "bodyTextLength": 1202,
+      "h1": "baltz.",
+      "links": 17,
+      "horizontalOverflow": 0,
+      "smileCanvas": 0,
+      "thermalCanvas": 0,
+      "status": 200
+    },
+    "navigation": {
+      "hash": "#caipora",
+      "caiporaTop": 64,
+      "horizontalOverflow": 0
+    },
+    "resilience": {
+      "cloudsState": "error",
+      "imageOpacity": "0",
+      "fallbackText": "CLOUDS",
+      "fallbackVisible": true
+    },
+    "keyboard": [],
+    "notFound": {
+      "h1": "This page does not exist.",
+      "robots": "noindex, follow",
+      "returnLabel": "Back to baltz.dev",
+      "status": 404
+    }
+  },
+  {
+    "profile": "webkit-reduced",
+    "homeConsoleErrors": [
+      "Failed to load resource: Unspecified proxy lookup failure"
+    ],
+    "homeFailedRequests": [
+      {
+        "url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e022e3ffa46097b7171b02c7176",
+        "error": "Unspecified proxy lookup failure"
+      }
+    ],
+    "notFoundConsoleErrors": [
+      "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    ],
+    "notFoundFailedRequests": [],
+    "initial": {
+      "statusText": "complete",
+      "bodyTextLength": 1202,
+      "h1": "baltz.",
+      "links": 17,
+      "horizontalOverflow": 0,
+      "smileCanvas": 0,
+      "thermalCanvas": 0,
+      "status": 200
+    },
+    "navigation": {
+      "hash": "#caipora",
+      "caiporaTop": 72,
+      "horizontalOverflow": 0
+    },
+    "resilience": {
+      "cloudsState": "error",
+      "imageOpacity": "0",
+      "fallbackText": "CLOUDS",
+      "fallbackVisible": true
+    },
+    "keyboard": [],
+    "notFound": {
+      "h1": "This page does not exist.",
+      "robots": "noindex, follow",
+      "returnLabel": "Back to baltz.dev",
+      "status": 404
+    }
+  }
+]

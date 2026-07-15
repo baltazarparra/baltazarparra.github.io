@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml" />
+    <title>The Edit - P4 motion harness</title>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const requestedMotion = params.get("motion") || "cut";
+      const validMotions = ["cut", "pin", "words"];
+      const reduced =
+        params.get("reduced") === "1" ||
+        (params.get("reduced") !== "0" &&
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+
+      document.documentElement.dataset.motion = validMotions.includes(requestedMotion)
+        ? requestedMotion
+        : "cut";
+      document.documentElement.dataset.reduced = reduced ? "true" : "false";
+      document.documentElement.dataset.capture = params.get("capture") === "1" ? "true" : "false";
+
+      window.__P4_LAB__ = {
+        startedAt: performance.now(),
+        longTasks: [],
+      };
+
+      if ("PerformanceObserver" in window) {
+        try {
+          const observer = new PerformanceObserver((list) => {
+            window.__P4_LAB__.longTasks.push(
+              ...list.getEntries().map((entry) => ({
+                startTime: Number(entry.startTime.toFixed(2)),
+                duration: Number(entry.duration.toFixed(2)),
+              })),
+            );
+          });
+          observer.observe({ type: "longtask", buffered: true });
+          window.__P4_LAB__.longTaskObserver = observer;
+        } catch {}
+      }
+    </script>
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "gsap": "/node_modules/gsap/index.js",
+          "gsap/ScrollTrigger": "/node_modules/gsap/ScrollTrigger.js",
+          "three": "/node_modules/three/build/three.module.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <aside class="lab-panel" aria-label="Motion prototype controls">
+      <strong>P4</strong>
+      <nav aria-label="Choose a motion prototype">
+        <a data-mode-link="cut" href="?motion=cut">A Cut</a>
+        <a data-mode-link="pin" href="?motion=pin">B Pin</a>
+        <a data-mode-link="words" href="?motion=words">C Words</a>
+      </nav>
+      <a class="reduced-link" href="?motion=cut&amp;reduced=1">Reduced</a>
+      <pre id="metrics-output" aria-live="polite">Measuring</pre>
+    </aside>
+
+    <header class="site-header">
+      <a class="brand" href="#hero" aria-label="Baltz, back to the beginning">b.</a>
+      <nav aria-label="Primary navigation">
+        <a href="#work">Work</a>
+        <a href="#caipora">Caipora</a>
+        <a href="#clouds">Clouds</a>
+        <a href="#elsewhere">Elsewhere</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero scene" id="hero">
+        <div class="hero-copy">
+          <p class="eyebrow hero-beat">AI-native engineer</p>
+          <h1 class="hero-beat">baltz.</h1>
+          <p class="hero-statement hero-beat">Software, systems and small worlds.</p>
+          <p class="hero-support hero-beat">
+            I design software with code agents, then write, make games and
+            record music.
+          </p>
+        </div>
+        <div class="smile-stage hero-object" aria-hidden="true">
+          <canvas id="smile-canvas"></canvas>
+          <span class="smile-fallback">b.</span>
+        </div>
+      </section>
+
+      <section class="about scene" id="work">
+        <figure class="portrait scene-media">
+          <img src="/baltz-portrait.jpg" alt="Portrait of Baltz" />
+        </figure>
+        <div class="about-copy scene-copy">
+          <h2 data-words>I design software with code agents as architectural components.</h2>
+          <p>The rest is a decade of shipping difficult things with teams.</p>
+          <p class="credits">
+            Nike, Thoughtworks, XP Investimentos, Serasa, Dasa, MRV, CVC, GFT,
+            CI&amp;T
+          </p>
+        </div>
+      </section>
+
+      <section class="writing scene" id="writing">
+        <header class="scene-copy">
+          <h2 data-words>Notes on how software gets made now.</h2>
+        </header>
+        <div class="writing-list scene-list">
+          <a href="https://dev.to/baltz/sharing-skills-with-npx-2nbc">
+            <span>Sharing skills with NPX</span>
+            <small>3 min read</small>
+          </a>
+          <a href="https://dev.to/baltz/what-is-harness-design-and-why-does-it-matter-2dbj">
+            <span>What is Harness Design and why does it matter?</span>
+            <small>4 min read</small>
+          </a>
+        </div>
+      </section>
+
+      <section class="projects scene" id="projects">
+        <div class="project-lead scene-copy">
+          <p>Selected systems</p>
+          <h2 data-words>Work that explains how I think.</h2>
+        </div>
+        <div class="project-stack scene-list">
+          <article class="project-entry">
+            <p>Interactive learning</p>
+            <h3>AI-Native Engineering</h3>
+            <p>
+              An interactive field guide to engineering software with AI at the
+              center of the workflow.
+            </p>
+            <a href="https://baltazarparra.github.io/ai-native-engineering">Open project</a>
+          </article>
+          <article class="project-entry">
+            <p>Browser experiment</p>
+            <h3>Crypto Transfer DApp</h3>
+            <p>A focused experiment for transferring cryptocurrency.</p>
+          </article>
+          <article class="project-entry">
+            <p>Tooling</p>
+            <h3>Subtitle Scraping</h3>
+            <p>A Puppeteer and Node.js utility for extracting subtitle data.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="caipora scene media-scene" id="caipora">
+        <div class="media-window scene-media">
+          <img src="/caipora.jpeg" alt="Caipora game title screen" />
+        </div>
+        <div class="caipora-copy scene-copy">
+          <h2 data-words>Caipora</h2>
+          <p>Brazilian folk horror, built one hard-earned hit at a time.</p>
+          <a href="https://baltazarparra.github.io/caipora/">Play in browser</a>
+        </div>
+      </section>
+
+      <div class="thermal-cut" aria-hidden="true"><span></span></div>
+
+      <section class="clouds scene media-scene" id="clouds">
+        <div class="clouds-cover scene-media">
+          <span aria-hidden="true">CLOUDS</span>
+          <img
+            src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e022e3ffa46097b7171b02c7176"
+            alt="Clouds EP cover"
+          />
+        </div>
+        <div class="clouds-copy scene-copy">
+          <h2 data-words>Clouds.</h2>
+          <p>An EP by Baltz.</p>
+          <a href="https://open.spotify.com/album/6BFeIsMZ4zcuGbs5cugxLM">Listen on Spotify</a>
+        </div>
+      </section>
+
+      <section class="elsewhere scene" id="elsewhere">
+        <h2 class="scene-copy" data-words>Elsewhere.</h2>
+        <nav class="scene-list" aria-label="External profiles">
+          <a href="https://www.linkedin.com/in/baltazarparra/">LinkedIn</a>
+          <a href="https://github.com/baltazarparra">GitHub</a>
+          <a href="https://dev.to/baltz">dev.to</a>
+          <a href="https://open.spotify.com/album/6BFeIsMZ4zcuGbs5cugxLM">Spotify</a>
+          <a href="https://baltazarparra.itch.io/">itch.io</a>
+        </nav>
+        <footer>
+          <span>baltz.dev</span>
+          <span>Built and edited by Baltz.</span>
+        </footer>
+      </section>
+    </main>
+
+    <script type="module" src="../p3/smile.js"></script>
+    <script type="module" src="./motion.js"></script>
+  </body>
+</html>

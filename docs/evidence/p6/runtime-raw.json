@@ -1,0 +1,191 @@
+[
+  {
+    "profile": "desktop",
+    "run": 1,
+    "consoleErrors": [],
+    "metrics": {
+      "frames": {
+        "samples": 294,
+        "fpsApprox": 58.8,
+        "timeP50Ms": 16.7,
+        "timeP95Ms": 16.8,
+        "over20msPct": 2.04
+      },
+      "longTasks": {
+        "count": 0,
+        "totalMs": 0,
+        "maxMs": 0
+      },
+      "memory": {
+        "endMiB": 8.8,
+        "deltaMiB": 2
+      },
+      "finalScrollY": 8397,
+      "maximumScroll": 8397,
+      "smileCanvas": 1,
+      "thermalCanvas": 1
+    }
+  },
+  {
+    "profile": "desktop",
+    "run": 2,
+    "consoleErrors": [],
+    "metrics": {
+      "frames": {
+        "samples": 295,
+        "fpsApprox": 58.8,
+        "timeP50Ms": 16.7,
+        "timeP95Ms": 16.8,
+        "over20msPct": 1.69
+      },
+      "longTasks": {
+        "count": 0,
+        "totalMs": 0,
+        "maxMs": 0
+      },
+      "memory": {
+        "endMiB": 8.69,
+        "deltaMiB": 1.93
+      },
+      "finalScrollY": 8397,
+      "maximumScroll": 8397,
+      "smileCanvas": 1,
+      "thermalCanvas": 1
+    }
+  },
+  {
+    "profile": "desktop",
+    "run": 3,
+    "consoleErrors": [],
+    "metrics": {
+      "frames": {
+        "samples": 301,
+        "fpsApprox": 60,
+        "timeP50Ms": 16.7,
+        "timeP95Ms": 16.7,
+        "over20msPct": 0
+      },
+      "longTasks": {
+        "count": 0,
+        "totalMs": 0,
+        "maxMs": 0
+      },
+      "memory": {
+        "endMiB": 8.82,
+        "deltaMiB": 2.07
+      },
+      "finalScrollY": 8397,
+      "maximumScroll": 8397,
+      "smileCanvas": 1,
+      "thermalCanvas": 1
+    }
+  },
+  {
+    "profile": "mobile",
+    "run": 1,
+    "consoleErrors": [],
+    "metrics": {
+      "frames": {
+        "samples": 300,
+        "fpsApprox": 60,
+        "timeP50Ms": 16.7,
+        "timeP95Ms": 16.7,
+        "over20msPct": 0
+      },
+      "longTasks": {
+        "count": 0,
+        "totalMs": 0,
+        "maxMs": 0
+      },
+      "memory": {
+        "endMiB": 2.36,
+        "deltaMiB": 0.43
+      },
+      "finalScrollY": 6464,
+      "maximumScroll": 6464,
+      "smileCanvas": 0,
+      "thermalCanvas": 0
+    }
+  },
+  {
+    "profile": "mobile",
+    "run": 2,
+    "consoleErrors": [],
+    "metrics": {
+      "frames": {
+        "samples": 300,
+        "fpsApprox": 60,
+        "timeP50Ms": 16.7,
+        "timeP95Ms": 16.8,
+        "over20msPct": 0
+      },
+      "longTasks": {
+        "count": 0,
+        "totalMs": 0,
+        "maxMs": 0
+      },
+      "memory": {
+        "endMiB": 2.33,
+        "deltaMiB": 0.4
+      },
+      "finalScrollY": 6464,
+      "maximumScroll": 6464,
+      "smileCanvas": 0,
+      "thermalCanvas": 0
+    }
+  },
+  {
+    "profile": "mobile",
+    "run": 3,
+    "consoleErrors": [],
+    "metrics": {
+      "frames": {
+        "samples": 300,
+        "fpsApprox": 60,
+        "timeP50Ms": 16.7,
+        "timeP95Ms": 16.8,
+        "over20msPct": 0
+      },
+      "longTasks": {
+        "count": 0,
+        "totalMs": 0,
+        "maxMs": 0
+      },
+      "memory": {
+        "endMiB": 2.33,
+        "deltaMiB": 0.4
+      },
+      "finalScrollY": 6464,
+      "maximumScroll": 6464,
+      "smileCanvas": 0,
+      "thermalCanvas": 0
+    }
+  },
+  {
+    "profile": "reduced",
+    "run": 1,
+    "consoleErrors": [],
+    "metrics": {
+      "frames": {
+        "samples": 288,
+        "fpsApprox": 57.6,
+        "timeP50Ms": 16.7,
+        "timeP95Ms": 16.8,
+        "over20msPct": 4.17
+      },
+      "longTasks": {
+        "count": 0,
+        "totalMs": 0,
+        "maxMs": 0
+      },
+      "memory": {
+        "endMiB": 1.45,
+        "deltaMiB": 0.1
+      },
+      "finalScrollY": 8397,
+      "maximumScroll": 8397,
+      "smileCanvas": 0,
+      "thermalCanvas": 0
+    }
+  }
+]

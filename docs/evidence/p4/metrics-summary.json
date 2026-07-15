@@ -1,0 +1,490 @@
+{
+  "cut-desktop": {
+    "runs": 3,
+    "consoleErrors": 0,
+    "metrics": {
+      "initialization.motionReadyMs": {
+        "median": 1034.9,
+        "min": 1016,
+        "max": 1098
+      },
+      "initialization.loadMs": {
+        "median": 1064.1,
+        "min": 1035.1,
+        "max": 1278.9
+      },
+      "frames.fpsApprox": {
+        "median": 60,
+        "min": 60,
+        "max": 60
+      },
+      "frames.timeP50Ms": {
+        "median": 16.7,
+        "min": 16.7,
+        "max": 16.7
+      },
+      "frames.timeP95Ms": {
+        "median": 16.7,
+        "min": 16.7,
+        "max": 16.8
+      },
+      "frames.over20msPct": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "longTasks.count": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "longTasks.totalMs": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "longTasks.maxMs": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "memory.endMiB": {
+        "median": 9.62,
+        "min": 9.6,
+        "max": 9.64
+      },
+      "memory.deltaMiB": {
+        "median": 0.38,
+        "min": 0.37,
+        "max": 0.38
+      }
+    }
+  },
+  "cut-mobile": {
+    "runs": 3,
+    "consoleErrors": 0,
+    "metrics": {
+      "initialization.motionReadyMs": {
+        "median": 881.7,
+        "min": 814.5,
+        "max": 920.6
+      },
+      "initialization.loadMs": {
+        "median": 902.5,
+        "min": 836,
+        "max": 937.9
+      },
+      "frames.fpsApprox": {
+        "median": 60,
+        "min": 60,
+        "max": 60
+      },
+      "frames.timeP50Ms": {
+        "median": 16.7,
+        "min": 16.7,
+        "max": 16.7
+      },
+      "frames.timeP95Ms": {
+        "median": 16.8,
+        "min": 16.7,
+        "max": 16.8
+      },
+      "frames.over20msPct": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "longTasks.count": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "longTasks.totalMs": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "longTasks.maxMs": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "memory.endMiB": {
+        "median": 9.73,
+        "min": 9.72,
+        "max": 9.88
+      },
+      "memory.deltaMiB": {
+        "median": 0.4,
+        "min": 0.4,
+        "max": 0.59
+      }
+    }
+  },
+  "pin-desktop": {
+    "runs": 3,
+    "consoleErrors": 0,
+    "metrics": {
+      "initialization.motionReadyMs": {
+        "median": 914,
+        "min": 730.9,
+        "max": 957.5
+      },
+      "initialization.loadMs": {
+        "median": 938.6,
+        "min": 759.2,
+        "max": 977.6
+      },
+      "frames.fpsApprox": {
+        "median": 60,
+        "min": 60,
+        "max": 60
+      },
+      "frames.timeP50Ms": {
+        "median": 16.7,
+        "min": 16.7,
+        "max": 16.7
+      },
+      "frames.timeP95Ms": {
+        "median": 16.7,
+        "min": 16.7,
+        "max": 16.8
+      },
+      "frames.over20msPct": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "longTasks.count": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "longTasks.totalMs": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "longTasks.maxMs": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "memory.endMiB": {
+        "median": 9.73,
+        "min": 9.73,
+        "max": 9.78
+      },
+      "memory.deltaMiB": {
+        "median": 0.43,
+        "min": 0.43,
+        "max": 0.43
+      }
+    }
+  },
+  "pin-mobile": {
+    "runs": 3,
+    "consoleErrors": 0,
+    "metrics": {
+      "initialization.motionReadyMs": {
+        "median": 957.2,
+        "min": 715.8,
+        "max": 1118.4
+      },
+      "initialization.loadMs": {
+        "median": 978.5,
+        "min": 732.7,
+        "max": 1138.2
+      },
+      "frames.fpsApprox": {
+        "median": 60,
+        "min": 60,
+        "max": 60
+      },
+      "frames.timeP50Ms": {
+        "median": 16.7,
+        "min": 16.7,
+        "max": 16.7
+      },
+      "frames.timeP95Ms": {
+        "median": 16.8,
+        "min": 16.7,
+        "max": 16.8
+      },
+      "frames.over20msPct": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "longTasks.count": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "longTasks.totalMs": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "longTasks.maxMs": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "memory.endMiB": {
+        "median": 9.72,
+        "min": 9.66,
+        "max": 9.89
+      },
+      "memory.deltaMiB": {
+        "median": 0.42,
+        "min": 0.42,
+        "max": 0.6
+      }
+    }
+  },
+  "words-desktop": {
+    "runs": 3,
+    "consoleErrors": 0,
+    "metrics": {
+      "initialization.motionReadyMs": {
+        "median": 873.9,
+        "min": 857,
+        "max": 1039.8
+      },
+      "initialization.loadMs": {
+        "median": 902.6,
+        "min": 874.9,
+        "max": 1060.4
+      },
+      "frames.fpsApprox": {
+        "median": 60,
+        "min": 60,
+        "max": 60
+      },
+      "frames.timeP50Ms": {
+        "median": 16.7,
+        "min": 16.7,
+        "max": 16.7
+      },
+      "frames.timeP95Ms": {
+        "median": 16.7,
+        "min": 16.7,
+        "max": 16.7
+      },
+      "frames.over20msPct": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "longTasks.count": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "longTasks.totalMs": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "longTasks.maxMs": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "memory.endMiB": {
+        "median": 10.12,
+        "min": 10.09,
+        "max": 10.13
+      },
+      "memory.deltaMiB": {
+        "median": 0.59,
+        "min": 0.59,
+        "max": 0.61
+      }
+    }
+  },
+  "words-mobile": {
+    "runs": 3,
+    "consoleErrors": 0,
+    "metrics": {
+      "initialization.motionReadyMs": {
+        "median": 837.7,
+        "min": 836.9,
+        "max": 912.1
+      },
+      "initialization.loadMs": {
+        "median": 862.9,
+        "min": 861.2,
+        "max": 929
+      },
+      "frames.fpsApprox": {
+        "median": 60,
+        "min": 60,
+        "max": 60
+      },
+      "frames.timeP50Ms": {
+        "median": 16.7,
+        "min": 16.7,
+        "max": 16.7
+      },
+      "frames.timeP95Ms": {
+        "median": 16.7,
+        "min": 16.7,
+        "max": 16.8
+      },
+      "frames.over20msPct": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "longTasks.count": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "longTasks.totalMs": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "longTasks.maxMs": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "memory.endMiB": {
+        "median": 10.29,
+        "min": 10.25,
+        "max": 10.36
+      },
+      "memory.deltaMiB": {
+        "median": 0.71,
+        "min": 0.66,
+        "max": 0.72
+      }
+    }
+  },
+  "cut-desktop-reduced": {
+    "runs": 1,
+    "consoleErrors": 0,
+    "metrics": {
+      "initialization.motionReadyMs": {
+        "median": 970.3,
+        "min": 970.3,
+        "max": 970.3
+      },
+      "initialization.loadMs": {
+        "median": 988.5,
+        "min": 988.5,
+        "max": 988.5
+      },
+      "frames.fpsApprox": {
+        "median": 60,
+        "min": 60,
+        "max": 60
+      },
+      "frames.timeP50Ms": {
+        "median": 16.7,
+        "min": 16.7,
+        "max": 16.7
+      },
+      "frames.timeP95Ms": {
+        "median": 16.7,
+        "min": 16.7,
+        "max": 16.7
+      },
+      "frames.over20msPct": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "longTasks.count": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "longTasks.totalMs": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "longTasks.maxMs": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "memory.endMiB": {
+        "median": 8.85,
+        "min": 8.85,
+        "max": 8.85
+      },
+      "memory.deltaMiB": {
+        "median": 0.14,
+        "min": 0.14,
+        "max": 0.14
+      }
+    }
+  },
+  "cut-mobile-reduced": {
+    "runs": 1,
+    "consoleErrors": 0,
+    "metrics": {
+      "initialization.motionReadyMs": {
+        "median": 758.2,
+        "min": 758.2,
+        "max": 758.2
+      },
+      "initialization.loadMs": {
+        "median": 773.4,
+        "min": 773.4,
+        "max": 773.4
+      },
+      "frames.fpsApprox": {
+        "median": 60,
+        "min": 60,
+        "max": 60
+      },
+      "frames.timeP50Ms": {
+        "median": 16.7,
+        "min": 16.7,
+        "max": 16.7
+      },
+      "frames.timeP95Ms": {
+        "median": 16.7,
+        "min": 16.7,
+        "max": 16.7
+      },
+      "frames.over20msPct": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "longTasks.count": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "longTasks.totalMs": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "longTasks.maxMs": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "memory.endMiB": {
+        "median": 8.91,
+        "min": 8.91,
+        "max": 8.91
+      },
+      "memory.deltaMiB": {
+        "median": 0.15,
+        "min": 0.15,
+        "max": 0.15
+      }
+    }
+  }
+}

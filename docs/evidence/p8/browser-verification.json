@@ -1,0 +1,2244 @@
+[
+  {
+    "profile": "desktop",
+    "consoleErrors": [],
+    "failedRequests": [],
+    "initial": {
+      "bodyTextLength": 1202,
+      "h1": "baltz.",
+      "canonical": "https://baltz.dev/",
+      "navLinks": 3,
+      "overlay": false,
+      "smileState": "poster",
+      "smileCanvas": 0,
+      "pageHeight": 9397,
+      "clientWidth": 1425,
+      "scrollWidth": 1425,
+      "horizontalOverflow": 0,
+      "headings": [
+        {
+          "level": 1,
+          "text": "baltz."
+        },
+        {
+          "level": 2,
+          "text": "I design software with code agents as architectural components."
+        },
+        {
+          "level": 2,
+          "text": "Writing."
+        },
+        {
+          "level": 3,
+          "text": "Sharing skills with NPX"
+        },
+        {
+          "level": 3,
+          "text": "What is 'Harness Design' and why does it matter"
+        },
+        {
+          "level": 2,
+          "text": "Work that explains how I think."
+        },
+        {
+          "level": 3,
+          "text": "AI-Native Engineering"
+        },
+        {
+          "level": 3,
+          "text": "Crypto Transfer DApp"
+        },
+        {
+          "level": 3,
+          "text": "Subtitle Scraping"
+        },
+        {
+          "level": 2,
+          "text": "Caipora"
+        },
+        {
+          "level": 2,
+          "text": "Clouds."
+        },
+        {
+          "level": 2,
+          "text": "Elsewhere."
+        }
+      ],
+      "landmarks": {
+        "main": 1,
+        "header": 1,
+        "nav": 2,
+        "footer": 1
+      },
+      "images": [
+        {
+          "alt": "Portrait of Baltz",
+          "width": 398,
+          "height": 1280
+        },
+        {
+          "alt": "Caipora game title screen",
+          "width": 1425,
+          "height": 1000
+        },
+        {
+          "alt": "Clouds EP cover",
+          "width": 486,
+          "height": 768
+        }
+      ],
+      "robots": "index, follow",
+      "structuredDataTypes": [
+        "WebSite",
+        "Person"
+      ],
+      "smileStateAfterInteraction": "interactive",
+      "smileCanvasAfterInteraction": 1
+    },
+    "writing": {
+      "entries": 2,
+      "titles": [
+        "Sharing skills with NPX",
+        "What is 'Harness Design' and why does it matter"
+      ],
+      "dates": [
+        "2026-05-04",
+        "2026-03-30"
+      ],
+      "links": [
+        "https://dev.to/baltz/sharing-skills-with-npx-2nbc",
+        "https://dev.to/baltz/what-is-harness-design-and-why-does-it-matter-2dbj"
+      ]
+    },
+    "thermal": {
+      "thermalState": "interactive",
+      "thermalCanvas": 1,
+      "fallbackVisible": true,
+      "fallbackDisplay": "block",
+      "fallbackOpacity": "0.82"
+    },
+    "navigation": {
+      "hash": "#caipora",
+      "caiporaTop": 72,
+      "caiporaImageLoaded": true
+    },
+    "clouds": {
+      "mediaState": "ready",
+      "imageLoaded": true,
+      "imageOpacity": "1",
+      "fallbackText": "CLOUDS"
+    },
+    "accessibility": [
+      {
+        "role": "link",
+        "name": "Skip to content"
+      },
+      {
+        "role": "main",
+        "name": ""
+      },
+      {
+        "role": "link",
+        "name": "Baltz, back to the beginning"
+      },
+      {
+        "role": "navigation",
+        "name": "Primary navigation"
+      },
+      {
+        "role": "link",
+        "name": "Work"
+      },
+      {
+        "role": "link",
+        "name": "Caipora"
+      },
+      {
+        "role": "link",
+        "name": "Elsewhere"
+      },
+      {
+        "role": "heading",
+        "name": "I design software with code agents as architectural components.",
+        "level": 2
+      },
+      {
+        "role": "heading",
+        "name": "Writing.",
+        "level": 2
+      },
+      {
+        "role": "heading",
+        "name": "Work that explains how I think.",
+        "level": 2
+      },
+      {
+        "role": "heading",
+        "name": "Clouds.",
+        "level": 2
+      },
+      {
+        "role": "link",
+        "name": "Listen on Spotify ↗"
+      },
+      {
+        "role": "heading",
+        "name": "Elsewhere.",
+        "level": 2
+      },
+      {
+        "role": "navigation",
+        "name": "External profiles"
+      },
+      {
+        "role": "heading",
+        "name": "baltz.",
+        "level": 1
+      },
+      {
+        "role": "image",
+        "name": "Portrait of Baltz"
+      },
+      {
+        "role": "heading",
+        "name": "Sharing skills with NPX",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Read Sharing skills with NPX on dev.to"
+      },
+      {
+        "role": "heading",
+        "name": "What is 'Harness Design' and why does it matter",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Read What is 'Harness Design' and why does it matter on dev.to"
+      },
+      {
+        "role": "heading",
+        "name": "AI-Native Engineering",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Open AI-Native Engineering"
+      },
+      {
+        "role": "heading",
+        "name": "Crypto Transfer DApp",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Open Crypto Transfer DApp"
+      },
+      {
+        "role": "heading",
+        "name": "Subtitle Scraping",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Open Subtitle Scraping"
+      },
+      {
+        "role": "image",
+        "name": "Caipora game title screen"
+      },
+      {
+        "role": "heading",
+        "name": "Caipora",
+        "level": 2
+      },
+      {
+        "role": "link",
+        "name": "Play in browser ↗"
+      },
+      {
+        "role": "image",
+        "name": "Clouds EP cover"
+      },
+      {
+        "role": "link",
+        "name": "LinkedIn ↗"
+      },
+      {
+        "role": "link",
+        "name": "GitHub ↗"
+      },
+      {
+        "role": "link",
+        "name": "dev.to ↗"
+      },
+      {
+        "role": "link",
+        "name": "Spotify ↗"
+      },
+      {
+        "role": "link",
+        "name": "itch.io ↗"
+      }
+    ],
+    "keyboard": [
+      {
+        "tag": "A",
+        "label": "Skip to content",
+        "href": "http://127.0.0.1:4100/#main",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Baltz, back to the beginning",
+        "href": "http://127.0.0.1:4100/#hero",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Work",
+        "href": "http://127.0.0.1:4100/#work",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Caipora",
+        "href": "http://127.0.0.1:4100/#caipora",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Elsewhere",
+        "href": "http://127.0.0.1:4100/#elsewhere",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Read Sharing skills with NPX on dev.to",
+        "href": "https://dev.to/baltz/sharing-skills-with-npx-2nbc",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Read What is 'Harness Design' and why does it matter on dev.to",
+        "href": "https://dev.to/baltz/what-is-harness-design-and-why-does-it-matter-2dbj",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Open AI-Native Engineering",
+        "href": "https://baltazarparra.github.io/ai-native-engineering",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Open Crypto Transfer DApp",
+        "href": "https://github.com/baltazarparra/crypto-transfer",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Open Subtitle Scraping",
+        "href": "https://github.com/baltazarparra/subtitle-scraping",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Play in browser",
+        "href": "https://baltazarparra.github.io/caipora/",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Listen on Spotify",
+        "href": "https://open.spotify.com/album/6BFeIsMZ4zcuGbs5cugxLM",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "LinkedIn",
+        "href": "https://www.linkedin.com/in/baltazarparra/",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "GitHub",
+        "href": "https://github.com/baltazarparra",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "dev.to",
+        "href": "https://dev.to/baltz",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Spotify",
+        "href": "https://open.spotify.com/album/6BFeIsMZ4zcuGbs5cugxLM",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "itch.io",
+        "href": "https://baltazarparra.itch.io/",
+        "visible": true,
+        "outlineWidth": "2px"
+      }
+    ]
+  },
+  {
+    "profile": "mobile",
+    "consoleErrors": [],
+    "failedRequests": [],
+    "initial": {
+      "bodyTextLength": 1202,
+      "h1": "baltz.",
+      "canonical": "https://baltz.dev/",
+      "navLinks": 3,
+      "overlay": false,
+      "smileState": "poster",
+      "smileCanvas": 0,
+      "pageHeight": 7308,
+      "clientWidth": 390,
+      "scrollWidth": 390,
+      "horizontalOverflow": 0,
+      "headings": [
+        {
+          "level": 1,
+          "text": "baltz."
+        },
+        {
+          "level": 2,
+          "text": "I design software with code agents as architectural components."
+        },
+        {
+          "level": 2,
+          "text": "Writing."
+        },
+        {
+          "level": 3,
+          "text": "Sharing skills with NPX"
+        },
+        {
+          "level": 3,
+          "text": "What is 'Harness Design' and why does it matter"
+        },
+        {
+          "level": 2,
+          "text": "Work that explains how I think."
+        },
+        {
+          "level": 3,
+          "text": "AI-Native Engineering"
+        },
+        {
+          "level": 3,
+          "text": "Crypto Transfer DApp"
+        },
+        {
+          "level": 3,
+          "text": "Subtitle Scraping"
+        },
+        {
+          "level": 2,
+          "text": "Caipora"
+        },
+        {
+          "level": 2,
+          "text": "Clouds."
+        },
+        {
+          "level": 2,
+          "text": "Elsewhere."
+        }
+      ],
+      "landmarks": {
+        "main": 1,
+        "header": 1,
+        "nav": 2,
+        "footer": 1
+      },
+      "images": [
+        {
+          "alt": "Portrait of Baltz",
+          "width": 304,
+          "height": 1280
+        },
+        {
+          "alt": "Caipora game title screen",
+          "width": 390,
+          "height": 473
+        },
+        {
+          "alt": "Clouds EP cover",
+          "width": 350,
+          "height": 350
+        }
+      ],
+      "robots": "index, follow",
+      "structuredDataTypes": [
+        "WebSite",
+        "Person"
+      ],
+      "smileStateAfterInteraction": "poster",
+      "smileCanvasAfterInteraction": 0
+    },
+    "writing": {
+      "entries": 2,
+      "titles": [
+        "Sharing skills with NPX",
+        "What is 'Harness Design' and why does it matter"
+      ],
+      "dates": [
+        "2026-05-04",
+        "2026-03-30"
+      ],
+      "links": [
+        "https://dev.to/baltz/sharing-skills-with-npx-2nbc",
+        "https://dev.to/baltz/what-is-harness-design-and-why-does-it-matter-2dbj"
+      ]
+    },
+    "thermal": {
+      "thermalState": "fallback",
+      "thermalCanvas": 0,
+      "fallbackVisible": true,
+      "fallbackDisplay": "block",
+      "fallbackOpacity": "0.82"
+    },
+    "navigation": {
+      "hash": "#caipora",
+      "caiporaTop": 64,
+      "caiporaImageLoaded": true
+    },
+    "clouds": {
+      "mediaState": "ready",
+      "imageLoaded": true,
+      "imageOpacity": "1",
+      "fallbackText": "CLOUDS"
+    },
+    "accessibility": [
+      {
+        "role": "link",
+        "name": "Skip to content"
+      },
+      {
+        "role": "main",
+        "name": ""
+      },
+      {
+        "role": "link",
+        "name": "Baltz, back to the beginning"
+      },
+      {
+        "role": "navigation",
+        "name": "Primary navigation"
+      },
+      {
+        "role": "link",
+        "name": "Work"
+      },
+      {
+        "role": "link",
+        "name": "Caipora"
+      },
+      {
+        "role": "link",
+        "name": "Elsewhere"
+      },
+      {
+        "role": "heading",
+        "name": "I design software with code agents as architectural components.",
+        "level": 2
+      },
+      {
+        "role": "heading",
+        "name": "Writing.",
+        "level": 2
+      },
+      {
+        "role": "heading",
+        "name": "Work that explains how I think.",
+        "level": 2
+      },
+      {
+        "role": "heading",
+        "name": "Clouds.",
+        "level": 2
+      },
+      {
+        "role": "link",
+        "name": "Listen on Spotify ↗"
+      },
+      {
+        "role": "heading",
+        "name": "Elsewhere.",
+        "level": 2
+      },
+      {
+        "role": "navigation",
+        "name": "External profiles"
+      },
+      {
+        "role": "heading",
+        "name": "baltz.",
+        "level": 1
+      },
+      {
+        "role": "image",
+        "name": "Portrait of Baltz"
+      },
+      {
+        "role": "heading",
+        "name": "Sharing skills with NPX",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Read Sharing skills with NPX on dev.to"
+      },
+      {
+        "role": "heading",
+        "name": "What is 'Harness Design' and why does it matter",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Read What is 'Harness Design' and why does it matter on dev.to"
+      },
+      {
+        "role": "heading",
+        "name": "AI-Native Engineering",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Open AI-Native Engineering"
+      },
+      {
+        "role": "heading",
+        "name": "Crypto Transfer DApp",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Open Crypto Transfer DApp"
+      },
+      {
+        "role": "heading",
+        "name": "Subtitle Scraping",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Open Subtitle Scraping"
+      },
+      {
+        "role": "image",
+        "name": "Caipora game title screen"
+      },
+      {
+        "role": "heading",
+        "name": "Caipora",
+        "level": 2
+      },
+      {
+        "role": "link",
+        "name": "Play in browser ↗"
+      },
+      {
+        "role": "image",
+        "name": "Clouds EP cover"
+      },
+      {
+        "role": "link",
+        "name": "LinkedIn ↗"
+      },
+      {
+        "role": "link",
+        "name": "GitHub ↗"
+      },
+      {
+        "role": "link",
+        "name": "dev.to ↗"
+      },
+      {
+        "role": "link",
+        "name": "Spotify ↗"
+      },
+      {
+        "role": "link",
+        "name": "itch.io ↗"
+      }
+    ],
+    "keyboard": []
+  },
+  {
+    "profile": "narrow-320",
+    "consoleErrors": [],
+    "failedRequests": [],
+    "initial": {
+      "bodyTextLength": 1202,
+      "h1": "baltz.",
+      "canonical": "https://baltz.dev/",
+      "navLinks": 3,
+      "overlay": false,
+      "smileState": "poster",
+      "smileCanvas": 0,
+      "pageHeight": 7217,
+      "clientWidth": 320,
+      "scrollWidth": 320,
+      "horizontalOverflow": 0,
+      "headings": [
+        {
+          "level": 1,
+          "text": "baltz."
+        },
+        {
+          "level": 2,
+          "text": "I design software with code agents as architectural components."
+        },
+        {
+          "level": 2,
+          "text": "Writing."
+        },
+        {
+          "level": 3,
+          "text": "Sharing skills with NPX"
+        },
+        {
+          "level": 3,
+          "text": "What is 'Harness Design' and why does it matter"
+        },
+        {
+          "level": 2,
+          "text": "Work that explains how I think."
+        },
+        {
+          "level": 3,
+          "text": "AI-Native Engineering"
+        },
+        {
+          "level": 3,
+          "text": "Crypto Transfer DApp"
+        },
+        {
+          "level": 3,
+          "text": "Subtitle Scraping"
+        },
+        {
+          "level": 2,
+          "text": "Caipora"
+        },
+        {
+          "level": 2,
+          "text": "Clouds."
+        },
+        {
+          "level": 2,
+          "text": "Elsewhere."
+        }
+      ],
+      "landmarks": {
+        "main": 1,
+        "header": 1,
+        "nav": 2,
+        "footer": 1
+      },
+      "images": [
+        {
+          "alt": "Portrait of Baltz",
+          "width": 250,
+          "height": 1280
+        },
+        {
+          "alt": "Caipora game title screen",
+          "width": 320,
+          "height": 448
+        },
+        {
+          "alt": "Clouds EP cover",
+          "width": 280,
+          "height": 280
+        }
+      ],
+      "robots": "index, follow",
+      "structuredDataTypes": [
+        "WebSite",
+        "Person"
+      ],
+      "smileStateAfterInteraction": "poster",
+      "smileCanvasAfterInteraction": 0
+    },
+    "writing": {
+      "entries": 2,
+      "titles": [
+        "Sharing skills with NPX",
+        "What is 'Harness Design' and why does it matter"
+      ],
+      "dates": [
+        "2026-05-04",
+        "2026-03-30"
+      ],
+      "links": [
+        "https://dev.to/baltz/sharing-skills-with-npx-2nbc",
+        "https://dev.to/baltz/what-is-harness-design-and-why-does-it-matter-2dbj"
+      ]
+    },
+    "thermal": {
+      "thermalState": "fallback",
+      "thermalCanvas": 0,
+      "fallbackVisible": true,
+      "fallbackDisplay": "block",
+      "fallbackOpacity": "0.82"
+    },
+    "navigation": {
+      "hash": "#caipora",
+      "caiporaTop": 64,
+      "caiporaImageLoaded": true
+    },
+    "clouds": {
+      "mediaState": "ready",
+      "imageLoaded": true,
+      "imageOpacity": "1",
+      "fallbackText": "CLOUDS"
+    },
+    "accessibility": [
+      {
+        "role": "link",
+        "name": "Skip to content"
+      },
+      {
+        "role": "main",
+        "name": ""
+      },
+      {
+        "role": "link",
+        "name": "Baltz, back to the beginning"
+      },
+      {
+        "role": "navigation",
+        "name": "Primary navigation"
+      },
+      {
+        "role": "link",
+        "name": "Work"
+      },
+      {
+        "role": "link",
+        "name": "Caipora"
+      },
+      {
+        "role": "link",
+        "name": "Elsewhere"
+      },
+      {
+        "role": "heading",
+        "name": "I design software with code agents as architectural components.",
+        "level": 2
+      },
+      {
+        "role": "heading",
+        "name": "Writing.",
+        "level": 2
+      },
+      {
+        "role": "heading",
+        "name": "Work that explains how I think.",
+        "level": 2
+      },
+      {
+        "role": "heading",
+        "name": "Clouds.",
+        "level": 2
+      },
+      {
+        "role": "link",
+        "name": "Listen on Spotify ↗"
+      },
+      {
+        "role": "heading",
+        "name": "Elsewhere.",
+        "level": 2
+      },
+      {
+        "role": "navigation",
+        "name": "External profiles"
+      },
+      {
+        "role": "heading",
+        "name": "baltz.",
+        "level": 1
+      },
+      {
+        "role": "image",
+        "name": "Portrait of Baltz"
+      },
+      {
+        "role": "heading",
+        "name": "Sharing skills with NPX",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Read Sharing skills with NPX on dev.to"
+      },
+      {
+        "role": "heading",
+        "name": "What is 'Harness Design' and why does it matter",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Read What is 'Harness Design' and why does it matter on dev.to"
+      },
+      {
+        "role": "heading",
+        "name": "AI-Native Engineering",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Open AI-Native Engineering"
+      },
+      {
+        "role": "heading",
+        "name": "Crypto Transfer DApp",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Open Crypto Transfer DApp"
+      },
+      {
+        "role": "heading",
+        "name": "Subtitle Scraping",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Open Subtitle Scraping"
+      },
+      {
+        "role": "image",
+        "name": "Caipora game title screen"
+      },
+      {
+        "role": "heading",
+        "name": "Caipora",
+        "level": 2
+      },
+      {
+        "role": "link",
+        "name": "Play in browser ↗"
+      },
+      {
+        "role": "image",
+        "name": "Clouds EP cover"
+      },
+      {
+        "role": "link",
+        "name": "LinkedIn ↗"
+      },
+      {
+        "role": "link",
+        "name": "GitHub ↗"
+      },
+      {
+        "role": "link",
+        "name": "dev.to ↗"
+      },
+      {
+        "role": "link",
+        "name": "Spotify ↗"
+      },
+      {
+        "role": "link",
+        "name": "itch.io ↗"
+      }
+    ],
+    "keyboard": []
+  },
+  {
+    "profile": "zoom-200",
+    "consoleErrors": [],
+    "failedRequests": [],
+    "initial": {
+      "bodyTextLength": 1202,
+      "h1": "baltz.",
+      "canonical": "https://baltz.dev/",
+      "navLinks": 3,
+      "overlay": false,
+      "smileState": "poster",
+      "smileCanvas": 0,
+      "pageHeight": 7390,
+      "clientWidth": 705,
+      "scrollWidth": 705,
+      "horizontalOverflow": 0,
+      "headings": [
+        {
+          "level": 1,
+          "text": "baltz."
+        },
+        {
+          "level": 2,
+          "text": "I design software with code agents as architectural components."
+        },
+        {
+          "level": 2,
+          "text": "Writing."
+        },
+        {
+          "level": 3,
+          "text": "Sharing skills with NPX"
+        },
+        {
+          "level": 3,
+          "text": "What is 'Harness Design' and why does it matter"
+        },
+        {
+          "level": 2,
+          "text": "Work that explains how I think."
+        },
+        {
+          "level": 3,
+          "text": "AI-Native Engineering"
+        },
+        {
+          "level": 3,
+          "text": "Crypto Transfer DApp"
+        },
+        {
+          "level": 3,
+          "text": "Subtitle Scraping"
+        },
+        {
+          "level": 2,
+          "text": "Caipora"
+        },
+        {
+          "level": 2,
+          "text": "Clouds."
+        },
+        {
+          "level": 2,
+          "text": "Elsewhere."
+        }
+      ],
+      "landmarks": {
+        "main": 1,
+        "header": 1,
+        "nav": 2,
+        "footer": 1
+      },
+      "images": [
+        {
+          "alt": "Portrait of Baltz",
+          "width": 384,
+          "height": 1280
+        },
+        {
+          "alt": "Caipora game title screen",
+          "width": 705,
+          "height": 280
+        },
+        {
+          "alt": "Clouds EP cover",
+          "width": 665,
+          "height": 665
+        }
+      ],
+      "robots": "index, follow",
+      "structuredDataTypes": [
+        "WebSite",
+        "Person"
+      ],
+      "smileStateAfterInteraction": "interactive",
+      "smileCanvasAfterInteraction": 1
+    },
+    "writing": {
+      "entries": 2,
+      "titles": [
+        "Sharing skills with NPX",
+        "What is 'Harness Design' and why does it matter"
+      ],
+      "dates": [
+        "2026-05-04",
+        "2026-03-30"
+      ],
+      "links": [
+        "https://dev.to/baltz/sharing-skills-with-npx-2nbc",
+        "https://dev.to/baltz/what-is-harness-design-and-why-does-it-matter-2dbj"
+      ]
+    },
+    "thermal": {
+      "thermalState": "fallback",
+      "thermalCanvas": 0,
+      "fallbackVisible": true,
+      "fallbackDisplay": "block",
+      "fallbackOpacity": "0.82"
+    },
+    "navigation": {
+      "hash": "#caipora",
+      "caiporaTop": 64,
+      "caiporaImageLoaded": true
+    },
+    "clouds": {
+      "mediaState": "ready",
+      "imageLoaded": true,
+      "imageOpacity": "1",
+      "fallbackText": "CLOUDS"
+    },
+    "accessibility": [
+      {
+        "role": "link",
+        "name": "Skip to content"
+      },
+      {
+        "role": "main",
+        "name": ""
+      },
+      {
+        "role": "link",
+        "name": "Baltz, back to the beginning"
+      },
+      {
+        "role": "navigation",
+        "name": "Primary navigation"
+      },
+      {
+        "role": "link",
+        "name": "Work"
+      },
+      {
+        "role": "link",
+        "name": "Caipora"
+      },
+      {
+        "role": "link",
+        "name": "Elsewhere"
+      },
+      {
+        "role": "heading",
+        "name": "I design software with code agents as architectural components.",
+        "level": 2
+      },
+      {
+        "role": "heading",
+        "name": "Writing.",
+        "level": 2
+      },
+      {
+        "role": "heading",
+        "name": "Work that explains how I think.",
+        "level": 2
+      },
+      {
+        "role": "heading",
+        "name": "Clouds.",
+        "level": 2
+      },
+      {
+        "role": "link",
+        "name": "Listen on Spotify ↗"
+      },
+      {
+        "role": "heading",
+        "name": "Elsewhere.",
+        "level": 2
+      },
+      {
+        "role": "navigation",
+        "name": "External profiles"
+      },
+      {
+        "role": "heading",
+        "name": "baltz.",
+        "level": 1
+      },
+      {
+        "role": "image",
+        "name": "Portrait of Baltz"
+      },
+      {
+        "role": "heading",
+        "name": "Sharing skills with NPX",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Read Sharing skills with NPX on dev.to"
+      },
+      {
+        "role": "heading",
+        "name": "What is 'Harness Design' and why does it matter",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Read What is 'Harness Design' and why does it matter on dev.to"
+      },
+      {
+        "role": "heading",
+        "name": "AI-Native Engineering",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Open AI-Native Engineering"
+      },
+      {
+        "role": "heading",
+        "name": "Crypto Transfer DApp",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Open Crypto Transfer DApp"
+      },
+      {
+        "role": "heading",
+        "name": "Subtitle Scraping",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Open Subtitle Scraping"
+      },
+      {
+        "role": "image",
+        "name": "Caipora game title screen"
+      },
+      {
+        "role": "heading",
+        "name": "Caipora",
+        "level": 2
+      },
+      {
+        "role": "link",
+        "name": "Play in browser ↗"
+      },
+      {
+        "role": "image",
+        "name": "Clouds EP cover"
+      },
+      {
+        "role": "link",
+        "name": "LinkedIn ↗"
+      },
+      {
+        "role": "link",
+        "name": "GitHub ↗"
+      },
+      {
+        "role": "link",
+        "name": "dev.to ↗"
+      },
+      {
+        "role": "link",
+        "name": "Spotify ↗"
+      },
+      {
+        "role": "link",
+        "name": "itch.io ↗"
+      }
+    ],
+    "keyboard": []
+  },
+  {
+    "profile": "zoom-400",
+    "consoleErrors": [],
+    "failedRequests": [],
+    "initial": {
+      "bodyTextLength": 1202,
+      "h1": "baltz.",
+      "canonical": "https://baltz.dev/",
+      "navLinks": 3,
+      "overlay": false,
+      "smileState": "poster",
+      "smileCanvas": 0,
+      "pageHeight": 6543,
+      "clientWidth": 345,
+      "scrollWidth": 345,
+      "horizontalOverflow": 0,
+      "headings": [
+        {
+          "level": 1,
+          "text": "baltz."
+        },
+        {
+          "level": 2,
+          "text": "I design software with code agents as architectural components."
+        },
+        {
+          "level": 2,
+          "text": "Writing."
+        },
+        {
+          "level": 3,
+          "text": "Sharing skills with NPX"
+        },
+        {
+          "level": 3,
+          "text": "What is 'Harness Design' and why does it matter"
+        },
+        {
+          "level": 2,
+          "text": "Work that explains how I think."
+        },
+        {
+          "level": 3,
+          "text": "AI-Native Engineering"
+        },
+        {
+          "level": 3,
+          "text": "Crypto Transfer DApp"
+        },
+        {
+          "level": 3,
+          "text": "Subtitle Scraping"
+        },
+        {
+          "level": 2,
+          "text": "Caipora"
+        },
+        {
+          "level": 2,
+          "text": "Clouds."
+        },
+        {
+          "level": 2,
+          "text": "Elsewhere."
+        }
+      ],
+      "landmarks": {
+        "main": 1,
+        "header": 1,
+        "nav": 2,
+        "footer": 1
+      },
+      "images": [
+        {
+          "alt": "Portrait of Baltz",
+          "width": 281,
+          "height": 1280
+        },
+        {
+          "alt": "Caipora game title screen",
+          "width": 345,
+          "height": 140
+        },
+        {
+          "alt": "Clouds EP cover",
+          "width": 305,
+          "height": 305
+        }
+      ],
+      "robots": "index, follow",
+      "structuredDataTypes": [
+        "WebSite",
+        "Person"
+      ],
+      "smileStateAfterInteraction": "interactive",
+      "smileCanvasAfterInteraction": 1
+    },
+    "writing": {
+      "entries": 2,
+      "titles": [
+        "Sharing skills with NPX",
+        "What is 'Harness Design' and why does it matter"
+      ],
+      "dates": [
+        "2026-05-04",
+        "2026-03-30"
+      ],
+      "links": [
+        "https://dev.to/baltz/sharing-skills-with-npx-2nbc",
+        "https://dev.to/baltz/what-is-harness-design-and-why-does-it-matter-2dbj"
+      ]
+    },
+    "thermal": {
+      "thermalState": "fallback",
+      "thermalCanvas": 0,
+      "fallbackVisible": true,
+      "fallbackDisplay": "block",
+      "fallbackOpacity": "0.82"
+    },
+    "navigation": {
+      "hash": "#caipora",
+      "caiporaTop": 64,
+      "caiporaImageLoaded": true
+    },
+    "clouds": {
+      "mediaState": "ready",
+      "imageLoaded": true,
+      "imageOpacity": "1",
+      "fallbackText": "CLOUDS"
+    },
+    "accessibility": [
+      {
+        "role": "link",
+        "name": "Skip to content"
+      },
+      {
+        "role": "main",
+        "name": ""
+      },
+      {
+        "role": "link",
+        "name": "Baltz, back to the beginning"
+      },
+      {
+        "role": "navigation",
+        "name": "Primary navigation"
+      },
+      {
+        "role": "link",
+        "name": "Work"
+      },
+      {
+        "role": "link",
+        "name": "Caipora"
+      },
+      {
+        "role": "link",
+        "name": "Elsewhere"
+      },
+      {
+        "role": "heading",
+        "name": "I design software with code agents as architectural components.",
+        "level": 2
+      },
+      {
+        "role": "heading",
+        "name": "Writing.",
+        "level": 2
+      },
+      {
+        "role": "heading",
+        "name": "Work that explains how I think.",
+        "level": 2
+      },
+      {
+        "role": "heading",
+        "name": "Clouds.",
+        "level": 2
+      },
+      {
+        "role": "link",
+        "name": "Listen on Spotify ↗"
+      },
+      {
+        "role": "heading",
+        "name": "Elsewhere.",
+        "level": 2
+      },
+      {
+        "role": "navigation",
+        "name": "External profiles"
+      },
+      {
+        "role": "heading",
+        "name": "baltz.",
+        "level": 1
+      },
+      {
+        "role": "image",
+        "name": "Portrait of Baltz"
+      },
+      {
+        "role": "heading",
+        "name": "Sharing skills with NPX",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Read Sharing skills with NPX on dev.to"
+      },
+      {
+        "role": "heading",
+        "name": "What is 'Harness Design' and why does it matter",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Read What is 'Harness Design' and why does it matter on dev.to"
+      },
+      {
+        "role": "heading",
+        "name": "AI-Native Engineering",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Open AI-Native Engineering"
+      },
+      {
+        "role": "heading",
+        "name": "Crypto Transfer DApp",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Open Crypto Transfer DApp"
+      },
+      {
+        "role": "heading",
+        "name": "Subtitle Scraping",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Open Subtitle Scraping"
+      },
+      {
+        "role": "image",
+        "name": "Caipora game title screen"
+      },
+      {
+        "role": "heading",
+        "name": "Caipora",
+        "level": 2
+      },
+      {
+        "role": "link",
+        "name": "Play in browser ↗"
+      },
+      {
+        "role": "image",
+        "name": "Clouds EP cover"
+      },
+      {
+        "role": "link",
+        "name": "LinkedIn ↗"
+      },
+      {
+        "role": "link",
+        "name": "GitHub ↗"
+      },
+      {
+        "role": "link",
+        "name": "dev.to ↗"
+      },
+      {
+        "role": "link",
+        "name": "Spotify ↗"
+      },
+      {
+        "role": "link",
+        "name": "itch.io ↗"
+      }
+    ],
+    "keyboard": [
+      {
+        "tag": "A",
+        "label": "Skip to content",
+        "href": "http://127.0.0.1:4100/#main",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Baltz, back to the beginning",
+        "href": "http://127.0.0.1:4100/#hero",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Work",
+        "href": "http://127.0.0.1:4100/#work",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Caipora",
+        "href": "http://127.0.0.1:4100/#caipora",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Elsewhere",
+        "href": "http://127.0.0.1:4100/#elsewhere",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Read Sharing skills with NPX on dev.to",
+        "href": "https://dev.to/baltz/sharing-skills-with-npx-2nbc",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Read What is 'Harness Design' and why does it matter on dev.to",
+        "href": "https://dev.to/baltz/what-is-harness-design-and-why-does-it-matter-2dbj",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Open AI-Native Engineering",
+        "href": "https://baltazarparra.github.io/ai-native-engineering",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Open Crypto Transfer DApp",
+        "href": "https://github.com/baltazarparra/crypto-transfer",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Open Subtitle Scraping",
+        "href": "https://github.com/baltazarparra/subtitle-scraping",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Play in browser",
+        "href": "https://baltazarparra.github.io/caipora/",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Listen on Spotify",
+        "href": "https://open.spotify.com/album/6BFeIsMZ4zcuGbs5cugxLM",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "LinkedIn",
+        "href": "https://www.linkedin.com/in/baltazarparra/",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "GitHub",
+        "href": "https://github.com/baltazarparra",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "dev.to",
+        "href": "https://dev.to/baltz",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "Spotify",
+        "href": "https://open.spotify.com/album/6BFeIsMZ4zcuGbs5cugxLM",
+        "visible": true,
+        "outlineWidth": "2px"
+      },
+      {
+        "tag": "A",
+        "label": "itch.io",
+        "href": "https://baltazarparra.itch.io/",
+        "visible": true,
+        "outlineWidth": "2px"
+      }
+    ]
+  },
+  {
+    "profile": "reduced",
+    "consoleErrors": [],
+    "failedRequests": [],
+    "initial": {
+      "bodyTextLength": 1202,
+      "h1": "baltz.",
+      "canonical": "https://baltz.dev/",
+      "navLinks": 3,
+      "overlay": false,
+      "smileState": "poster",
+      "smileCanvas": 0,
+      "pageHeight": 9397,
+      "clientWidth": 1425,
+      "scrollWidth": 1425,
+      "horizontalOverflow": 0,
+      "headings": [
+        {
+          "level": 1,
+          "text": "baltz."
+        },
+        {
+          "level": 2,
+          "text": "I design software with code agents as architectural components."
+        },
+        {
+          "level": 2,
+          "text": "Writing."
+        },
+        {
+          "level": 3,
+          "text": "Sharing skills with NPX"
+        },
+        {
+          "level": 3,
+          "text": "What is 'Harness Design' and why does it matter"
+        },
+        {
+          "level": 2,
+          "text": "Work that explains how I think."
+        },
+        {
+          "level": 3,
+          "text": "AI-Native Engineering"
+        },
+        {
+          "level": 3,
+          "text": "Crypto Transfer DApp"
+        },
+        {
+          "level": 3,
+          "text": "Subtitle Scraping"
+        },
+        {
+          "level": 2,
+          "text": "Caipora"
+        },
+        {
+          "level": 2,
+          "text": "Clouds."
+        },
+        {
+          "level": 2,
+          "text": "Elsewhere."
+        }
+      ],
+      "landmarks": {
+        "main": 1,
+        "header": 1,
+        "nav": 2,
+        "footer": 1
+      },
+      "images": [
+        {
+          "alt": "Portrait of Baltz",
+          "width": 398,
+          "height": 1280
+        },
+        {
+          "alt": "Caipora game title screen",
+          "width": 1425,
+          "height": 1000
+        },
+        {
+          "alt": "Clouds EP cover",
+          "width": 486,
+          "height": 768
+        }
+      ],
+      "robots": "index, follow",
+      "structuredDataTypes": [
+        "WebSite",
+        "Person"
+      ],
+      "smileStateAfterInteraction": "poster",
+      "smileCanvasAfterInteraction": 0
+    },
+    "writing": {
+      "entries": 2,
+      "titles": [
+        "Sharing skills with NPX",
+        "What is 'Harness Design' and why does it matter"
+      ],
+      "dates": [
+        "2026-05-04",
+        "2026-03-30"
+      ],
+      "links": [
+        "https://dev.to/baltz/sharing-skills-with-npx-2nbc",
+        "https://dev.to/baltz/what-is-harness-design-and-why-does-it-matter-2dbj"
+      ]
+    },
+    "thermal": {
+      "thermalState": "fallback",
+      "thermalCanvas": 0,
+      "fallbackVisible": true,
+      "fallbackDisplay": "block",
+      "fallbackOpacity": "0.82"
+    },
+    "navigation": {
+      "hash": "#caipora",
+      "caiporaTop": 72,
+      "caiporaImageLoaded": true
+    },
+    "clouds": {
+      "mediaState": "ready",
+      "imageLoaded": true,
+      "imageOpacity": "1",
+      "fallbackText": "CLOUDS"
+    },
+    "accessibility": [
+      {
+        "role": "link",
+        "name": "Skip to content"
+      },
+      {
+        "role": "main",
+        "name": ""
+      },
+      {
+        "role": "link",
+        "name": "Baltz, back to the beginning"
+      },
+      {
+        "role": "navigation",
+        "name": "Primary navigation"
+      },
+      {
+        "role": "link",
+        "name": "Work"
+      },
+      {
+        "role": "link",
+        "name": "Caipora"
+      },
+      {
+        "role": "link",
+        "name": "Elsewhere"
+      },
+      {
+        "role": "heading",
+        "name": "I design software with code agents as architectural components.",
+        "level": 2
+      },
+      {
+        "role": "heading",
+        "name": "Writing.",
+        "level": 2
+      },
+      {
+        "role": "heading",
+        "name": "Work that explains how I think.",
+        "level": 2
+      },
+      {
+        "role": "heading",
+        "name": "Clouds.",
+        "level": 2
+      },
+      {
+        "role": "link",
+        "name": "Listen on Spotify ↗"
+      },
+      {
+        "role": "heading",
+        "name": "Elsewhere.",
+        "level": 2
+      },
+      {
+        "role": "navigation",
+        "name": "External profiles"
+      },
+      {
+        "role": "heading",
+        "name": "baltz.",
+        "level": 1
+      },
+      {
+        "role": "image",
+        "name": "Portrait of Baltz"
+      },
+      {
+        "role": "heading",
+        "name": "Sharing skills with NPX",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Read Sharing skills with NPX on dev.to"
+      },
+      {
+        "role": "heading",
+        "name": "What is 'Harness Design' and why does it matter",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Read What is 'Harness Design' and why does it matter on dev.to"
+      },
+      {
+        "role": "heading",
+        "name": "AI-Native Engineering",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Open AI-Native Engineering"
+      },
+      {
+        "role": "heading",
+        "name": "Crypto Transfer DApp",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Open Crypto Transfer DApp"
+      },
+      {
+        "role": "heading",
+        "name": "Subtitle Scraping",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Open Subtitle Scraping"
+      },
+      {
+        "role": "image",
+        "name": "Caipora game title screen"
+      },
+      {
+        "role": "heading",
+        "name": "Caipora",
+        "level": 2
+      },
+      {
+        "role": "link",
+        "name": "Play in browser ↗"
+      },
+      {
+        "role": "image",
+        "name": "Clouds EP cover"
+      },
+      {
+        "role": "link",
+        "name": "LinkedIn ↗"
+      },
+      {
+        "role": "link",
+        "name": "GitHub ↗"
+      },
+      {
+        "role": "link",
+        "name": "dev.to ↗"
+      },
+      {
+        "role": "link",
+        "name": "Spotify ↗"
+      },
+      {
+        "role": "link",
+        "name": "itch.io ↗"
+      }
+    ],
+    "keyboard": []
+  },
+  {
+    "profile": "no-js",
+    "consoleErrors": [],
+    "failedRequests": [],
+    "initial": {
+      "bodyTextLength": 1202,
+      "h1": "baltz.",
+      "canonical": "https://baltz.dev/",
+      "navLinks": 3,
+      "overlay": false,
+      "smileState": "poster",
+      "smileCanvas": 0,
+      "pageHeight": 9397,
+      "clientWidth": 1425,
+      "scrollWidth": 1425,
+      "horizontalOverflow": 0,
+      "headings": [
+        {
+          "level": 1,
+          "text": "baltz."
+        },
+        {
+          "level": 2,
+          "text": "I design software with code agents as architectural components."
+        },
+        {
+          "level": 2,
+          "text": "Writing."
+        },
+        {
+          "level": 3,
+          "text": "Sharing skills with NPX"
+        },
+        {
+          "level": 3,
+          "text": "What is 'Harness Design' and why does it matter"
+        },
+        {
+          "level": 2,
+          "text": "Work that explains how I think."
+        },
+        {
+          "level": 3,
+          "text": "AI-Native Engineering"
+        },
+        {
+          "level": 3,
+          "text": "Crypto Transfer DApp"
+        },
+        {
+          "level": 3,
+          "text": "Subtitle Scraping"
+        },
+        {
+          "level": 2,
+          "text": "Caipora"
+        },
+        {
+          "level": 2,
+          "text": "Clouds."
+        },
+        {
+          "level": 2,
+          "text": "Elsewhere."
+        }
+      ],
+      "landmarks": {
+        "main": 1,
+        "header": 1,
+        "nav": 2,
+        "footer": 1
+      },
+      "images": [
+        {
+          "alt": "Portrait of Baltz",
+          "width": 398,
+          "height": 1280
+        },
+        {
+          "alt": "Caipora game title screen",
+          "width": 1425,
+          "height": 1000
+        },
+        {
+          "alt": "Clouds EP cover",
+          "width": 486,
+          "height": 768
+        }
+      ],
+      "robots": "index, follow",
+      "structuredDataTypes": [
+        "WebSite",
+        "Person"
+      ],
+      "smileStateAfterInteraction": "poster",
+      "smileCanvasAfterInteraction": 0
+    },
+    "writing": {
+      "entries": 2,
+      "titles": [
+        "Sharing skills with NPX",
+        "What is 'Harness Design' and why does it matter"
+      ],
+      "dates": [
+        "2026-05-04",
+        "2026-03-30"
+      ],
+      "links": [
+        "https://dev.to/baltz/sharing-skills-with-npx-2nbc",
+        "https://dev.to/baltz/what-is-harness-design-and-why-does-it-matter-2dbj"
+      ]
+    },
+    "thermal": {
+      "thermalState": "fallback",
+      "thermalCanvas": 0,
+      "fallbackVisible": true,
+      "fallbackDisplay": "block",
+      "fallbackOpacity": "0.82"
+    },
+    "navigation": {
+      "hash": "#caipora",
+      "caiporaTop": 72,
+      "caiporaImageLoaded": true
+    },
+    "clouds": {
+      "mediaState": "ready",
+      "imageLoaded": true,
+      "imageOpacity": "1",
+      "fallbackText": "CLOUDS"
+    },
+    "accessibility": [
+      {
+        "role": "link",
+        "name": "Skip to content"
+      },
+      {
+        "role": "main",
+        "name": ""
+      },
+      {
+        "role": "link",
+        "name": "Baltz, back to the beginning"
+      },
+      {
+        "role": "navigation",
+        "name": "Primary navigation"
+      },
+      {
+        "role": "link",
+        "name": "Work"
+      },
+      {
+        "role": "link",
+        "name": "Caipora"
+      },
+      {
+        "role": "link",
+        "name": "Elsewhere"
+      },
+      {
+        "role": "heading",
+        "name": "I design software with code agents as architectural components.",
+        "level": 2
+      },
+      {
+        "role": "heading",
+        "name": "Writing.",
+        "level": 2
+      },
+      {
+        "role": "heading",
+        "name": "Work that explains how I think.",
+        "level": 2
+      },
+      {
+        "role": "heading",
+        "name": "Clouds.",
+        "level": 2
+      },
+      {
+        "role": "link",
+        "name": "Listen on Spotify ↗"
+      },
+      {
+        "role": "heading",
+        "name": "Elsewhere.",
+        "level": 2
+      },
+      {
+        "role": "navigation",
+        "name": "External profiles"
+      },
+      {
+        "role": "heading",
+        "name": "baltz.",
+        "level": 1
+      },
+      {
+        "role": "image",
+        "name": "Portrait of Baltz"
+      },
+      {
+        "role": "heading",
+        "name": "Sharing skills with NPX",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Read Sharing skills with NPX on dev.to"
+      },
+      {
+        "role": "heading",
+        "name": "What is 'Harness Design' and why does it matter",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Read What is 'Harness Design' and why does it matter on dev.to"
+      },
+      {
+        "role": "heading",
+        "name": "AI-Native Engineering",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Open AI-Native Engineering"
+      },
+      {
+        "role": "heading",
+        "name": "Crypto Transfer DApp",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Open Crypto Transfer DApp"
+      },
+      {
+        "role": "heading",
+        "name": "Subtitle Scraping",
+        "level": 3
+      },
+      {
+        "role": "link",
+        "name": "Open Subtitle Scraping"
+      },
+      {
+        "role": "image",
+        "name": "Caipora game title screen"
+      },
+      {
+        "role": "heading",
+        "name": "Caipora",
+        "level": 2
+      },
+      {
+        "role": "link",
+        "name": "Play in browser ↗"
+      },
+      {
+        "role": "image",
+        "name": "Clouds EP cover"
+      },
+      {
+        "role": "link",
+        "name": "LinkedIn ↗"
+      },
+      {
+        "role": "link",
+        "name": "GitHub ↗"
+      },
+      {
+        "role": "link",
+        "name": "dev.to ↗"
+      },
+      {
+        "role": "link",
+        "name": "Spotify ↗"
+      },
+      {
+        "role": "link",
+        "name": "itch.io ↗"
+      }
+    ],
+    "keyboard": []
+  }
+]

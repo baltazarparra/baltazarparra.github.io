@@ -1,0 +1,155 @@
+{
+  "desktop": {
+    "runs": 3,
+    "consoleErrors": 0,
+    "metrics": {
+      "frames.fpsApprox": {
+        "median": 58.8,
+        "min": 58.8,
+        "max": 60
+      },
+      "frames.timeP50Ms": {
+        "median": 16.7,
+        "min": 16.7,
+        "max": 16.7
+      },
+      "frames.timeP95Ms": {
+        "median": 16.8,
+        "min": 16.7,
+        "max": 16.8
+      },
+      "frames.over20msPct": {
+        "median": 1.69,
+        "min": 0,
+        "max": 2.04
+      },
+      "longTasks.count": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "longTasks.totalMs": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "longTasks.maxMs": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "memory.endMiB": {
+        "median": 8.8,
+        "min": 8.69,
+        "max": 8.82
+      },
+      "memory.deltaMiB": {
+        "median": 2,
+        "min": 1.93,
+        "max": 2.07
+      }
+    }
+  },
+  "mobile": {
+    "runs": 3,
+    "consoleErrors": 0,
+    "metrics": {
+      "frames.fpsApprox": {
+        "median": 60,
+        "min": 60,
+        "max": 60
+      },
+      "frames.timeP50Ms": {
+        "median": 16.7,
+        "min": 16.7,
+        "max": 16.7
+      },
+      "frames.timeP95Ms": {
+        "median": 16.8,
+        "min": 16.7,
+        "max": 16.8
+      },
+      "frames.over20msPct": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "longTasks.count": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "longTasks.totalMs": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "longTasks.maxMs": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "memory.endMiB": {
+        "median": 2.33,
+        "min": 2.33,
+        "max": 2.36
+      },
+      "memory.deltaMiB": {
+        "median": 0.4,
+        "min": 0.4,
+        "max": 0.43
+      }
+    }
+  },
+  "reduced": {
+    "runs": 1,
+    "consoleErrors": 0,
+    "metrics": {
+      "frames.fpsApprox": {
+        "median": 57.6,
+        "min": 57.6,
+        "max": 57.6
+      },
+      "frames.timeP50Ms": {
+        "median": 16.7,
+        "min": 16.7,
+        "max": 16.7
+      },
+      "frames.timeP95Ms": {
+        "median": 16.8,
+        "min": 16.8,
+        "max": 16.8
+      },
+      "frames.over20msPct": {
+        "median": 4.17,
+        "min": 4.17,
+        "max": 4.17
+      },
+      "longTasks.count": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "longTasks.totalMs": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "longTasks.maxMs": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "memory.endMiB": {
+        "median": 1.45,
+        "min": 1.45,
+        "max": 1.45
+      },
+      "memory.deltaMiB": {
+        "median": 0.1,
+        "min": 0.1,
+        "max": 0.1
+      }
+    }
+  }
+}
