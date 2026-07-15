@@ -7,6 +7,7 @@ import NoiseBackground from "./components/NoiseBackground";
 import CustomCursor from "./components/CustomCursor";
 import LatestPostsSection from "./components/LatestPostsSection";
 import FeaturedProjectsSection from "./components/FeaturedProjectsSection";
+import CaiporaGameSection from "./components/CaiporaGameSection";
 
 // Lazy load Hero3D para melhor performance inicial
 const Hero3D = lazy(() => import("./components/Hero3D"));
@@ -356,10 +357,12 @@ function App() {
 
             <FeaturedProjectsSection />
 
+            <CaiporaGameSection reduceMotion={prefersReducedMotion} />
+
             {/* Connect Section */}
             <section className="section connect-section">
                 <div className="section-grid">
-                    <div className="section-number">04</div>
+                    <div className="section-number">05</div>
                     <div className="section-content">
                         <h2 className="section-title">CONNECT</h2>
                         <nav className="connect-links">
