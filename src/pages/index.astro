@@ -229,6 +229,27 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
     gsap.registerPlugin(ScrollTrigger);
 
     const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const chromaTexts = gsap.utils.toArray<HTMLElement>(".chroma-text");
+
+    chromaTexts.forEach((text) => {
+      const units = [...text.querySelectorAll<HTMLElement>(".chroma-unit")];
+      if (units.length === 0) return;
+
+      gsap.set(units, { color: "var(--chroma-muted)" });
+      gsap.to(units, {
+        keyframes: [
+          { color: "var(--chroma-accent)", duration: 0.18, ease: "power2.out" },
+          { color: "var(--chroma-final)", duration: 0.38, ease: "power2.inOut" },
+        ],
+        stagger: 0.055,
+        scrollTrigger: {
+          trigger: text,
+          start: "top 50%",
+          toggleActions: "play none none reverse",
+        },
+      });
+    });
+
     const marquee = document.querySelector<HTMLElement>("[data-credits-marquee]");
     const marqueeTrack = marquee?.querySelector<HTMLElement>("[data-credits-track]");
 
@@ -316,6 +337,70 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
           if (target === panel) target = undefined;
         }, { passive: true });
       });
+
+      const footer = document.querySelector<HTMLElement>(".rework-footer");
+      const footerWordmark = footer?.querySelector<HTMLElement>(".footer-wordmark");
+
+      if (footer && footerWordmark) {
+        let wordmarkFrame = 0;
+        let rotateX = 0;
+        let rotateY = 0;
+        let shiftX = 0;
+        let shiftY = 0;
+        let targetRotateX = 0;
+        let targetRotateY = 0;
+        let targetShiftX = 0;
+        let targetShiftY = 0;
+
+        const drawWordmark = () => {
+          wordmarkFrame = 0;
+          rotateX += (targetRotateX - rotateX) * 0.095;
+          rotateY += (targetRotateY - rotateY) * 0.095;
+          shiftX += (targetShiftX - shiftX) * 0.11;
+          shiftY += (targetShiftY - shiftY) * 0.11;
+
+          footerWordmark.style.setProperty("--wordmark-rotate-x", `${rotateX}deg`);
+          footerWordmark.style.setProperty("--wordmark-rotate-y", `${rotateY}deg`);
+          footerWordmark.style.setProperty("--wordmark-shift-x", `${shiftX}px`);
+          footerWordmark.style.setProperty("--wordmark-shift-y", `${shiftY}px`);
+
+          const unsettled =
+            Math.abs(targetRotateX - rotateX) > 0.01 ||
+            Math.abs(targetRotateY - rotateY) > 0.01 ||
+            Math.abs(targetShiftX - shiftX) > 0.02 ||
+            Math.abs(targetShiftY - shiftY) > 0.02;
+          if (unsettled) wordmarkFrame = requestAnimationFrame(drawWordmark);
+        };
+
+        const requestWordmarkFrame = () => {
+          if (!wordmarkFrame) wordmarkFrame = requestAnimationFrame(drawWordmark);
+        };
+
+        footer.addEventListener("pointermove", (event) => {
+          const rect = footer.getBoundingClientRect();
+          const localX = Math.max(
+            -1,
+            Math.min(1, ((event.clientX - rect.left) / rect.width) * 2 - 1),
+          );
+          const localY = Math.max(
+            -1,
+            Math.min(1, -(((event.clientY - rect.top) / rect.height) * 2 - 1)),
+          );
+          targetRotateX = localY * 6;
+          targetRotateY = -localX * 10;
+          targetShiftX = localX * 7;
+          targetShiftY = -localY * 5;
+          requestWordmarkFrame();
+        }, { passive: true });
+
+        footer.addEventListener("pointerleave", () => {
+          targetRotateX = 0;
+          targetRotateY = 0;
+          targetShiftX = 0;
+          targetShiftY = 0;
+          requestWordmarkFrame();
+        }, { passive: true });
+      }
 
       const endZones = [...document.querySelectorAll<HTMLElement>("[data-end-zone]")];
       const trail = document.querySelector<HTMLElement>("[data-end-trail]");

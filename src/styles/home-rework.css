@@ -73,7 +73,7 @@ html[data-renderer="ready"] .unified-canvas {
 }
 
 .chroma-unit {
-    color: inherit;
+    color: var(--chroma-muted);
 }
 
 .sr-only {
@@ -86,32 +86,6 @@ html[data-renderer="ready"] .unified-canvas {
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border: 0;
-}
-
-@supports (animation-timeline: view()) and (animation-range: entry 0% cover 50%) {
-    .chroma-unit {
-        color: var(--chroma-muted);
-        animation-name: chroma-syllable-shift;
-        animation-duration: 1ms;
-        animation-fill-mode: both;
-        animation-timing-function: linear;
-        animation-timeline: view(block);
-        view-timeline-inset: 0 50vh;
-        animation-range: entry var(--chroma-start) cover var(--chroma-end);
-    }
-}
-
-@keyframes chroma-syllable-shift {
-    0%,
-    18% {
-        color: var(--chroma-muted);
-    }
-    58% {
-        color: var(--chroma-accent);
-    }
-    100% {
-        color: var(--chroma-final);
-    }
 }
 
 .rework-home .hero {
@@ -644,7 +618,10 @@ html[data-renderer="ready"][data-liquid="active"] [data-liquid-slot] > img {
 .clouds-copy iframe {
     display: block;
     border: 0;
-    background: var(--color-surface);
+    border-radius: 12px;
+    overflow: hidden;
+    background: #121212;
+    clip-path: inset(0 round 12px);
 }
 .spotify-frame > a {
     min-height: 2.75rem;
@@ -726,7 +703,9 @@ html[data-renderer="ready"][data-liquid="active"] [data-liquid-slot] > img {
 }
 .elsewhere-links a {
     min-height: 7.25rem;
-    padding: 1.75rem 0.35rem;
+    padding:
+        clamp(1.5rem, 2.4vw, 2rem)
+        clamp(1.25rem, 2.6vw, 2.5rem);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -780,6 +759,10 @@ html[data-renderer="ready"][data-liquid="active"] [data-liquid-slot] > img {
     opacity: 1;
 }
 .footer-wordmark {
+    --wordmark-rotate-x: 0deg;
+    --wordmark-rotate-y: 0deg;
+    --wordmark-shift-x: 0px;
+    --wordmark-shift-y: 0px;
     position: relative;
     z-index: 1;
     width: var(--rework-page);
@@ -790,7 +773,14 @@ html[data-renderer="ready"][data-liquid="active"] [data-liquid-slot] > img {
     font-weight: 660;
     letter-spacing: -0.09em;
     line-height: 0.72;
+    transform: perspective(90rem)
+        translate3d(var(--wordmark-shift-x), var(--wordmark-shift-y), 0)
+        rotateX(var(--wordmark-rotate-x))
+        rotateY(var(--wordmark-rotate-y));
+    transform-origin: center;
+    transform-style: preserve-3d;
     transition: color 900ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
     -webkit-text-stroke: 1px rgb(243 240 233 / 22%);
 }
 .rework-footer[data-trail="active"] .footer-wordmark {

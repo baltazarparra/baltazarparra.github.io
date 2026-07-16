@@ -14,7 +14,7 @@ export const site = {
   about: {
     heading: "Design software with code agents as architectural components.",
     credits:
-      "Nike, Thoughtworks, XP Investimentos, Serasa, Dasa, MRV, CVC, GFT, CI&T",
+      "Nike, Thoughtworks, XP Investimentos, Serasa, Dasa, MRV Construtora, CVC Viagens, GFT Technologies, CI&T",
   },
   writing: [
     {

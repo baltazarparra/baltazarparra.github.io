@@ -5,22 +5,12 @@ interface Props {
 }
 
 const { segments, label = segments.join("") } = Astro.props;
-const lastIndex = Math.max(segments.length - 1, 1);
-const units = segments.map((text, index) => {
-  const start = (index / lastIndex) * 30;
-  const end = Math.min(64, start + 22);
-  return { text, start, end };
-});
 ---
 
 <span class="chroma-text" aria-label={label}>
   {
-    units.map(({ text, start, end }) => (
-      <span
-        class="chroma-unit"
-        aria-hidden="true"
-        style={`--chroma-start: ${start.toFixed(2)}%; --chroma-end: ${end.toFixed(2)}%;`}
-      >
+    segments.map((text) => (
+      <span class="chroma-unit" aria-hidden="true">
         {text}
       </span>
     ))
