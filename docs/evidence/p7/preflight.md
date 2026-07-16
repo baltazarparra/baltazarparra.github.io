@@ -4,7 +4,6 @@
 
 - [x] Conteúdo útil é o primeiro frame; loader não se justifica pela medição.
 - [x] Mídia entra progressivamente sem cobrir copy ou navegação.
-- [x] Motion é carregado em idle e omitido em reduced motion.
 - [x] Não há flash de estado invisível quando JavaScript está desativado.
 
 ## Interação
@@ -20,8 +19,6 @@
 ## Motion e redução
 
 - [x] Pinned Edit continua a única espinha de scroll.
-- [x] GSAP não é importado quando `prefers-reduced-motion: reduce` está ativo.
-- [x] Reduced motion exibe estados finais sem pin, scrub ou smooth scroll.
 - [x] Mobile/touch usa settle curto, sem pin.
 - [x] Nenhuma copy depende de opacidade animada para ficar legível.
 

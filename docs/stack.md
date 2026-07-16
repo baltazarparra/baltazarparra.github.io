@@ -100,15 +100,14 @@ são decorativas/enriquecedoras e recebem fallback estático dirigido.
   `smile.glb` só são importados depois de intenção real por mouse ou caneta.
 - `ThermalField`: uma fronteira Astro observa a faixa fora da primeira dobra e
   importa a ilha somente em desktop sem touch; não há runtime React no fallback.
-- Touch mantém o poster; reduced motion e tier sem WebGL mantêm fallbacks
-  estáticos. O documento sem JavaScript preserva copy, navegação e mídia.
+- Touch mantém o poster. O documento sem JavaScript preserva copy, navegação e mídia.
 - React não será usado para seções editoriais, navegação ou dados estáticos.
 
 ### Motion e scroll
 
 - GSAP + ScrollTrigger permanece porque P4 já validou a coreografia com ele.
 - Scroll é nativo. Lenis fica fora até existir defeito reproduzível que ele
-  resolva sem prejudicar teclado, touch, reduced motion ou custo de runtime.
+  resolva sem prejudicar teclado, touch ou custo de runtime.
 - O CSS não começa com conteúdo oculto. GSAP melhora estados já legíveis.
 - Pinned Edit só usa pin em desktop/fine pointer; touch recebe fluxo sem pin.
 
@@ -174,7 +173,7 @@ assets são cópias auditadas do site atual; a raiz publicada não foi alterada.
 8. Portar um shader mínimo sob tiers como segunda ilha; sem background eterno
    no caminho crítico.
 9. Completar a vertical slice com hero, nav, transição e showcase Caipora.
-10. Rodar lint, type-check, build, smoke de teclado/reduced motion/sem WebGL,
+10. Rodar lint, type-check, build, smoke de teclado/sem WebGL,
     traces e três Lighthouse por perfil.
 11. Comparar os números com o baseline e com os budgets abaixo; simplificar
     antes de pedir aprovação do gate.

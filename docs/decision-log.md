@@ -161,7 +161,7 @@ forma de revalidação.
   seção em demonstração de efeito ou atrasar leitura.
 - **Decisão:** usar B - Pinned Edit como espinha; limitar Cut e Settle
   a transições funcionais; excluir Words como sistema global e manter som fora
-  do conceito. Touch remove pin; reduced motion mostra estados finais.
+  do conceito. Touch remove pin;
 - **Evidência:** aprovação explícita do Baltz em 15 jul. 2026;
   `docs/motion-concept.md`, harness em `docs/prototypes/p4/` e 20 execuções
   registradas em `docs/evidence/p4/`.
@@ -199,8 +199,7 @@ forma de revalidação.
   inicial e aumentava trabalho de main thread. A tipografia variável completa
   também mantinha o LCP mobile acima de 2,5 s no modelo do Lighthouse.
 - **Decisão:** renderizar um smile estático dirigido em CSS; importar a cena 3D
-  somente após `pointerenter` real de mouse/caneta; manter touch, reduced motion
-  e ausência de JavaScript em fallback; usar `font-display: optional` e subset
+  somente após `pointerenter` real de mouse/caneta; manter touch e ausência de JavaScript em fallback; usar `font-display: optional` e subset
   ASCII da Instrument Sans. Texto não anima opacidade, preservando contraste e
   a árvore acessível durante todo o scroll.
 - **Evidência:** seis relatórios Lighthouse finais, smoke em quatro perfis e
@@ -236,7 +235,7 @@ forma de revalidação.
   já mostra conteúdo no primeiro frame; player incorporado adicionaria runtime
   e privacidade de terceiro; GSAP antes do LCP criou regressão mensurável.
 - **Decisão:** não criar loader; manter Spotify como link explícito sem embed;
-  manter som fora; importar GSAP em idle e omiti-lo em reduced motion; aplicar
+  manter som fora; aplicar
   timeout de 8 s e posters/fallbacks aos assets pesados.
 - **Evidência:** conceito C2, aprovação P4 e medições/percursos em
   `docs/evidence/p7/`. A mediana de LCP caiu de 2,558 s durante a iteração para
@@ -379,9 +378,9 @@ forma de revalidação.
 - **Decisão:** a home usa um módulo WebGL próprio com um contexto e três
   programas para campo, Smile e retrato. O Smile consome o binário quantizado
   de 77,8 KB. A integração Astro React e os islands antigos foram removidos do
-  build; reduced motion não inicializa WebGL e preserva posters DOM.
+  build;
 - **Evidência:** `astro check`, lint e build limpos; bundle da home 16,8 KB sem
-  chunk React; verificação Playwright em desktop, mobile e reduced motion.
+  chunk React; verificação Playwright em desktop e mobile.
 - **Alternativa rejeitada:** otimizar os dois islands existentes ou carregar o
   GLB antigo depois do primeiro paint.
 - **Revalidar quando:** o renderer ganhar uma nova superfície, o browser perder
@@ -412,8 +411,7 @@ forma de revalidação.
   alvos acessíveis e responder a mudanças de `prefers-reduced-motion` durante a
   sessão, não apenas no carregamento.
 - **Decisão:** restringir hover visual a ponteiros finos, usar feedback `active`
-  no touch, garantir alvos mínimos de 24 px e restaurar posters DOM sempre que
-  reduced motion for ativado. O renderer pode retomar quando a preferência
+  no touch, garantir alvos mínimos de 24 px. O renderer pode retomar quando a preferência
   volta a motion completo.
 - **Evidência:** Playwright em 320/360/390/768 px sem overflow ou alvos menores
   que 24 px; sequência de foco com outline; motion dinâmico preservando Smile,

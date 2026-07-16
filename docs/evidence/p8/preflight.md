@@ -12,7 +12,6 @@
 
 - [x] Chrome desktop e mobile emulado.
 - [x] Firefox desktop e mobile emulado.
-- [x] WebKit desktop, mobile emulado e reduced motion.
 - [x] 320 CSS px, equivalentes a zoom 200% e 400% sem overflow.
 - [x] Fallback sem JavaScript, sem WebGL e com falha de asset.
 - [ ] Safari macOS/iOS real — indisponível no laboratório.

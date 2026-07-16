@@ -8,13 +8,15 @@ import { site } from "../data/site";
 import "../styles/home-rework.css";
 
 const [primaryProject, ...secondaryProjects] = site.projects;
+const companies = site.about.credits.split(", ");
+const companyLoop = [...companies, ...companies, ...companies];
 const chroma = {
   hero: ["baltz."],
   about: ["De", "sign ", "soft", "ware ", "with ", "code ", "a", "gents ", "as ", "ar", "chi", "tec", "tu", "ral ", "com", "po", "nents."],
   writing: ["Lat", "est ", "notes."],
   projects: ["Sys", "tems ", "with ", "a ", "point ", "of ", "view."],
   caipora: ["Cai", "po", "ra"],
-  clouds: ["Clouds."],
+  clouds: ["Clouds"],
   elsewhere: ["Still ", "here."],
 } as const;
 const writingChroma = {
@@ -53,7 +55,7 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
         <h1 id="hero-title"><ChromaText segments={chroma.hero} /></h1>
         <div class="hero-meta" aria-label="Role and location">
           <p>
-            {site.hero.role} at
+            <span class="hero-role">{site.hero.role} at</span>
             <a href={site.hero.employerUrl} target="_blank" rel="noreferrer">
               {site.hero.employer}
             </a>
@@ -64,11 +66,15 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
       <div class="smile-slot" data-smile-slot aria-hidden="true">
         <div class="smile-poster"><span></span><span></span></div>
       </div>
-      <p class="hero-index" aria-hidden="true">01 / 07</p>
     </section>
 
     <section class="scene about" id="work" aria-labelledby="about-title">
-      <figure class="portrait-shell" data-liquid-slot data-liquid-source="/baltz-portrait.jpg">
+      <figure
+        class="portrait-shell"
+        data-liquid-slot
+        data-liquid-mode="portrait"
+        data-liquid-source="/baltz-portrait.jpg"
+      >
         <img
           src="/baltz-portrait.jpg"
           width="800"
@@ -80,7 +86,21 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
       <div class="about-copy">
         <p class="section-label">About</p>
         <h2 id="about-title"><ChromaText segments={chroma.about} /></h2>
-        <p class="credits">{site.about.credits}</p>
+        <div class="credits-marquee" data-credits-marquee>
+          <p class="sr-only">Collaborated with {site.about.credits}</p>
+          <div class="credits-marquee-viewport" aria-hidden="true">
+            <div class="credits-marquee-track" data-credits-track>
+              {
+                companyLoop.map((company, index) => (
+                  <span class="credits-marquee-item" data-loop-copy={Math.floor(index / companies.length)}>
+                    {company}
+                    {index < companyLoop.length - 1 && <i>•</i>}
+                  </span>
+                ))
+              }
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -113,6 +133,7 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
       <a class="project-primary interactive-panel" href={primaryProject.url} target="_blank" rel="noreferrer">
         <span class="project-kicker">{primaryProject.category}</span>
         <strong><ChromaText segments={projectChroma[primaryProject.name]} /></strong>
+        <span class="project-description">{primaryProject.description}</span>
         <span class="project-action">Open the work ↗</span>
       </a>
       <div class="project-notes">
@@ -151,15 +172,13 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
 
     <section class="scene clouds" id="clouds" aria-labelledby="clouds-title">
       <div class="clouds-copy">
-        <p class="section-label">Clouds · EP</p>
         <h2 id="clouds-title"><ChromaText segments={chroma.clouds} /></h2>
-        <p>{site.clouds.description}</p>
         <div class="spotify-frame">
           <iframe
-            title="Clouds EP on Spotify"
+            title="Clouds on Spotify"
             src={site.clouds.embedUrl}
             width="100%"
-            height="152"
+            height="352"
             loading="lazy"
             referrerpolicy="strict-origin-when-cross-origin"
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
@@ -167,13 +186,13 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
           <a href={site.clouds.url} target="_blank" rel="noreferrer">Open in Spotify ↗</a>
         </div>
       </div>
-      <a class="clouds-cover interactive-panel" href={site.clouds.url} target="_blank" rel="noreferrer" aria-label="Open Clouds EP on Spotify" data-liquid-slot data-liquid-source={site.clouds.coverUrl}>
+      <a class="clouds-cover interactive-panel" href={site.clouds.url} target="_blank" rel="noreferrer" aria-label="Open Clouds on Spotify" data-liquid-slot data-liquid-mode="cover" data-liquid-source={site.clouds.coverUrl}>
         <img src={site.clouds.coverUrl} alt="Clouds EP cover" width="640" height="640" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
         <span>Listen ↗</span>
       </a>
     </section>
 
-    <section class="scene elsewhere" id="elsewhere" aria-labelledby="elsewhere-title">
+    <section class="scene elsewhere" id="elsewhere" data-end-zone aria-labelledby="elsewhere-title">
       <div class="elsewhere-heading">
         <p class="section-label">Elsewhere</p>
         <h2 id="elsewhere-title"><ChromaText segments={chroma.elsewhere} /></h2>
@@ -190,10 +209,11 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
     </section>
   </main>
 
-  <footer class="rework-footer" data-footer-trail>
-    <div class="footer-trail" aria-hidden="true">
-      <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-    </div>
+  <div class="end-trail-layer" data-end-trail aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <footer class="rework-footer" data-end-zone>
     <p class="footer-wordmark" aria-hidden="true">baltz.</p>
     <div class="footer-meta">
       <span>© 2026 Baltazar Parra</span>
@@ -202,10 +222,69 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
   </footer>
 
   <script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
     import "../lib/visual/unifiedRenderer.js";
+
+    gsap.registerPlugin(ScrollTrigger);
 
     const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    if (!reducedMotion.matches) {
+      const marquee = document.querySelector<HTMLElement>("[data-credits-marquee]");
+      const marqueeTrack = marquee?.querySelector<HTMLElement>("[data-credits-track]");
+
+      if (marquee && marqueeTrack) {
+        let marqueeFrame = 0;
+        let marqueeOffset = 0;
+        let marqueeVelocity = -26;
+        let marqueeImpulse = 0;
+        let marqueeCycle = 1;
+        let marqueeLastTime = performance.now();
+        let marqueeVisible = false;
+
+        const measureMarquee = () => {
+          marqueeCycle = Math.max(1, marqueeTrack.scrollWidth / 3);
+          marqueeOffset %= marqueeCycle;
+        };
+
+        const drawMarquee = (time: number) => {
+          marqueeFrame = 0;
+          if (!marqueeVisible) return;
+          const elapsed = Math.min(48, time - marqueeLastTime) / 1000;
+          marqueeLastTime = time;
+          marqueeImpulse *= 0.92;
+          marqueeVelocity += ((-26 + marqueeImpulse) - marqueeVelocity) * 0.11;
+          marqueeOffset = (marqueeOffset + marqueeVelocity * elapsed) % marqueeCycle;
+          if (marqueeOffset > 0) marqueeOffset -= marqueeCycle;
+          marqueeTrack.style.transform = `translate3d(${marqueeOffset}px, 0, 0)`;
+          marqueeFrame = requestAnimationFrame(drawMarquee);
+        };
+
+        const marqueeObserver = new IntersectionObserver(([entry]) => {
+          marqueeVisible = entry.isIntersecting;
+          marqueeLastTime = performance.now();
+          if (marqueeVisible && !marqueeFrame) {
+            marqueeFrame = requestAnimationFrame(drawMarquee);
+          }
+        }, { rootMargin: "160px 0px" });
+
+        const marqueeResizeObserver = new ResizeObserver(measureMarquee);
+        marqueeResizeObserver.observe(marqueeTrack);
+        marqueeObserver.observe(marquee);
+        measureMarquee();
+
+        ScrollTrigger.create({
+          trigger: marquee,
+          start: "top bottom",
+          end: "bottom top",
+          onUpdate: (self) => {
+            marqueeImpulse = Math.max(-150, Math.min(150, self.getVelocity() * 0.055));
+          },
+        });
+      }
+    }
 
     if (finePointer.matches && !reducedMotion.matches) {
       const panels = document.querySelectorAll<HTMLElement>(".interactive-panel, .interactive-row");
@@ -236,12 +315,13 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
         }, { passive: true });
       });
 
-      const footer = document.querySelector<HTMLElement>("[data-footer-trail]");
-      const trailNodes = footer
-        ? [...footer.querySelectorAll<HTMLElement>(".footer-trail span")]
+      const endZones = [...document.querySelectorAll<HTMLElement>("[data-end-zone]")];
+      const trail = document.querySelector<HTMLElement>("[data-end-trail]");
+      const trailNodes = trail
+        ? [...trail.querySelectorAll<HTMLElement>("span")]
         : [];
 
-      if (footer && trailNodes.length > 0) {
+      if (endZones.length > 0 && trailNodes.length > 0) {
         const points = trailNodes.map(() => ({ x: 0, y: 0 }));
         let trailFrame = 0;
         let trailActive = false;
@@ -270,34 +350,44 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
             if (!point) return;
             node.style.transform = `translate3d(${point.x}px, ${point.y}px, 0) translate(-50%, -50%)`;
           });
-          footer.style.setProperty("--footer-x", `${head.x}px`);
-          footer.style.setProperty("--footer-y", `${head.y}px`);
+          endZones.forEach((zone) => {
+            const rect = zone.getBoundingClientRect();
+            zone.style.setProperty("--end-x", `${head.x - rect.left}px`);
+            zone.style.setProperty("--end-y", `${head.y - rect.top}px`);
+          });
           trailFrame = requestAnimationFrame(drawTrail);
         };
 
         const activateTrail = (event: PointerEvent) => {
-          const rect = footer.getBoundingClientRect();
-          pointerX = event.clientX - rect.left;
-          pointerY = event.clientY - rect.top;
+          pointerX = event.clientX;
+          pointerY = event.clientY;
           if (!trailActive) {
             points.forEach((point) => {
               point.x = pointerX;
               point.y = pointerY;
             });
             trailActive = true;
-            footer.dataset.trail = "active";
+            document.documentElement.dataset.endTrail = "active";
+            endZones.forEach((zone) => { zone.dataset.trail = "active"; });
           }
           if (!trailFrame) trailFrame = requestAnimationFrame(drawTrail);
         };
 
-        footer.addEventListener("pointerenter", activateTrail, { passive: true });
-        footer.addEventListener("pointermove", activateTrail, { passive: true });
-        footer.addEventListener("pointerleave", () => {
+        const deactivateTrail = (event: PointerEvent) => {
+          const nextTarget = event.relatedTarget;
+          if (endZones.some((zone) => nextTarget instanceof Node && zone.contains(nextTarget))) return;
           trailActive = false;
-          footer.dataset.trail = "idle";
+          document.documentElement.dataset.endTrail = "idle";
+          endZones.forEach((zone) => { zone.dataset.trail = "idle"; });
           if (trailFrame) cancelAnimationFrame(trailFrame);
           trailFrame = 0;
-        }, { passive: true });
+        };
+
+        endZones.forEach((zone) => {
+          zone.addEventListener("pointerenter", activateTrail, { passive: true });
+          zone.addEventListener("pointermove", activateTrail, { passive: true });
+          zone.addEventListener("pointerleave", deactivateTrail, { passive: true });
+        });
       }
     }
   </script>

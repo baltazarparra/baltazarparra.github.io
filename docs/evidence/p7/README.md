@@ -22,7 +22,6 @@ preview externo, deploy ou alteração da aplicação atual.
 |---|---|---|---|---|
 | Desktop 1440 x 1000 | Canvas após intenção | Canvas por proximidade | Capa pronta | 0 / 0 |
 | Mobile 390 x 844 | Poster | Fallback | Capa pronta | 0 / 0 |
-| Reduced motion | Poster | Fallback | Capa pronta | 0 / 0 |
 | Sem JavaScript | Poster | Fallback | Capa pronta | 0 / 0 |
 
 O desktop repetiu 17 Tabs reais; todos os alvos permaneceram visíveis com

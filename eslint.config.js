@@ -1,43 +1,44 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import react from 'eslint-plugin-react'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
+import js from "@eslint/js";
+import { defineConfig } from "eslint/config";
+import eslintPluginAstro from "eslint-plugin-astro";
+import reactHooks from "eslint-plugin-react-hooks";
+import globals from "globals";
+import tseslint from "typescript-eslint";
 
-export default [
-  { ignores: ['dist'] },
-  js.configs.recommended,
-  react.configs.flat.recommended,
-  react.configs.flat['jsx-runtime'],
+export default defineConfig(
   {
-    files: ['**/*.{js,jsx}'],
+    ignores: [
+      ".astro/",
+      ".lighthouseci/",
+      ".lighthouseci-desktop/",
+      "dist/",
+      "node_modules/",
+      "src/generated/",
+    ],
+  },
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
+  ...eslintPluginAstro.configs["flat/recommended"],
+  {
+    files: ["**/*.{cjs,js,mjs,ts,tsx,astro}"],
     languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
-      globals: globals.browser,
-      parserOptions: {
-        ecmaFeatures: { jsx: true },
+      globals: {
+        ...globals.browser,
+        ...globals.node,
       },
     },
-    // version explícita: o detect do eslint-plugin-react 7.37 chama a API
-    // context.getFilename() removida no ESLint 10 e quebra.
-    settings: { react: { version: '19.2' } },
+  },
+  {
+    files: ["**/*.{ts,tsx}"],
     plugins: {
-      'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
+      "react-hooks": reactHooks,
     },
+    rules: reactHooks.configs.recommended.rules,
+  },
+  {
+    files: ["lighthouserc*.cjs"],
     rules: {
-      // Mantém a paridade com o .eslintrc.cjs antigo: apenas as duas regras
-      // clássicas de hooks. O recommended do react-hooks 7 passou a embutir
-      // todo o ruleset do React Compiler (purity/immutability/...), que
-      // quebraria código de geometria válido — fora do escopo desta migração.
-      'react-hooks/rules-of-hooks': 'error',
-      'react-hooks/exhaustive-deps': 'warn',
-      'react/jsx-no-target-blank': 'off',
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
+      "@typescript-eslint/no-require-imports": "off",
     },
   },
-]
+);

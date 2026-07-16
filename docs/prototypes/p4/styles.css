@@ -2,78 +2,78 @@
 
 html,
 body {
-  overflow-x: clip;
+    overflow-x: clip;
 }
 
 body {
-  min-width: 20rem;
+    min-width: 20rem;
 }
 
 .scene {
-  position: relative;
-  width: min(100%, var(--max));
-  min-height: 100dvh;
-  margin-inline: auto;
-  padding: var(--section) var(--gutter);
-  scroll-margin-top: 4.5rem;
-  overflow: hidden;
+    position: relative;
+    width: min(100%, var(--max));
+    min-height: 100dvh;
+    margin-inline: auto;
+    padding: var(--section) var(--gutter);
+    scroll-margin-top: 4.5rem;
+    overflow: hidden;
 }
 
 .lab-panel {
-  position: fixed;
-  z-index: 30;
-  right: 1rem;
-  bottom: 1rem;
-  display: grid;
-  width: min(25rem, calc(100vw - 2rem));
-  grid-template-columns: auto 1fr auto;
-  gap: 0.75rem 1rem;
-  align-items: center;
-  padding: 0.85rem 1rem;
-  border: 1px solid var(--line);
-  background: rgb(12 13 15 / 0.94);
-  box-shadow: 0 1rem 3rem rgb(0 0 0 / 0.32);
-  font-size: 0.72rem;
+    position: fixed;
+    z-index: 30;
+    right: 1rem;
+    bottom: 1rem;
+    display: grid;
+    width: min(25rem, calc(100vw - 2rem));
+    grid-template-columns: auto 1fr auto;
+    gap: 0.75rem 1rem;
+    align-items: center;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--line);
+    background: rgb(12 13 15 / 0.94);
+    box-shadow: 0 1rem 3rem rgb(0 0 0 / 0.32);
+    font-size: 0.72rem;
 }
 
 .lab-panel nav {
-  display: flex;
-  gap: 0.9rem;
+    display: flex;
+    gap: 0.9rem;
 }
 
 .lab-panel a {
-  color: var(--muted);
-  text-decoration: none;
+    color: var(--muted);
+    text-decoration: none;
 }
 
 .lab-panel a[aria-current="page"],
 .lab-panel a:hover,
 .lab-panel a:focus-visible {
-  color: var(--accent-strong);
+    color: var(--accent-strong);
 }
 
 .lab-panel pre {
-  grid-column: 1 / -1;
-  max-height: 8rem;
-  margin: 0;
-  overflow: auto;
-  color: var(--muted);
-  font: inherit;
-  line-height: 1.4;
-  white-space: pre-wrap;
+    grid-column: 1 / -1;
+    max-height: 8rem;
+    margin: 0;
+    overflow: auto;
+    color: var(--muted);
+    font: inherit;
+    line-height: 1.4;
+    white-space: pre-wrap;
 }
 
 html[data-capture="true"] .lab-panel {
-  display: none;
+    display: none;
 }
 
 .hero {
-  width: min(100%, var(--max));
-  margin-inline: auto;
+    width: min(100%, var(--max));
+    margin-inline: auto;
 }
 
 .hero-statement {
-  text-wrap: balance;
+    text-wrap: balance;
 }
 
 .scene-copy,
@@ -81,202 +81,190 @@ html[data-capture="true"] .lab-panel {
 .scene-media,
 .hero-object,
 .hero-beat {
-  transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
 }
 
 .about,
 .writing,
 .clouds {
-  width: min(100%, var(--max));
+    width: min(100%, var(--max));
 }
 
 .projects {
-  display: grid;
-  grid-template-columns: 5fr 7fr;
-  gap: clamp(3rem, 10vw, 10rem);
-  align-items: start;
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: clamp(3rem, 10vw, 10rem);
+    align-items: start;
 }
 
 .project-lead {
-  padding-top: 0.5rem;
+    padding-top: 0.5rem;
 }
 
 .project-lead > p {
-  margin: 0 0 2rem;
-  color: var(--accent-strong);
-  font-size: 0.8rem;
+    margin: 0 0 2rem;
+    color: var(--accent-strong);
+    font-size: 0.8rem;
 }
 
 .project-lead h2 {
-  max-width: 9ch;
-  font-size: clamp(3.6rem, 7.3vw, 7.5rem);
+    max-width: 9ch;
+    font-size: clamp(3.6rem, 7.3vw, 7.5rem);
 }
 
 .project-stack {
-  display: grid;
+    display: grid;
 }
 
 .project-entry {
-  display: grid;
-  min-height: 48vh;
-  align-content: center;
-  padding-block: clamp(3rem, 7vw, 7rem);
-  border-top: 1px solid var(--line);
+    display: grid;
+    min-height: 48vh;
+    align-content: center;
+    padding-block: clamp(3rem, 7vw, 7rem);
+    border-top: 1px solid var(--line);
 }
 
 .project-entry:first-child {
-  border-top-color: var(--accent);
+    border-top-color: var(--accent);
 }
 
 .project-entry > p:first-child {
-  margin: 0 0 1.5rem;
-  color: var(--muted);
-  font-size: 0.78rem;
+    margin: 0 0 1.5rem;
+    color: var(--muted);
+    font-size: 0.78rem;
 }
 
 .project-entry h3 {
-  max-width: 13ch;
-  margin: 0;
-  font-size: clamp(2.4rem, 5.5vw, 6rem);
-  font-weight: 600;
-  letter-spacing: -0.05em;
-  line-height: 0.92;
+    max-width: 13ch;
+    margin: 0;
+    font-size: clamp(2.4rem, 5.5vw, 6rem);
+    font-weight: 600;
+    letter-spacing: -0.05em;
+    line-height: 0.92;
 }
 
 .project-entry > p:not(:first-child) {
-  max-width: 34rem;
-  margin: 1.5rem 0 2rem;
-  color: var(--muted);
-  font-size: clamp(1rem, 1.4vw, 1.3rem);
-  line-height: 1.4;
+    max-width: 34rem;
+    margin: 1.5rem 0 2rem;
+    color: var(--muted);
+    font-size: clamp(1rem, 1.4vw, 1.3rem);
+    line-height: 1.4;
 }
 
 .project-entry a,
 .caipora-copy a,
 .clouds-copy a {
-  font-weight: 600;
-  text-decoration-color: var(--accent);
+    font-weight: 600;
+    text-decoration-color: var(--accent);
 }
 
 .media-window {
-  width: 100%;
-  height: 100dvh;
-  overflow: hidden;
+    width: 100%;
+    height: 100dvh;
+    overflow: hidden;
 }
 
 .media-window img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 54% 50%;
-  filter: brightness(0.58) contrast(1.16) saturate(0.9);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 54% 50%;
+    filter: brightness(0.58) contrast(1.16) saturate(0.9);
 }
 
 .caipora::after {
-  pointer-events: none;
+    pointer-events: none;
 }
 
 .thermal-cut {
-  position: relative;
-  overflow: hidden;
-  background: var(--canvas);
+    position: relative;
+    overflow: hidden;
+    background: var(--canvas);
 }
 
 .thermal-cut span {
-  position: absolute;
-  inset: 0;
-  display: block;
-  background: var(--accent);
-  transform-origin: left center;
+    position: absolute;
+    inset: 0;
+    display: block;
+    background: var(--accent);
+    transform-origin: left center;
 }
 
 .word {
-  display: inline-block;
-  will-change: opacity, transform;
+    display: inline-block;
+    will-change: opacity, transform;
 }
 
 html[data-motion="pin"] .projects {
-  min-height: 230vh;
+    min-height: 230vh;
 }
 
 html[data-motion="pin"] .project-entry {
-  min-height: 64vh;
+    min-height: 64vh;
 }
 
 html[data-motion="words"] .about h2,
 html[data-motion="words"] .writing h2,
 html[data-motion="words"] .project-lead h2 {
-  max-width: 12ch;
+    max-width: 12ch;
 }
 
 html[data-reduced="true"] .word {
-  opacity: 1 !important;
-  transform: none !important;
-  will-change: auto;
+    opacity: 1 !important;
+    transform: none !important;
+    will-change: auto;
 }
 
 @media (max-width: 48rem) {
-  .scene {
-    min-height: auto;
-    padding-block: 5.5rem;
-    scroll-margin-top: 4rem;
-  }
+    .scene {
+        min-height: auto;
+        padding-block: 5.5rem;
+        scroll-margin-top: 4rem;
+    }
 
-  .lab-panel {
-    right: 0.65rem;
-    bottom: 0.65rem;
-    width: calc(100vw - 1.3rem);
-  }
+    .lab-panel {
+        right: 0.65rem;
+        bottom: 0.65rem;
+        width: calc(100vw - 1.3rem);
+    }
 
-  .projects {
-    min-height: 100dvh;
-    grid-template-columns: 1fr;
-    gap: 3rem;
-  }
+    .projects {
+        min-height: 100dvh;
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
 
-  html[data-motion="pin"] .projects {
-    min-height: auto;
-  }
+    html[data-motion="pin"] .projects {
+        min-height: auto;
+    }
 
-  .project-lead h2 {
-    max-width: 11ch;
-    font-size: clamp(3.3rem, 15vw, 5.2rem);
-  }
+    .project-lead h2 {
+        max-width: 11ch;
+        font-size: clamp(3.3rem, 15vw, 5.2rem);
+    }
 
-  .project-entry,
-  html[data-motion="pin"] .project-entry {
-    min-height: auto;
-  }
+    .project-entry,
+    html[data-motion="pin"] .project-entry {
+        min-height: auto;
+    }
 
-  .media-window {
-    height: 50dvh;
-  }
+    .media-window {
+        height: 50dvh;
+    }
 
-  .caipora {
-    padding-top: 4rem;
-  }
+    .caipora {
+        padding-top: 4rem;
+    }
 
-  .caipora .caipora-copy {
-    position: relative;
-    left: auto;
-    bottom: auto;
-    padding: 1.75rem var(--gutter) 3rem;
-  }
+    .caipora .caipora-copy {
+        position: relative;
+        left: auto;
+        bottom: auto;
+        padding: 1.75rem var(--gutter) 3rem;
+    }
 
-  .caipora::after {
-    inset: 4rem 0 auto;
-    height: 50dvh;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .scene-copy,
-  .scene-list,
-  .scene-media,
-  .hero-object,
-  .hero-beat {
-    opacity: 1 !important;
-    clip-path: none !important;
-    transform: none !important;
-  }
+    .caipora::after {
+        inset: 4rem 0 auto;
+        height: 50dvh;
+    }
 }

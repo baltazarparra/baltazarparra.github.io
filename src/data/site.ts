@@ -37,17 +37,17 @@ export const site = {
       category: "Interactive learning",
       name: "AI-Native Engineering",
       description:
-        "An interactive field guide to engineering software with AI at the center of the workflow.",
+        "A practical guide to coding with code agents.",
       url: "https://baltazarparra.github.io/ai-native-engineering",
     },
     {
-      category: "Browser experiment",
+      category: "DApp Web3 experiment",
       name: "Crypto Transfer DApp",
       description: "A focused experiment for transferring cryptocurrency.",
       url: "https://github.com/baltazarparra/crypto-transfer",
     },
     {
-      category: "Tooling",
+      category: "Data Extraction",
       name: "Subtitle Scraping",
       description:
         "A Puppeteer and Node.js utility for extracting subtitle data.",
@@ -60,8 +60,7 @@ export const site = {
     url: "https://baltazarparra.github.io/caipora/",
   },
   clouds: {
-    name: "Clouds.",
-    description: "An EP by Baltz.",
+    name: "Clouds",
     url: "https://open.spotify.com/album/6BFeIsMZ4zcuGbs5cugxLM",
     coverUrl: "/clouds-cover.jpg",
     embedUrl:

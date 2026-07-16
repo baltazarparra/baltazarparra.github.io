@@ -87,12 +87,14 @@ for (const profile of profiles) {
       0,
       document.documentElement.scrollWidth - document.documentElement.clientWidth,
     ),
-    smileCanvas: document.querySelectorAll(".smile-stage canvas").length,
-    thermalCanvas: document.querySelectorAll(".thermal-cut canvas").length,
+    smileCanvas: document.querySelectorAll("[data-unified-canvas]").length,
+    heroIndexPresent: Boolean(document.querySelector(".hero-index")),
   }));
   initial.status = response?.status();
 
-  await page.locator('a[href="#caipora"]').click();
+  await page.evaluate(() => {
+    document.querySelector("#caipora")?.scrollIntoView({ behavior: "instant", block: "center" });
+  });
   await page.waitForTimeout(700);
   const navigation = await page.evaluate(() => ({
     hash: location.hash,

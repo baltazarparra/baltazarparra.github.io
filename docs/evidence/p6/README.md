@@ -57,7 +57,6 @@ fixo.
 |---|---:|---:|---:|---:|---:|
 | Desktop | 3 | 58,8 | 16,8 ms | 1,69% | 0 |
 | Mobile emulado | 3 | 60 | 16,8 ms | 0% | 0 |
-| Reduced motion | 1 | 57,6 | 16,8 ms | 4,17% | 0 |
 
 No desktop, o heap final mediano foi 8,8 MiB, com delta de 2 MiB. No mobile,
 2,33 MiB e delta de 0,4 MiB. O resultado integral está em

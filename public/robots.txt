@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://baltazarparra.github.io/sitemap.xml
+Sitemap: https://baltz.dev/sitemap.xml

@@ -18,8 +18,7 @@
 - Copy, links e mídia continuam disponíveis sem JavaScript.
 - Texto nunca recebe `visibility:hidden` nem anima opacidade; contraste
   automatizado alcança 100 em seis relatórios.
-- Touch remove pin e não importa o Smile 3D. Reduced motion não anima shader ou
-  Smile. Fallbacks permanecem dirigidos.
+- Touch remove pin e não importa o Smile 3D.
 - Foco visível usa token de contraste. Auditoria manual aprofundada de teclado,
   zoom, leitor de tela e browsers reais continua no P8.
 
@@ -30,7 +29,7 @@
   viewport nem loop 3D permanente.
 - Smile 3D usa `frameloop="demand"` e carrega somente após mouse/caneta.
 - Shader é importado por `IntersectionObserver` apenas em desktop sem touch;
-  mobile, reduced motion e sem JavaScript usam o fallback térmico CSS.
+  mobile e sem JavaScript usam o fallback térmico CSS.
 - Não há listener global de scroll/mouse implementado à mão; ScrollTrigger e
   R3F controlam scheduling.
 - p95 de frames abaixo de 20 ms e zero long tasks nas sete execuções P5.

@@ -2,96 +2,78 @@
 
 Guidance for working in this repository.
 
+## Working agreement
+
+- Do not assume missing product requirements. Ask the user whenever an
+  unresolved choice materially affects the result.
+- Apply critical, evidence-based judgment rather than agreeing by convenience.
+
 ## What this is
 
-Personal site / portfolio of Baltazar Parra ("baltz"), served at
-`https://baltazarparra.github.io/`. Single-page React app built with Vite,
-featuring an interactive 3D hero and a shader-driven animated background.
-Aesthetic: minimal, cyberpunk, fire-themed.
+The personal portfolio of Baltazar Parra (`https://baltz.dev`), served as a
+static Astro site. The aesthetic is minimal, dark, editorial, and kinetic. A
+single canvas renderer handles the 3D Smile, visual field, liquid image
+distortion, and pointer interactions.
+
+The former Vite/React application was retired. The repository root contains
+the only site implementation and deployment target.
 
 ## Commands
 
-Package manager is **pnpm** (see `pnpm-lock.yaml` / `pnpm-workspace.yaml`).
+Package manager: **pnpm** (see `pnpm-lock.yaml`). Use Node.js 22.12 or newer.
 
-- `pnpm start` — dev server on port 3000 (auto-opens, host exposed on LAN)
-- `pnpm build` — production build to `dist/` (terser minify, drops `console`/`debugger`)
-- `pnpm preview` — preview the production build
-- `pnpm lint` — ESLint over `.js`/`.jsx`, `--max-warnings 0` (lint must be clean)
-- `pnpm deploy` — runs `predeploy` (build) then publishes `dist/` to GitHub Pages via `gh-pages`
+- `pnpm dev` / `pnpm start` — local Astro server on port 3100.
+- `pnpm lint` — ESLint with no warnings allowed.
+- `pnpm check` — Astro and TypeScript checks.
+- `pnpm build` — generates tokens, checks the site, and builds `dist/`.
+- `pnpm artifact:check` — validates the static artifact and SEO assets.
+- `pnpm launch:check` — lint, build, and artifact validation.
+- `pnpm verify:browser` — browser-level interaction checks.
+- `pnpm preview` — serves `dist/` on port 4100.
 
-There is no test runner configured.
+There is no unit-test runner.
 
 ## Architecture
 
-Entry: `index.html` → `src/main.jsx` → `src/App.jsx`.
+Entry route: `src/pages/index.astro`. It uses `src/layouts/BaseLayout.astro`
+for document metadata and composes the page sections in this order: Hero,
+About, Writing, Selected work, Caipora, Clouds, Elsewhere, Footer.
 
-`src/App.jsx` is the single page. It composes fixed-position visual layers
-(`CustomCursor`, `NoiseBackground`) over scrollable `<main>` content, and drives
-all scroll/entrance animations with **GSAP + ScrollTrigger**. Smooth scrolling
-uses **Lenis** (only mounted when animations are enabled). Sections in order:
-Hero → About (01) → Writing (02) → Projects (03) → Connect (04) → Footer.
+### Source areas
 
-### Components (`src/components/`)
+- `src/data/site.ts` — editable content, links, labels, and project metadata.
+- `src/components/ChromaText.astro` — scroll-revealed chromatic headings.
+- `src/lib/visual/unifiedRenderer.js` — all canvas/WebGL visual behavior. It
+  owns Smile gaze/scroll motion, image liquid displacement, and motion gating.
+- `src/styles/global.css` — reset, tokens, base layout, accessibility defaults.
+- `src/styles/home-rework.css` — the page’s layout, responsive rules, and
+  non-canvas animations.
+- `src/generated/` — generated design-token files; do not edit manually.
+- `scripts/` — token/OG generators and launch verification.
 
-- `Hero3D.jsx` — React Three Fiber `<Canvas>` rendering the `smile.glb` model.
-  Reacts to mouse/touch (gaze) and scroll (lift/scale). Lazy-loaded via
-  `React.lazy` + `Suspense`. Optional `ChromaticAberration` post-processing.
-  Camera, model fit, and motion profiles are tuned per viewport width via the
-  `get*Profile` / `getCameraSettings` helpers.
-- `NoiseBackground.jsx` — fullscreen R3F canvas with a custom GLSL Perlin-noise
-  fire shader (`NoiseShader`), plus `Particles` and optional `TVNoiseEffect`.
-  Mouse-reactive and scroll-reactive (special intensity ramp near the Connect
-  section).
-- `Particles.jsx` — GPU point cloud, GLSL vertex/fragment shaders.
-- `TVNoiseEffect.jsx` — analog-TV static shader overlay (desktop, high tiers only).
-- `CustomCursor.jsx` — custom trailing cursor; only mounts on
-  `(hover: hover) and (pointer: fine)` devices and when motion is allowed.
-- `PerformanceMonitor.jsx` — runs inside the background `<Canvas>`; samples FPS
-  and adjusts `gl.setPixelRatio` at runtime to hold framerate.
-- `LatestPostsSection.jsx` / `FeaturedProjectsSection.jsx` — render the Writing
-  and Projects sections from data.
+### Assets
 
-### Data & config
+`public/` contains the Smile model, portrait, Caipora and Clouds images, font,
+favicon, OG image, robots, and sitemap. Assets are referenced from the site
+root (for example, `/smile.glb`).
 
-- `src/data/homeContent.js` — `writingPosts` and `featuredProjects` arrays.
-  **Edit content here**, not in the section components.
-- `src/config/qualityConfig.js` — adaptive quality system. `detectDeviceTier()`
-  scores the device (memory, CPU cores, resolution, type, battery) into
-  `ULTRA / HIGH / MEDIUM / LOW`. `QUALITY_TIERS` define particle counts, noise
-  layers, DPR ranges, and whether heavy effects run. The result is cached;
-  `forceQualityTier(tier)` overrides for debugging.
+## Performance and accessibility
 
-### Styles
+- Respect `prefers-reduced-motion`. The renderer must reduce or pause motion
+  when the preference is active.
+- Keep pointer-specific interactions behind `(hover: hover) and (pointer:
+  fine)`; touch remains scroll-reactive where meaningful.
+- Use passive listeners and `requestAnimationFrame` scheduling for continuous
+  input or scroll work.
+- Reuse WebGL resources; avoid allocating vectors, textures, or DOM nodes per
+  frame.
+- Preserve semantic markup, visible focus states, the skip link, image alt
+  text, and external-link safety attributes.
 
-- `src/index.css` — reset + CSS variables.
-- `src/App.css` — all layout/section styling. Animations target the class names
-  used by GSAP in `App.jsx` (e.g. `.section-number`, `.section-title`,
-  `.connect-link`), so renaming a class can silently break an animation.
+## Build and deployment
 
-## Performance & accessibility conventions
+`astro.config.ts` produces a static site in `dist/`. Vercel uses `pnpm build`
+and publishes `dist/`; the same artifact is suitable for any static host.
 
-This codebase trades complexity for smoothness on low-end and mobile devices.
-Preserve these when editing:
-
-- **Respect `prefers-reduced-motion`** and mobile detection. `App.jsx` computes
-  `enableAnimations = !prefersReducedMotion && !isMobile`; many components take
-  `reduceMotion` / `isMobile` props and disable work accordingly.
-- **Gate heavy effects through `qualityConfig`** rather than hardcoding counts.
-- **Throttle input/scroll with `requestAnimationFrame`** (see the rAF-scheduling
-  patterns in `Hero3D` and `NoiseBackground`); use `{ passive: true }` listeners.
-- **Pause offscreen/hidden work**: canvases use `frameloop="demand"` when not
-  animating; `IntersectionObserver` and `visibilitychange` stop loops.
-- Reuse THREE objects (vectors, etc.) inside `useFrame` instead of allocating.
-
-## Build & deploy notes
-
-- `vite.config.js` manually chunks `react` and `react-three` vendor bundles,
-  hashes filenames, and disables sourcemaps. Console calls are stripped in prod.
-- `public/` assets (the `.glb` model, `og.jpg`, icons, `manifest.json`,
-  `robots.txt`, `sitemap.xml`, `sw.js`) are copied as-is to `dist/`.
-- `public/sw.js` is an **unregister-only** service worker — it tears down any
-  previously installed Workbox caches and removes itself. Don't reintroduce
-  caching there without intent.
-- `dist/` is committed/published output; never hand-edit it — rebuild instead.
-- Deploy target is GitHub Pages from the built `dist/`. SEO/OG meta lives in
-  `index.html`; absolute URLs assume the `baltazarparra.github.io` origin.
+Do not hand-edit `dist/`; rebuild it. The GitHub Actions workflow runs lint,
+type checks, artifact validation, and Lighthouse budgets for root site changes.

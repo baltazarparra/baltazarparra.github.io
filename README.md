@@ -1,53 +1,36 @@
-<h1 align="center">Hi! I'm Baltz 🤙</h1>
+# baltz.dev
 
-<p align="center">
-  <a href="https://baltazarparra.github.io/">Site</a> •
-  <a href="https://codesandbox.io/u/baltazarparra">Lab</a> •
-  <a href="https://codepen.io/baltazarparra">Codepen</a> •
-  <a href="https://open.spotify.com/artist/5lgem0AFESB7PQ4GRg67CX">Spotify</a> •
-  <a href="https://www.linkedin.com/in/baltazarparra/">LinkedIn</a> •
-  <a href="https://dev.to/baltz">Dev.to</a>
-</p>
+Personal portfolio of Baltazar Parra, built as a static Astro site with a
+canvas-driven interactive layer.
 
-## 🚀 Sobre o Projeto
+## Commands
 
-Este é meu site pessoal/portfólio desenvolvido com React e tecnologias 3D modernas. Ele apresenta uma experiência visual interativa com modelagem 3D e efeitos visuais avançados, além de servir como hub central para minha presença online.
+Use Node.js 22.12+ and pnpm 11.8.
 
-### ✨ Características
-
-- Interface minimalista com estética cyberpunk
-- Modelo 3D interativo renderizado com Three.js
-- Efeitos visuais avançados com shaders e post-processing
-- Design responsivo para desktop e dispositivos móveis
-- Janela de terminal arrastável pelo cabeçalho, com suporte a dispositivo móvel e navegação por teclado
-- Toggle para habilitar/desabilitar efeitos visuais pesados
-- Animações suaves de entrada e transição
-
-## 🛠️ Tecnologias
-
-- **React 18** - Biblioteca para construção de interfaces
-- **Vite** - Build tool ultrarrápido
-- **Three.js** - Engine 3D para web
-- **React Three Fiber** - Renderizador React para Three.js
-- **React Three Drei** - Utilitários para React Three Fiber
-- **R3F Scroll Rig** - Efeitos de scroll para Three.js
-- **Postprocessing** - Efeitos visuais avançados
-
-## 🔨 Estrutura do Projeto
-
+```bash
+pnpm dev
+pnpm lint
+pnpm check
+pnpm build
+pnpm launch:check
 ```
-/
-├── public/          # Arquivos estáticos e modelos 3D
-├── src/
-│   ├── components/  # Componentes React
-│   ├── App.jsx      # Componente principal
-│   ├── App.css      # Estilos globais
-│   ├── index.css    # Reset CSS e variáveis
-│   └── main.jsx     # Ponto de entrada
-```
-## 📬 Contato
 
-- LinkedIn: [@baltazarparra](https://www.linkedin.com/in/baltazarparra/)
-- GitHub: [@baltazarparra](https://github.com/baltazarparra)
-- Dev.to: [@baltz](https://dev.to/baltz)
-- Spotify: [Baltazar Parra](https://open.spotify.com/artist/5lgem0AFESB7PQ4GRg67CX)
+`pnpm build` writes the production site to `dist/`. `pnpm preview` serves that
+artifact locally.
+
+## Structure
+
+```text
+src/
+  pages/          # Astro routes
+  layouts/        # shared document shell and metadata
+  components/     # server-rendered presentation components
+  data/           # portfolio content
+  lib/visual/     # unified WebGL and interaction renderer
+  styles/         # global and page-level styling
+public/           # images, 3D assets, fonts, SEO files
+scripts/          # generation and browser/artifact checks
+```
+
+The former Vite/React implementation has been removed; the Astro site at the
+repository root is the only application and deployment target.

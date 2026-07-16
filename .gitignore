@@ -14,7 +14,6 @@ dist-ssr
 .lighthouseci*
 .astro/
 .vercel/
-v2/*lighthouse.*/
 *.local
 .env*
 

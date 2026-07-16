@@ -119,7 +119,7 @@ const evaluate = async (client, expression) => {
   return result.result.value;
 };
 
-const userDataDirectory = await mkdtemp(join("/tmp", "baltz-v2-runtime-"));
+const userDataDirectory = await mkdtemp(join("/tmp", "baltz-runtime-"));
 const chrome = spawn(
   chromeExecutable,
   [
@@ -229,18 +229,6 @@ try {
       await loaded;
       await delay(750);
 
-      if (!profile.touch && !profile.reducedMotion) {
-        await evaluate(
-          client,
-          `(() => {
-            document.querySelector("[data-smile-root]").dispatchEvent(
-              new PointerEvent("pointerenter", { pointerType: "mouse" })
-            );
-          })()`,
-        );
-        await delay(1750);
-      }
-
       const metrics = await evaluate(
         client,
         `(async () => {
@@ -323,8 +311,9 @@ try {
             },
             finalScrollY: Math.round(window.scrollY),
             maximumScroll: Math.round(maximumScroll),
-            smileCanvas: document.querySelectorAll(".smile-stage canvas").length,
-            thermalCanvas: document.querySelectorAll(".thermal-cut canvas").length,
+            unifiedCanvas: document.querySelectorAll("[data-unified-canvas]").length,
+            smileProgress: window.__unifiedRendererMetrics?.smileProgress ?? null,
+            smileVisible: window.__unifiedRendererMetrics?.smileVisible ?? null,
           };
         })()`,
       );

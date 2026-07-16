@@ -38,7 +38,6 @@
 |---|---|---|---|
 | Desktop 1440×1000 | `desktop-1440x1000.png` | Conteúdo e WebGL renderizados | Chrome headless/WSL |
 | Mobile 390×844, DPR 2 | `mobile-390x844@2x.png` | Sem overflow visível no hero | Emulação, não aparelho real |
-| Reduced motion | `reduced-motion-1440x1000.png` | Conteúdo renderizado em estado reduzido | Emulação de mídia |
 
 ## Vertical slice P5 automatizada
 

@@ -1,5 +1,11 @@
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
 const canvas = document.querySelector("[data-unified-canvas]");
 const smileSlot = document.querySelector("[data-smile-slot]");
+const hero = document.querySelector("#hero");
 const allLiquidSlots = [...document.querySelectorAll("[data-liquid-slot]")];
 const rendererStatus = document.querySelector("[data-status]");
 const contextMetric = document.querySelector('[data-metric="contexts"]');
@@ -7,7 +13,7 @@ const programMetric = document.querySelector('[data-metric="programs"]');
 const frameMetric = document.querySelector('[data-metric="frame"]');
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
-const liquidSlots = finePointer.matches && !reducedMotion.matches ? allLiquidSlots : [];
+const liquidSlots = !reducedMotion.matches ? allLiquidSlots : [];
 const geometryUrl = new URL("/smile-lite.bin", window.location.origin);
 const liquidUrls = liquidSlots.map((slot) =>
   new URL(slot.dataset.liquidSource || "/baltz-portrait.jpg", window.location.origin),
@@ -19,6 +25,8 @@ const metrics = {
   surfaces: liquidSlots.length,
   quality: "unknown",
   renderer: "unknown",
+  smileProgress: 0,
+  smileVisible: false,
   frameTimes: [],
   get frameP95() {
     if (this.frameTimes.length === 0) return 0;
@@ -74,6 +82,8 @@ const mediaFragmentSource = `
   uniform vec2 uPointer;
   uniform float uHover;
   uniform float uVelocity;
+  uniform float uScrollMotion;
+  uniform float uScrollDirection;
   uniform float uTime;
   uniform float uViewportAspect;
   uniform float uTextureAspect;
@@ -93,25 +103,28 @@ const mediaFragmentSource = `
     vec3 color;
     float radius = 1.0;
 
+    float scrollWave = sin((vUv.y * 17.0) - uTime * 7.0) * uScrollMotion;
+    vec2 scrollOffset = vec2(scrollWave * 0.008 * uScrollDirection, scrollWave * 0.003);
+
     if (uHover > 0.002) {
       vec2 delta = vUv - uPointer;
       vec2 corrected = delta * vec2(uViewportAspect, 1.0);
       radius = length(corrected);
       vec2 direction = corrected / max(radius, 0.001);
       direction.x /= max(uViewportAspect, 0.001);
-      float lens = smoothstep(0.46, 0.0, radius) * uHover;
-      float wave = sin(radius * 26.0 - uTime * 5.2);
-      wave *= exp(-radius * 7.4) * uHover;
+      float lens = smoothstep(0.42, 0.0, radius) * uHover;
+      float wave = sin(radius * 24.0 - uTime * 4.4);
+      wave *= exp(-radius * 6.2) * uHover;
       float speed = min(1.0, uVelocity * 72.0);
       vec2 tangent = vec2(-direction.y, direction.x);
-      vec2 displacement = direction * (lens * 0.024 + wave * 0.01);
-      displacement += tangent * wave * speed * 0.011;
-      uv = coverUv(vUv + displacement);
+      vec2 displacement = direction * (lens * 0.018 + wave * 0.012);
+      displacement += tangent * wave * speed * 0.014;
+      uv = coverUv(vUv + displacement + scrollOffset);
       color = texture2D(uTexture, clamp(uv, 0.001, 0.999)).rgb;
-      color.r *= 1.0 + speed * uHover * 0.055;
-      color.b *= 1.0 - speed * uHover * 0.035;
+      color.r *= 1.0 + speed * uHover * 0.025;
+      color.b *= 1.0 - speed * uHover * 0.018;
     } else {
-      color = texture2D(uTexture, clamp(uv, 0.001, 0.999)).rgb;
+      color = texture2D(uTexture, clamp(uv + scrollOffset, 0.001, 0.999)).rgb;
     }
 
     color = mix(color, color * vec3(1.02, 0.91, 0.86), 0.22);
@@ -128,7 +141,7 @@ const smileVertexSource = `
   uniform float uScale;
   uniform float uAspect;
   uniform float uYOffset;
-  uniform float uScreenOffset;
+  uniform vec2 uScreenOffset;
   varying vec3 vNormal;
 
   mat3 rotateX(float angle) {
@@ -157,8 +170,8 @@ const smileVertexSource = `
     position.z += 3.4;
     float focalLength = 2.5;
     gl_Position = vec4(
-      position.x * focalLength / uAspect + uScreenOffset * position.z,
-      position.y * focalLength,
+      position.x * focalLength / uAspect + uScreenOffset.x * position.z,
+      position.y * focalLength + uScreenOffset.y * position.z,
       position.z - 0.2,
       position.z
     );
@@ -326,7 +339,7 @@ const init = async () => {
   ]);
   const mediaUniforms = uniformsFor(gl, mediaProgram, [
     "uTexture", "uPointer", "uHover", "uVelocity", "uTime",
-    "uViewportAspect", "uTextureAspect",
+    "uViewportAspect", "uTextureAspect", "uScrollMotion", "uScrollDirection",
   ]);
   const smileUniforms = uniformsFor(gl, smileProgram, [
     "uRotation", "uRoll", "uScale", "uAspect", "uYOffset",
@@ -380,6 +393,9 @@ const init = async () => {
     lastPointerY: 0.5,
     lastPointerAt: performance.now(),
     lastInputProcessedAt: 0,
+    smileProgress: 0,
+    scrollVelocity: 0,
+    scrollDirection: 1,
     smileX: 0,
     smileY: 0,
     smileTargetX: 0,
@@ -401,6 +417,8 @@ const init = async () => {
       hoverTarget: 0,
       velocity: 0,
       velocityTarget: 0,
+      scrollMotion: 0,
+      scrollScale: element.dataset.liquidMode === "portrait" ? 1 : 0.16,
       lastProcessedAt: 0,
     })),
   };
@@ -473,6 +491,8 @@ const init = async () => {
     gl.uniform2f(mediaUniforms.uPointer, surface.x, surface.y);
     gl.uniform1f(mediaUniforms.uHover, surface.hover);
     gl.uniform1f(mediaUniforms.uVelocity, surface.velocity);
+    gl.uniform1f(mediaUniforms.uScrollMotion, surface.scrollMotion);
+    gl.uniform1f(mediaUniforms.uScrollDirection, state.scrollDirection);
     gl.uniform1f(mediaUniforms.uTime, time * 0.001);
     gl.uniform1f(mediaUniforms.uViewportAspect, viewport.width / viewport.height);
     gl.uniform1f(mediaUniforms.uTextureAspect, surface.image.naturalWidth / surface.image.naturalHeight);
@@ -483,8 +503,8 @@ const init = async () => {
     state.surfaces.forEach((surface) => drawMediaSurface(surface, time));
   };
 
-  const drawSmilePass = (offset, tint, alpha) => {
-    gl.uniform1f(smileUniforms.uScreenOffset, offset);
+  const drawSmilePass = (offsetX, offsetY, tint, alpha) => {
+    gl.uniform2f(smileUniforms.uScreenOffset, offsetX, offsetY);
     gl.uniform3fv(smileUniforms.uTint, tint);
     gl.uniform1f(smileUniforms.uAlpha, alpha);
     gl.drawElements(gl.TRIANGLES, geometry.indexCount, gl.UNSIGNED_SHORT, 0);
@@ -492,9 +512,13 @@ const init = async () => {
 
   const drawSmile = (time) => {
     const rect = state.smileRect;
-    if (!rectIsVisible(rect)) return;
+    if (!rectIsVisible(rect) || state.smileProgress >= 0.998) {
+      metrics.smileVisible = false;
+      return;
+    }
     const viewport = viewportFor(rect, state.dpr);
     if (viewport.width < 1 || viewport.height < 1) return;
+    metrics.smileVisible = true;
     gl.enable(gl.SCISSOR_TEST);
     setViewport(viewport);
     gl.clearDepth(1);
@@ -515,21 +539,33 @@ const init = async () => {
     const aspect = viewport.width / viewport.height;
     const portraitLayout = viewport.width < viewport.height;
     const ambientSmileMotion = finePointer.matches && !reducedMotion.matches;
-    const float = ambientSmileMotion ? Math.sin(time * 0.00058) * 0.032 : 0;
+    const progress = state.smileProgress;
+    const lift = progress * progress * (3 - 2 * progress);
+    const float = ambientSmileMotion ? Math.sin(time * 0.00058) * 0.032 * (1 - lift) : 0;
     const roll = ambientSmileMotion ? -0.05 + Math.cos(time * 0.00034) * 0.05 : -0.05;
-    gl.uniform2f(smileUniforms.uRotation, state.smileX, state.smileY);
-    gl.uniform1f(smileUniforms.uRoll, roll);
-    gl.uniform1f(smileUniforms.uScale, portraitLayout ? 1.03 : 1.16);
+    const gazeWeight = 1 - lift * 0.62;
+    const baseScale = portraitLayout ? 1.03 : 1.16;
+    const blur = Math.max(0, (lift - 0.18) / 0.82) * 0.009;
+    const fade = 1 - Math.max(0, (lift - 0.78) / 0.22);
+    gl.uniform2f(smileUniforms.uRotation, state.smileX * gazeWeight, state.smileY * gazeWeight);
+    gl.uniform1f(smileUniforms.uRoll, roll - lift * 0.06);
+    gl.uniform1f(smileUniforms.uScale, baseScale * (1 + lift * 0.52));
     gl.uniform1f(smileUniforms.uAspect, aspect);
-    gl.uniform1f(smileUniforms.uYOffset, float - (portraitLayout ? 0.025 : 0));
+    gl.uniform1f(smileUniforms.uYOffset, float - (portraitLayout ? 0.025 : 0) - lift * 2.2);
     gl.uniform2f(smileUniforms.uPointer, state.pointerX * 2 - 1, state.pointerY * 2 - 1);
     gl.uniform1f(smileUniforms.uTime, time * 0.001);
+    if (blur > 0) {
+      const samples = [[-1, 0], [1, 0], [0, -1], [0, 1], [-0.7, -0.7], [0.7, -0.7], [-0.7, 0.7], [0.7, 0.7]];
+      samples.forEach(([x, y]) => {
+        drawSmilePass(x * blur, y * blur, [0.15, 0.18, 0.23], fade * 0.055);
+      });
+    }
     if (state.pointerMotion > 0.42) {
       const split = Math.min(0.0055, state.pointerMotion * 0.0055);
-      drawSmilePass(-split, [0.92, 0.12, 0.04], 0.17);
-      drawSmilePass(split, [0.06, 0.22, 0.82], 0.12);
+      drawSmilePass(-split, 0, [0.92, 0.12, 0.04], 0.17 * fade);
+      drawSmilePass(split, 0, [0.06, 0.22, 0.82], 0.12 * fade);
     }
-    drawSmilePass(0, [0.15, 0.18, 0.23], 1);
+    drawSmilePass(0, 0, [0.15, 0.18, 0.23], fade);
   };
 
   const updateRects = () => {
@@ -560,7 +596,10 @@ const init = async () => {
       surface.hover += (surface.hoverTarget - surface.hover) * 0.11;
       surface.velocity += (surface.velocityTarget - surface.velocity) * 0.14;
       surface.velocityTarget *= 0.88;
+      const scrollTarget = Math.min(1, Math.abs(state.scrollVelocity) / 1_400) * surface.scrollScale;
+      surface.scrollMotion += (scrollTarget - surface.scrollMotion) * 0.12;
     });
+    state.scrollVelocity *= 0.86;
     state.pointerMotion += (state.pointerMotionTarget - state.pointerMotion) * 0.1;
     state.pointerMotionTarget *= 0.9;
     drawBackground(time);
@@ -615,6 +654,7 @@ const init = async () => {
     state.lastPointerAt = now;
 
     const smileRect = state.smileRect;
+    const heroRect = hero?.getBoundingClientRect();
     const overSmile =
       event.clientX >= smileRect.left && event.clientX <= smileRect.right &&
       event.clientY >= smileRect.top && event.clientY <= smileRect.bottom;
@@ -624,11 +664,12 @@ const init = async () => {
     );
     state.surfaceActive = overSmile || overLiquid;
 
-    if (overSmile) {
-      const localX = ((event.clientX - smileRect.left) / smileRect.width) * 2 - 1;
-      const localY = -(((event.clientY - smileRect.top) / smileRect.height) * 2 - 1);
-      state.smileTargetX = localY * 0.2;
-      state.smileTargetY = localX * 0.34;
+    const heroVisible = heroRect && heroRect.bottom > 0 && heroRect.top < window.innerHeight;
+    if (heroVisible && state.smileProgress < 0.998) {
+      const localX = Math.max(-1.2, Math.min(1.2, ((event.clientX - smileRect.left) / smileRect.width) * 2 - 1));
+      const localY = Math.max(-1.2, Math.min(1.2, -(((event.clientY - smileRect.top) / smileRect.height) * 2 - 1)));
+      state.smileTargetX = localY * 0.18;
+      state.smileTargetY = localX * 0.3;
     } else {
       state.smileTargetX = 0;
       state.smileTargetY = 0;
@@ -637,7 +678,7 @@ const init = async () => {
   };
 
   const updateMediaPointer = (surface, event) => {
-    if (softwareRenderer) return;
+    if (softwareRenderer || !finePointer.matches) return;
     const now = performance.now();
     if (now - surface.lastProcessedAt < 28) return;
     surface.lastProcessedAt = now;
@@ -653,7 +694,7 @@ const init = async () => {
   };
 
   const leaveMedia = (surface) => {
-    if (softwareRenderer) return;
+    if (softwareRenderer || !finePointer.matches) return;
     surface.hoverTarget = 0;
     surface.velocityTarget = 0.45;
     requestFrame(700);
@@ -670,10 +711,38 @@ const init = async () => {
   });
   resizeObserver.observe(document.documentElement);
   window.addEventListener("pointermove", updateGlobalPointer, { passive: true });
-  window.addEventListener("scroll", () => {
-    updateRects();
-    requestFrame(450);
-  }, { passive: true });
+  ScrollTrigger.create({
+    start: 0,
+    end: "max",
+    onUpdate: (self) => {
+      state.scrollVelocity = self.getVelocity();
+      state.scrollDirection = Math.sign(self.getVelocity()) || state.scrollDirection;
+      updateRects();
+      requestFrame(450);
+    },
+    onRefresh: () => {
+      updateRects();
+      requestFrame(250);
+    },
+  });
+  if (hero) {
+    ScrollTrigger.create({
+      trigger: hero,
+      start: "top top",
+      end: () => `+=${Math.round(window.innerHeight * 0.75)}`,
+      invalidateOnRefresh: true,
+      onUpdate: (self) => {
+        state.smileProgress = self.progress;
+        metrics.smileProgress = self.progress;
+        updateRects();
+        requestFrame(550);
+      },
+      onRefresh: () => {
+        updateRects();
+        requestFrame(250);
+      },
+    });
+  }
   state.surfaces.forEach((surface) => {
     surface.element.addEventListener("pointerenter", (event) => updateMediaPointer(surface, event), { passive: true });
     surface.element.addEventListener("pointermove", (event) => updateMediaPointer(surface, event), { passive: true });

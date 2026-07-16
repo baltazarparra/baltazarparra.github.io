@@ -41,7 +41,6 @@
 - [ ] Confirmar HTTP 200 na home e HTTP 404 em rota inexistente.
 - [ ] Confirmar assets locais, fontes, portrait, Caipora, smile e shader.
 - [ ] Confirmar navegação, âncoras e 17 links em desktop/mobile.
-- [ ] Confirmar keyboard focus e reduced motion.
 - [ ] Confirmar canonical, robots, sitemap, JSON-LD e OG/Twitter no HTML final.
 - [ ] Validar `og.png` pelo crawler/social debugger disponível.
 - [ ] Confirmar zero erro inesperado de console e request.
@@ -59,6 +58,5 @@
 - home indisponível, vazia ou sem navegação;
 - DNS/TLS ou alias apontando para deployment diferente do SHA aprovado;
 - redirect em loop ou canonical divergente do domínio primário;
-- regressão crítica de teclado, reduced motion ou leitura;
 - assets essenciais ausentes sem fallback;
 - erro persistente que impeça hero → conteúdo → links.

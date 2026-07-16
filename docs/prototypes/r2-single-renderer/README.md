@@ -24,7 +24,7 @@ runtime.
 - background, Smile and liquid media all use that context;
 - linked media remains semantic, focusable and fully clickable;
 - frame p95 <= 20 ms during pointer interaction;
-- no permanent animation loop on mobile or reduced motion;
+- no permanent animation loop on mobile;
 - software WebGL renderers receive a static compatibility tier instead of a
   continuous GPU loop;
 - DOM image and CSS field remain available as failure fallbacks;

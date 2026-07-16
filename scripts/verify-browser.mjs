@@ -91,7 +91,7 @@ const evaluate = async (client, expression) => {
   return result.result.value;
 };
 
-const userDataDirectory = await mkdtemp(join("/tmp", "baltz-v2-cdp-"));
+const userDataDirectory = await mkdtemp(join("/tmp", "baltz-browser-cdp-"));
 const chrome = spawn(
   chromeExecutable,
   [
@@ -282,10 +282,10 @@ try {
         bodyTextLength: document.body.innerText.trim().length,
         h1: document.querySelector("h1")?.textContent?.trim(),
         canonical: document.querySelector('link[rel="canonical"]')?.href,
-        navLinks: document.querySelectorAll(".site-header nav a").length,
+        heroIndexPresent: Boolean(document.querySelector(".hero-index")),
+        heroEmployerDisplay: getComputedStyle(document.querySelector(".hero-meta a")).display,
         overlay: Boolean(document.querySelector(".vite-error-overlay, #webpack-dev-server-client-overlay")),
-        smileState: document.querySelector("[data-smile-root]")?.dataset.smileState,
-        smileCanvas: document.querySelectorAll(".smile-stage canvas").length,
+        smileCanvas: document.querySelectorAll("[data-unified-canvas]").length,
         pageHeight: document.documentElement.scrollHeight,
         clientWidth: document.documentElement.clientWidth,
         scrollWidth: document.documentElement.scrollWidth,
@@ -333,28 +333,6 @@ try {
         )?.value?.value,
       }));
 
-    if (!profile.touch && !profile.reducedMotion && !profile.disableJavaScript) {
-      await evaluate(
-        client,
-        `(() => {
-          document.querySelector("[data-smile-root]").dispatchEvent(
-            new PointerEvent("pointerenter", { bubbles: false, pointerType: "mouse" })
-          );
-          return true;
-        })()`,
-      );
-      await delay(2200);
-    }
-
-    initial.smileStateAfterInteraction = await evaluate(
-      client,
-      'document.querySelector("[data-smile-root]")?.dataset.smileState',
-    );
-    initial.smileCanvasAfterInteraction = await evaluate(
-      client,
-      'document.querySelectorAll(".smile-stage canvas").length',
-    );
-
     const heroScreenshot = await client.send("Page.captureScreenshot", {
       format: "png",
       fromSurface: true,
@@ -376,10 +354,10 @@ try {
     const writing = await evaluate(
       client,
       `(() => ({
-        entries: document.querySelectorAll(".writing-entry").length,
-        titles: [...document.querySelectorAll(".writing-entry h3")].map((node) => node.textContent.trim()),
-        dates: [...document.querySelectorAll(".writing-entry time")].map((node) => node.dateTime),
-        links: [...document.querySelectorAll(".writing-entry .text-link")].map((node) => node.href)
+        entries: document.querySelectorAll(".story-row").length,
+        titles: [...document.querySelectorAll(".story-row h3")].map((node) => node.textContent.trim()),
+        dates: [...document.querySelectorAll(".story-row time")].map((node) => node.dateTime),
+        links: [...document.querySelectorAll(".story-row")].map((node) => node.href)
       }))()`,
     );
 
@@ -396,36 +374,35 @@ try {
     await evaluate(
       client,
       `(() => {
-        document.querySelector('.thermal-cut').scrollIntoView({ behavior: 'instant', block: 'center' });
+        window.scrollTo({ top: window.innerHeight * 0.75, behavior: 'instant' });
         return true;
       })()`,
     );
-    await delay(1800);
-    const thermal = await evaluate(
+    await delay(900);
+    const smileExit = await evaluate(
       client,
       `(() => ({
-        thermalState: document.querySelector("[data-thermal-root]")?.dataset.thermalState,
-        thermalCanvas: document.querySelectorAll(".thermal-cut canvas").length,
-        fallbackVisible: Boolean(document.querySelector(".thermal-fallback")),
-        fallbackDisplay: getComputedStyle(document.querySelector(".thermal-fallback")).display,
-        fallbackOpacity: getComputedStyle(document.querySelector(".thermal-fallback")).opacity
+        scrollY: Math.round(window.scrollY),
+        expectedExitAt: Math.round(window.innerHeight * 0.75),
+        progress: window.__unifiedRendererMetrics?.smileProgress,
+        visible: window.__unifiedRendererMetrics?.smileVisible
       }))()`,
     );
 
-    const thermalScreenshot = await client.send("Page.captureScreenshot", {
+    const smileExitScreenshot = await client.send("Page.captureScreenshot", {
       format: "png",
       fromSurface: true,
       captureBeyondViewport: false,
     });
     await writeFile(
-      resolve(outputDirectory, `${profile.name}-thermal.png`),
-      Buffer.from(thermalScreenshot.data, "base64"),
+      resolve(outputDirectory, `${profile.name}-smile-exit.png`),
+      Buffer.from(smileExitScreenshot.data, "base64"),
     );
 
     await evaluate(
       client,
       `(() => {
-        document.querySelector('a[href="#caipora"]').click();
+        document.querySelector('#caipora').scrollIntoView({ behavior: 'instant', block: 'center' });
         return true;
       })()`,
     );
@@ -461,12 +438,13 @@ try {
       client,
       `(() => {
         const root = document.querySelector('.clouds-cover');
-        const image = root.querySelector('img');
+        const image = root?.querySelector('img');
+        const iframe = document.querySelector('.spotify-frame iframe');
         return {
-          mediaState: root.dataset.mediaState,
-          imageLoaded: image.complete && image.naturalWidth > 0,
-          imageOpacity: getComputedStyle(image).opacity,
-          fallbackText: root.querySelector('span')?.textContent?.trim()
+          imageLoaded: Boolean(image?.complete && image.naturalWidth > 0),
+          imageOpacity: image ? getComputedStyle(image).opacity : null,
+          playerHeight: iframe?.getAttribute('height'),
+          heading: document.querySelector('#clouds-title')?.textContent?.trim()
         };
       })()`,
     );
@@ -563,7 +541,7 @@ try {
       failedRequests,
       initial,
       writing,
-      thermal,
+      smileExit,
       navigation,
       clouds,
       privacy,
@@ -633,7 +611,7 @@ try {
     await client.send("Runtime.enable");
     await client.send("Network.enable");
     await client.send("Network.setBlockedURLs", {
-      urls: ["*spotifycdn.com*", "*smile.glb*"],
+      urls: ["*spotifycdn.com*", "*smile-lite.bin*"],
     });
     client.on("Network.loadingFailed", (event) => {
       failedRequests.push(event.errorText);
@@ -652,9 +630,6 @@ try {
     await evaluate(
       client,
       `(() => {
-        document.querySelector('[data-smile-root]').dispatchEvent(
-          new PointerEvent('pointerenter', { pointerType: 'mouse' })
-        );
         document.querySelector('.clouds').scrollIntoView({ behavior: 'instant', block: 'center' });
         return true;
       })()`,
@@ -664,14 +639,12 @@ try {
       client,
       `(() => {
         const cover = document.querySelector('.clouds-cover');
-        const smileFallback = document.querySelector('.smile-fallback');
+        const smileFallback = document.querySelector('.smile-poster');
         return {
-          coverState: cover.dataset.mediaState,
           coverImageOpacity: getComputedStyle(cover.querySelector('img')).opacity,
           coverFallbackText: cover.querySelector('span')?.textContent?.trim(),
-          smileState: document.querySelector('[data-smile-root]')?.dataset.smileState,
           smileFallbackVisible: getComputedStyle(smileFallback).display !== 'none',
-          smileCanvasCount: document.querySelectorAll('.smile-stage canvas').length
+          smileCanvasCount: document.querySelectorAll('[data-unified-canvas]').length
         };
       })()`,
     );

@@ -16,9 +16,7 @@ Coleta feita em 15 jul. 2026 pelo runner CDP de
 - desktop 1440 x 1000, `touch=0`;
 - mobile emulado 390 x 844, `touch=1`.
 
-Cada variante normal possui três execuções desktop e três mobile. Reduced motion
-possui uma execução por perfil, usada como verificação funcional, não como
-distribuição estatística. O autoplay percorre o documento inteiro em 5 s e
+Cada variante normal possui três execuções desktop e três mobile. O autoplay percorre o documento inteiro em 5 s e
 coleta frame deltas durante o percurso e 350 ms de estabilização.
 
 ## Arquivos

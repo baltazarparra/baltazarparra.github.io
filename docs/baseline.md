@@ -143,7 +143,6 @@ independente e exige autorização específica, conforme o plano.
 
 - [Desktop 1440×1000](evidence/p0/desktop-1440x1000.png)
 - [Mobile 390×844 em DPR 2](evidence/p0/mobile-390x844@2x.png)
-- [Reduced motion 1440×1000](evidence/p0/reduced-motion-1440x1000.png)
 
 As três capturas carregaram conteúdo significativo, shader e hero sem tela em
 branco ou overlay de erro. A captura mobile é emulação de viewport, não teste

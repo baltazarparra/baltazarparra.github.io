@@ -6,7 +6,7 @@ produção não foi alterado e nenhum deploy ou preview externo foi criado.
 ## Resultado executivo
 
 A implementação passou no laboratório em Chrome 149, Firefox 151 e WebKit
-26.5, incluindo desktop, viewport mobile, reduced motion, ausência de
+26.5, incluindo desktop, viewport mobile, ausência de
 JavaScript, 320 CSS px e equivalentes de zoom a 200%/400%. SEO, privacidade,
 resiliência, 404 local, teclado e budgets também passaram.
 
@@ -46,7 +46,6 @@ LCPs foram 509, 489 e 488 ms. Nenhuma execução final excedeu os budgets.
 |---|---:|---:|---:|---:|---:|---:|
 | Desktop 1440 × 1000 | 3 | 60 | 16,7 ms | 0 | 8,84 MiB | 2,04 MiB |
 | Mobile 390 × 844 | 3 | 60 | 16,7 ms | 0 | 2,33 MiB | 0,40 MiB |
-| Reduced motion | 1 | 60 | 16,8 ms | 0 | 0,93 MiB | 0,08 MiB |
 
 São métricas de Chrome headless com SwiftShader; não substituem frame pacing
 em GPU e aparelho físicos.
@@ -62,7 +61,6 @@ em GPU e aparelho físicos.
 | 320 CSS px | Zero overflow horizontal |
 | Equivalente a zoom 200% | Zero overflow horizontal |
 | Equivalente a zoom 400% | Zero overflow; 17 alvos de teclado visíveis com outline de 2 px |
-| Reduced motion | Posters/estados finais; sem pin ou WebGL pesado |
 | Sem JavaScript | Copy, navegação, mídia e links permanecem utilizáveis |
 
 O WebKit do laboratório não conseguiu resolver a capa remota do Spotify por

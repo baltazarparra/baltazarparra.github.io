@@ -34,8 +34,7 @@ reservando distorção líquida para mídia. O efeito é local e acorda por
 interação, em vez de manter a GPU permanentemente ocupada.
 
 No mobile, todas as composições colapsam para uma coluna, a ordem de Clouds é
-capa → copy → embed, não há overlaps dependentes de hover e o renderer mantém
-fallback estático para reduced motion ou GPU por software.
+capa → copy → embed, não há overlaps dependentes de hover ou GPU por software.
 
 ## Design read
 
@@ -173,8 +172,6 @@ projetos antes do congelamento da copy na P6.
 - Hero usa `min-height: 100dvh`; nome, frase e smile cabem na primeira tela.
 - Navegação fica em uma linha no desktop e reduz a três anchors no mobile.
 - Todo link possui foco visível de 2 px no acento.
-- Reduced motion remove cortes, pin e transformações; nenhuma informação depende
-  de hover ou canvas.
 - Imagens têm alt funcional; o smile decorativo fica fora da árvore acessível.
 - Clouds mantém ação externa e nunca inicia áudio automaticamente.
 

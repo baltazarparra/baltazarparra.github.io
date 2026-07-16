@@ -1,4 +1,8 @@
-# ROADMAP — baltz.dev v2: one-page submission-ready
+# ROADMAP — baltz.dev: one-page submission-ready
+
+> Status: the Astro implementation was promoted to the repository root. This
+> roadmap retains its earlier planning language as project history; `v2/` is no
+> longer an active or deployable codebase.
 
 > **Status:** revisado e validado em 15 jul. 2026 contra o repositório atual e
 > fontes oficiais. O objetivo controlável é construir uma experiência com barra
@@ -122,7 +126,7 @@ https://claude.ai/code/artifact/afe03f5c-45f8-41fb-a84d-0db0a95b28cb
 | Estratégia criativa | Síntese comprovada; sem cópia de soluções distintivas |
 | Idioma do site | Inglês (corrigindo o `lang="pt-BR"` atual) |
 | Assets elegíveis para reuso | smile.glb, shaders (fogo/partículas/TV noise), quality tiers, cursor-brasa, sprite Caipora, EP Clouds — reusar é opção, não obrigação; decide-se nas fases 2–4 |
-| Stack | Astro estático + TypeScript; HTML/Astro para conteúdo, React/R3F só em ilhas, GSAP sobre scroll nativo; v2 isolada em `v2/` |
+| Stack | Astro estático + TypeScript; HTML/Astro para conteúdo, React/R3F só em ilhas, GSAP sobre scroll nativo; implementação na raiz do repositório |
 
 ## Autonomia do executor
 

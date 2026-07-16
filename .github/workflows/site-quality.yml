@@ -1,15 +1,19 @@
-name: v2 quality
+name: site quality
 
 on:
   pull_request:
     paths:
-      - "v2/**"
+      - "src/**"
+      - "public/**"
+      - "scripts/**"
+      - "astro.config.ts"
+      - "eslint.config.js"
+      - "tsconfig.json"
       - "docs/design-tokens.json"
       - "pnpm-lock.yaml"
-      - "pnpm-workspace.yaml"
       - "package.json"
       - "vercel.json"
-      - ".github/workflows/v2-quality.yml"
+      - ".github/workflows/site-quality.yml"
   workflow_dispatch:
 
 permissions:
@@ -43,19 +47,19 @@ jobs:
         run: pnpm audit --prod --audit-level moderate
 
       - name: Lint
-        run: pnpm --filter @baltz/site-v2 lint
+        run: pnpm lint
 
       - name: Type-check
-        run: pnpm --filter @baltz/site-v2 check
+        run: pnpm check
 
       - name: Build
-        run: pnpm --filter @baltz/site-v2 build
+        run: pnpm build
 
       - name: Verify launch artifact
-        run: pnpm --filter @baltz/site-v2 artifact:check
+        run: pnpm artifact:check
 
       - name: Lighthouse mobile budgets
-        run: pnpm --filter @baltz/site-v2 lighthouse:ci
+        run: pnpm lighthouse:ci
 
       - name: Lighthouse desktop budgets
-        run: pnpm --filter @baltz/site-v2 lighthouse:desktop
+        run: pnpm lighthouse:desktop

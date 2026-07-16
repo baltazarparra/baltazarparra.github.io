@@ -522,12 +522,6 @@ Use this for: feature lists, testimonial grids, logo walls, anything that just n
 * Animate ONLY `transform` and `opacity`. Never animate `top`, `left`, `width`, `height`.
 * Use `will-change: transform` sparingly - only on elements that will actually animate.
 
-### 6.B Reduced Motion (mandatory)
-* **Any motion above `MOTION_INTENSITY > 3` MUST honor `prefers-reduced-motion`.** This is non-negotiable.
-* In Motion: wrap with `useReducedMotion()` and degrade to static.
-* In CSS: gate animations behind `@media (prefers-reduced-motion: no-preference)` or provide an override block under `@media (prefers-reduced-motion: reduce)` that disables.
-* Infinite loops, parallax, scroll-hijack, and magnetic physics MUST collapse to static / instant under reduced motion.
-
 ### 6.C Dark Mode (mandatory for any consumer-facing page)
 * Design for **both modes from the start**. Never ship light-only or dark-only without explicit user instruction.
 * Use Tailwind `dark:` variant OR CSS variables for tokens. Pick one strategy per project.
@@ -963,7 +957,6 @@ Run this matrix before outputting code. This is the last filter.
 - [ ] **Motion claimed = motion shown**: if `MOTION_INTENSITY > 4`, page actually animates, not just claimed?
 - [ ] **GSAP sticky-stack / horizontal-pan** implemented per Section 5.A / 5.B canonical skeleton (`start: "top top"`, `pin: true`, correct scrub)?
 - [ ] **No `window.addEventListener('scroll')`** - using Motion `useScroll()` / ScrollTrigger / IntersectionObserver / CSS scroll-driven animations only?
-- [ ] **Reduced motion** wrapped for everything `MOTION_INTENSITY > 3`?
 - [ ] **Dark mode** tokens defined and tested in both modes?
 - [ ] **Mobile collapse** explicit (`w-full`, `px-4`, `max-w-7xl mx-auto`) for high-variance layouts?
 - [ ] **Viewport stability**: `min-h-[100dvh]`, never `h-screen`?

@@ -9,8 +9,7 @@
 Recomendo **B - Pinned Edit** como coreografia. O título de Projects permanece
 fixo no desktop enquanto cada prova editorial avança; Cut e Settle entram como
 vocabulário de transição, não como uma máscara repetida em toda seção. Touch
-remove o pin sem remover conteúdo. Reduced motion mostra o estado final
-estático.
+remove o pin sem remover conteúdo.
 
 Não recomendo Words como sistema global. Ele reforça a voz de S8, mas faz a
 leitura depender do scroll, transforma cada heading em dezenas de nós e teve o

@@ -42,7 +42,6 @@
 - [x] Todos os alvos do percurso ficaram visíveis com outline de 2 px.
 - [x] Links externos têm texto ou nome acessível descritivo.
 - [x] Touch não depende de hover.
-- [x] Reduced motion remove pin, scrub, transições e smooth scroll, mantendo
   estados finais dirigidos.
 - [x] Sem JavaScript preserva todo o conteúdo e todos os links.
 - [x] Sem WebGL preserva posters de Smile e transição térmica.

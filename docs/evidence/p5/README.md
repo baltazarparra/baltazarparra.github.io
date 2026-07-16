@@ -27,7 +27,7 @@ Coleta final feita em 15 jul. 2026 sobre o build estático de produção em
 | CLS | 0 | 0 |
 
 O runtime percorreu a página inteira em 5 s, com três execuções desktop, três
-mobile e uma reduced motion. As medianas foram 60 fps, p95 de 16,8 ms desktop e
+mobile. As medianas foram 60 fps, p95 de 16,8 ms desktop e
 16,7 ms mobile, nenhum frame acima de 20 ms na mediana e zero long tasks. O resultado
 completo está em `runtime-summary.json` e os registros individuais em
 `runtime-raw.json`.

@@ -1,4 +1,7 @@
-# Plano de desenvolvimento — baltz.dev v2
+# Plano de desenvolvimento — baltz.dev
+
+> Status: o site Astro foi promovido à raiz do repositório; as menções a “v2”
+> abaixo são contexto histórico do plano, não uma segunda aplicação ativa.
 
 > **Status:** em execução; P0 a P8 concluídos em 15 jul. 2026. P8 fechou com
 > riscos de cobertura física/manual aceitos; a preparação local do P9 está
