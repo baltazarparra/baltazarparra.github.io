@@ -1,9 +1,45 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { GithubLogoIcon } from "@phosphor-icons/react/ssr";
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import ChromaText from "../components/ChromaText.astro";
 import { site } from "../data/site";
 import "../styles/home-rework.css";
 
 const [primaryProject, ...secondaryProjects] = site.projects;
+const chroma = {
+  hero: ["baltz."],
+  about: ["De", "sign ", "soft", "ware ", "with ", "code ", "a", "gents ", "as ", "ar", "chi", "tec", "tu", "ral ", "com", "po", "nents."],
+  writing: ["Lat", "est ", "notes."],
+  projects: ["Sys", "tems ", "with ", "a ", "point ", "of ", "view."],
+  caipora: ["Cai", "po", "ra"],
+  clouds: ["Clouds."],
+  elsewhere: ["Still ", "here."],
+} as const;
+const writingChroma = {
+  "Sharing skills with NPX": ["Shar", "ing ", "skills ", "with ", "NPX"],
+  "What is 'Harness Design' and why does it matter": ["What ", "is ", "'Har", "ness ", "De", "sign' ", "and ", "why ", "does ", "it ", "mat", "ter"],
+} as const;
+const projectChroma = {
+  "AI-Native Engineering": ["AI-", "Na", "tive ", "En", "gi", "neer", "ing"],
+  "Crypto Transfer DApp": ["Cryp", "to ", "Trans", "fer ", "DApp"],
+  "Subtitle Scraping": ["Sub", "ti", "tle ", "Scrap", "ing"],
+} as const;
+const profileChroma = {
+  LinkedIn: ["Linked", "In"],
+  GitHub: ["Git", "Hub"],
+  "dev.to": ["dev", ".to"],
+  Spotify: ["Spot", "i", "fy"],
+  "itch.io": ["itch", ".io"],
+} as const;
+const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
+  className: "project-note-github",
+  size: 24,
+  weight: "fill",
+  "aria-hidden": true,
+  focusable: false,
+}));
 ---
 
 <BaseLayout>
@@ -14,7 +50,7 @@ const [primaryProject, ...secondaryProjects] = site.projects;
   <main id="main" class="rework-home">
     <section class="scene hero" id="hero" aria-labelledby="hero-title">
       <div class="hero-lockup">
-        <h1 id="hero-title">{site.hero.name}</h1>
+        <h1 id="hero-title"><ChromaText segments={chroma.hero} /></h1>
         <div class="hero-meta" aria-label="Role and location">
           <p>
             {site.hero.role} at
@@ -40,11 +76,10 @@ const [primaryProject, ...secondaryProjects] = site.projects;
           alt="Portrait of Baltazar Parra"
           decoding="async"
         />
-        <figcaption>Baltazar Parra — Brasil</figcaption>
       </figure>
       <div class="about-copy">
         <p class="section-label">About</p>
-        <h2 id="about-title">{site.about.heading}</h2>
+        <h2 id="about-title"><ChromaText segments={chroma.about} /></h2>
         <p class="credits">{site.about.credits}</p>
       </div>
     </section>
@@ -52,7 +87,7 @@ const [primaryProject, ...secondaryProjects] = site.projects;
     <section class="scene writing" id="writing" aria-labelledby="writing-title">
       <header class="section-heading">
         <p class="section-label">Writing</p>
-        <h2 id="writing-title">Latest notes.</h2>
+        <h2 id="writing-title"><ChromaText segments={chroma.writing} /></h2>
       </header>
       <div class="story-list">
         {
@@ -62,7 +97,7 @@ const [primaryProject, ...secondaryProjects] = site.projects;
                 <time datetime={post.publishedAt}>{post.publishedLabel}</time>
                 {` · ${post.readingTime}`}
               </span>
-              <h3>{post.title}</h3>
+              <h3><ChromaText segments={writingChroma[post.title]} /></h3>
               <span class="row-arrow" aria-hidden="true">↗</span>
             </a>
           ))
@@ -73,20 +108,26 @@ const [primaryProject, ...secondaryProjects] = site.projects;
     <section class="scene projects" id="projects" aria-labelledby="projects-title">
       <div class="projects-intro">
         <p class="section-label">Selected work</p>
-        <h2 id="projects-title">Systems with a point of view.</h2>
+        <h2 id="projects-title"><ChromaText segments={chroma.projects} /></h2>
       </div>
       <a class="project-primary interactive-panel" href={primaryProject.url} target="_blank" rel="noreferrer">
         <span class="project-kicker">{primaryProject.category}</span>
-        <strong>{primaryProject.name}</strong>
+        <strong><ChromaText segments={projectChroma[primaryProject.name]} /></strong>
         <span class="project-action">Open the work ↗</span>
       </a>
       <div class="project-notes">
         {
           secondaryProjects.map((project) => (
             <a class="project-note interactive-row" href={project.url} target="_blank" rel="noreferrer">
-              <span>{project.category}</span>
-              <strong>{project.name}</strong>
-              <span class="row-arrow" aria-hidden="true">↗</span>
+              <span class="project-note-meta">
+                <span class="project-note-category">{project.category}</span>
+                <Fragment set:html={githubLogoSvg} />
+              </span>
+              <strong><ChromaText segments={projectChroma[project.name]} /></strong>
+              <span class="repository-action">
+                <span>View repository</span>
+                <span aria-hidden="true">↗</span>
+              </span>
             </a>
           ))
         }
@@ -94,13 +135,14 @@ const [primaryProject, ...secondaryProjects] = site.projects;
     </section>
 
     <section class="scene caipora" id="caipora" aria-labelledby="caipora-title">
-      <a class="caipora-link" href={site.caipora.url} target="_blank" rel="noreferrer">
-        <div class="caipora-image">
-          <img src="/caipora.jpeg" alt="Caipora game title screen" width="1600" height="900" loading="lazy" decoding="async" />
+      <a class="caipora-link interactive-panel" href={site.caipora.url} target="_blank" rel="noreferrer">
+        <div class="caipora-stage" aria-hidden="true">
+          <div class="caipora-image">
+            <img src="/caipora.jpeg" alt="" width="819" height="544" loading="lazy" decoding="async" />
+          </div>
         </div>
         <div class="caipora-copy">
-          <p class="section-label">A small world</p>
-          <h2 id="caipora-title">{site.caipora.name}</h2>
+          <h2 id="caipora-title"><ChromaText segments={chroma.caipora} /></h2>
           <p>{site.caipora.description}</p>
           <span>Enter the world ↗</span>
         </div>
@@ -110,7 +152,7 @@ const [primaryProject, ...secondaryProjects] = site.projects;
     <section class="scene clouds" id="clouds" aria-labelledby="clouds-title">
       <div class="clouds-copy">
         <p class="section-label">Clouds · EP</p>
-        <h2 id="clouds-title">{site.clouds.name}</h2>
+        <h2 id="clouds-title"><ChromaText segments={chroma.clouds} /></h2>
         <p>{site.clouds.description}</p>
         <div class="spotify-frame">
           <iframe
@@ -134,13 +176,13 @@ const [primaryProject, ...secondaryProjects] = site.projects;
     <section class="scene elsewhere" id="elsewhere" aria-labelledby="elsewhere-title">
       <div class="elsewhere-heading">
         <p class="section-label">Elsewhere</p>
-        <h2 id="elsewhere-title">Still here.</h2>
+        <h2 id="elsewhere-title"><ChromaText segments={chroma.elsewhere} /></h2>
       </div>
       <nav class="elsewhere-links" aria-label="External profiles">
         {
           site.profiles.map((profile) => (
             <a class="interactive-row" href={profile.url} target="_blank" rel="me noreferrer">
-              <strong>{profile.label}</strong><span>Open ↗</span>
+              <strong><ChromaText segments={profileChroma[profile.label]} /></strong><span>Open ↗</span>
             </a>
           ))
         }
@@ -148,9 +190,15 @@ const [primaryProject, ...secondaryProjects] = site.projects;
     </section>
   </main>
 
-  <footer class="rework-footer">
-    <span>© 2026 Baltazar Parra</span>
-    <a href="#hero">Back to top ↑</a>
+  <footer class="rework-footer" data-footer-trail>
+    <div class="footer-trail" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <p class="footer-wordmark" aria-hidden="true">baltz.</p>
+    <div class="footer-meta">
+      <span>© 2026 Baltazar Parra</span>
+      <a href="#hero">Back to top ↑</a>
+    </div>
   </footer>
 
   <script>
@@ -187,6 +235,70 @@ const [primaryProject, ...secondaryProjects] = site.projects;
           if (target === panel) target = undefined;
         }, { passive: true });
       });
+
+      const footer = document.querySelector<HTMLElement>("[data-footer-trail]");
+      const trailNodes = footer
+        ? [...footer.querySelectorAll<HTMLElement>(".footer-trail span")]
+        : [];
+
+      if (footer && trailNodes.length > 0) {
+        const points = trailNodes.map(() => ({ x: 0, y: 0 }));
+        let trailFrame = 0;
+        let trailActive = false;
+        let pointerX = 0;
+        let pointerY = 0;
+
+        const drawTrail = () => {
+          trailFrame = 0;
+          if (!trailActive) return;
+
+          const head = points[0];
+          if (!head) return;
+          head.x += (pointerX - head.x) * 0.34;
+          head.y += (pointerY - head.y) * 0.34;
+
+          for (let index = 1; index < points.length; index += 1) {
+            const point = points[index];
+            const previous = points[index - 1];
+            if (!point || !previous) continue;
+            point.x += (previous.x - point.x) * 0.25;
+            point.y += (previous.y - point.y) * 0.25;
+          }
+
+          trailNodes.forEach((node, index) => {
+            const point = points[index];
+            if (!point) return;
+            node.style.transform = `translate3d(${point.x}px, ${point.y}px, 0) translate(-50%, -50%)`;
+          });
+          footer.style.setProperty("--footer-x", `${head.x}px`);
+          footer.style.setProperty("--footer-y", `${head.y}px`);
+          trailFrame = requestAnimationFrame(drawTrail);
+        };
+
+        const activateTrail = (event: PointerEvent) => {
+          const rect = footer.getBoundingClientRect();
+          pointerX = event.clientX - rect.left;
+          pointerY = event.clientY - rect.top;
+          if (!trailActive) {
+            points.forEach((point) => {
+              point.x = pointerX;
+              point.y = pointerY;
+            });
+            trailActive = true;
+            footer.dataset.trail = "active";
+          }
+          if (!trailFrame) trailFrame = requestAnimationFrame(drawTrail);
+        };
+
+        footer.addEventListener("pointerenter", activateTrail, { passive: true });
+        footer.addEventListener("pointermove", activateTrail, { passive: true });
+        footer.addEventListener("pointerleave", () => {
+          trailActive = false;
+          footer.dataset.trail = "idle";
+          if (trailFrame) cancelAnimationFrame(trailFrame);
+          trailFrame = 0;
+        }, { passive: true });
+      }
     }
   </script>
 </BaseLayout>

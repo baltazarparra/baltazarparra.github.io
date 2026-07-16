@@ -1,12 +1,13 @@
 const canvas = document.querySelector("[data-unified-canvas]");
 const smileSlot = document.querySelector("[data-smile-slot]");
-const liquidSlots = [...document.querySelectorAll("[data-liquid-slot]")];
+const allLiquidSlots = [...document.querySelectorAll("[data-liquid-slot]")];
 const rendererStatus = document.querySelector("[data-status]");
 const contextMetric = document.querySelector('[data-metric="contexts"]');
 const programMetric = document.querySelector('[data-metric="programs"]');
 const frameMetric = document.querySelector('[data-metric="frame"]');
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+const liquidSlots = finePointer.matches && !reducedMotion.matches ? allLiquidSlots : [];
 const geometryUrl = new URL("/smile-lite.bin", window.location.origin);
 const liquidUrls = liquidSlots.map((slot) =>
   new URL(slot.dataset.liquidSource || "/baltz-portrait.jpg", window.location.origin),
@@ -278,10 +279,11 @@ const fail = (message) => {
 };
 
 const init = async () => {
-  if (!canvas || !smileSlot || liquidSlots.length === 0) return;
+  if (!canvas || !smileSlot) return;
   if (reducedMotion.matches) {
     document.documentElement.dataset.renderer = "reduced";
     document.documentElement.dataset.motion = "reduced";
+    document.documentElement.dataset.liquid = "static";
     metrics.quality = "static";
     return;
   }
@@ -512,8 +514,9 @@ const init = async () => {
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, smileIndexBuffer);
     const aspect = viewport.width / viewport.height;
     const portraitLayout = viewport.width < viewport.height;
-    const float = reducedMotion.matches ? 0 : Math.sin(time * 0.00058) * 0.032;
-    const roll = reducedMotion.matches ? -0.05 : -0.05 + Math.cos(time * 0.00034) * 0.05;
+    const ambientSmileMotion = finePointer.matches && !reducedMotion.matches;
+    const float = ambientSmileMotion ? Math.sin(time * 0.00058) * 0.032 : 0;
+    const roll = ambientSmileMotion ? -0.05 + Math.cos(time * 0.00034) * 0.05 : -0.05;
     gl.uniform2f(smileUniforms.uRotation, state.smileX, state.smileY);
     gl.uniform1f(smileUniforms.uRoll, roll);
     gl.uniform1f(smileUniforms.uScale, portraitLayout ? 1.03 : 1.16);
@@ -596,7 +599,7 @@ const init = async () => {
   };
 
   const updateGlobalPointer = (event) => {
-    if (softwareRenderer) return;
+    if (softwareRenderer || !finePointer.matches) return;
     const now = performance.now();
     if (now - state.lastInputProcessedAt < 28) return;
     state.lastInputProcessedAt = now;
@@ -689,6 +692,7 @@ const init = async () => {
   document.documentElement.dataset.renderer = "ready";
   document.documentElement.dataset.quality = metrics.quality;
   document.documentElement.dataset.motion = reducedMotion.matches ? "reduced" : "full";
+  document.documentElement.dataset.liquid = liquidSlots.length > 0 ? "active" : "static";
   if (rendererStatus) {
     rendererStatus.textContent = softwareRenderer
       ? "One context — compatibility tier, static GPU surfaces"
