@@ -501,7 +501,7 @@ html[data-renderer="ready"][data-liquid="active"] [data-liquid-slot] {
 }
 .rework-home .caipora::before {
     position: absolute;
-    inset: 2rem calc((100vw - 100%) / -2);
+    inset: 2rem 0;
     z-index: -1;
     background:
         radial-gradient(ellipse at 50% 48%, rgb(255 89 18 / 36%), transparent 58%),

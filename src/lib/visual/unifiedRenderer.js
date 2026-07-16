@@ -552,9 +552,8 @@ const init = async () => {
     const ambientAnchorY = portraitLayout ? -0.08 : -0.04;
     const anchorY = initialAnchorY + (ambientAnchorY - initialAnchorY) * arrival;
     const ambientYOffset = portraitLayout ? -0.68 : -0.92;
-    const ambientAlpha = portraitLayout ? 0.18 : 0.22;
     const blur = arrival * 0.0024;
-    const fade = 1 - arrival * (1 - ambientAlpha);
+    const smileAlpha = 1;
     gl.uniform2f(smileUniforms.uRotation, state.smileX * gazeWeight, state.smileY * gazeWeight);
     gl.uniform1f(smileUniforms.uRoll, roll - arrival * 0.035);
     gl.uniform1f(smileUniforms.uScale, fullViewportScale * (1 + arrival * 0.28));
@@ -569,15 +568,15 @@ const init = async () => {
     if (blur > 0) {
       const samples = [[-1, 0], [1, 0], [0, -1], [0, 1], [-0.7, -0.7], [0.7, -0.7], [-0.7, 0.7], [0.7, 0.7]];
       samples.forEach(([x, y]) => {
-        drawSmilePass(x * blur, y * blur, [0.15, 0.18, 0.23], fade * 0.055);
+        drawSmilePass(x * blur, y * blur, [0.15, 0.18, 0.23], smileAlpha * 0.055);
       });
     }
     if (state.pointerMotion > 0.42) {
       const split = Math.min(0.0055, state.pointerMotion * 0.0055);
-      drawSmilePass(-split, 0, [0.92, 0.12, 0.04], 0.17 * fade);
-      drawSmilePass(split, 0, [0.06, 0.22, 0.82], 0.12 * fade);
+      drawSmilePass(-split, 0, [0.92, 0.12, 0.04], 0.17 * smileAlpha);
+      drawSmilePass(split, 0, [0.06, 0.22, 0.82], 0.12 * smileAlpha);
     }
-    drawSmilePass(0, 0, [0.15, 0.18, 0.23], fade);
+    drawSmilePass(0, 0, [0.15, 0.18, 0.23], smileAlpha);
   };
 
   const updateRects = () => {
