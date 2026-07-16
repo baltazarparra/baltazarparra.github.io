@@ -14,7 +14,6 @@
 }
 
 html {
-    min-width: 20rem;
     background: var(--color-canvas);
     color: var(--color-text);
     color-scheme: dark;
@@ -24,7 +23,6 @@ html {
 }
 
 body {
-    min-width: 20rem;
     margin: 0;
     overflow-x: clip;
     background: var(--color-canvas);
@@ -549,41 +547,6 @@ a:focus-visible {
     filter: brightness(0.58) contrast(1.16) saturate(0.9);
 }
 
-.caipora::after {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: linear-gradient(
-        90deg,
-        color-mix(in srgb, var(--color-canvas) 92%, transparent) 0%,
-        color-mix(in srgb, var(--color-canvas) 35%, transparent) 48%,
-        transparent 76%
-    );
-    content: "";
-}
-
-.caipora-copy {
-    position: absolute;
-    z-index: 2;
-    left: var(--space-gutter-desktop);
-    bottom: clamp(3rem, 8vh, 7rem);
-    max-width: 38rem;
-}
-
-.caipora h2 {
-    color: var(--color-text);
-    font-size: clamp(5rem, 12vw, 13rem);
-    line-height: 0.8;
-}
-
-.caipora-copy p {
-    max-width: 28rem;
-    margin: 2rem 0;
-    color: var(--color-text);
-    font-size: clamp(1.2rem, 2vw, 1.8rem);
-    line-height: 1.25;
-}
-
 .thermal-cut {
     position: relative;
     width: 100%;
@@ -872,37 +835,8 @@ a:focus-visible {
         padding-block: 3.5rem;
     }
 
-    .caipora {
-        min-height: auto;
-        padding: 0;
-    }
-
     .media-window {
         height: 56dvh;
-    }
-
-    .caipora::after {
-        inset: 0 0 auto;
-        height: 56dvh;
-        background: linear-gradient(0deg, var(--color-canvas), transparent 58%);
-    }
-
-    .caipora-copy {
-        position: relative;
-        left: auto;
-        bottom: auto;
-        padding: 2rem var(--space-gutter-mobile) 4rem;
-        background: var(--color-canvas);
-    }
-
-    .caipora-fallback {
-        align-items: end;
-        padding: 0 var(--space-gutter-mobile) 2rem;
-        font-size: clamp(4rem, 20vw, 7rem);
-    }
-
-    .caipora h2 {
-        font-size: clamp(4rem, 20vw, 7rem);
     }
 
     .thermal-cut {

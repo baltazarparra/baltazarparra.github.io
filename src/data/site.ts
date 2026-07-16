@@ -56,8 +56,20 @@ export const site = {
   ],
   caipora: {
     name: "Caipora",
-    description: "Brazilian folk horror, built one hard-earned hit at a time.",
+    eyebrow: ["Original game", "Play in browser"],
+    kicker: "The guardian of the forest has awakened.",
+    description:
+      "A Brazilian folk-horror roguelike where precise timing, procedural runs and every hard-earned hit decide who survives the forest.",
+    features: [
+      "Turn-based combat + action commands",
+      "Procedural roguelike runs",
+      "Brazilian folk horror",
+    ],
+    playerLabel: "01 player",
+    atmosphereLabel: "The forest is watching",
     url: "https://baltazarparra.github.io/caipora/",
+    spriteUrl:
+      "https://baltazarparra.github.io/caipora/assets/sprites/caipora_idle_strip.png",
   },
   clouds: {
     name: "Clouds",

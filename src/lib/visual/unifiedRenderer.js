@@ -503,13 +503,7 @@ const init = async () => {
   };
 
   const drawSmile = (time) => {
-    const heroRect = hero?.getBoundingClientRect();
-    if (
-      !heroRect ||
-      heroRect.bottom <= 0 ||
-      heroRect.top >= window.innerHeight ||
-      state.smileProgress >= 0.998
-    ) {
+    if (!hero) {
       metrics.smileVisible = false;
       return;
     }
@@ -536,28 +530,39 @@ const init = async () => {
     const portraitLayout = viewport.width < viewport.height;
     const ambientSmileMotion = finePointer.matches;
     const progress = state.smileProgress;
-    const lift = progress * progress * (3 - 2 * progress);
-    const float = ambientSmileMotion ? Math.sin(time * 0.00058) * 0.032 * (1 - lift) : 0;
+    const arrival = progress * progress * (3 - 2 * progress);
+    const float = ambientSmileMotion
+      ? Math.sin(time * 0.00058) * 0.032 * (1 - arrival * 0.72)
+      : 0;
     const roll = ambientSmileMotion ? -0.05 + Math.cos(time * 0.00034) * 0.05 : -0.05;
-    const gazeWeight = 1 - lift * 0.62;
+    const gazeWeight = 1 - arrival * 0.68;
     const baseScale = portraitLayout ? 1.03 : 1.16;
     const slotScale = state.smileRect.height / Math.max(window.innerHeight, 1);
     const fullViewportScale = Math.max(0.4, Math.min(0.76, baseScale * slotScale));
-    const anchorX = Math.max(
+    const initialAnchorX = Math.max(
       -0.72,
       Math.min(
         0.72,
         ((state.smileRect.left + state.smileRect.width * 0.5) / window.innerWidth) * 2 - 1,
       ),
     );
-    const anchorY = portraitLayout ? -0.1 : 0;
-    const blur = Math.max(0, (lift - 0.18) / 0.82) * 0.009;
-    const fade = 1 - Math.max(0, (lift - 0.78) / 0.22);
+    const ambientAnchorX = portraitLayout ? 0.46 : 0.58;
+    const anchorX = initialAnchorX + (ambientAnchorX - initialAnchorX) * arrival;
+    const initialAnchorY = portraitLayout ? -0.1 : 0;
+    const ambientAnchorY = portraitLayout ? -0.08 : -0.04;
+    const anchorY = initialAnchorY + (ambientAnchorY - initialAnchorY) * arrival;
+    const ambientYOffset = portraitLayout ? -0.68 : -0.92;
+    const ambientAlpha = portraitLayout ? 0.18 : 0.22;
+    const blur = arrival * 0.0024;
+    const fade = 1 - arrival * (1 - ambientAlpha);
     gl.uniform2f(smileUniforms.uRotation, state.smileX * gazeWeight, state.smileY * gazeWeight);
-    gl.uniform1f(smileUniforms.uRoll, roll - lift * 0.06);
-    gl.uniform1f(smileUniforms.uScale, fullViewportScale * (1 + lift * 0.52));
+    gl.uniform1f(smileUniforms.uRoll, roll - arrival * 0.035);
+    gl.uniform1f(smileUniforms.uScale, fullViewportScale * (1 + arrival * 0.28));
     gl.uniform1f(smileUniforms.uAspect, aspect);
-    gl.uniform1f(smileUniforms.uYOffset, float - (portraitLayout ? 0.025 : 0) - lift * 2.2);
+    gl.uniform1f(
+      smileUniforms.uYOffset,
+      float - (portraitLayout ? 0.025 : 0) + ambientYOffset * arrival,
+    );
     gl.uniform2f(smileUniforms.uAnchor, anchorX, anchorY);
     gl.uniform2f(smileUniforms.uPointer, state.pointerX * 2 - 1, state.pointerY * 2 - 1);
     gl.uniform1f(smileUniforms.uTime, time * 0.001);
@@ -610,8 +615,8 @@ const init = async () => {
     state.pointerMotion += (state.pointerMotionTarget - state.pointerMotion) * 0.1;
     state.pointerMotionTarget *= 0.9;
     drawBackground(time);
-    drawMedia(time);
     drawSmile(time);
+    drawMedia(time);
   };
 
   const frame = (time) => {
@@ -668,15 +673,10 @@ const init = async () => {
     );
     state.surfaceActive = overSmile || overLiquid;
 
-    if (heroVisible && state.smileProgress < 0.998) {
-      const localX = Math.max(-1.2, Math.min(1.2, (event.clientX / window.innerWidth) * 2 - 1));
-      const localY = Math.max(-1.2, Math.min(1.2, -((event.clientY / window.innerHeight) * 2 - 1)));
-      state.smileTargetX = localY * 0.18;
-      state.smileTargetY = -localX * 0.3;
-    } else {
-      state.smileTargetX = 0;
-      state.smileTargetY = 0;
-    }
+    const localX = Math.max(-1.2, Math.min(1.2, (event.clientX / window.innerWidth) * 2 - 1));
+    const localY = Math.max(-1.2, Math.min(1.2, -((event.clientY / window.innerHeight) * 2 - 1)));
+    state.smileTargetX = localY * 0.18;
+    state.smileTargetY = -localX * 0.3;
     requestFrame(500);
   };
 

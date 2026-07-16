@@ -15,7 +15,6 @@ const chroma = {
   about: ["De", "sign ", "soft", "ware ", "with ", "code ", "a", "gents ", "as ", "ar", "chi", "tec", "tu", "ral ", "com", "po", "nents."],
   writing: ["Lat", "est ", "notes."],
   projects: ["Sys", "tems ", "with ", "a ", "point ", "of ", "view."],
-  caipora: ["Cai", "po", "ra"],
   clouds: ["Clouds"],
   elsewhere: ["Still ", "here."],
 } as const;
@@ -156,18 +155,41 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
     </section>
 
     <section class="scene caipora" id="caipora" aria-labelledby="caipora-title">
-      <a class="caipora-link interactive-panel" href={site.caipora.url} target="_blank" rel="noreferrer">
-        <div class="caipora-stage" aria-hidden="true">
-          <div class="caipora-image">
-            <img src="/caipora.jpeg" alt="" width="819" height="544" loading="lazy" decoding="async" />
+      <article class="caipora-showcase">
+        <div class="caipora-showcase-copy">
+          <div class="caipora-eyebrow" aria-label="Game format">
+            {site.caipora.eyebrow.map((label) => <span>{label}</span>)}
+          </div>
+
+          <h2 id="caipora-title">{site.caipora.name}</h2>
+          <p class="caipora-kicker">{site.caipora.kicker}</p>
+          <p class="caipora-description">{site.caipora.description}</p>
+
+          <ul class="caipora-features" aria-label="Game features">
+            {site.caipora.features.map((feature) => <li>{feature}</li>)}
+          </ul>
+
+          <a class="caipora-cta" href={site.caipora.url} target="_blank" rel="noreferrer">
+            <span>Play Caipora</span>
+            <span class="caipora-cta-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        <div class="caipora-visual" role="img" aria-label="Animated pixel-art protagonist from Caipora">
+          <div class="caipora-character-stage">
+            <div
+              class="caipora-character"
+              data-caipora-sprite
+              style={`background-image: url(${site.caipora.spriteUrl})`}
+              aria-hidden="true"
+            ></div>
+          </div>
+          <div class="caipora-visual-label" aria-hidden="true">
+            <span>{site.caipora.playerLabel}</span>
+            <span>{site.caipora.atmosphereLabel}</span>
           </div>
         </div>
-        <div class="caipora-copy">
-          <h2 id="caipora-title"><ChromaText segments={chroma.caipora} /></h2>
-          <p>{site.caipora.description}</p>
-          <span>Enter the world ↗</span>
-        </div>
-      </a>
+      </article>
     </section>
 
     <section class="scene clouds" id="clouds" aria-labelledby="clouds-title">
@@ -230,24 +252,75 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
 
     const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
     const chromaTexts = gsap.utils.toArray<HTMLElement>(".chroma-text");
+    type RgbColor = [number, number, number];
+    const rootStyles = getComputedStyle(document.documentElement);
+    const readTokenColor = (property: string): RgbColor => {
+      const value = rootStyles.getPropertyValue(property).trim().replace("#", "");
+      const normalized = value.length === 3
+        ? value.split("").map((character) => character.repeat(2)).join("")
+        : value;
+      return [
+        Number.parseInt(normalized.slice(0, 2), 16),
+        Number.parseInt(normalized.slice(2, 4), 16),
+        Number.parseInt(normalized.slice(4, 6), 16),
+      ];
+    };
+    const mixColor = (from: RgbColor, to: RgbColor, progress: number): RgbColor =>
+      from.map((channel, index) =>
+        Math.round(channel + ((to[index] ?? channel) - channel) * progress),
+      ) as RgbColor;
+    const colorString = ([red, green, blue]: RgbColor) =>
+      `rgb(${red}, ${green}, ${blue})`;
+    const mutedColor = mixColor(
+      readTokenColor("--color-canvas"),
+      readTokenColor("--color-text-muted"),
+      0.58,
+    );
+    const accentColor = readTokenColor("--color-accent-strong");
+    const finalColor = readTokenColor("--color-text");
 
     chromaTexts.forEach((text) => {
       const units = [...text.querySelectorAll<HTMLElement>(".chroma-unit")];
       if (units.length === 0) return;
 
-      gsap.set(units, { color: "var(--chroma-muted)" });
-      gsap.to(units, {
-        keyframes: [
-          { color: "var(--chroma-accent)", duration: 0.18, ease: "power2.out" },
-          { color: "var(--chroma-final)", duration: 0.38, ease: "power2.inOut" },
-        ],
-        stagger: 0.055,
+      gsap.set(units, { color: colorString(mutedColor) });
+      const chromaClock = { progress: 0 };
+      const chromaTimeline = gsap.timeline({
         scrollTrigger: {
           trigger: text,
           start: "top 50%",
-          toggleActions: "play none none reverse",
+          end: "top top",
+          scrub: true,
         },
       });
+      const lastIndex = Math.max(units.length - 1, 1);
+      const ranges = units.map((_, index) => {
+        const start = (index / lastIndex) * 0.3;
+        const end = Math.min(0.64, start + 0.22);
+        return { start, end };
+      });
+
+      chromaTimeline.to(chromaClock, {
+        progress: 1,
+        duration: 1,
+        ease: "none",
+        onUpdate: () => {
+          units.forEach((unit, index) => {
+            const range = ranges[index];
+            if (!range) return;
+            const localProgress = Math.max(
+              0,
+              Math.min(1, (chromaClock.progress - range.start) / (range.end - range.start)),
+            );
+            const color = localProgress <= 0.18
+              ? mutedColor
+              : localProgress <= 0.58
+                ? mixColor(mutedColor, accentColor, (localProgress - 0.18) / 0.4)
+                : mixColor(accentColor, finalColor, (localProgress - 0.58) / 0.42);
+            unit.style.color = colorString(color);
+          });
+        },
+      }, 0);
     });
 
     const marquee = document.querySelector<HTMLElement>("[data-credits-marquee]");
@@ -307,6 +380,75 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
             marqueeImpulse = Math.min(210, Math.abs(velocity) * 0.085);
           },
         });
+    }
+
+    const caiporaSprite = document.querySelector<HTMLElement>("[data-caipora-sprite]");
+
+    if (caiporaSprite) {
+      const idleFrameCount = 5;
+      const lastFrameIndex = 6;
+      const idleFrameDuration = 1000 / 5;
+      const blinkFrameDuration = 1000 / 12;
+      let idleFrame = 0;
+      let blinkAt = 0;
+      let timeoutId: number | undefined;
+      let isRunning = false;
+      let isInView = false;
+
+      const showCaiporaFrame = (frame: number) => {
+        caiporaSprite.style.backgroundPositionX = `${(frame / lastFrameIndex) * 100}%`;
+      };
+
+      const scheduleCaiporaBlink = () => {
+        blinkAt = Date.now() + 3000 + Math.random() * 3500;
+      };
+
+      const playCaiporaIdle = () => {
+        if (!isRunning) return;
+
+        if (Date.now() >= blinkAt) {
+          showCaiporaFrame(5);
+          timeoutId = window.setTimeout(() => {
+            if (!isRunning) return;
+            showCaiporaFrame(6);
+            timeoutId = window.setTimeout(() => {
+              if (!isRunning) return;
+              scheduleCaiporaBlink();
+              playCaiporaIdle();
+            }, blinkFrameDuration);
+          }, blinkFrameDuration);
+          return;
+        }
+
+        showCaiporaFrame(idleFrame);
+        idleFrame = (idleFrame + 1) % idleFrameCount;
+        timeoutId = window.setTimeout(playCaiporaIdle, idleFrameDuration);
+      };
+
+      const stopCaiporaAnimation = () => {
+        isRunning = false;
+        if (timeoutId !== undefined) window.clearTimeout(timeoutId);
+      };
+
+      const startCaiporaAnimation = () => {
+        if (isRunning || !isInView || document.visibilityState !== "visible") return;
+        isRunning = true;
+        scheduleCaiporaBlink();
+        playCaiporaIdle();
+      };
+
+      const caiporaObserver = new IntersectionObserver(([entry]) => {
+        if (!entry) return;
+        isInView = entry.isIntersecting;
+        if (isInView) startCaiporaAnimation();
+        else stopCaiporaAnimation();
+      }, { rootMargin: "160px 0px", threshold: 0.1 });
+
+      caiporaObserver.observe(caiporaSprite);
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible") startCaiporaAnimation();
+        else stopCaiporaAnimation();
+      });
     }
 
     if (finePointer.matches) {

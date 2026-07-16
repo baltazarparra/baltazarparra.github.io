@@ -360,24 +360,24 @@ try {
       })()`,
     );
     await delay(900);
-    const smileExit = await evaluate(
+    const smileAmbient = await evaluate(
       client,
       `(() => ({
         scrollY: Math.round(window.scrollY),
-        expectedExitAt: Math.round(window.innerHeight * 0.75),
+        expectedSettleAt: Math.round(window.innerHeight * 0.75),
         progress: window.__unifiedRendererMetrics?.smileProgress,
-        visible: window.__unifiedRendererMetrics?.smileVisible
+        persists: window.__unifiedRendererMetrics?.smileVisible
       }))()`,
     );
 
-    const smileExitScreenshot = await client.send("Page.captureScreenshot", {
+    const smileAmbientScreenshot = await client.send("Page.captureScreenshot", {
       format: "png",
       fromSurface: true,
       captureBeyondViewport: false,
     });
     await writeFile(
-      resolve(outputDirectory, `${profile.name}-smile-exit.png`),
-      Buffer.from(smileExitScreenshot.data, "base64"),
+      resolve(outputDirectory, `${profile.name}-smile-ambient.png`),
+      Buffer.from(smileAmbientScreenshot.data, "base64"),
     );
 
     await evaluate(
@@ -393,7 +393,7 @@ try {
       `(() => ({
         hash: location.hash,
         caiporaTop: Math.round(document.querySelector("#caipora").getBoundingClientRect().top),
-        caiporaImageLoaded: document.querySelector("#caipora img").complete
+        caiporaSpriteReady: getComputedStyle(document.querySelector("[data-caipora-sprite]")).backgroundImage !== "none"
       }))()`,
     );
 
@@ -522,7 +522,7 @@ try {
       failedRequests,
       initial,
       writing,
-      smileExit,
+      smileAmbient,
       navigation,
       clouds,
       privacy,
