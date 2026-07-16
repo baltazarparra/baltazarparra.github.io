@@ -18,6 +18,12 @@ pnpm launch:check
 `pnpm build` writes the production site to `dist/`. `pnpm preview` serves that
 artifact locally.
 
+## Deployment
+
+Vercel publishes the site at `https://baltz.dev` from the `dist/` directory.
+The `Deploy to GitHub Pages` workflow also publishes the same static build at
+`https://baltazarparra.github.io` after every push to `main`.
+
 ## Structure
 
 ```text
