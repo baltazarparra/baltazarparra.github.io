@@ -12,7 +12,7 @@ export const site = {
     location: "Based in Brasil",
   },
   about: {
-    heading: "Design software with code agents as architectural components.",
+    heading: "Design solutions with code agents as architectural components.",
     credits:
       "Nike, Thoughtworks, XP Investimentos, Serasa, Dasa, MRV Construtora, CVC Viagens, GFT Technologies, CI&T",
   },

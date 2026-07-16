@@ -1,7 +1,6 @@
-import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { scrollMotion } from "../motion/scrollMotion.js";
 
-gsap.registerPlugin(ScrollTrigger);
 
 const canvas = document.querySelector("[data-unified-canvas]");
 const smileSlot = document.querySelector("[data-smile-slot]");
@@ -25,6 +24,7 @@ const metrics = {
   quality: "unknown",
   renderer: "unknown",
   smileProgress: 0,
+  scrollImpulse: 0,
   smileVisible: false,
   frameTimes: [],
   get frameP95() {
@@ -81,8 +81,16 @@ const mediaFragmentSource = `
   uniform vec2 uPointer;
   uniform float uHover;
   uniform float uVelocity;
+  uniform float uPortrait;
   uniform float uScrollMotion;
   uniform float uScrollDirection;
+  uniform float uSurfaceBend;
+  uniform vec2 uEdgePoint;
+  uniform vec2 uEdgeNormal;
+  uniform vec2 uEdgeInset;
+  uniform float uEdgePulse;
+  uniform float uEdgeStartedAt;
+  uniform float uEdgePolarity;
   uniform float uTime;
   uniform float uViewportAspect;
   uniform float uTextureAspect;
@@ -98,36 +106,87 @@ const mediaFragmentSource = `
   }
 
   void main() {
-    vec2 uv = coverUv(vUv);
+    vec2 surfaceUv = (vUv - uEdgeInset) / max(vec2(0.001), vec2(1.0) - uEdgeInset * 2.0);
+    float edgeAge = max(0.0, uTime - uEdgeStartedAt);
+    vec2 impactDelta = surfaceUv - uEdgePoint;
+    vec2 correctedImpact = impactDelta * vec2(uViewportAspect, 1.0);
+    float impactDistance = length(correctedImpact);
+    vec2 impactDirection = correctedImpact / max(impactDistance, 0.001);
+    impactDirection.x /= max(uViewportAspect, 0.001);
+    vec2 tangentAxis = vec2(-uEdgeNormal.y, uEdgeNormal.x);
+    float tangentOffset = dot(impactDelta, tangentAxis);
+    float impactAttack = smoothstep(0.0, 0.12, edgeAge);
+    float impactDecay = uEdgePulse * impactAttack * exp(-edgeAge * 1.85);
+    float localInfluence = exp(-impactDistance * 1.45);
+    vec2 centerDelta = (vec2(0.5) - uEdgePoint) * vec2(uViewportAspect, 1.0);
+    float centerInfluence = exp(-length(centerDelta) * 1.45);
+    float anchoredInfluence = localInfluence - centerInfluence;
+    float impactInfluence = localInfluence;
+    float impactWave = sin(impactDistance * 19.0 - edgeAge * 10.5);
+    float waveFront = exp(-pow(impactDistance - edgeAge * 0.62, 2.0) * 52.0);
+    float signedPush = impactDecay * anchoredInfluence
+      * (0.030 * uEdgePolarity + impactWave * 0.012);
+    vec2 componentWarp = uEdgeNormal * signedPush;
+    componentWarp += impactDirection * waveFront * impactDecay * 0.016;
+    componentWarp += tangentAxis * tangentOffset * impactDecay
+      * localInfluence * uEdgePolarity * 0.015;
+    componentWarp += (surfaceUv - 0.5) * impactDecay
+      * localInfluence * uEdgePolarity * 0.009;
+    componentWarp *= uPortrait;
+    vec2 shapeUv = surfaceUv - componentWarp;
+
+    if (
+      shapeUv.x < 0.0 || shapeUv.x > 1.0 ||
+      shapeUv.y < 0.0 || shapeUv.y > 1.0
+    ) discard;
+
+    float bendMagnitude = abs(uSurfaceBend);
+    float horizontal = shapeUv.x * 2.0 - 1.0;
+    float arch = 1.0 - horizontal * horizontal;
+    float verticalShift = uSurfaceBend >= 0.0
+      ? bendMagnitude * (1.0 - arch)
+      : bendMagnitude * arch;
+    if (
+      shapeUv.y < bendMagnitude - verticalShift ||
+      shapeUv.y > 1.0 - verticalShift
+    ) discard;
+
+    vec2 uv = coverUv(shapeUv);
     vec3 color;
     float radius = 1.0;
 
-    float scrollWave = sin((vUv.y * 17.0) - uTime * 7.0) * uScrollMotion;
+    float scrollWave = sin((shapeUv.y * 17.0) - uTime * 7.0) * uScrollMotion;
     vec2 scrollOffset = vec2(scrollWave * 0.008 * uScrollDirection, scrollWave * 0.003);
 
-    if (uHover > 0.002) {
-      vec2 delta = vUv - uPointer;
+    if (uPortrait > 0.5) {
+      vec2 refractedUv = coverUv(shapeUv + scrollOffset);
+      vec2 prism = uEdgeNormal * impactWave * impactDecay * impactInfluence * 0.0011;
+      color.r = texture2D(uTexture, clamp(refractedUv + prism, 0.001, 0.999)).r;
+      color.g = texture2D(uTexture, clamp(refractedUv, 0.001, 0.999)).g;
+      color.b = texture2D(uTexture, clamp(refractedUv - prism, 0.001, 0.999)).b;
+      color *= 0.99 + waveFront * impactDecay * 0.025;
+    } else if (uHover > 0.002) {
+      vec2 delta = shapeUv - uPointer;
       vec2 corrected = delta * vec2(uViewportAspect, 1.0);
       radius = length(corrected);
       vec2 direction = corrected / max(radius, 0.001);
       direction.x /= max(uViewportAspect, 0.001);
-      float lens = smoothstep(0.42, 0.0, radius) * uHover;
-      float wave = sin(radius * 24.0 - uTime * 4.4);
-      wave *= exp(-radius * 6.2) * uHover;
       float speed = min(1.0, uVelocity * 72.0);
-      vec2 tangent = vec2(-direction.y, direction.x);
+      float lens = smoothstep(0.46, 0.0, radius) * uHover;
+      float wave = sin(radius * 25.0 - uTime * 4.6);
+      wave *= exp(-radius * 5.8) * uHover;
+
+      vec2 tangentDirection = vec2(-direction.y, direction.x);
       vec2 displacement = direction * (lens * 0.018 + wave * 0.012);
-      displacement += tangent * wave * speed * 0.014;
-      uv = coverUv(vUv + displacement + scrollOffset);
+      displacement += tangentDirection * wave * speed * 0.014;
+      uv = coverUv(shapeUv + displacement + scrollOffset);
       color = texture2D(uTexture, clamp(uv, 0.001, 0.999)).rgb;
-      color.r *= 1.0 + speed * uHover * 0.025;
-      color.b *= 1.0 - speed * uHover * 0.018;
     } else {
       color = texture2D(uTexture, clamp(uv + scrollOffset, 0.001, 0.999)).rgb;
     }
 
     color = mix(color, color * vec3(1.02, 0.91, 0.86), 0.22);
-    color *= 0.84 + smoothstep(0.72, 0.0, radius) * uHover * 0.2;
+    color *= 0.84 + smoothstep(0.72, 0.0, radius) * uHover * (1.0 - uPortrait) * 0.2;
     gl_FragColor = vec4(color, 1.0);
   }
 `;
@@ -331,8 +390,9 @@ const init = async () => {
     "uResolution", "uPointer", "uTime", "uMotion",
   ]);
   const mediaUniforms = uniformsFor(gl, mediaProgram, [
-    "uTexture", "uPointer", "uHover", "uVelocity", "uTime",
-    "uViewportAspect", "uTextureAspect", "uScrollMotion", "uScrollDirection",
+    "uTexture", "uPointer", "uHover", "uVelocity", "uPortrait", "uTime",
+    "uViewportAspect", "uTextureAspect", "uScrollMotion", "uScrollDirection", "uSurfaceBend",
+    "uEdgePoint", "uEdgeNormal", "uEdgeInset", "uEdgePulse", "uEdgeStartedAt", "uEdgePolarity",
   ]);
   const smileUniforms = uniformsFor(gl, smileProgram, [
     "uRotation", "uRoll", "uScale", "uAspect", "uYOffset",
@@ -387,8 +447,8 @@ const init = async () => {
     lastPointerAt: performance.now(),
     lastInputProcessedAt: 0,
     smileProgress: 0,
-    scrollVelocity: 0,
     scrollDirection: 1,
+    scrollImpulse: 0,
     smileX: 0,
     smileY: 0,
     smileTargetX: 0,
@@ -412,6 +472,16 @@ const init = async () => {
       velocityTarget: 0,
       scrollMotion: 0,
       scrollScale: element.dataset.liquidMode === "portrait" ? 1 : 0.16,
+      isPortrait: element.dataset.liquidMode === "portrait",
+      surfaceBendStrength: Number(element.dataset.scrollSurfaceStrength) || 0,
+      edgeEnabled: element.dataset.liquidMode === "portrait",
+      edgePointX: 0.5,
+      edgePointY: 0.5,
+      edgeNormalX: 0,
+      edgeNormalY: 0,
+      edgePulse: 0,
+      edgeStartedAt: 0,
+      edgePolarity: 1,
       lastProcessedAt: 0,
     })),
   };
@@ -469,7 +539,16 @@ const init = async () => {
   const drawMediaSurface = (surface, time) => {
     const rect = surface.rect;
     if (!rectIsVisible(rect)) return;
-    const viewport = viewportFor(rect, state.dpr);
+    const edgePadding = surface.edgeEnabled ? Math.min(34, rect.width * 0.085) : 0;
+    const expandedRect = {
+      left: rect.left - edgePadding,
+      right: rect.right + edgePadding,
+      top: rect.top - edgePadding,
+      bottom: rect.bottom + edgePadding,
+      width: rect.width + edgePadding * 2,
+      height: rect.height + edgePadding * 2,
+    };
+    const viewport = viewportFor(expandedRect, state.dpr);
     if (viewport.width < 1 || viewport.height < 1) return;
     gl.enable(gl.SCISSOR_TEST);
     gl.disable(gl.DEPTH_TEST);
@@ -483,8 +562,23 @@ const init = async () => {
     gl.uniform2f(mediaUniforms.uPointer, surface.x, surface.y);
     gl.uniform1f(mediaUniforms.uHover, surface.hover);
     gl.uniform1f(mediaUniforms.uVelocity, surface.velocity);
+    gl.uniform1f(mediaUniforms.uPortrait, surface.isPortrait ? 1 : 0);
     gl.uniform1f(mediaUniforms.uScrollMotion, surface.scrollMotion);
     gl.uniform1f(mediaUniforms.uScrollDirection, state.scrollDirection);
+    gl.uniform1f(
+      mediaUniforms.uSurfaceBend,
+      state.scrollImpulse * 0.035 * surface.surfaceBendStrength,
+    );
+    gl.uniform2f(mediaUniforms.uEdgePoint, surface.edgePointX, surface.edgePointY);
+    gl.uniform2f(mediaUniforms.uEdgeNormal, surface.edgeNormalX, surface.edgeNormalY);
+    gl.uniform2f(
+      mediaUniforms.uEdgeInset,
+      edgePadding / expandedRect.width,
+      edgePadding / expandedRect.height,
+    );
+    gl.uniform1f(mediaUniforms.uEdgePulse, surface.edgePulse);
+    gl.uniform1f(mediaUniforms.uEdgeStartedAt, surface.edgeStartedAt);
+    gl.uniform1f(mediaUniforms.uEdgePolarity, surface.edgePolarity);
     gl.uniform1f(mediaUniforms.uTime, time * 0.001);
     gl.uniform1f(mediaUniforms.uViewportAspect, viewport.width / viewport.height);
     gl.uniform1f(mediaUniforms.uTextureAspect, surface.image.naturalWidth / surface.image.naturalHeight);
@@ -534,7 +628,9 @@ const init = async () => {
     const float = ambientSmileMotion
       ? Math.sin(time * 0.00058) * 0.032 * (1 - arrival * 0.72)
       : 0;
-    const roll = ambientSmileMotion ? -0.05 + Math.cos(time * 0.00034) * 0.05 : -0.05;
+    const scrollLift = state.scrollImpulse * 0.04;
+    const roll = (ambientSmileMotion ? -0.05 + Math.cos(time * 0.00034) * 0.05 : -0.05)
+      - scrollLift * 0.48;
     const gazeWeight = 1 - arrival * 0.68;
     const baseScale = portraitLayout ? 1.03 : 1.16;
     const slotScale = state.smileRect.height / Math.max(window.innerHeight, 1);
@@ -556,11 +652,14 @@ const init = async () => {
     const smileAlpha = 1;
     gl.uniform2f(smileUniforms.uRotation, state.smileX * gazeWeight, state.smileY * gazeWeight);
     gl.uniform1f(smileUniforms.uRoll, roll - arrival * 0.035);
-    gl.uniform1f(smileUniforms.uScale, fullViewportScale * (1 + arrival * 0.28));
+    gl.uniform1f(
+      smileUniforms.uScale,
+      fullViewportScale * (1 + arrival * 0.28 + Math.abs(state.scrollImpulse) * 0.018),
+    );
     gl.uniform1f(smileUniforms.uAspect, aspect);
     gl.uniform1f(
       smileUniforms.uYOffset,
-      float - (portraitLayout ? 0.025 : 0) + ambientYOffset * arrival,
+      float - (portraitLayout ? 0.025 : 0) + ambientYOffset * arrival - scrollLift * 0.2,
     );
     gl.uniform2f(smileUniforms.uAnchor, anchorX, anchorY);
     gl.uniform2f(smileUniforms.uPointer, state.pointerX * 2 - 1, state.pointerY * 2 - 1);
@@ -607,10 +706,9 @@ const init = async () => {
       surface.hover += (surface.hoverTarget - surface.hover) * 0.11;
       surface.velocity += (surface.velocityTarget - surface.velocity) * 0.14;
       surface.velocityTarget *= 0.88;
-      const scrollTarget = Math.min(1, Math.abs(state.scrollVelocity) / 1_400) * surface.scrollScale;
+      const scrollTarget = Math.abs(state.scrollImpulse) * surface.scrollScale;
       surface.scrollMotion += (scrollTarget - surface.scrollMotion) * 0.12;
     });
-    state.scrollVelocity *= 0.86;
     state.pointerMotion += (state.pointerMotionTarget - state.pointerMotion) * 0.1;
     state.pointerMotionTarget *= 0.9;
     drawBackground(time);
@@ -695,11 +793,47 @@ const init = async () => {
     requestFrame(700);
   };
 
-  const leaveMedia = (surface) => {
+  const impactMediaEdge = (surface, event, polarity) => {
+    if (!surface.edgeEnabled) return;
+    const rect = surface.rect;
+    const x = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+    const y = Math.max(0, Math.min(1, 1 - (event.clientY - rect.top) / rect.height));
+    const edges = [
+      { distance: Math.abs(event.clientX - rect.left), normalX: -1, normalY: 0 },
+      { distance: Math.abs(event.clientX - rect.right), normalX: 1, normalY: 0 },
+      { distance: Math.abs(event.clientY - rect.top), normalX: 0, normalY: 1 },
+      { distance: Math.abs(event.clientY - rect.bottom), normalX: 0, normalY: -1 },
+    ];
+    const edge = edges.reduce((closest, candidate) =>
+      candidate.distance < closest.distance ? candidate : closest,
+    );
+    surface.edgePointX = x;
+    surface.edgePointY = y;
+    surface.edgeNormalX = edge.normalX;
+    surface.edgeNormalY = edge.normalY;
+    surface.edgePulse = 1;
+    surface.edgeStartedAt = performance.now() * 0.001;
+    surface.edgePolarity = polarity;
+  };
+
+  const enterMedia = (surface, event) => {
     if (softwareRenderer || !finePointer.matches) return;
+    impactMediaEdge(surface, event, 1);
+    if (!surface.isPortrait) updateMediaPointer(surface, event);
+    requestFrame(1600);
+  };
+
+  const moveMedia = (surface, event) => {
+    if (surface.isPortrait) return;
+    updateMediaPointer(surface, event);
+  };
+
+  const leaveMedia = (surface, event) => {
+    if (softwareRenderer || !finePointer.matches) return;
+    impactMediaEdge(surface, event, -1);
     surface.hoverTarget = 0;
-    surface.velocityTarget = 0.45;
-    requestFrame(700);
+    surface.velocityTarget = surface.isPortrait ? 0 : 0.45;
+    requestFrame(1600);
   };
 
   const pageObserver = new IntersectionObserver(([entry]) => {
@@ -713,19 +847,12 @@ const init = async () => {
   });
   resizeObserver.observe(document.documentElement);
   window.addEventListener("pointermove", updateGlobalPointer, { passive: true });
-  ScrollTrigger.create({
-    start: 0,
-    end: "max",
-    onUpdate: (self) => {
-      state.scrollVelocity = self.getVelocity();
-      state.scrollDirection = Math.sign(self.getVelocity()) || state.scrollDirection;
-      updateRects();
-      requestFrame(450);
-    },
-    onRefresh: () => {
-      updateRects();
-      requestFrame(250);
-    },
+  scrollMotion.subscribe(({ direction, impulse }) => {
+    state.scrollDirection = direction;
+    state.scrollImpulse = impulse;
+    metrics.scrollImpulse = impulse;
+    updateRects();
+    requestFrame(450);
   });
   if (hero) {
     ScrollTrigger.create({
@@ -746,10 +873,10 @@ const init = async () => {
     });
   }
   state.surfaces.forEach((surface) => {
-    surface.element.addEventListener("pointerenter", (event) => updateMediaPointer(surface, event), { passive: true });
-    surface.element.addEventListener("pointermove", (event) => updateMediaPointer(surface, event), { passive: true });
-    surface.element.addEventListener("pointerleave", () => leaveMedia(surface), { passive: true });
-    surface.element.addEventListener("pointercancel", () => leaveMedia(surface), { passive: true });
+    surface.element.addEventListener("pointerenter", (event) => enterMedia(surface, event), { passive: true });
+    surface.element.addEventListener("pointermove", (event) => moveMedia(surface, event), { passive: true });
+    surface.element.addEventListener("pointerleave", (event) => leaveMedia(surface, event), { passive: true });
+    surface.element.addEventListener("pointercancel", (event) => leaveMedia(surface, event), { passive: true });
   });
   document.addEventListener("visibilitychange", () => requestFrame(200));
   finePointer.addEventListener("change", () => requestFrame(400));

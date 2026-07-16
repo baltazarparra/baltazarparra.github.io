@@ -5,14 +5,37 @@ interface Props {
 }
 
 const { segments, label = segments.join("") } = Astro.props;
+const words: Array<{ segments: string[]; gap: string }> = [];
+let wordSegments: string[] = [];
+
+segments.forEach((segment) => {
+  segment.split(/(\s+)/).filter(Boolean).forEach((piece) => {
+    if (/^\s+$/.test(piece)) {
+      if (wordSegments.length > 0) {
+        words.push({ segments: wordSegments, gap: piece });
+        wordSegments = [];
+      } else if (words.length > 0) {
+        const previousWord = words.at(-1);
+        if (previousWord) previousWord.gap += piece;
+      }
+      return;
+    }
+    wordSegments.push(piece);
+  });
+});
+
+if (wordSegments.length > 0) words.push({ segments: wordSegments, gap: "" });
 ---
 
 <span class="chroma-text" aria-label={label}>
   {
-    segments.map((text) => (
-      <span class="chroma-unit" aria-hidden="true">
-        {text}
-      </span>
+    words.map((word) => (
+      <Fragment>
+        <span class="chroma-word" aria-hidden="true">
+          {word.segments.map((text) => <span class="chroma-unit">{text}</span>)}
+        </span>
+        {word.gap}
+      </Fragment>
     ))
   }
 </span>

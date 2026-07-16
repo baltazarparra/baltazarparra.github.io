@@ -12,10 +12,10 @@ const companies = site.about.credits.split(", ");
 const companyLoop = [...companies, ...companies, ...companies];
 const chroma = {
   hero: ["baltz."],
-  about: ["De", "sign ", "soft", "ware ", "with ", "code ", "a", "gents ", "as ", "ar", "chi", "tec", "tu", "ral ", "com", "po", "nents."],
+  about: ["De", "sign ", "so", "lu", "tions ", "with ", "code ", "a", "gents ", "as ", "ar", "chi", "tec", "tu", "ral ", "com", "po", "nents."],
   writing: ["Lat", "est ", "notes."],
   projects: ["Sys", "tems ", "with ", "a ", "point ", "of ", "view."],
-  clouds: ["Clouds"],
+  clouds: ["Producing..."],
   elsewhere: ["Still ", "here."],
 } as const;
 const writingChroma = {
@@ -49,10 +49,10 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
   <canvas class="unified-canvas" data-unified-canvas aria-hidden="true"></canvas>
 
   <main id="main" class="rework-home">
-    <section class="scene hero" id="hero" aria-labelledby="hero-title">
+    <section class="scene hero" id="hero" aria-labelledby="hero-title" data-scroll-bend="0.58">
       <div class="hero-lockup">
         <h1 id="hero-title"><ChromaText segments={chroma.hero} /></h1>
-        <div class="hero-meta" aria-label="Role and location">
+        <div class="hero-meta" aria-label="Role and location" data-scroll-curve="0.9">
           <p>
             <span class="hero-role">{site.hero.role} at</span>
             <a href={site.hero.employerUrl} target="_blank" rel="noreferrer">
@@ -67,7 +67,7 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
       </div>
     </section>
 
-    <section class="scene about" id="work" aria-labelledby="about-title">
+    <section class="scene about" id="work" aria-labelledby="about-title" data-scroll-bend="1">
       <figure
         class="portrait-shell"
         data-liquid-slot
@@ -85,10 +85,10 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
       <div class="about-copy">
         <p class="section-label">About</p>
         <h2 id="about-title"><ChromaText segments={chroma.about} /></h2>
-        <div class="credits-marquee" data-credits-marquee>
+        <div class="credits-marquee" data-credits-marquee data-scroll-rib="top bottom">
           <p class="sr-only">Collaborated with {site.about.credits}</p>
           <div class="credits-marquee-viewport" aria-hidden="true">
-            <div class="credits-marquee-track" data-credits-track>
+            <div class="credits-marquee-track" data-credits-track data-scroll-curve="0.72">
               {
                 companyLoop.map((company, index) => (
                   <span class="credits-marquee-item" data-loop-copy={Math.floor(index / companies.length)}>
@@ -103,15 +103,15 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
       </div>
     </section>
 
-    <section class="scene writing" id="writing" aria-labelledby="writing-title">
+    <section class="scene writing" id="writing" aria-labelledby="writing-title" data-scroll-bend="0.38">
       <header class="section-heading">
         <p class="section-label">Writing</p>
         <h2 id="writing-title"><ChromaText segments={chroma.writing} /></h2>
       </header>
-      <div class="story-list">
+      <div class="story-list" data-scroll-rib="top">
         {
           site.writing.map((post) => (
-            <a class="story-row interactive-row" href={post.url} target="_blank" rel="noreferrer">
+            <a class="story-row interactive-row" href={post.url} target="_blank" rel="noreferrer" data-scroll-curve="1.15" data-scroll-rib="bottom">
               <span class="story-meta">
                 <time datetime={post.publishedAt}>{post.publishedLabel}</time>
                 {` · ${post.readingTime}`}
@@ -124,27 +124,27 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
       </div>
     </section>
 
-    <section class="scene projects" id="projects" aria-labelledby="projects-title">
+    <section class="scene projects" id="projects" aria-labelledby="projects-title" data-scroll-bend="0.56">
       <div class="projects-intro">
         <p class="section-label">Selected work</p>
         <h2 id="projects-title"><ChromaText segments={chroma.projects} /></h2>
       </div>
-      <a class="project-primary interactive-panel" href={primaryProject.url} target="_blank" rel="noreferrer">
+      <a class="project-primary interactive-panel" href={primaryProject.url} target="_blank" rel="noreferrer" data-scroll-surface="edge" data-scroll-surface-strength="0.9">
         <span class="project-kicker">{primaryProject.category}</span>
         <strong><ChromaText segments={projectChroma[primaryProject.name]} /></strong>
         <span class="project-description">{primaryProject.description}</span>
         <span class="project-action">Open the work ↗</span>
       </a>
-      <div class="project-notes">
+      <div class="project-notes" data-scroll-rib="top">
         {
           secondaryProjects.map((project) => (
-            <a class="project-note interactive-row" href={project.url} target="_blank" rel="noreferrer">
-              <span class="project-note-meta">
+            <a class="project-note interactive-row" href={project.url} target="_blank" rel="noreferrer" data-scroll-rib="bottom">
+              <span class="project-note-meta" data-scroll-curve="0.9">
                 <span class="project-note-category">{project.category}</span>
                 <Fragment set:html={githubLogoSvg} />
               </span>
               <strong><ChromaText segments={projectChroma[project.name]} /></strong>
-              <span class="repository-action">
+              <span class="repository-action" data-scroll-curve="1.05" data-scroll-rib="top">
                 <span>View repository</span>
                 <span aria-hidden="true">↗</span>
               </span>
@@ -154,8 +154,8 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
       </div>
     </section>
 
-    <section class="scene caipora" id="caipora" aria-labelledby="caipora-title">
-      <article class="caipora-showcase">
+    <section class="scene caipora" id="caipora" aria-labelledby="caipora-title" data-scroll-bend="0.24">
+      <article class="caipora-showcase" data-scroll-surface="border" data-scroll-surface-strength="0.78">
         <div class="caipora-showcase-copy">
           <div class="caipora-eyebrow" aria-label="Game format">
             {site.caipora.eyebrow.map((label) => <span>{label}</span>)}
@@ -184,7 +184,7 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
               aria-hidden="true"
             ></div>
           </div>
-          <div class="caipora-visual-label" aria-hidden="true">
+          <div class="caipora-visual-label" aria-hidden="true" data-scroll-curve="0.75">
             <span>{site.caipora.playerLabel}</span>
             <span>{site.caipora.atmosphereLabel}</span>
           </div>
@@ -192,7 +192,7 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
       </article>
     </section>
 
-    <section class="scene clouds" id="clouds" aria-labelledby="clouds-title">
+    <section class="scene clouds" id="clouds" aria-labelledby="clouds-title" data-scroll-bend="0.54">
       <div class="clouds-copy">
         <h2 id="clouds-title"><ChromaText segments={chroma.clouds} /></h2>
         <div class="spotify-frame">
@@ -208,21 +208,21 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
           <a href={site.clouds.url} target="_blank" rel="noreferrer">Open in Spotify ↗</a>
         </div>
       </div>
-      <a class="clouds-cover interactive-panel" href={site.clouds.url} target="_blank" rel="noreferrer" aria-label="Open Clouds on Spotify" data-liquid-slot data-liquid-mode="cover" data-liquid-source={site.clouds.coverUrl}>
+      <a class="clouds-cover interactive-panel" href={site.clouds.url} target="_blank" rel="noreferrer" aria-label="Open Clouds on Spotify" data-liquid-slot data-liquid-mode="cover" data-liquid-source={site.clouds.coverUrl} data-scroll-surface="edge" data-scroll-surface-strength="0.86">
         <img src={site.clouds.coverUrl} alt="Clouds EP cover" width="640" height="640" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
-        <span>Listen ↗</span>
+        <span>Listen to my lo-fi EP ↗</span>
       </a>
     </section>
 
-    <section class="scene elsewhere" id="elsewhere" data-end-zone aria-labelledby="elsewhere-title">
+    <section class="scene elsewhere" id="elsewhere" data-end-zone aria-labelledby="elsewhere-title" data-scroll-bend="0.42">
       <div class="elsewhere-heading">
         <p class="section-label">Elsewhere</p>
         <h2 id="elsewhere-title"><ChromaText segments={chroma.elsewhere} /></h2>
       </div>
-      <nav class="elsewhere-links" aria-label="External profiles">
+      <nav class="elsewhere-links" aria-label="External profiles" data-scroll-rib="top">
         {
           site.profiles.map((profile) => (
-            <a class="interactive-row" href={profile.url} target="_blank" rel="me noreferrer">
+            <a class="interactive-row" href={profile.url} target="_blank" rel="me noreferrer" data-scroll-curve="1.1" data-scroll-rib="bottom">
               <strong><ChromaText segments={profileChroma[profile.label]} /></strong><span>Open ↗</span>
             </a>
           ))
@@ -235,17 +235,15 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
     <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
   </div>
 
-  <footer class="rework-footer" data-end-zone>
+  <footer class="rework-footer" data-scroll-bend="0.62" data-scroll-rib="top">
     <p class="footer-wordmark" aria-hidden="true">baltz.</p>
-    <div class="footer-meta">
-      <span>© 2026 Baltazar Parra</span>
-      <a href="#hero">Back to top ↑</a>
-    </div>
   </footer>
 
   <script>
     import { gsap } from "gsap";
     import { ScrollTrigger } from "gsap/ScrollTrigger";
+    import { scrollMotion } from "../lib/motion/scrollMotion.js";
+    import "../lib/motion/scrollBend.js";
     import "../lib/visual/unifiedRenderer.js";
 
     gsap.registerPlugin(ScrollTrigger);
@@ -282,6 +280,7 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
     chromaTexts.forEach((text) => {
       const units = [...text.querySelectorAll<HTMLElement>(".chroma-unit")];
       if (units.length === 0) return;
+      const isSelectedWorkText = Boolean(text.closest("#projects"));
 
       gsap.set(units, { color: colorString(mutedColor) });
       const chromaClock = { progress: 0 };
@@ -289,14 +288,16 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
         scrollTrigger: {
           trigger: text,
           start: "top 75%",
-          end: "top top",
+          end: isSelectedWorkText ? "top 52%" : "top top",
           scrub: true,
         },
       });
       const lastIndex = Math.max(units.length - 1, 1);
+      const staggerRange = isSelectedWorkText ? 0.66 : 0.3;
+      const revealDuration = isSelectedWorkText ? 0.34 : 0.22;
       const ranges = units.map((_, index) => {
-        const start = (index / lastIndex) * 0.3;
-        const end = Math.min(0.64, start + 0.22);
+        const start = (index / lastIndex) * staggerRange;
+        const end = Math.min(1, start + revealDuration);
         return { start, end };
       });
 
@@ -369,16 +370,10 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
         marqueeObserver.observe(marquee);
         measureMarquee();
 
-        ScrollTrigger.create({
-          trigger: marquee,
-          start: "top bottom",
-          end: "bottom top",
-          onUpdate: (self) => {
-            const velocity = self.getVelocity();
-            if (Math.abs(velocity) < 12) return;
-            marqueeDirection = velocity > 0 ? -1 : 1;
-            marqueeImpulse = Math.min(210, Math.abs(velocity) * 0.085);
-          },
+        scrollMotion.subscribe(({ rawVelocity, direction, energy }) => {
+          if (Math.abs(rawVelocity) < 48) return;
+          marqueeDirection = direction > 0 ? -1 : 1;
+          marqueeImpulse = Math.min(210, energy * 210);
         });
     }
 
@@ -479,70 +474,6 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
           if (target === panel) target = undefined;
         }, { passive: true });
       });
-
-      const footer = document.querySelector<HTMLElement>(".rework-footer");
-      const footerWordmark = footer?.querySelector<HTMLElement>(".footer-wordmark");
-
-      if (footer && footerWordmark) {
-        let wordmarkFrame = 0;
-        let rotateX = 0;
-        let rotateY = 0;
-        let shiftX = 0;
-        let shiftY = 0;
-        let targetRotateX = 0;
-        let targetRotateY = 0;
-        let targetShiftX = 0;
-        let targetShiftY = 0;
-
-        const drawWordmark = () => {
-          wordmarkFrame = 0;
-          rotateX += (targetRotateX - rotateX) * 0.095;
-          rotateY += (targetRotateY - rotateY) * 0.095;
-          shiftX += (targetShiftX - shiftX) * 0.11;
-          shiftY += (targetShiftY - shiftY) * 0.11;
-
-          footerWordmark.style.setProperty("--wordmark-rotate-x", `${rotateX}deg`);
-          footerWordmark.style.setProperty("--wordmark-rotate-y", `${rotateY}deg`);
-          footerWordmark.style.setProperty("--wordmark-shift-x", `${shiftX}px`);
-          footerWordmark.style.setProperty("--wordmark-shift-y", `${shiftY}px`);
-
-          const unsettled =
-            Math.abs(targetRotateX - rotateX) > 0.01 ||
-            Math.abs(targetRotateY - rotateY) > 0.01 ||
-            Math.abs(targetShiftX - shiftX) > 0.02 ||
-            Math.abs(targetShiftY - shiftY) > 0.02;
-          if (unsettled) wordmarkFrame = requestAnimationFrame(drawWordmark);
-        };
-
-        const requestWordmarkFrame = () => {
-          if (!wordmarkFrame) wordmarkFrame = requestAnimationFrame(drawWordmark);
-        };
-
-        footer.addEventListener("pointermove", (event) => {
-          const rect = footer.getBoundingClientRect();
-          const localX = Math.max(
-            -1,
-            Math.min(1, ((event.clientX - rect.left) / rect.width) * 2 - 1),
-          );
-          const localY = Math.max(
-            -1,
-            Math.min(1, -(((event.clientY - rect.top) / rect.height) * 2 - 1)),
-          );
-          targetRotateX = localY * 6;
-          targetRotateY = -localX * 10;
-          targetShiftX = localX * 7;
-          targetShiftY = -localY * 5;
-          requestWordmarkFrame();
-        }, { passive: true });
-
-        footer.addEventListener("pointerleave", () => {
-          targetRotateX = 0;
-          targetRotateY = 0;
-          targetShiftX = 0;
-          targetShiftY = 0;
-          requestWordmarkFrame();
-        }, { passive: true });
-      }
 
       const endZones = [...document.querySelectorAll<HTMLElement>("[data-end-zone]")];
       const trail = document.querySelector<HTMLElement>("[data-end-trail]");

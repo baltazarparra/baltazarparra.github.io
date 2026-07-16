@@ -4,7 +4,7 @@ import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 
 const baseUrl = process.argv[2] ?? "http://127.0.0.1:4100/";
-const outputDirectory = resolve(process.argv[3] ?? "../docs/evidence/p5");
+const outputDirectory = resolve(process.argv[3] ?? "docs/evidence/p5");
 const profileFilter = process.argv[4];
 const chromeExecutable = "/usr/bin/google-chrome";
 const delay = (milliseconds) =>
@@ -87,7 +87,11 @@ const evaluate = async (client, expression) => {
     awaitPromise: true,
     returnByValue: true,
   });
-  if (result.exceptionDetails) throw new Error(result.exceptionDetails.text);
+  if (result.exceptionDetails) {
+    throw new Error(
+      result.exceptionDetails.exception?.description ?? result.exceptionDetails.text,
+    );
+  }
   return result.result.value;
 };
 
@@ -264,7 +268,9 @@ try {
         h1: document.querySelector("h1")?.textContent?.trim(),
         canonical: document.querySelector('link[rel="canonical"]')?.href,
         heroIndexPresent: Boolean(document.querySelector(".hero-index")),
-        heroEmployerDisplay: getComputedStyle(document.querySelector(".hero-meta a")).display,
+        heroEmployerDisplay: document.querySelector(".hero-meta a")
+          ? getComputedStyle(document.querySelector(".hero-meta a")).display
+          : null,
         overlay: Boolean(document.querySelector(".vite-error-overlay, #webpack-dev-server-client-overlay")),
         smileCanvas: document.querySelectorAll("[data-unified-canvas]").length,
         pageHeight: document.documentElement.scrollHeight,
@@ -297,6 +303,151 @@ try {
           .map((entry) => entry["@type"])
       }))()`,
     );
+
+    await evaluate(
+      client,
+      `(() => {
+        window.scrollTo({ top: Math.min(window.innerHeight * 1.4, document.documentElement.scrollHeight - window.innerHeight), behavior: "instant" });
+        return true;
+      })()`,
+    );
+    await delay(120);
+    const scrollMotion = await evaluate(
+      client,
+      `(() => ({
+        metrics: window.__scrollMotionMetrics ?? null,
+        curvedPoints: [...document.querySelectorAll(".scroll-curve-point")]
+          .filter((node) => node.style.translate).length,
+        ribPaths: [...document.querySelectorAll(".scroll-rib path")]
+          .slice(0, 8)
+          .map((node) => node.getAttribute("d")),
+        viewportFilm: {
+          transform: getComputedStyle(document.body, "::after").transform,
+          opacity: getComputedStyle(document.body, "::after").opacity
+        },
+        rootState: document.documentElement.dataset.scrollMotion ?? null
+      }))()`,
+    );
+    const scrollDownScreenshot = await client.send("Page.captureScreenshot", {
+      format: "png",
+      fromSurface: true,
+      captureBeyondViewport: false,
+    });
+    await writeFile(
+      resolve(outputDirectory, `${profile.name}-scroll-down.png`),
+      Buffer.from(scrollDownScreenshot.data, "base64"),
+    );
+    await delay(900);
+    const scrollMotionSettled = await evaluate(
+      client,
+      `(() => ({
+        metrics: window.__scrollMotionMetrics ?? null,
+        viewportFilm: {
+          transform: getComputedStyle(document.body, "::after").transform,
+          opacity: getComputedStyle(document.body, "::after").opacity
+        },
+        rootState: document.documentElement.dataset.scrollMotion ?? null
+      }))()`,
+    );
+    await evaluate(
+      client,
+      `(() => {
+        window.scrollTo({ top: 0, behavior: "instant" });
+        return true;
+      })()`,
+    );
+    await delay(120);
+    const scrollMotionReverse = await evaluate(
+      client,
+      `(() => ({
+        metrics: window.__scrollMotionMetrics ?? null,
+        curvedPoints: [...document.querySelectorAll(".scroll-curve-point")]
+          .filter((node) => node.style.translate).length,
+        ribPaths: [...document.querySelectorAll(".scroll-rib path")]
+          .slice(0, 8)
+          .map((node) => node.getAttribute("d")),
+        viewportFilm: {
+          transform: getComputedStyle(document.body, "::after").transform,
+          opacity: getComputedStyle(document.body, "::after").opacity
+        },
+        rootState: document.documentElement.dataset.scrollMotion ?? null
+      }))()`,
+    );
+    const scrollUpScreenshot = await client.send("Page.captureScreenshot", {
+      format: "png",
+      fromSurface: true,
+      captureBeyondViewport: false,
+    });
+    await writeFile(
+      resolve(outputDirectory, `${profile.name}-scroll-up.png`),
+      Buffer.from(scrollUpScreenshot.data, "base64"),
+    );
+    await delay(900);
+    const scrollMotionReverseSettled = await evaluate(
+      client,
+      `(() => ({
+        metrics: window.__scrollMotionMetrics ?? null,
+        curvedPoints: [...document.querySelectorAll(".scroll-curve-point")]
+          .filter((node) => node.style.translate).length,
+        viewportFilm: {
+          transform: getComputedStyle(document.body, "::after").transform,
+          opacity: getComputedStyle(document.body, "::after").opacity
+        },
+        rootState: document.documentElement.dataset.scrollMotion ?? null
+      }))()`,
+    );
+
+    const scrollSurfaces = [];
+    if (!profile.disableJavaScript) {
+      for (const surfaceName of ["project", "caipora", "clouds"]) {
+        await evaluate(
+          client,
+          `(() => {
+            document.querySelector('[data-scroll-surface][class*="${surfaceName}"]')
+              ?.scrollIntoView({ behavior: "instant", block: "center" });
+            return true;
+          })()`,
+        );
+        await delay(900);
+        await evaluate(
+          client,
+          `(() => {
+            window.scrollBy({ top: Math.min(240, window.innerHeight * 0.24), behavior: "instant" });
+            return true;
+          })()`,
+        );
+        await delay(120);
+        const surfaceState = await evaluate(
+          client,
+          `(() => {
+            const surfaces = [...document.querySelectorAll('[data-scroll-surface]')];
+            const target = document.querySelector('[data-scroll-surface][class*="${surfaceName}"]');
+            const index = surfaces.indexOf(target);
+            const overlayPath = document.querySelectorAll('.scroll-surface-overlay path')[index];
+            return {
+              name: "${surfaceName}",
+              active: target?.classList.contains('is-scroll-surface-curving') ?? false,
+              clipPath: target?.style.clipPath ?? null,
+              overlayPath: overlayPath?.getAttribute('d') ?? null,
+              renderer: document.documentElement.dataset.renderer ?? null,
+              impulse: window.__scrollMotionMetrics?.impulse ?? null
+            };
+          })()`,
+        );
+        const surfaceScreenshot = await client.send("Page.captureScreenshot", {
+          format: "png",
+          fromSurface: true,
+          captureBeyondViewport: false,
+        });
+        await writeFile(
+          resolve(outputDirectory, `${profile.name}-surface-${surfaceName}.png`),
+          Buffer.from(surfaceScreenshot.data, "base64"),
+        );
+        scrollSurfaces.push(surfaceState);
+      }
+      await evaluate(client, "window.scrollTo({ top: 0, behavior: 'instant' }) || true");
+      await delay(900);
+    }
 
     const accessibilityTree = await client.send("Accessibility.getFullAXTree");
     const accessibility = accessibilityTree.nodes
@@ -521,6 +672,11 @@ try {
       consoleErrors,
       failedRequests,
       initial,
+      scrollMotion,
+      scrollMotionSettled,
+      scrollMotionReverse,
+      scrollMotionReverseSettled,
+      scrollSurfaces,
       writing,
       smileAmbient,
       navigation,
