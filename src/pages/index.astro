@@ -237,6 +237,7 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
         let marqueeOffset = 0;
         let marqueeVelocity = -26;
         let marqueeImpulse = 0;
+        let marqueeDirection = -1;
         let marqueeCycle = 1;
         let marqueeLastTime = performance.now();
         let marqueeVisible = false;
@@ -252,7 +253,8 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
           const elapsed = Math.min(48, time - marqueeLastTime) / 1000;
           marqueeLastTime = time;
           marqueeImpulse *= 0.92;
-          marqueeVelocity += ((-26 + marqueeImpulse) - marqueeVelocity) * 0.11;
+          const marqueeTarget = marqueeDirection * (26 + marqueeImpulse);
+          marqueeVelocity += (marqueeTarget - marqueeVelocity) * 0.14;
           marqueeOffset = (marqueeOffset + marqueeVelocity * elapsed) % marqueeCycle;
           if (marqueeOffset > 0) marqueeOffset -= marqueeCycle;
           marqueeTrack.style.transform = `translate3d(${marqueeOffset}px, 0, 0)`;
@@ -278,7 +280,10 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
           start: "top bottom",
           end: "bottom top",
           onUpdate: (self) => {
-            marqueeImpulse = Math.max(-150, Math.min(150, self.getVelocity() * 0.055));
+            const velocity = self.getVelocity();
+            if (Math.abs(velocity) < 12) return;
+            marqueeDirection = velocity > 0 ? -1 : 1;
+            marqueeImpulse = Math.min(210, Math.abs(velocity) * 0.085);
           },
         });
     }

@@ -96,7 +96,7 @@ html[data-renderer="ready"] .unified-canvas {
         animation-fill-mode: both;
         animation-timing-function: linear;
         animation-timeline: view(block);
-        view-timeline-inset: 0 0 25vh;
+        view-timeline-inset: 0 50vh;
         animation-range: entry var(--chroma-start) cover var(--chroma-end);
     }
 }
@@ -644,7 +644,6 @@ html[data-renderer="ready"][data-liquid="active"] [data-liquid-slot] > img {
 .clouds-copy iframe {
     display: block;
     border: 0;
-    border-radius: 12px;
     background: var(--color-surface);
 }
 .spotify-frame > a {

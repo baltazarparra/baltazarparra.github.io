@@ -140,6 +140,7 @@ const smileVertexSource = `
   uniform float uScale;
   uniform float uAspect;
   uniform float uYOffset;
+  uniform vec2 uAnchor;
   uniform vec2 uScreenOffset;
   varying vec3 vNormal;
 
@@ -169,8 +170,8 @@ const smileVertexSource = `
     position.z += 3.4;
     float focalLength = 2.5;
     gl_Position = vec4(
-      position.x * focalLength / uAspect + uScreenOffset.x * position.z,
-      position.y * focalLength + uScreenOffset.y * position.z,
+      position.x * focalLength / uAspect + (uAnchor.x + uScreenOffset.x) * position.z,
+      position.y * focalLength + (uAnchor.y + uScreenOffset.y) * position.z,
       position.z - 0.2,
       position.z
     );
@@ -335,7 +336,7 @@ const init = async () => {
   ]);
   const smileUniforms = uniformsFor(gl, smileProgram, [
     "uRotation", "uRoll", "uScale", "uAspect", "uYOffset",
-    "uScreenOffset", "uPointer", "uTint", "uAlpha", "uTime",
+    "uAnchor", "uScreenOffset", "uPointer", "uTint", "uAlpha", "uTime",
   ]);
 
   const quadBuffer = gl.createBuffer();
@@ -502,13 +503,17 @@ const init = async () => {
   };
 
   const drawSmile = (time) => {
-    const rect = state.smileRect;
-    if (!rectIsVisible(rect) || state.smileProgress >= 0.998) {
+    const heroRect = hero?.getBoundingClientRect();
+    if (
+      !heroRect ||
+      heroRect.bottom <= 0 ||
+      heroRect.top >= window.innerHeight ||
+      state.smileProgress >= 0.998
+    ) {
       metrics.smileVisible = false;
       return;
     }
-    const viewport = viewportFor(rect, state.dpr);
-    if (viewport.width < 1 || viewport.height < 1) return;
+    const viewport = { x: 0, y: 0, width: state.width, height: state.height };
     metrics.smileVisible = true;
     gl.enable(gl.SCISSOR_TEST);
     setViewport(viewport);
@@ -536,13 +541,24 @@ const init = async () => {
     const roll = ambientSmileMotion ? -0.05 + Math.cos(time * 0.00034) * 0.05 : -0.05;
     const gazeWeight = 1 - lift * 0.62;
     const baseScale = portraitLayout ? 1.03 : 1.16;
+    const slotScale = state.smileRect.height / Math.max(window.innerHeight, 1);
+    const fullViewportScale = Math.max(0.4, Math.min(0.76, baseScale * slotScale));
+    const anchorX = Math.max(
+      -0.72,
+      Math.min(
+        0.72,
+        ((state.smileRect.left + state.smileRect.width * 0.5) / window.innerWidth) * 2 - 1,
+      ),
+    );
+    const anchorY = portraitLayout ? -0.1 : 0;
     const blur = Math.max(0, (lift - 0.18) / 0.82) * 0.009;
     const fade = 1 - Math.max(0, (lift - 0.78) / 0.22);
     gl.uniform2f(smileUniforms.uRotation, state.smileX * gazeWeight, state.smileY * gazeWeight);
     gl.uniform1f(smileUniforms.uRoll, roll - lift * 0.06);
-    gl.uniform1f(smileUniforms.uScale, baseScale * (1 + lift * 0.52));
+    gl.uniform1f(smileUniforms.uScale, fullViewportScale * (1 + lift * 0.52));
     gl.uniform1f(smileUniforms.uAspect, aspect);
     gl.uniform1f(smileUniforms.uYOffset, float - (portraitLayout ? 0.025 : 0) - lift * 2.2);
+    gl.uniform2f(smileUniforms.uAnchor, anchorX, anchorY);
     gl.uniform2f(smileUniforms.uPointer, state.pointerX * 2 - 1, state.pointerY * 2 - 1);
     gl.uniform1f(smileUniforms.uTime, time * 0.001);
     if (blur > 0) {
@@ -643,23 +659,20 @@ const init = async () => {
     state.lastPointerY = y;
     state.lastPointerAt = now;
 
-    const smileRect = state.smileRect;
     const heroRect = hero?.getBoundingClientRect();
-    const overSmile =
-      event.clientX >= smileRect.left && event.clientX <= smileRect.right &&
-      event.clientY >= smileRect.top && event.clientY <= smileRect.bottom;
+    const heroVisible = heroRect && heroRect.bottom > 0 && heroRect.top < window.innerHeight;
+    const overSmile = Boolean(heroVisible);
     const overLiquid = state.surfaces.some(({ rect }) =>
       event.clientX >= rect.left && event.clientX <= rect.right &&
       event.clientY >= rect.top && event.clientY <= rect.bottom,
     );
     state.surfaceActive = overSmile || overLiquid;
 
-    const heroVisible = heroRect && heroRect.bottom > 0 && heroRect.top < window.innerHeight;
     if (heroVisible && state.smileProgress < 0.998) {
-      const localX = Math.max(-1.2, Math.min(1.2, ((event.clientX - smileRect.left) / smileRect.width) * 2 - 1));
-      const localY = Math.max(-1.2, Math.min(1.2, -(((event.clientY - smileRect.top) / smileRect.height) * 2 - 1)));
+      const localX = Math.max(-1.2, Math.min(1.2, (event.clientX / window.innerWidth) * 2 - 1));
+      const localY = Math.max(-1.2, Math.min(1.2, -((event.clientY / window.innerHeight) * 2 - 1)));
       state.smileTargetX = localY * 0.18;
-      state.smileTargetY = localX * 0.3;
+      state.smileTargetY = -localX * 0.3;
     } else {
       state.smileTargetX = 0;
       state.smileTargetY = 0;
