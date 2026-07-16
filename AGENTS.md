@@ -59,8 +59,6 @@ root (for example, `/smile.glb`).
 
 ## Performance and accessibility
 
-- Respect `prefers-reduced-motion`. The renderer must reduce or pause motion
-  when the preference is active.
 - Keep pointer-specific interactions behind `(hover: hover) and (pointer:
   fine)`; touch remains scroll-reactive where meaningful.
 - Use passive listeners and `requestAnimationFrame` scheduling for continuous

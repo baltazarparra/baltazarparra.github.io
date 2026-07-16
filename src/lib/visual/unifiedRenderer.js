@@ -11,9 +11,8 @@ const rendererStatus = document.querySelector("[data-status]");
 const contextMetric = document.querySelector('[data-metric="contexts"]');
 const programMetric = document.querySelector('[data-metric="programs"]');
 const frameMetric = document.querySelector('[data-metric="frame"]');
-const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
-const liquidSlots = !reducedMotion.matches ? allLiquidSlots : [];
+const liquidSlots = allLiquidSlots;
 const geometryUrl = new URL("/smile-lite.bin", window.location.origin);
 const liquidUrls = liquidSlots.map((slot) =>
   new URL(slot.dataset.liquidSource || "/baltz-portrait.jpg", window.location.origin),
@@ -293,13 +292,6 @@ const fail = (message) => {
 
 const init = async () => {
   if (!canvas || !smileSlot) return;
-  if (reducedMotion.matches) {
-    document.documentElement.dataset.renderer = "reduced";
-    document.documentElement.dataset.motion = "reduced";
-    document.documentElement.dataset.liquid = "static";
-    metrics.quality = "static";
-    return;
-  }
   const gl = canvas.getContext("webgl", {
     alpha: true,
     antialias: false,
@@ -474,7 +466,6 @@ const init = async () => {
   };
 
   const drawMediaSurface = (surface, time) => {
-    if (reducedMotion.matches) return;
     const rect = surface.rect;
     if (!rectIsVisible(rect)) return;
     const viewport = viewportFor(rect, state.dpr);
@@ -538,7 +529,7 @@ const init = async () => {
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, smileIndexBuffer);
     const aspect = viewport.width / viewport.height;
     const portraitLayout = viewport.width < viewport.height;
-    const ambientSmileMotion = finePointer.matches && !reducedMotion.matches;
+    const ambientSmileMotion = finePointer.matches;
     const progress = state.smileProgress;
     const lift = progress * progress * (3 - 2 * progress);
     const float = ambientSmileMotion ? Math.sin(time * 0.00058) * 0.032 * (1 - lift) : 0;
@@ -622,7 +613,6 @@ const init = async () => {
     updateLabels();
     if (
       !softwareRenderer &&
-      !reducedMotion.matches &&
       (finePointer.matches || time < state.settleUntil)
     ) {
       state.running = true;
@@ -750,17 +740,12 @@ const init = async () => {
     surface.element.addEventListener("pointercancel", () => leaveMedia(surface), { passive: true });
   });
   document.addEventListener("visibilitychange", () => requestFrame(200));
-  reducedMotion.addEventListener("change", () => {
-    document.documentElement.dataset.motion = reducedMotion.matches ? "reduced" : "full";
-    requestFrame(400);
-  });
   finePointer.addEventListener("change", () => requestFrame(400));
 
   resize();
   render(performance.now());
   document.documentElement.dataset.renderer = "ready";
   document.documentElement.dataset.quality = metrics.quality;
-  document.documentElement.dataset.motion = reducedMotion.matches ? "reduced" : "full";
   document.documentElement.dataset.liquid = liquidSlots.length > 0 ? "active" : "static";
   if (rendererStatus) {
     rendererStatus.textContent = softwareRenderer

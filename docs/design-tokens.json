@@ -94,8 +94,7 @@
       "media": { "value": "500ms" }
     },
     "touch": { "value": "no pin; settle and cut only" },
-    "lowCapacity": { "value": "opacity and short translate only; static media" },
-    "reducedMotion": { "value": "instant final states; no pin, scrub, clip-path or parallax" }
+    "lowCapacity": { "value": "opacity and short translate only; static media" }
   },
   "layer": {
     "content": { "value": 0 },

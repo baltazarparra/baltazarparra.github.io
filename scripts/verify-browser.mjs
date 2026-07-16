@@ -146,7 +146,6 @@ const profiles = [
     height: 1000,
     mobile: false,
     touch: false,
-    reducedMotion: false,
   },
   {
     name: "mobile",
@@ -154,7 +153,6 @@ const profiles = [
     height: 844,
     mobile: true,
     touch: true,
-    reducedMotion: false,
   },
   {
     name: "narrow-320",
@@ -162,7 +160,6 @@ const profiles = [
     height: 800,
     mobile: true,
     touch: true,
-    reducedMotion: false,
   },
   {
     name: "zoom-200",
@@ -170,7 +167,6 @@ const profiles = [
     height: 500,
     mobile: false,
     touch: false,
-    reducedMotion: false,
   },
   {
     name: "zoom-400",
@@ -178,17 +174,7 @@ const profiles = [
     height: 250,
     mobile: false,
     touch: false,
-    reducedMotion: false,
     keyboard: true,
-  },
-  {
-    name: "reduced",
-    width: 1440,
-    height: 1000,
-    mobile: false,
-    touch: false,
-    reducedMotion: true,
-    disableJavaScript: false,
   },
   {
     name: "no-js",
@@ -196,7 +182,6 @@ const profiles = [
     height: 1000,
     mobile: false,
     touch: false,
-    reducedMotion: false,
     disableJavaScript: true,
   },
 ];
@@ -253,10 +238,6 @@ try {
     await client.send("Emulation.setEmulatedMedia", {
       media: "screen",
       features: [
-        {
-          name: "prefers-reduced-motion",
-          value: profile.reducedMotion ? "reduce" : "no-preference",
-        },
         {
           name: "hover",
           value: profile.touch ? "none" : "hover",

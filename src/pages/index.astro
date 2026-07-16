@@ -229,13 +229,10 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
     gsap.registerPlugin(ScrollTrigger);
 
     const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const marquee = document.querySelector<HTMLElement>("[data-credits-marquee]");
+    const marqueeTrack = marquee?.querySelector<HTMLElement>("[data-credits-track]");
 
-    if (!reducedMotion.matches) {
-      const marquee = document.querySelector<HTMLElement>("[data-credits-marquee]");
-      const marqueeTrack = marquee?.querySelector<HTMLElement>("[data-credits-track]");
-
-      if (marquee && marqueeTrack) {
+    if (marquee && marqueeTrack) {
         let marqueeFrame = 0;
         let marqueeOffset = 0;
         let marqueeVelocity = -26;
@@ -263,6 +260,7 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
         };
 
         const marqueeObserver = new IntersectionObserver(([entry]) => {
+          if (!entry) return;
           marqueeVisible = entry.isIntersecting;
           marqueeLastTime = performance.now();
           if (marqueeVisible && !marqueeFrame) {
@@ -283,10 +281,9 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
             marqueeImpulse = Math.max(-150, Math.min(150, self.getVelocity() * 0.055));
           },
         });
-      }
     }
 
-    if (finePointer.matches && !reducedMotion.matches) {
+    if (finePointer.matches) {
       const panels = document.querySelectorAll<HTMLElement>(".interactive-panel, .interactive-row");
       let frame = 0;
       let target: HTMLElement | undefined;

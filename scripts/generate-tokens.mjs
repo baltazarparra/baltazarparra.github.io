@@ -1,7 +1,7 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 
-const sourceUrl = new URL("../../docs/design-tokens.json", import.meta.url);
+const sourceUrl = new URL("../docs/design-tokens.json", import.meta.url);
 const outputDirectoryUrl = new URL("../src/generated/", import.meta.url);
 
 const source = JSON.parse(await readFile(sourceUrl, "utf8"));

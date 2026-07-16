@@ -42,14 +42,6 @@ const profiles = [
     hasTouch: true,
     keyboard: false,
   },
-  {
-    name: "webkit-reduced",
-    browserType: webkit,
-    viewport: { width: 1440, height: 1000 },
-    hasTouch: false,
-    keyboard: false,
-    reducedMotion: "reduce",
-  },
 ];
 
 const results = [];
@@ -59,7 +51,6 @@ for (const profile of profiles) {
   const context = await browser.newContext({
     viewport: profile.viewport,
     hasTouch: profile.hasTouch,
-    reducedMotion: profile.reducedMotion ?? "no-preference",
     colorScheme: "dark",
   });
   const page = await context.newPage();

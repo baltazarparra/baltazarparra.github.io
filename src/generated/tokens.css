@@ -58,7 +58,6 @@
   --motion-scrub-media: 500ms;
   --motion-touch: "no pin; settle and cut only";
   --motion-low-capacity: "opacity and short translate only; static media";
-  --motion-reduced-motion: "instant final states; no pin, scrub, clip-path or parallax";
   --layer-content: 0;
   --layer-nav: 10;
   --layer-focus: 20;

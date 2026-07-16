@@ -86,8 +86,7 @@ export const tokens = {
       "media": "500ms"
     },
     "touch": "no pin; settle and cut only",
-    "lowCapacity": "opacity and short translate only; static media",
-    "reducedMotion": "instant final states; no pin, scrub, clip-path or parallax"
+    "lowCapacity": "opacity and short translate only; static media"
   },
   "layer": {
     "content": 0,
