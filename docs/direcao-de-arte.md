@@ -3,6 +3,40 @@
 > **Estado:** aprovada no gate P3 em 15 jul. 2026, incluindo frames responsivos,
 > copy inicial e tokens. Produção permanece intocada.
 
+## Rework R3 — composição em validação
+
+O feedback posterior reabriu composição, escala e motion sem trocar o conceito
+C2. O protótipo navegável está em `docs/prototypes/r3-rework/`; `v2/` continua
+intocada até aprovação explícita deste gate.
+
+### Hierarquia revisada
+
+- O header desaparece por completo. A página começa diretamente em `baltz.`,
+  Smile, `Lead Engineer at Thoughtworks` e `Based in Brasil`.
+- Saem do hero `AI-native engineer`, `Software, systems and small worlds.` e
+  `I design software with code agents, then write, make games and record
+  music.`.
+- About passa a dizer `Design software with code agents as architectural
+  components.`. Sai a frase sobre “a decade of shipping difficult things”.
+- O retrato volta a ser quadrado e fica limitado a 400 px no desktop e 288 px
+  no mobile. A fonte 800 × 800 nunca é ampliada.
+- Writing usa linhas editoriais; Projects tem um estudo dominante e duas notas,
+  sem grade de cards iguais. Todo item com destino é clicável por inteiro.
+- Caipora permanece como corte full-bleed. Clouds vira um split com capa
+  clicável e embed real do Spotify carregado apenas ao chegar perto da seção.
+
+### Vida visual e interação
+
+Um único renderer aprovado no R2 governa campo de fundo, Smile e superfície
+líquida do retrato. O grão global continua em CSS; não existe uma segunda pilha
+de pós-processamento. Links recebem sweep de contraste e resposta posicional,
+reservando distorção líquida para mídia. O efeito é local e acorda por
+interação, em vez de manter a GPU permanentemente ocupada.
+
+No mobile, todas as composições colapsam para uma coluna, a ordem de Clouds é
+capa → copy → embed, não há overlaps dependentes de hover e o renderer mantém
+fallback estático para reduced motion ou GPU por software.
+
 ## Design read
 
 Portfolio autoral para o próprio Baltz, com linguagem

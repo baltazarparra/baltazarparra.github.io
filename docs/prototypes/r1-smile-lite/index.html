@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>Smile Lite — R1 performance study</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main>
+      <section class="study-copy" aria-labelledby="study-title">
+        <p class="eyebrow">R1 / renderer study</p>
+        <h1 id="study-title">Smile,<br />without the wait.</h1>
+        <p class="description">
+          True 3D. One quantized mesh. No React, R3F, Three.js or GLTF loader in
+          the browser.
+        </p>
+        <dl class="metrics" aria-label="Runtime metrics">
+          <div><dt>Geometry</dt><dd data-metric="asset">—</dd></div>
+          <div><dt>First render</dt><dd data-metric="init">—</dd></div>
+          <div><dt>Frame p95</dt><dd data-metric="frame">—</dd></div>
+          <div><dt>Renderer</dt><dd>WebGL native</dd></div>
+        </dl>
+      </section>
+
+      <section
+        class="smile-stage"
+        aria-label="Interactive Smile study"
+        data-smile-root
+      >
+        <div class="smile-poster" aria-hidden="true">
+          <span class="poster-eye poster-eye-left"></span>
+          <span class="poster-eye poster-eye-right"></span>
+          <span class="poster-mouth"></span>
+        </div>
+        <canvas data-smile-canvas aria-hidden="true"></canvas>
+        <p class="interaction-hint">Move slowly. Leave quickly.</p>
+        <p class="status" role="status" aria-live="polite" data-status>
+          Preparing lightweight geometry…
+        </p>
+      </section>
+    </main>
+    <script type="module" src="./smile-lite.js"></script>
+  </body>
+</html>

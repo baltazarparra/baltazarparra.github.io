@@ -2,24 +2,17 @@ export const site = {
   canonicalUrl: "https://baltz.dev/",
   fullName: "Baltazar Parra",
   shortName: "Baltz",
-  title: "Baltz | AI-native engineer, game maker and musician",
-  description:
-    "Baltz designs software with code agents, writes about engineering, makes games and records music.",
-  navigation: [
-    { label: "Work", href: "#work" },
-    { label: "Caipora", href: "#caipora" },
-    { label: "Elsewhere", href: "#elsewhere" },
-  ],
+  title: "Baltz | Lead Engineer at Thoughtworks",
+  description: "The personal site of Baltazar Parra, Lead Engineer at Thoughtworks, based in Brasil.",
   hero: {
-    eyebrow: "AI-native engineer",
     name: "baltz.",
-    statement: "Software, systems and small worlds.",
-    support:
-      "I design software with code agents, then write, make games and record music.",
+    role: "Lead Engineer",
+    employer: "Thoughtworks",
+    employerUrl: "https://www.thoughtworks.com/",
+    location: "Based in Brasil",
   },
   about: {
-    heading: "I design software with code agents as architectural components.",
-    body: "The rest is a decade of shipping difficult things with teams.",
+    heading: "Design software with code agents as architectural components.",
     credits:
       "Nike, Thoughtworks, XP Investimentos, Serasa, Dasa, MRV, CVC, GFT, CI&T",
   },
@@ -70,8 +63,9 @@ export const site = {
     name: "Clouds.",
     description: "An EP by Baltz.",
     url: "https://open.spotify.com/album/6BFeIsMZ4zcuGbs5cugxLM",
-    coverUrl:
-      "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e022e3ffa46097b7171b02c7176",
+    coverUrl: "/clouds-cover.jpg",
+    embedUrl:
+      "https://open.spotify.com/embed/album/6BFeIsMZ4zcuGbs5cugxLM?utm_source=generator&theme=0",
   },
   profiles: [
     { label: "LinkedIn", url: "https://www.linkedin.com/in/baltazarparra/" },

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>One surface — R2 renderer study</title>
+    <script>
+      if (new URLSearchParams(location.search).get("view") === "liquid") {
+        document.documentElement.dataset.view = "liquid";
+      }
+    </script>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="fallback-field" aria-hidden="true"></div>
+    <canvas data-unified-canvas aria-hidden="true"></canvas>
+
+    <main>
+      <section class="intro" aria-labelledby="study-title">
+        <div class="study-copy">
+          <p class="eyebrow">R2 / one context</p>
+          <h1 id="study-title">One surface.<br />Three behaviors.</h1>
+          <p class="description">
+            Background, Smile and liquid media share one native WebGL context.
+          </p>
+          <dl class="metrics" aria-label="Runtime metrics">
+            <div><dt>Contexts</dt><dd data-metric="contexts">—</dd></div>
+            <div><dt>Programs</dt><dd data-metric="programs">—</dd></div>
+            <div><dt>Frame p95</dt><dd data-metric="frame">—</dd></div>
+            <div><dt>Renderer</dt><dd>WebGL native</dd></div>
+          </dl>
+          <p class="status" role="status" aria-live="polite" data-status>
+            Preparing shared renderer…
+          </p>
+        </div>
+
+        <div
+          class="smile-slot"
+          data-smile-slot
+          data-smile-root
+          aria-label="Interactive Smile"
+        >
+          <span class="smile-fallback" aria-hidden="true">
+            <i></i><i></i><b></b>
+          </span>
+          <span class="slot-label">01 / geometry</span>
+        </div>
+      </section>
+
+      <section class="liquid-demo" id="liquid" aria-labelledby="liquid-title">
+        <div class="liquid-copy">
+          <p class="eyebrow">02 / liquid surface</p>
+          <h2 id="liquid-title">The image bends.<br />The link stays real.</h2>
+          <p>
+            The photograph is rendered inside the shared canvas while this
+            component remains semantic, focusable and entirely clickable.
+          </p>
+        </div>
+
+        <a
+          class="liquid-card"
+          href="https://www.linkedin.com/in/baltazarparra/"
+          target="_blank"
+          rel="me noreferrer"
+          data-liquid-slot
+          aria-label="Open Baltazar Parra on LinkedIn"
+        >
+          <img src="./portrait.jpg" alt="Portrait of Baltz" width="800" height="800" />
+          <span class="card-scrim" aria-hidden="true"></span>
+          <span class="card-copy">
+            <small>Move fast, then leave slowly</small>
+            <strong>Baltz ↗</strong>
+          </span>
+        </a>
+      </section>
+    </main>
+
+    <script type="module" src="./unified-renderer.js"></script>
+  </body>
+</html>

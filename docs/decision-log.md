@@ -349,6 +349,80 @@ forma de revalidação.
 - **Revalidar quando:** Baltz decidir que `www` deve ser a identidade pública ou
   a configuração de domínio mudar antes da janela.
 
+## D-0022 - Rework preserva C2 e substitui a composição do P3
+
+- **Data:** 15 jul. 2026
+- **Status:** aceita como requisito; composição R3 em validação
+- **Contexto:** após o launch candidate anterior, Baltz avaliou a página como
+  sem impacto, com pouca vida, retrato superdimensionado e ausência do embed do
+  Spotify. Também especificou cortes exatos de copy, remoção do header e
+  superfícies líquidas comparáveis à referência 14islands.
+- **Decisão:** preservar o conceito C2 The Edit, grafite, Instrument Sans,
+  radius zero e assimetria, mas substituir a composição do P3 pelo rework R3.
+  O novo baseline não tem header, reduz o retrato, torna componentes com links
+  integralmente clicáveis e inclui o embed real de Clouds. O embed supersede a
+  rejeição condicional registrada em D-0015; ele será lazy e nunca autoplay.
+- **Evidência:** briefing explícito do Baltz e protótipo isolado em
+  `docs/prototypes/r3-rework/`.
+- **Alternativa rejeitada:** apenas polir a composição antiga ou adicionar mais
+  efeitos sobre a mesma hierarquia.
+- **Revalidar quando:** Baltz aprovar ou rejeitar o gate visual R3, ou o embed
+  demonstrar custo incompatível com os budgets na validação R7.
+
+## D-0023 - Um renderer substitui os islands React/Three da home
+
+- **Data:** 15 jul. 2026
+- **Status:** aceita
+- **Contexto:** a composição R3 aprovada precisava chegar ao Astro sem
+  reintroduzir o custo do GLB, dois contextos e chunks React/Three que tornaram
+  a primeira versão lenta.
+- **Decisão:** a home usa um módulo WebGL próprio com um contexto e três
+  programas para campo, Smile e retrato. O Smile consome o binário quantizado
+  de 77,8 KB. A integração Astro React e os islands antigos foram removidos do
+  build; reduced motion não inicializa WebGL e preserva posters DOM.
+- **Evidência:** `astro check`, lint e build limpos; bundle da home 16,8 KB sem
+  chunk React; verificação Playwright em desktop, mobile e reduced motion.
+- **Alternativa rejeitada:** otimizar os dois islands existentes ou carregar o
+  GLB antigo depois do primeiro paint.
+- **Revalidar quando:** o renderer ganhar uma nova superfície, o browser perder
+  contexto ou RUM demonstrar regressão de frame time.
+
+## D-0024 - Superfícies líquidas compartilham programa e assets locais
+
+- **Data:** 15 jul. 2026
+- **Status:** aceita
+- **Contexto:** retrato e capa de Clouds precisam da mesma resposta líquida sem
+  multiplicar contextos, shaders ou depender de CORS do Spotify CDN.
+- **Decisão:** generalizar o programa de mídia do renderer para uma lista de
+  superfícies com textura e estado de ponteiro independentes. Retrato e Clouds
+  usam o mesmo draw path; a capa 640 × 640 é servida localmente. O embed permanece
+  lazy, sem autoplay, com link externo sempre disponível como fallback.
+- **Evidência:** um canvas, três programas e duas superfícies reportados no
+  preview; desktop/mobile sem overflow e sem erro de console.
+- **Alternativa rejeitada:** segundo canvas para Clouds, CSS displacement
+  aproximado ou textura remota sujeita a CORS.
+- **Revalidar quando:** entrar uma terceira mídia, o custo de upload de textura
+  afetar o primeiro paint ou o embed mudar sua política de carregamento.
+
+## D-0025 - Touch e motion preservam o mesmo conteúdo sem efeitos presos
+
+- **Data:** 15 jul. 2026
+- **Status:** aceita
+- **Contexto:** a composição precisava funcionar a partir de 320 px, manter
+  alvos acessíveis e responder a mudanças de `prefers-reduced-motion` durante a
+  sessão, não apenas no carregamento.
+- **Decisão:** restringir hover visual a ponteiros finos, usar feedback `active`
+  no touch, garantir alvos mínimos de 24 px e restaurar posters DOM sempre que
+  reduced motion for ativado. O renderer pode retomar quando a preferência
+  volta a motion completo.
+- **Evidência:** Playwright em 320/360/390/768 px sem overflow ou alvos menores
+  que 24 px; sequência de foco com outline; motion dinâmico preservando Smile,
+  retrato e Clouds; sem links vazios ou imagens sem alt.
+- **Alternativa rejeitada:** desativar apenas animações CSS ou manter hover
+  global e aceitar estado preso em touch.
+- **Revalidar quando:** a navegação ganhar controles novos, houver mudança na
+  mídia query de capability ou a página receber formulários.
+
 ## Template para próximas decisões
 
 ## D-XXXX — Título

@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0c0d0f" />
+    <title>baltz. — rework composition</title>
+    <script>
+      document.documentElement.dataset.frame = new URLSearchParams(location.search).get("frame") || "";
+    </script>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="fallback-field" aria-hidden="true"></div>
+    <canvas class="unified-canvas" data-unified-canvas aria-hidden="true"></canvas>
+
+    <main id="main">
+      <section class="scene hero" id="hero" aria-labelledby="hero-title">
+        <div class="hero-lockup">
+          <h1 id="hero-title">baltz.</h1>
+          <div class="hero-meta" aria-label="Role and location">
+            <p>Lead Engineer at <a href="https://www.thoughtworks.com/" target="_blank" rel="noreferrer">Thoughtworks</a></p>
+            <p>Based in Brasil</p>
+          </div>
+        </div>
+        <div class="smile-slot" data-smile-slot data-smile-root aria-hidden="true">
+          <div class="smile-fallback"><span></span><span></span></div>
+        </div>
+        <p class="hero-index" aria-hidden="true">01 / 07</p>
+      </section>
+
+      <section class="scene about" id="about" aria-labelledby="about-title">
+        <figure class="portrait-shell" data-liquid-slot>
+          <img src="./portrait.jpg" width="800" height="800" alt="Portrait of Baltazar Parra" />
+          <figcaption>Baltazar Parra — Brasil</figcaption>
+        </figure>
+        <div class="about-copy">
+          <p class="section-label">About</p>
+          <h2 id="about-title">Design software with code agents as architectural components.</h2>
+          <p class="evidence">Nike, Thoughtworks, XP Investimentos, Serasa, Dasa, MRV, CVC, GFT and CI&amp;T.</p>
+        </div>
+      </section>
+
+      <section class="scene writing" id="writing" aria-labelledby="writing-title">
+        <header class="section-heading">
+          <p class="section-label">Writing</p>
+          <h2 id="writing-title">Latest notes.</h2>
+        </header>
+        <div class="story-list">
+          <a class="story-row interactive-row" href="https://dev.to/baltz/sharing-skills-with-npx-2nbc" target="_blank" rel="noreferrer">
+            <span class="story-meta">May 4, 2026 · 3 min read</span>
+            <h3>Sharing skills with NPX</h3>
+            <span class="row-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="story-row interactive-row" href="https://dev.to/baltz/what-is-harness-design-and-why-does-it-matter-2dbj" target="_blank" rel="noreferrer">
+            <span class="story-meta">March 30, 2026 · 4 min read</span>
+            <h3>What is ‘Harness Design’ and why does it matter</h3>
+            <span class="row-arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="scene projects" id="projects" aria-labelledby="projects-title">
+        <div class="projects-intro">
+          <p class="section-label">Selected work</p>
+          <h2 id="projects-title">Systems with a point of view.</h2>
+        </div>
+        <a class="project-primary interactive-panel" href="https://baltazarparra.github.io/ai-native-engineering" target="_blank" rel="noreferrer">
+          <span class="project-kicker">Interactive learning</span>
+          <strong>AI-Native Engineering</strong>
+          <span class="project-action">Open the work ↗</span>
+        </a>
+        <div class="project-notes">
+          <a class="project-note interactive-row" href="https://github.com/baltazarparra/crypto-transfer" target="_blank" rel="noreferrer">
+            <span>Browser experiment</span><strong>Crypto Transfer DApp</strong><span class="row-arrow">↗</span>
+          </a>
+          <a class="project-note interactive-row" href="https://github.com/baltazarparra/subtitle-scraping" target="_blank" rel="noreferrer">
+            <span>Tooling</span><strong>Subtitle Scraping</strong><span class="row-arrow">↗</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="scene caipora" id="caipora" aria-labelledby="caipora-title">
+        <a class="caipora-link" href="https://baltazarparra.github.io/caipora/" target="_blank" rel="noreferrer">
+          <div class="caipora-image">
+            <img src="./caipora.jpeg" alt="Caipora game artwork" loading="lazy" />
+          </div>
+          <div class="caipora-copy">
+            <p class="section-label">A small world</p>
+            <h2 id="caipora-title">Caipora</h2>
+            <p>Brazilian folk horror, built one hard-earned hit at a time.</p>
+            <span>Enter the world ↗</span>
+          </div>
+        </a>
+      </section>
+
+      <section class="scene clouds" id="clouds" aria-labelledby="clouds-title">
+        <div class="clouds-copy">
+          <p class="section-label">Clouds · EP</p>
+          <h2 id="clouds-title">Clouds.</h2>
+          <p>An EP by Baltz.</p>
+          <iframe
+            title="Clouds EP on Spotify"
+            src="https://open.spotify.com/embed/album/6BFeIsMZ4zcuGbs5cugxLM?utm_source=generator&theme=0"
+            width="100%"
+            height="152"
+            loading="lazy"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          ></iframe>
+        </div>
+        <a class="clouds-cover interactive-panel" href="https://open.spotify.com/album/6BFeIsMZ4zcuGbs5cugxLM" target="_blank" rel="noreferrer" aria-label="Open Clouds EP on Spotify">
+          <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e022e3ffa46097b7171b02c7176" alt="Clouds EP cover" loading="lazy" />
+          <span>Listen ↗</span>
+        </a>
+      </section>
+
+      <section class="scene elsewhere" id="elsewhere" aria-labelledby="elsewhere-title">
+        <div class="elsewhere-heading">
+          <p class="section-label">Elsewhere</p>
+          <h2 id="elsewhere-title">Still here.</h2>
+        </div>
+        <nav class="elsewhere-links" aria-label="External profiles">
+          <a class="interactive-row" href="https://github.com/baltazarparra" target="_blank" rel="noreferrer"><strong>GitHub</strong><span>@baltazarparra ↗</span></a>
+          <a class="interactive-row" href="https://www.linkedin.com/in/baltazarparra/" target="_blank" rel="noreferrer"><strong>LinkedIn</strong><span>/in/baltazarparra ↗</span></a>
+          <a class="interactive-row" href="https://dev.to/baltz" target="_blank" rel="noreferrer"><strong>dev.to</strong><span>@baltz ↗</span></a>
+        </nav>
+      </section>
+    </main>
+
+    <footer>
+      <span>© 2026 Baltazar Parra</span>
+      <a href="#hero">Back to top ↑</a>
+    </footer>
+    <script type="module" src="./renderer.js"></script>
+  </body>
+</html>

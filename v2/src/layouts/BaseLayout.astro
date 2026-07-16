@@ -3,13 +3,6 @@ import "../generated/tokens.css";
 import "../styles/global.css";
 import { site } from "../data/site";
 
-interface Props {
-  title?: string;
-  description?: string;
-  canonicalPath?: string;
-  robots?: string;
-}
-
 const {
   title = site.title,
   description = site.description,
@@ -37,7 +30,12 @@ const structuredData = {
       alternateName: site.shortName,
       url: site.canonicalUrl,
       image: portraitUrl.href,
-      jobTitle: "AI-native engineer",
+      jobTitle: "Lead Engineer",
+      worksFor: {
+        "@type": "Organization",
+        name: "Thoughtworks",
+        url: "https://www.thoughtworks.com/",
+      },
       sameAs: site.profiles.map((profile) => profile.url),
     },
   ],
