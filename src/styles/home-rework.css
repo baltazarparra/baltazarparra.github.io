@@ -263,8 +263,20 @@ html[data-renderer="fallback"] .opening-loader {
     height: 100%;
     object-fit: cover;
     opacity: 0;
+    transition: opacity 320ms ease;
     animation: portrait-fallback-in 650ms cubic-bezier(0.22, 1, 0.36, 1)
         120ms forwards;
+}
+
+html[data-renderer="ready"][data-liquid="active"]
+    .portrait-shell[data-media-state="ready"] {
+    background: transparent;
+}
+
+html[data-renderer="ready"][data-liquid="active"]
+    .portrait-shell[data-media-state="ready"] img {
+    opacity: 0;
+    animation: none;
 }
 
 @keyframes portrait-fallback-in {
@@ -835,7 +847,7 @@ html[data-renderer="fallback"] .opening-loader {
 }
 .clouds-copy {
     width: min(100%, 64rem);
-    margin-left: auto;
+    margin-inline: auto;
 }
 .rework-home .clouds h2 {
     max-width: 13ch;
@@ -1171,7 +1183,7 @@ html[data-end-trail="active"] .end-trail-layer span {
     }
     .clouds-copy {
         width: 100%;
-        margin-left: 0;
+        margin-inline: auto;
     }
     .rework-home .elsewhere {
         align-items: start;

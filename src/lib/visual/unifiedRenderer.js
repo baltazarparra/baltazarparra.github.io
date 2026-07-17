@@ -27,6 +27,9 @@ const metrics = {
   scrollImpulse: 0,
   smileVisible: false,
   mediaReady: 0,
+  mediaHover: 0,
+  mediaVelocity: 0,
+  mediaTrailDistance: 0,
   frameTimes: [],
   get frameP95() {
     if (this.frameTimes.length === 0) return 0;
@@ -80,6 +83,7 @@ const mediaFragmentSource = `
   varying vec2 vUv;
   uniform sampler2D uTexture;
   uniform vec2 uPointer;
+  uniform vec2 uTrailPointer;
   uniform float uHover;
   uniform float uVelocity;
   uniform float uReveal;
@@ -156,6 +160,7 @@ const mediaFragmentSource = `
     vec2 uv = coverUv(shapeUv);
     vec3 color;
     float radius = 1.0;
+    vec2 hoverPrism = vec2(0.0);
 
     float scrollWave = sin((shapeUv.y * 17.0) - uTime * 7.0) * uScrollMotion;
     vec2 scrollOffset = vec2(scrollWave * 0.008 * uScrollDirection, scrollWave * 0.003);
@@ -167,18 +172,37 @@ const mediaFragmentSource = `
       radius = length(corrected);
       vec2 direction = corrected / max(radius, 0.001);
       direction.x /= max(uViewportAspect, 0.001);
-      float speed = min(1.0, uVelocity * 72.0);
-      float lens = smoothstep(0.46, 0.0, radius) * uHover;
-      float wave = sin(radius * 25.0 - uTime * 4.6);
-      wave *= exp(-radius * 5.8) * uHover;
+      vec2 trailDelta = shapeUv - uTrailPointer;
+      vec2 correctedTrail = trailDelta * vec2(uViewportAspect, 1.0);
+      float trailRadius = length(correctedTrail);
+      vec2 pointerFlow = (uPointer - uTrailPointer) * vec2(uViewportAspect, 1.0);
+      float pointerFlowLength = length(pointerFlow);
+      vec2 flowDirection = pointerFlow / max(pointerFlowLength, 0.001);
+      flowDirection.x /= max(uViewportAspect, 0.001);
+      float speed = smoothstep(0.015, 0.38, uVelocity);
+      float lens = smoothstep(0.54, 0.0, radius) * uHover;
+      float ripple = sin(radius * 36.0 - uTime * 7.4);
+      ripple *= exp(-radius * 5.2) * uHover;
+      float fineRipple = sin(radius * 58.0 - uTime * 9.2);
+      fineRipple *= exp(-radius * 8.5) * uHover;
+      float wake = smoothstep(0.48, 0.0, trailRadius) * speed * uHover;
+      float wakeRipple = sin(trailRadius * 31.0 - uTime * 6.1) * wake;
       vec2 tangentDirection = vec2(-direction.y, direction.x);
-      hoverDisplacement = direction * (lens * 0.018 + wave * 0.012);
-      hoverDisplacement += tangentDirection * wave * speed * 0.014;
+      hoverDisplacement = direction * (
+        lens * 0.017 + ripple * 0.007 + fineRipple * 0.002
+      );
+      hoverDisplacement -= flowDirection * wake * (0.007 + speed * 0.010);
+      hoverDisplacement += tangentDirection * (
+        ripple * 0.005 + wakeRipple * 0.007
+      );
+      hoverPrism = direction * lens * (0.0012 + speed * 0.0018);
+      hoverPrism += flowDirection * wake * 0.0017;
     }
 
     if (uPortrait > 0.5) {
       vec2 refractedUv = coverUv(shapeUv + hoverDisplacement + scrollOffset);
       vec2 prism = uEdgeNormal * impactWave * impactDecay * impactInfluence * 0.0011;
+      prism += hoverPrism * uHover;
       color.r = texture2D(uTexture, clamp(refractedUv + prism, 0.001, 0.999)).r;
       color.g = texture2D(uTexture, clamp(refractedUv, 0.001, 0.999)).g;
       color.b = texture2D(uTexture, clamp(refractedUv - prism, 0.001, 0.999)).b;
@@ -408,7 +432,7 @@ const init = async () => {
     "uResolution", "uPointer", "uTime", "uMotion",
   ]);
   const mediaUniforms = uniformsFor(gl, mediaProgram, [
-    "uTexture", "uPointer", "uHover", "uVelocity", "uReveal", "uPortrait", "uTime",
+    "uTexture", "uPointer", "uTrailPointer", "uHover", "uVelocity", "uReveal", "uPortrait", "uTime",
     "uViewportAspect", "uTextureAspect", "uScrollMotion", "uScrollDirection", "uSurfaceBend",
     "uEdgePoint", "uEdgeNormal", "uEdgeInset", "uEdgePulse", "uEdgeStartedAt", "uEdgePolarity",
   ]);
@@ -488,6 +512,9 @@ const init = async () => {
       rect: element.getBoundingClientRect(),
       x: 0.5,
       y: 0.5,
+      trailX: 0.5,
+      trailY: 0.5,
+      pointerActive: false,
       hover: 0,
       hoverTarget: 0,
       velocity: 0,
@@ -584,6 +611,7 @@ const init = async () => {
     gl.bindTexture(gl.TEXTURE_2D, surface.texture);
     gl.uniform1i(mediaUniforms.uTexture, 0);
     gl.uniform2f(mediaUniforms.uPointer, surface.x, surface.y);
+    gl.uniform2f(mediaUniforms.uTrailPointer, surface.trailX, surface.trailY);
     gl.uniform1f(mediaUniforms.uHover, surface.hover);
     gl.uniform1f(mediaUniforms.uVelocity, surface.velocity);
     gl.uniform1f(mediaUniforms.uReveal, surface.reveal);
@@ -728,6 +756,8 @@ const init = async () => {
     state.smileX += (state.smileTargetX - state.smileX) * 0.075;
     state.smileY += (state.smileTargetY - state.smileY) * 0.075;
     state.surfaces.forEach((surface) => {
+      surface.trailX += (surface.x - surface.trailX) * 0.16;
+      surface.trailY += (surface.y - surface.trailY) * 0.16;
       surface.hover += (surface.hoverTarget - surface.hover) * 0.11;
       surface.velocity += (surface.velocityTarget - surface.velocity) * 0.14;
       surface.velocityTarget *= 0.88;
@@ -738,6 +768,14 @@ const init = async () => {
       else if (softwareRenderer) surface.reveal = revealTarget;
       else surface.reveal += (revealTarget - surface.reveal) * 0.09;
     });
+    metrics.mediaHover = Math.max(0, ...state.surfaces.map(({ hover }) => hover));
+    metrics.mediaVelocity = Math.max(0, ...state.surfaces.map(({ velocity }) => velocity));
+    metrics.mediaTrailDistance = Math.max(
+      0,
+      ...state.surfaces.map((surface) =>
+        Math.hypot(surface.x - surface.trailX, surface.y - surface.trailY),
+      ),
+    );
     state.pointerMotion += (state.pointerMotionTarget - state.pointerMotion) * 0.1;
     state.pointerMotionTarget *= 0.9;
     drawBackground(time);
@@ -837,6 +875,13 @@ const init = async () => {
     const rect = surface.rect;
     const x = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
     const y = Math.max(0, Math.min(1, 1 - (event.clientY - rect.top) / rect.height));
+    if (!surface.pointerActive) {
+      surface.x = x;
+      surface.y = y;
+      surface.trailX = x;
+      surface.trailY = y;
+      surface.pointerActive = true;
+    }
     const distance = Math.hypot(x - surface.x, y - surface.y);
     surface.x = x;
     surface.y = y;
@@ -882,6 +927,7 @@ const init = async () => {
   const leaveMedia = (surface, event) => {
     if (softwareRenderer || !finePointer.matches) return;
     impactMediaEdge(surface, event, -1);
+    surface.pointerActive = false;
     surface.hoverTarget = 0;
     surface.velocityTarget = 0.45;
     requestFrame(1600);

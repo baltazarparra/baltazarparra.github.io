@@ -228,6 +228,33 @@ try {
     await client.send("Runtime.enable");
     await client.send("Network.enable");
     await client.send("Accessibility.enable");
+    if (profile.name === "desktop") {
+      await client.send("Page.addScriptToEvaluateOnNewDocument", {
+        source: `(() => {
+          const nativeMatchMedia = window.matchMedia.bind(window);
+          window.matchMedia = (query) => {
+            const result = nativeMatchMedia(query);
+            if (query !== "(hover: hover) and (pointer: fine)") return result;
+            return new Proxy(result, {
+              get(target, property) {
+                if (property === "matches") return true;
+                const value = Reflect.get(target, property, target);
+                return typeof value === "function" ? value.bind(target) : value;
+              }
+            });
+          };
+          [window.WebGLRenderingContext, window.WebGL2RenderingContext]
+            .filter(Boolean)
+            .forEach((Context) => {
+              const originalGetParameter = Context.prototype.getParameter;
+              Context.prototype.getParameter = function(parameter) {
+              if (parameter === 37446 || parameter === 7937) return "ANGLE (Test Hardware GPU)";
+                return originalGetParameter.call(this, parameter);
+              };
+            });
+        })();`,
+      });
+    }
     await client.send("Network.setCacheDisabled", { cacheDisabled: true });
     await client.send("Emulation.setDeviceMetricsOverride", {
       width: profile.width,
@@ -484,6 +511,86 @@ try {
       Buffer.from(heroScreenshot.data, "base64"),
     );
 
+    let portraitLiquid = null;
+    if (profile.name === "desktop" && !profile.disableJavaScript) {
+      await evaluate(
+        client,
+        `(() => {
+          document.querySelector('.portrait-shell')
+            ?.scrollIntoView({ behavior: 'instant', block: 'center' });
+          return true;
+        })()`,
+      );
+      await delay(900);
+      const portraitRect = await evaluate(
+        client,
+        `(() => {
+          const rect = document.querySelector('.portrait-shell')?.getBoundingClientRect();
+          return rect ? { left: rect.left, top: rect.top, width: rect.width, height: rect.height } : null;
+        })()`,
+      );
+      if (portraitRect) {
+        const portraitStillScreenshot = await client.send("Page.captureScreenshot", {
+          format: "png",
+          fromSurface: true,
+          captureBeyondViewport: false,
+        });
+        await writeFile(
+          resolve(outputDirectory, `${profile.name}-portrait-still.png`),
+          Buffer.from(portraitStillScreenshot.data, "base64"),
+        );
+        const y = portraitRect.top + portraitRect.height * 0.52;
+        const positions = [0.08, 0.78, 0.24, 0.7, 0.48];
+        for (const [index, progress] of positions.entries()) {
+          const x = portraitRect.left + portraitRect.width * progress;
+          await client.send("Input.dispatchMouseEvent", {
+            type: "mouseMoved",
+            x,
+            y,
+          });
+          await evaluate(
+            client,
+            `(() => {
+              const portrait = document.querySelector('.portrait-shell');
+              const options = {
+                bubbles: true,
+                pointerType: 'mouse',
+                clientX: ${x},
+                clientY: ${y}
+              };
+              if (${index} === 0) portrait?.dispatchEvent(new PointerEvent('pointerenter', options));
+              portrait?.dispatchEvent(new PointerEvent('pointermove', options));
+              return true;
+            })()`,
+          );
+          await delay(70);
+        }
+        portraitLiquid = await evaluate(
+          client,
+          `(() => ({
+            renderer: document.documentElement.dataset.renderer,
+            quality: document.documentElement.dataset.quality,
+            finePointer: matchMedia('(hover: hover) and (pointer: fine)').matches,
+            rect: ${JSON.stringify(portraitRect)},
+            mediaState: document.querySelector('.portrait-shell')?.dataset.mediaState,
+            domImageOpacity: getComputedStyle(document.querySelector('.portrait-shell img')).opacity,
+            hover: window.__unifiedRendererMetrics?.mediaHover ?? null,
+            velocity: window.__unifiedRendererMetrics?.mediaVelocity ?? null,
+            trailDistance: window.__unifiedRendererMetrics?.mediaTrailDistance ?? null
+          }))()`,
+        );
+        const portraitLiquidScreenshot = await client.send("Page.captureScreenshot", {
+          format: "png",
+          fromSurface: true,
+          captureBeyondViewport: false,
+        });
+        await writeFile(
+          resolve(outputDirectory, `${profile.name}-portrait-liquid.png`),
+          Buffer.from(portraitLiquidScreenshot.data, "base64"),
+        );
+      }
+    }
+
     await evaluate(
       client,
       `(() => {
@@ -685,6 +792,7 @@ try {
       scrollMotionReverse,
       scrollMotionReverseSettled,
       scrollSurfaces,
+      portraitLiquid,
       writing,
       smileAmbient,
       navigation,
