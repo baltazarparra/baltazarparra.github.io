@@ -1,5 +1,3 @@
-/* global process, URLSearchParams, console, WebSocket, fetch, setTimeout, clearTimeout */
-
 import { Buffer } from "node:buffer";
 import { spawn } from "node:child_process";
 import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";

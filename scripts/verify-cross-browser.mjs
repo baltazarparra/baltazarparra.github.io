@@ -102,29 +102,26 @@ for (const profile of profiles) {
   });
   await page.waitForTimeout(500);
   const resilience = await page.evaluate(() => {
-    const cover = document.querySelector(".clouds-cover");
-    const image = cover?.querySelector("img");
-    const fallback = cover?.querySelector(":scope > span");
+    const portrait = document.querySelector("[data-liquid-slot]");
+    const image = portrait?.querySelector("img");
     return {
-      cloudsState: cover?.getAttribute("data-media-state"),
-      imageOpacity: image ? getComputedStyle(image).opacity : null,
-      fallbackText: fallback?.textContent?.trim() ?? null,
-      fallbackVisible: fallback
-        ? getComputedStyle(fallback).visibility !== "hidden" &&
-          getComputedStyle(fallback).display !== "none" &&
-          getComputedStyle(fallback).opacity !== "0"
-        : false,
+      portraitState: portrait?.getAttribute("data-media-state"),
+      portraitLoaded: Boolean(image?.complete && image.naturalWidth > 0),
+      cloudsCoverPresent: Boolean(document.querySelector(".clouds-cover")),
+      cloudsHeading: document.querySelector("#clouds-title")?.textContent?.trim(),
+      sectionOrder: [...document.querySelectorAll("main > section")].map((node) => node.id),
     };
   });
 
   const keyboard = [];
   if (profile.keyboard) {
-    await page.evaluate(() => {
+    const keyboardSteps = await page.evaluate(() => {
       window.scrollTo({ top: 0, behavior: "instant" });
       document.body.tabIndex = -1;
       document.body.focus({ preventScroll: true });
+      return document.querySelectorAll("a[href]").length;
     });
-    for (let index = 0; index < 17; index += 1) {
+    for (let index = 0; index < keyboardSteps; index += 1) {
       await page.keyboard.press("Tab");
       keyboard.push(
         await page.evaluate(() => {

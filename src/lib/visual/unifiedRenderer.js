@@ -14,7 +14,7 @@ const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
 const liquidSlots = allLiquidSlots;
 const geometryUrl = new URL("/smile-lite.bin", window.location.origin);
 const liquidUrls = liquidSlots.map((slot) =>
-  new URL(slot.dataset.liquidSource || "/baltz-portrait.jpg", window.location.origin),
+  new URL(slot.dataset.liquidSource || "/baltz-portrait.webp", window.location.origin),
 );
 
 const metrics = {
@@ -26,6 +26,7 @@ const metrics = {
   smileProgress: 0,
   scrollImpulse: 0,
   smileVisible: false,
+  mediaReady: 0,
   frameTimes: [],
   get frameP95() {
     if (this.frameTimes.length === 0) return 0;
@@ -81,6 +82,7 @@ const mediaFragmentSource = `
   uniform vec2 uPointer;
   uniform float uHover;
   uniform float uVelocity;
+  uniform float uReveal;
   uniform float uPortrait;
   uniform float uScrollMotion;
   uniform float uScrollDirection;
@@ -158,14 +160,8 @@ const mediaFragmentSource = `
     float scrollWave = sin((shapeUv.y * 17.0) - uTime * 7.0) * uScrollMotion;
     vec2 scrollOffset = vec2(scrollWave * 0.008 * uScrollDirection, scrollWave * 0.003);
 
-    if (uPortrait > 0.5) {
-      vec2 refractedUv = coverUv(shapeUv + scrollOffset);
-      vec2 prism = uEdgeNormal * impactWave * impactDecay * impactInfluence * 0.0011;
-      color.r = texture2D(uTexture, clamp(refractedUv + prism, 0.001, 0.999)).r;
-      color.g = texture2D(uTexture, clamp(refractedUv, 0.001, 0.999)).g;
-      color.b = texture2D(uTexture, clamp(refractedUv - prism, 0.001, 0.999)).b;
-      color *= 0.99 + waveFront * impactDecay * 0.025;
-    } else if (uHover > 0.002) {
+    vec2 hoverDisplacement = vec2(0.0);
+    if (uHover > 0.002) {
       vec2 delta = shapeUv - uPointer;
       vec2 corrected = delta * vec2(uViewportAspect, 1.0);
       radius = length(corrected);
@@ -175,19 +171,26 @@ const mediaFragmentSource = `
       float lens = smoothstep(0.46, 0.0, radius) * uHover;
       float wave = sin(radius * 25.0 - uTime * 4.6);
       wave *= exp(-radius * 5.8) * uHover;
-
       vec2 tangentDirection = vec2(-direction.y, direction.x);
-      vec2 displacement = direction * (lens * 0.018 + wave * 0.012);
-      displacement += tangentDirection * wave * speed * 0.014;
-      uv = coverUv(shapeUv + displacement + scrollOffset);
-      color = texture2D(uTexture, clamp(uv, 0.001, 0.999)).rgb;
+      hoverDisplacement = direction * (lens * 0.018 + wave * 0.012);
+      hoverDisplacement += tangentDirection * wave * speed * 0.014;
+    }
+
+    if (uPortrait > 0.5) {
+      vec2 refractedUv = coverUv(shapeUv + hoverDisplacement + scrollOffset);
+      vec2 prism = uEdgeNormal * impactWave * impactDecay * impactInfluence * 0.0011;
+      color.r = texture2D(uTexture, clamp(refractedUv + prism, 0.001, 0.999)).r;
+      color.g = texture2D(uTexture, clamp(refractedUv, 0.001, 0.999)).g;
+      color.b = texture2D(uTexture, clamp(refractedUv - prism, 0.001, 0.999)).b;
+      color *= 0.99 + waveFront * impactDecay * 0.025;
     } else {
-      color = texture2D(uTexture, clamp(uv + scrollOffset, 0.001, 0.999)).rgb;
+      uv = coverUv(shapeUv + hoverDisplacement + scrollOffset);
+      color = texture2D(uTexture, clamp(uv, 0.001, 0.999)).rgb;
     }
 
     color = mix(color, color * vec3(1.02, 0.91, 0.86), 0.22);
-    color *= 0.84 + smoothstep(0.72, 0.0, radius) * uHover * (1.0 - uPortrait) * 0.2;
-    gl_FragColor = vec4(color, 1.0);
+    color *= 0.84 + smoothstep(0.72, 0.0, radius) * uHover * 0.2;
+    gl_FragColor = vec4(color, uReveal);
   }
 `;
 
@@ -268,15 +271,17 @@ const smileFragmentSource = `
 `;
 
 const compileShader = (gl, type, source) => {
-  const shader = gl.createShader(type);
-  gl.shaderSource(shader, source);
-  gl.compileShader(shader);
-  if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-    const message = gl.getShaderInfoLog(shader) || "Shader compilation failed";
+  let lastMessage = "Shader compilation failed";
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    const shader = gl.createShader(type);
+    gl.shaderSource(shader, source);
+    gl.compileShader(shader);
+    if (gl.getShaderParameter(shader, gl.COMPILE_STATUS)) return shader;
+    lastMessage = gl.getShaderInfoLog(shader) || lastMessage;
     gl.deleteShader(shader);
-    throw new Error(message);
   }
-  return shader;
+  const label = type === gl.VERTEX_SHADER ? "vertex" : "fragment";
+  throw new Error(`${label} shader compilation failed: ${lastMessage}`);
 };
 
 const createProgram = (gl, vertexSource, fragmentSource) => {
@@ -332,6 +337,15 @@ const rectIsVisible = (rect) => {
   return true;
 };
 
+const viewportRevealFor = (rect) => {
+  const visibleHeight = Math.max(
+    0,
+    Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0),
+  );
+  const fadeBand = Math.max(1, Math.min(120, rect.height * 0.24));
+  return Math.min(1, visibleHeight / fadeBand);
+};
+
 const viewportFor = (rect, dpr) => ({
   x: Math.max(0, Math.round(rect.left * dpr)),
   y: Math.max(0, Math.round((window.innerHeight - rect.bottom) * dpr)),
@@ -347,11 +361,18 @@ const updateLabels = () => {
 
 const fail = (message) => {
   document.documentElement.dataset.renderer = "fallback";
+  document.documentElement.dataset.liquid = "static";
+  liquidSlots.forEach((slot) => {
+    if (slot.dataset.mediaState !== "ready") slot.dataset.mediaState = "error";
+  });
   if (rendererStatus) rendererStatus.textContent = message;
 };
 
 const init = async () => {
-  if (!canvas || !smileSlot) return;
+  if (!canvas || !smileSlot) {
+    fail("CSS and image fallback — renderer mount unavailable");
+    return;
+  }
   const gl = canvas.getContext("webgl", {
     alpha: true,
     antialias: false,
@@ -372,10 +393,7 @@ const init = async () => {
   metrics.renderer = rendererName || "unknown";
   metrics.quality = softwareRenderer ? "compatibility" : "full";
 
-  const [geometryResponse, ...liquidImages] = await Promise.all([
-    fetch(geometryUrl, { cache: "force-cache" }),
-    ...liquidUrls.map((url) => loadImage(url)),
-  ]);
+  const geometryResponse = await fetch(geometryUrl, { cache: "force-cache" });
   if (!geometryResponse.ok) {
     throw new Error(`Geometry request failed: ${geometryResponse.status}`);
   }
@@ -390,7 +408,7 @@ const init = async () => {
     "uResolution", "uPointer", "uTime", "uMotion",
   ]);
   const mediaUniforms = uniformsFor(gl, mediaProgram, [
-    "uTexture", "uPointer", "uHover", "uVelocity", "uPortrait", "uTime",
+    "uTexture", "uPointer", "uHover", "uVelocity", "uReveal", "uPortrait", "uTime",
     "uViewportAspect", "uTextureAspect", "uScrollMotion", "uScrollDirection", "uSurfaceBend",
     "uEdgePoint", "uEdgeNormal", "uEdgeInset", "uEdgePulse", "uEdgeStartedAt", "uEdgePolarity",
   ]);
@@ -422,7 +440,7 @@ const init = async () => {
     gl.STATIC_DRAW,
   );
 
-  const liquidTextures = liquidImages.map((image) => {
+  const createTexture = (image) => {
     const texture = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, texture);
     gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
@@ -432,7 +450,7 @@ const init = async () => {
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
     return texture;
-  });
+  };
 
   const state = {
     width: 1,
@@ -461,8 +479,12 @@ const init = async () => {
     smileRect: smileSlot.getBoundingClientRect(),
     surfaces: liquidSlots.map((element, index) => ({
       element,
-      image: liquidImages[index],
-      texture: liquidTextures[index],
+      url: liquidUrls[index],
+      image: null,
+      texture: null,
+      ready: false,
+      failed: false,
+      reveal: 0,
       rect: element.getBoundingClientRect(),
       x: 0.5,
       y: 0.5,
@@ -537,6 +559,7 @@ const init = async () => {
   };
 
   const drawMediaSurface = (surface, time) => {
+    if (!surface.ready || !surface.texture || !surface.image || surface.reveal <= 0.001) return;
     const rect = surface.rect;
     if (!rectIsVisible(rect)) return;
     const edgePadding = surface.edgeEnabled ? Math.min(34, rect.width * 0.085) : 0;
@@ -552,7 +575,8 @@ const init = async () => {
     if (viewport.width < 1 || viewport.height < 1) return;
     gl.enable(gl.SCISSOR_TEST);
     gl.disable(gl.DEPTH_TEST);
-    gl.disable(gl.BLEND);
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
     setViewport(viewport);
     gl.useProgram(mediaProgram);
     bindQuad(mediaProgram);
@@ -562,6 +586,7 @@ const init = async () => {
     gl.uniform2f(mediaUniforms.uPointer, surface.x, surface.y);
     gl.uniform1f(mediaUniforms.uHover, surface.hover);
     gl.uniform1f(mediaUniforms.uVelocity, surface.velocity);
+    gl.uniform1f(mediaUniforms.uReveal, surface.reveal);
     gl.uniform1f(mediaUniforms.uPortrait, surface.isPortrait ? 1 : 0);
     gl.uniform1f(mediaUniforms.uScrollMotion, surface.scrollMotion);
     gl.uniform1f(mediaUniforms.uScrollDirection, state.scrollDirection);
@@ -708,6 +733,10 @@ const init = async () => {
       surface.velocityTarget *= 0.88;
       const scrollTarget = Math.abs(state.scrollImpulse) * surface.scrollScale;
       surface.scrollMotion += (scrollTarget - surface.scrollMotion) * 0.12;
+      const revealTarget = surface.ready ? viewportRevealFor(surface.rect) : 0;
+      if (revealTarget <= 0) surface.reveal = 0;
+      else if (softwareRenderer) surface.reveal = revealTarget;
+      else surface.reveal += (revealTarget - surface.reveal) * 0.09;
     });
     state.pointerMotion += (state.pointerMotionTarget - state.pointerMotion) * 0.1;
     state.pointerMotionTarget *= 0.9;
@@ -743,6 +772,29 @@ const init = async () => {
     if (state.running || !state.visible || document.hidden) return;
     state.running = true;
     requestAnimationFrame(frame);
+  };
+
+  let settledSurfaceCount = 0;
+  const loadSurface = async (surface) => {
+    surface.element.dataset.mediaState = "loading";
+    try {
+      const image = await loadImage(surface.url);
+      surface.image = image;
+      surface.texture = createTexture(image);
+      surface.ready = true;
+      surface.element.dataset.mediaState = "ready";
+      metrics.mediaReady += 1;
+      document.documentElement.dataset.liquid = "active";
+      requestFrame(900);
+    } catch {
+      surface.failed = true;
+      surface.element.dataset.mediaState = "error";
+    } finally {
+      settledSurfaceCount += 1;
+      if (settledSurfaceCount === state.surfaces.length && metrics.mediaReady === 0) {
+        document.documentElement.dataset.liquid = "static";
+      }
+    }
   };
 
   const updateGlobalPointer = (event) => {
@@ -819,12 +871,11 @@ const init = async () => {
   const enterMedia = (surface, event) => {
     if (softwareRenderer || !finePointer.matches) return;
     impactMediaEdge(surface, event, 1);
-    if (!surface.isPortrait) updateMediaPointer(surface, event);
+    updateMediaPointer(surface, event);
     requestFrame(1600);
   };
 
   const moveMedia = (surface, event) => {
-    if (surface.isPortrait) return;
     updateMediaPointer(surface, event);
   };
 
@@ -832,7 +883,7 @@ const init = async () => {
     if (softwareRenderer || !finePointer.matches) return;
     impactMediaEdge(surface, event, -1);
     surface.hoverTarget = 0;
-    surface.velocityTarget = surface.isPortrait ? 0 : 0.45;
+    surface.velocityTarget = 0.45;
     requestFrame(1600);
   };
 
@@ -885,7 +936,7 @@ const init = async () => {
   render(performance.now());
   document.documentElement.dataset.renderer = "ready";
   document.documentElement.dataset.quality = metrics.quality;
-  document.documentElement.dataset.liquid = liquidSlots.length > 0 ? "active" : "static";
+  document.documentElement.dataset.liquid = liquidSlots.length > 0 ? "loading" : "static";
   if (rendererStatus) {
     rendererStatus.textContent = softwareRenderer
       ? "One context — compatibility tier, static GPU surfaces"
@@ -893,6 +944,9 @@ const init = async () => {
   }
   updateLabels();
   requestFrame(500);
+  state.surfaces.forEach((surface) => {
+    void loadSurface(surface);
+  });
 };
 
 init().catch((error) => {

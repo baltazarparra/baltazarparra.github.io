@@ -26,7 +26,9 @@ const profiles = [
     touch: true,
     runs: 1,
   },
-];
+].filter((profile) =>
+  process.env.RUNTIME_DESKTOP_ONLY === "1" ? profile.name === "desktop" : true,
+);
 
 await mkdir(outputDirectory, { recursive: true });
 
@@ -163,7 +165,8 @@ const rawRuns = [];
 
 try {
   for (const profile of profiles) {
-    for (let run = 1; run <= profile.runs; run += 1) {
+    const runCount = process.env.RUNTIME_CPU_PROFILE === "1" ? 1 : profile.runs;
+    for (let run = 1; run <= runCount; run += 1) {
       const { client, targetId } = await createPage();
       const consoleErrors = [];
       client.on("Runtime.exceptionThrown", (event) => {
@@ -182,6 +185,16 @@ try {
       await client.send("Page.enable");
       await client.send("Runtime.enable");
       await client.send("Network.enable");
+      const blockedUrls = [];
+      if (process.env.RUNTIME_BLOCK_THIRD_PARTY === "1") {
+        blockedUrls.push("*open.spotify.com*");
+      }
+      if (process.env.RUNTIME_BLOCK_RENDERER === "1") {
+        blockedUrls.push("*smile-lite.bin*");
+      }
+      if (blockedUrls.length > 0) {
+        await client.send("Network.setBlockedURLs", { urls: blockedUrls });
+      }
       await client.send("Network.setCacheDisabled", { cacheDisabled: true });
       await client.send("Emulation.setDeviceMetricsOverride", {
         width: profile.width,
@@ -212,7 +225,28 @@ try {
       const loaded = client.waitFor("Page.loadEventFired");
       await client.send("Page.navigate", { url: baseUrl });
       await loaded;
+      if (process.env.RUNTIME_DISABLE_SURFACE_CLIP === "1") {
+        await evaluate(
+          client,
+          `(() => {
+            const style = document.createElement("style");
+            style.textContent = "[data-scroll-surface] { clip-path: none !important; }";
+            document.head.append(style);
+          })()`,
+        );
+      }
+      if (process.env.RUNTIME_HIDE_CANVAS === "1") {
+        await evaluate(
+          client,
+          `document.querySelector("[data-unified-canvas]")?.style.setProperty("display", "none", "important")`,
+        );
+      }
       await delay(750);
+
+      if (process.env.RUNTIME_CPU_PROFILE === "1") {
+        await client.send("Profiler.enable");
+        await client.send("Profiler.start");
+      }
 
       const metrics = await evaluate(
         client,
@@ -303,11 +337,35 @@ try {
         })()`,
       );
 
+      let cpuProfileTop = [];
+      if (process.env.RUNTIME_CPU_PROFILE === "1") {
+        const { profile } = await client.send("Profiler.stop");
+        const nodeById = new Map(profile.nodes.map((node) => [node.id, node]));
+        const counts = new Map();
+        for (const nodeId of profile.samples ?? []) {
+          counts.set(nodeId, (counts.get(nodeId) ?? 0) + 1);
+        }
+        cpuProfileTop = [...counts.entries()]
+          .map(([nodeId, samples]) => {
+            const callFrame = nodeById.get(nodeId)?.callFrame;
+            return {
+              samples,
+              functionName: callFrame?.functionName || "(anonymous)",
+              url: callFrame?.url || "",
+              line: (callFrame?.lineNumber ?? -1) + 1,
+            };
+          })
+          .sort((left, right) => right.samples - left.samples)
+          .slice(0, 24);
+        await client.send("Profiler.disable");
+      }
+
       rawRuns.push({
         profile: profile.name,
         run,
         consoleErrors,
         metrics,
+        cpuProfileTop,
       });
 
       client.close();

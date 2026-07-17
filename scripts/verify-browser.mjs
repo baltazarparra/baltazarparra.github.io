@@ -196,6 +196,8 @@ const activeProfiles = profileFilter
 const results = [];
 let notFound;
 let assetFailure;
+let geometryFailure;
+let webglFailure;
 
 try {
   for (const profile of activeProfiles) {
@@ -259,7 +261,7 @@ try {
     const loaded = client.waitFor("Page.loadEventFired");
     await client.send("Page.navigate", { url: baseUrl });
     await loaded;
-    await delay(2500);
+    await delay(profile.disableJavaScript ? 3200 : 2500);
 
     const initial = await evaluate(
       client,
@@ -272,7 +274,17 @@ try {
           ? getComputedStyle(document.querySelector(".hero-meta a")).display
           : null,
         overlay: Boolean(document.querySelector(".vite-error-overlay, #webpack-dev-server-client-overlay")),
+        loader: (() => {
+          const node = document.querySelector(".opening-loader");
+          const style = node ? getComputedStyle(node) : null;
+          return {
+            present: Boolean(node),
+            visibility: style?.visibility ?? null,
+            opacity: style?.opacity ?? null
+          };
+        })(),
         smileCanvas: document.querySelectorAll("[data-unified-canvas]").length,
+        sectionOrder: [...document.querySelectorAll("main > section")].map((node) => node.id),
         pageHeight: document.documentElement.scrollHeight,
         clientWidth: document.documentElement.clientWidth,
         scrollWidth: document.documentElement.scrollWidth,
@@ -399,7 +411,7 @@ try {
 
     const scrollSurfaces = [];
     if (!profile.disableJavaScript) {
-      for (const surfaceName of ["project", "caipora", "clouds"]) {
+      for (const surfaceName of ["project", "caipora"]) {
         await evaluate(
           client,
           `(() => {
@@ -420,15 +432,12 @@ try {
         const surfaceState = await evaluate(
           client,
           `(() => {
-            const surfaces = [...document.querySelectorAll('[data-scroll-surface]')];
             const target = document.querySelector('[data-scroll-surface][class*="${surfaceName}"]');
-            const index = surfaces.indexOf(target);
-            const overlayPath = document.querySelectorAll('.scroll-surface-overlay path')[index];
             return {
               name: "${surfaceName}",
               active: target?.classList.contains('is-scroll-surface-curving') ?? false,
               clipPath: target?.style.clipPath ?? null,
-              overlayPath: overlayPath?.getAttribute('d') ?? null,
+              overlayPresent: Boolean(document.querySelector('.scroll-surface-overlay')),
               renderer: document.documentElement.dataset.renderer ?? null,
               impulse: window.__scrollMotionMetrics?.impulse ?? null
             };
@@ -569,14 +578,13 @@ try {
     const clouds = await evaluate(
       client,
       `(() => {
-        const root = document.querySelector('.clouds-cover');
-        const image = root?.querySelector('img');
         const iframe = document.querySelector('.spotify-frame iframe');
         return {
-          imageLoaded: Boolean(image?.complete && image.naturalWidth > 0),
-          imageOpacity: image ? getComputedStyle(image).opacity : null,
+          coverPresent: Boolean(document.querySelector('.clouds-cover')),
           playerHeight: iframe?.getAttribute('height'),
-          heading: document.querySelector('#clouds-title')?.textContent?.trim()
+          loading: iframe?.getAttribute('loading'),
+          heading: document.querySelector('#clouds-title')?.textContent?.trim(),
+          sectionOrder: [...document.querySelectorAll('main > section')].map((node) => node.id)
         };
       })()`,
     );
@@ -622,7 +630,7 @@ try {
 
     const keyboard = [];
     if (profile.name === "desktop" || profile.keyboard) {
-      await evaluate(
+      const keyboardSteps = await evaluate(
         client,
         `(() => {
           window.scrollTo({ top: 0, behavior: "instant" });
@@ -631,7 +639,7 @@ try {
           return document.querySelectorAll("a[href]").length;
         })()`,
       );
-      for (let index = 0; index < 17; index += 1) {
+      for (let index = 0; index < keyboardSteps; index += 1) {
         await client.send("Input.dispatchKeyEvent", {
           type: "keyDown",
           key: "Tab",
@@ -748,7 +756,7 @@ try {
     await client.send("Runtime.enable");
     await client.send("Network.enable");
     await client.send("Network.setBlockedURLs", {
-      urls: ["*spotifycdn.com*", "*smile-lite.bin*"],
+      urls: ["*baltz-portrait.webp*"],
     });
     client.on("Network.loadingFailed", (event) => {
       failedRequests.push(event.errorText);
@@ -767,7 +775,7 @@ try {
     await evaluate(
       client,
       `(() => {
-        document.querySelector('.clouds').scrollIntoView({ behavior: 'instant', block: 'center' });
+        document.querySelector('.portrait-shell').scrollIntoView({ behavior: 'instant', block: 'center' });
         return true;
       })()`,
     );
@@ -775,12 +783,15 @@ try {
     assetFailure = await evaluate(
       client,
       `(() => {
-        const cover = document.querySelector('.clouds-cover');
-        const smileFallback = document.querySelector('.smile-poster');
+        const portrait = document.querySelector('[data-liquid-slot]');
+        const image = portrait?.querySelector('img');
+        const loader = document.querySelector('.opening-loader');
         return {
-          coverImageOpacity: getComputedStyle(cover.querySelector('img')).opacity,
-          coverFallbackText: cover.querySelector('span')?.textContent?.trim(),
-          smileFallbackVisible: getComputedStyle(smileFallback).display !== 'none',
+          renderer: document.documentElement.dataset.renderer,
+          liquid: document.documentElement.dataset.liquid,
+          mediaState: portrait?.dataset.mediaState,
+          imageLoaded: Boolean(image?.complete && image.naturalWidth > 0),
+          loaderVisibility: loader ? getComputedStyle(loader).visibility : null,
           smileCanvasCount: document.querySelectorAll('[data-unified-canvas]').length
         };
       })()`,
@@ -792,8 +803,67 @@ try {
       captureBeyondViewport: false,
     });
     await writeFile(
-      resolve(outputDirectory, "asset-failure-clouds.png"),
+      resolve(outputDirectory, "asset-failure-portrait.png"),
       Buffer.from(screenshot.data, "base64"),
+    );
+    client.close();
+    await browser.send("Target.closeTarget", { targetId });
+  }
+
+  {
+    const { client, targetId } = await createPage();
+    await client.send("Page.enable");
+    await client.send("Runtime.enable");
+    await client.send("Network.enable");
+    await client.send("Network.setBlockedURLs", { urls: ["*smile-lite.bin*"] });
+    const loaded = client.waitFor("Page.loadEventFired");
+    await client.send("Page.navigate", { url: baseUrl });
+    await loaded;
+    await delay(900);
+    geometryFailure = await evaluate(
+      client,
+      `(() => {
+        const loader = document.querySelector('.opening-loader');
+        return {
+          renderer: document.documentElement.dataset.renderer,
+          liquid: document.documentElement.dataset.liquid,
+          loaderVisibility: loader ? getComputedStyle(loader).visibility : null,
+          loaderOpacity: loader ? getComputedStyle(loader).opacity : null
+        };
+      })()`,
+    );
+    client.close();
+    await browser.send("Target.closeTarget", { targetId });
+  }
+
+  {
+    const { client, targetId } = await createPage();
+    await client.send("Page.enable");
+    await client.send("Runtime.enable");
+    await client.send("Page.addScriptToEvaluateOnNewDocument", {
+      source: `(() => {
+        const getContext = HTMLCanvasElement.prototype.getContext;
+        HTMLCanvasElement.prototype.getContext = function (type, ...args) {
+          if (type === "webgl" || type === "experimental-webgl") return null;
+          return getContext.call(this, type, ...args);
+        };
+      })();`,
+    });
+    const loaded = client.waitFor("Page.loadEventFired");
+    await client.send("Page.navigate", { url: baseUrl });
+    await loaded;
+    await delay(900);
+    webglFailure = await evaluate(
+      client,
+      `(() => {
+        const loader = document.querySelector('.opening-loader');
+        return {
+          renderer: document.documentElement.dataset.renderer,
+          liquid: document.documentElement.dataset.liquid,
+          loaderVisibility: loader ? getComputedStyle(loader).visibility : null,
+          portraitOpacity: getComputedStyle(document.querySelector('.portrait-shell img')).opacity
+        };
+      })()`,
     );
     client.close();
     await browser.send("Target.closeTarget", { targetId });
@@ -822,7 +892,7 @@ await writeFile(
 
 await writeFile(
   resolve(outputDirectory, "polish-verification.json"),
-  `${JSON.stringify({ notFound, assetFailure }, null, 2)}\n`,
+  `${JSON.stringify({ notFound, assetFailure, geometryFailure, webglFailure }, null, 2)}\n`,
   "utf8",
 );
 

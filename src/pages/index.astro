@@ -15,7 +15,7 @@ const chroma = {
   about: ["De", "sign ", "so", "lu", "tions ", "with ", "code ", "a", "gents ", "as ", "ar", "chi", "tec", "tu", "ral ", "com", "po", "nents."],
   writing: ["Lat", "est ", "notes."],
   projects: ["Sys", "tems ", "with ", "a ", "point ", "of ", "view."],
-  clouds: ["Producing..."],
+  clouds: ["my ", "lofi ", "ep"],
   elsewhere: ["Still ", "here."],
 } as const;
 const writingChroma = {
@@ -45,6 +45,9 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
 
 <BaseLayout>
   <a class="skip-link" href="#main">Skip to content</a>
+  <div class="opening-loader" aria-hidden="true">
+    <span>baltazarparra</span>
+  </div>
   <div class="visual-field" aria-hidden="true"></div>
   <canvas class="unified-canvas" data-unified-canvas aria-hidden="true"></canvas>
 
@@ -62,9 +65,7 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
           <p>{site.hero.location}</p>
         </div>
       </div>
-      <div class="smile-slot" data-smile-slot aria-hidden="true">
-        <div class="smile-poster"><span></span><span></span></div>
-      </div>
+      <div class="smile-slot" data-smile-slot aria-hidden="true"></div>
     </section>
 
     <section class="scene about" id="work" aria-labelledby="about-title" data-scroll-bend="1">
@@ -72,13 +73,15 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
         class="portrait-shell"
         data-liquid-slot
         data-liquid-mode="portrait"
-        data-liquid-source="/baltz-portrait.jpg"
+        data-liquid-source="/baltz-portrait.webp"
+        data-media-state="loading"
       >
         <img
-          src="/baltz-portrait.jpg"
+          src="/baltz-portrait.webp"
           width="800"
           height="800"
           alt="Portrait of Baltazar Parra"
+          loading="lazy"
           decoding="async"
         />
       </figure>
@@ -155,12 +158,8 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
     </section>
 
     <section class="scene caipora" id="caipora" aria-labelledby="caipora-title" data-scroll-bend="0.24">
-      <article class="caipora-showcase" data-scroll-surface="border" data-scroll-surface-strength="0.78">
+      <article class="caipora-showcase" data-scroll-surface="edge" data-scroll-surface-strength="0.78">
         <div class="caipora-showcase-copy">
-          <div class="caipora-eyebrow" aria-label="Game format">
-            {site.caipora.eyebrow.map((label) => <span>{label}</span>)}
-          </div>
-
           <h2 id="caipora-title">{site.caipora.name}</h2>
           <p class="caipora-kicker">{site.caipora.kicker}</p>
           <p class="caipora-description">{site.caipora.description}</p>
@@ -192,28 +191,6 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
       </article>
     </section>
 
-    <section class="scene clouds" id="clouds" aria-labelledby="clouds-title" data-scroll-bend="0.54">
-      <div class="clouds-copy">
-        <h2 id="clouds-title"><ChromaText segments={chroma.clouds} /></h2>
-        <div class="spotify-frame">
-          <iframe
-            title="Clouds on Spotify"
-            src={site.clouds.embedUrl}
-            width="100%"
-            height="352"
-            loading="lazy"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-          ></iframe>
-          <a href={site.clouds.url} target="_blank" rel="noreferrer">Open in Spotify ↗</a>
-        </div>
-      </div>
-      <a class="clouds-cover interactive-panel" href={site.clouds.url} target="_blank" rel="noreferrer" aria-label="Open Clouds on Spotify" data-liquid-slot data-liquid-mode="cover" data-liquid-source={site.clouds.coverUrl} data-scroll-surface="edge" data-scroll-surface-strength="0.86">
-        <img src={site.clouds.coverUrl} alt="Clouds EP cover" width="640" height="640" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
-        <span>Listen to my lo-fi EP ↗</span>
-      </a>
-    </section>
-
     <section class="scene elsewhere" id="elsewhere" data-end-zone aria-labelledby="elsewhere-title" data-scroll-bend="0.42">
       <div class="elsewhere-heading">
         <p class="section-label">Elsewhere</p>
@@ -228,6 +205,23 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
           ))
         }
       </nav>
+    </section>
+
+    <section class="scene clouds" id="clouds" data-end-zone aria-labelledby="clouds-title" data-scroll-bend="0.54">
+      <div class="clouds-copy">
+        <h2 id="clouds-title"><ChromaText segments={chroma.clouds} /></h2>
+        <div class="spotify-frame">
+          <iframe
+            title="Clouds on Spotify"
+            src={site.clouds.embedUrl}
+            width="100%"
+            height="352"
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          ></iframe>
+        </div>
+      </div>
     </section>
   </main>
 
@@ -276,13 +270,15 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
     );
     const accentColor = readTokenColor("--color-accent-strong");
     const finalColor = readTokenColor("--color-text");
+    const projectMutedColor: RgbColor = [22, 11, 7];
 
     chromaTexts.forEach((text) => {
       const units = [...text.querySelectorAll<HTMLElement>(".chroma-unit")];
       if (units.length === 0) return;
       const isSelectedWorkText = Boolean(text.closest("#projects"));
+      const initialColor = isSelectedWorkText ? projectMutedColor : mutedColor;
 
-      gsap.set(units, { color: colorString(mutedColor) });
+      gsap.set(units, { color: colorString(initialColor) });
       const chromaClock = { progress: 0 };
       const chromaTimeline = gsap.timeline({
         scrollTrigger: {
@@ -314,9 +310,9 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
               Math.min(1, (chromaClock.progress - range.start) / (range.end - range.start)),
             );
             const color = localProgress <= 0.18
-              ? mutedColor
+              ? initialColor
               : localProgress <= 0.58
-                ? mixColor(mutedColor, accentColor, (localProgress - 0.18) / 0.4)
+                ? mixColor(initialColor, accentColor, (localProgress - 0.18) / 0.4)
                 : mixColor(accentColor, finalColor, (localProgress - 0.58) / 0.42);
             unit.style.color = colorString(color);
           });

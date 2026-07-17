@@ -56,7 +56,6 @@ export const site = {
   ],
   caipora: {
     name: "Caipora",
-    eyebrow: ["Original game", "Play in browser"],
     kicker: "The guardian of the forest has awakened.",
     description:
       "A Brazilian folk-horror roguelike where precise timing, procedural runs and every hard-earned hit decide who survives the forest.",
@@ -72,9 +71,6 @@ export const site = {
       "https://baltazarparra.github.io/caipora/assets/sprites/caipora_idle_strip.png",
   },
   clouds: {
-    name: "Clouds",
-    url: "https://open.spotify.com/album/6BFeIsMZ4zcuGbs5cugxLM",
-    coverUrl: "/clouds-cover.jpg",
     embedUrl:
       "https://open.spotify.com/embed/album/6BFeIsMZ4zcuGbs5cugxLM?utm_source=generator&theme=0",
   },

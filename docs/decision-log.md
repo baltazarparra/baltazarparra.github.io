@@ -389,7 +389,7 @@ forma de revalidação.
 ## D-0024 - Superfícies líquidas compartilham programa e assets locais
 
 - **Data:** 15 jul. 2026
-- **Status:** aceita
+- **Status:** substituída em parte por D-0028
 - **Contexto:** retrato e capa de Clouds precisam da mesma resposta líquida sem
   multiplicar contextos, shaders ou depender de CORS do Spotify CDN.
 - **Decisão:** generalizar o programa de mídia do renderer para uma lista de
@@ -406,7 +406,7 @@ forma de revalidação.
 ## D-0025 - Touch e motion preservam o mesmo conteúdo sem efeitos presos
 
 - **Data:** 15 jul. 2026
-- **Status:** aceita
+- **Status:** substituída em parte por D-0029
 - **Contexto:** a composição precisava funcionar a partir de 320 px, manter
   alvos acessíveis e responder a mudanças de `prefers-reduced-motion` durante a
   sessão, não apenas no carregamento.
@@ -420,6 +420,66 @@ forma de revalidação.
   global e aceitar estado preso em touch.
 - **Revalidar quando:** a navegação ganhar controles novos, houver mudança na
   mídia query de capability ou a página receber formulários.
+
+## D-0026 - Loader editorial consome o estado final do renderer
+
+- **Data:** 17 jul. 2026
+- **Status:** aceita
+- **Contexto:** o smile-poster antecipava uma forma que não pertencia à abertura
+  desejada e não cobria falha de bundle ou WebGL.
+- **Decisão:** substituir o poster por um overlay em tom papel com
+  `baltazarparra`, liberado por `data-renderer="ready"`, `fallback` ou timeout
+  CSS independente de aproximadamente 2,5 s. O estado `ready` representa o
+  primeiro frame do núcleo e não aguarda mídias abaixo da dobra.
+- **Evidência:** F1/P4 da PRD de julho e implementação em `index.astro`,
+  `home-rework.css` e `unifiedRenderer.js`.
+- **Alternativa rejeitada:** atrelar a saída do loader à textura do retrato ou
+  manter o smile-poster como fallback visual.
+- **Revalidar quando:** o renderer mudar seu contrato de boot ou o loader
+  aparecer em RUM além do timeout previsto.
+
+## D-0027 - Caipora mantém warp sem borda desenhada em overlay
+
+- **Data:** 17 jul. 2026
+- **Status:** aceita
+- **Contexto:** a borda laranja era redesenhada em um SVG fixo e atrasava um
+  frame em relação ao bloco durante scroll.
+- **Decisão:** remover borda e eyebrow, manter o `clip-path` relativo no modo
+  `edge` e apagar todo o branch de overlay do `scrollBend`.
+- **Evidência:** F3/P5 da PRD e superfície `caipora-showcase` sem path absoluto.
+- **Alternativa rejeitada:** sincronizar o SVG fixo ou remover também o warp do
+  bloco.
+- **Revalidar quando:** uma nova superfície exigir contorno deformado real.
+
+## D-0028 - Clouds encerra a página apenas com heading e embed
+
+- **Data:** 17 jul. 2026
+- **Status:** aceita; substitui a parte de Clouds de D-0024
+- **Contexto:** capa, link duplicado e superfície líquida competiam com o embed
+  e mantinham uma textura abaixo da dobra no boot do renderer.
+- **Decisão:** mover Clouds depois de Elsewhere, usar o heading literal
+  `my lofi ep`, manter somente o iframe lazy e estender o end trail pelas duas
+  seções finais.
+- **Evidência:** F4 da PRD; uma única superfície líquida permanece no DOM.
+- **Alternativa rejeitada:** conservar a capa como elemento decorativo ou o
+  link externo redundante.
+- **Revalidar quando:** o embed deixar de oferecer acesso ao álbum ou mudar sua
+  política de carregamento.
+
+## D-0029 - Motion pleno substitui a preferência registrada em D-0025
+
+- **Data:** 17 jul. 2026
+- **Status:** aceita; substitui a parte de reduced motion de D-0025
+- **Contexto:** Baltz definiu que a identidade minimal, editorial e cinética
+  depende de motion pleno e não deve variar por `prefers-reduced-motion`.
+- **Decisão:** não implementar a media query nem branches equivalentes. Manter
+  fallbacks de capacidade para touch, WebGL indisponível, falhas de asset e
+  JavaScript ausente.
+- **Evidência:** D5 da PRD e regra normativa em `AGENTS.md`.
+- **Alternativa rejeitada:** reduzir ou congelar motion com base na preferência
+  do sistema.
+- **Revalidar quando:** a política de acessibilidade do produto mudar. Esta
+  decisão não alega conformidade com WCAG 2.3.3 nível AAA.
 
 ## Template para próximas decisões
 

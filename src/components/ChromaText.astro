@@ -27,7 +27,8 @@ segments.forEach((segment) => {
 if (wordSegments.length > 0) words.push({ segments: wordSegments, gap: "" });
 ---
 
-<span class="chroma-text" aria-label={label}>
+<span class="chroma-text">
+  <span class="sr-only">{label}</span>
   {
     words.map((word) => (
       <Fragment>

@@ -42,6 +42,42 @@ html[data-renderer="ready"] .unified-canvas {
     opacity: 1;
 }
 
+.opening-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+    display: grid;
+    place-items: center;
+    background: rgb(243 240 233);
+    color: var(--color-canvas);
+    animation: opening-loader-exit 600ms cubic-bezier(0.22, 1, 0.36, 1)
+        2500ms forwards;
+}
+
+.opening-loader span {
+    font-family: "Instrument Sans", Arial, sans-serif;
+    font-size: clamp(1rem, 1.4vw, 1.25rem);
+    font-weight: 560;
+    letter-spacing: -0.035em;
+}
+
+html[data-renderer="ready"] .opening-loader,
+html[data-renderer="fallback"] .opening-loader {
+    animation-delay: 0ms;
+}
+
+@keyframes opening-loader-exit {
+    0% {
+        visibility: visible;
+        opacity: 1;
+    }
+    100% {
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+    }
+}
+
 .rework-home,
 .rework-footer {
     position: relative;
@@ -120,25 +156,6 @@ html[data-renderer="ready"] .unified-canvas {
 
 .is-scroll-surface-curving {
     will-change: clip-path;
-}
-
-[data-scroll-surface="border"].is-scroll-surface-curving {
-    border-color: transparent;
-}
-
-.scroll-surface-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 3;
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-    pointer-events: none;
-}
-
-.scroll-surface-overlay path {
-    fill: none;
-    vector-effect: non-scaling-stroke;
 }
 
 .rework-home .section-label {
@@ -226,41 +243,6 @@ html[data-renderer="ready"] .unified-canvas {
     justify-self: end;
     position: relative;
 }
-.smile-poster {
-    position: absolute;
-    inset: 12%;
-    border: 0.32rem solid rgb(243 240 233 / 78%);
-    border-radius: 50%;
-    transform: rotate(7deg);
-}
-.smile-poster::after {
-    content: "";
-    position: absolute;
-    left: 22%;
-    right: 22%;
-    bottom: 22%;
-    height: 17%;
-    border-bottom: 0.3rem solid currentColor;
-    border-radius: 50%;
-}
-.smile-poster span {
-    position: absolute;
-    top: 30%;
-    width: 10%;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: currentColor;
-}
-.smile-poster span:first-child {
-    left: 28%;
-}
-.smile-poster span:last-child {
-    right: 28%;
-}
-html[data-renderer="ready"] .smile-poster {
-    opacity: 0;
-}
-
 .rework-home .about {
     min-height: 90dvh;
     display: grid;
@@ -280,13 +262,15 @@ html[data-renderer="ready"] .smile-poster {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: opacity 200ms linear;
-}
-html[data-renderer="ready"][data-liquid="active"] [data-liquid-slot] > img {
     opacity: 0;
+    animation: portrait-fallback-in 650ms cubic-bezier(0.22, 1, 0.36, 1)
+        120ms forwards;
 }
-html[data-renderer="ready"][data-liquid="active"] [data-liquid-slot] {
-    background: transparent;
+
+@keyframes portrait-fallback-in {
+    to {
+        opacity: 1;
+    }
 }
 .rework-home .about h2,
 .rework-home .section-heading h2,
@@ -471,8 +455,7 @@ html[data-renderer="ready"][data-liquid="active"] [data-liquid-slot] {
     position: relative;
     overflow: hidden;
 }
-.project-primary::after,
-.clouds-cover::after {
+.project-primary::after {
     content: "";
     position: absolute;
     width: 19rem;
@@ -514,7 +497,7 @@ html[data-renderer="ready"][data-liquid="active"] [data-liquid-slot] {
 .project-description {
     max-width: 30ch;
     margin-top: auto;
-    color: rgb(22 11 7 / 72%);
+    color: #160b07;
     font-size: clamp(1rem, 1.35vw, 1.2rem);
     line-height: 1.45;
 }
@@ -608,7 +591,6 @@ html[data-renderer="ready"][data-liquid="active"] [data-liquid-slot] {
     display: grid;
     grid-template-columns: minmax(0, 1.05fr) minmax(20rem, 0.95fr);
     overflow: hidden;
-    border: 1px solid rgb(255 102 0 / 65%);
     background:
         radial-gradient(circle at 78% 48%, rgb(255 69 0 / 22%), transparent 26%),
         radial-gradient(circle at 76% 58%, rgb(139 0 0 / 28%), transparent 48%),
@@ -656,24 +638,6 @@ html[data-renderer="ready"][data-liquid="active"] [data-liquid-slot] {
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-}
-.caipora-eyebrow {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.625rem;
-    margin-bottom: clamp(1.75rem, 4vw, 3rem);
-}
-.caipora-eyebrow span {
-    min-height: 1.875rem;
-    padding-inline: 0.6875rem;
-    display: inline-flex;
-    align-items: center;
-    border: 1px solid rgb(255 102 0 / 50%);
-    color: #ffb38f;
-    font-size: 0.625rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
 }
 .rework-home .caipora h2 {
     max-width: 100%;
@@ -861,10 +825,17 @@ html[data-renderer="ready"][data-liquid="active"] [data-liquid-slot] {
 }
 
 .rework-home .clouds {
+    --end-x: 50%;
+    --end-y: 50%;
+    min-height: 82dvh;
     display: grid;
-    grid-template-columns: 5fr 7fr;
-    align-items: center;
-    gap: clamp(3rem, 9vw, 10rem);
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    isolation: isolate;
+}
+.clouds-copy {
+    width: min(100%, 64rem);
+    margin-left: auto;
 }
 .rework-home .clouds h2 {
     max-width: 13ch;
@@ -874,60 +845,16 @@ html[data-renderer="ready"][data-liquid="active"] [data-liquid-slot] {
     position: relative;
     z-index: 4;
     display: grid;
-    gap: 1rem;
-    margin-top: 2.25rem;
+    margin-top: clamp(2.5rem, 6vw, 5.5rem);
 }
 .clouds-copy iframe {
     display: block;
+    width: 100%;
     border: 0;
     border-radius: 12px;
     overflow: hidden;
     background: #121212;
     clip-path: inset(0 round 12px);
-}
-.spotify-frame > a {
-    min-height: 2.75rem;
-    justify-self: end;
-    display: inline-flex;
-    align-items: center;
-    color: var(--color-text-muted);
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-}
-.clouds-cover {
-    justify-self: end;
-    width: min(100%, 42rem);
-    aspect-ratio: 1;
-    color: var(--color-text);
-}
-.clouds-cover img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition:
-        opacity 200ms linear,
-        transform 800ms cubic-bezier(0.22, 1, 0.36, 1),
-        filter 500ms ease;
-}
-.clouds-cover > span {
-    position: absolute;
-    z-index: 4;
-    right: 1rem;
-    bottom: 1rem;
-    padding: 0.55rem 0.7rem;
-    background: var(--color-canvas);
-    color: var(--color-text);
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-}
-.clouds-cover:focus-visible {
-    z-index: 4;
-}
-.clouds-cover:focus-visible img {
-    transform: scale(1.025);
-    filter: contrast(1.08);
 }
 
 .rework-home .elsewhere {
@@ -947,7 +874,8 @@ html[data-renderer="ready"][data-liquid="active"] [data-liquid-slot] {
     min-width: 0;
     padding-inline: clamp(1.5rem, 3vw, 3rem);
 }
-.rework-home .elsewhere::before {
+.rework-home .elsewhere::before,
+.rework-home .clouds::before {
     position: absolute;
     inset: 0;
     z-index: -1;
@@ -961,7 +889,8 @@ html[data-renderer="ready"][data-liquid="active"] [data-liquid-slot] {
     transition: opacity 850ms ease;
     pointer-events: none;
 }
-.rework-home .elsewhere[data-trail="active"]::before {
+.rework-home .elsewhere[data-trail="active"]::before,
+.rework-home .clouds[data-trail="active"]::before {
     opacity: 1;
 }
 .elsewhere-links {
@@ -1007,7 +936,8 @@ html[data-renderer="ready"][data-liquid="active"] [data-liquid-slot] {
 .footer-wordmark {
     width: var(--rework-page);
     margin: 0 auto;
-    color: rgb(243 240 233 / 4%);
+    color: transparent;
+    -webkit-text-fill-color: transparent;
     font-size: clamp(7rem, 22vw, 22rem);
     font-stretch: 100%;
     font-weight: 660;
@@ -1095,10 +1025,6 @@ html[data-end-trail="active"] .end-trail-layer span {
     }
     .caipora-cta:hover .caipora-cta-arrow {
         transform: translateX(0.5rem);
-    }
-    .clouds-cover:hover img {
-        transform: scale(1.025);
-        filter: contrast(1.08);
     }
     .elsewhere-links a:hover span {
         color: #3d3d3b;
@@ -1206,9 +1132,6 @@ html[data-end-trail="active"] .end-trail-layer span {
     .caipora-showcase-copy {
         padding: 1.875rem 1.375rem 2.375rem;
     }
-    .caipora-eyebrow {
-        margin-bottom: 1.625rem;
-    }
     .rework-home .caipora h2 {
         font-size: clamp(3.125rem, 17vw, 4.5rem);
         line-height: 0.86;
@@ -1247,13 +1170,8 @@ html[data-end-trail="active"] .end-trail-layer span {
         font-size: 0.4375rem;
     }
     .clouds-copy {
-        order: 2;
-    }
-    .clouds-cover {
-        order: 1;
-        width: min(86vw, 34rem);
-        justify-self: end;
-        margin-right: 0;
+        width: 100%;
+        margin-left: 0;
     }
     .rework-home .elsewhere {
         align-items: start;

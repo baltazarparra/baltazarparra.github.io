@@ -11,7 +11,7 @@ const {
 } = Astro.props;
 const canonicalUrl = new URL(canonicalPath, site.canonicalUrl);
 const socialImageUrl = new URL("/og.png", site.canonicalUrl);
-const portraitUrl = new URL("/baltz-portrait.jpg", site.canonicalUrl);
+const portraitUrl = new URL("/baltz-portrait.webp", site.canonicalUrl);
 const structuredData = {
   "@context": "https://schema.org",
   "@graph": [

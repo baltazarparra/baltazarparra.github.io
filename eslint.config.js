@@ -11,6 +11,7 @@ export default defineConfig(
       ".astro/",
       ".lighthouseci/",
       ".lighthouseci-desktop/",
+      ".vercel/",
       "dist/",
       "node_modules/",
       "src/generated/",

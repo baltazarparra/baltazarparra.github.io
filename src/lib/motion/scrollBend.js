@@ -1,3 +1,4 @@
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { scrollMotion } from "./scrollMotion.js";
 
 const svgNamespace = "http://www.w3.org/2000/svg";
@@ -41,28 +42,14 @@ const ribs = [...document.querySelectorAll("[data-scroll-rib]")].flatMap((elemen
     .map((edge) => createRib(element, edge));
 });
 
-const surfaceElements = [...document.querySelectorAll("[data-scroll-surface]")];
-const surfaceOverlay = surfaceElements.length > 0
-  ? document.createElementNS(svgNamespace, "svg")
-  : null;
-
-if (surfaceOverlay) {
-  surfaceOverlay.classList.add("scroll-surface-overlay");
-  surfaceOverlay.setAttribute("aria-hidden", "true");
-  document.body.append(surfaceOverlay);
-}
-
-const surfaces = surfaceElements.map((element) => {
-  const styles = getComputedStyle(element);
-  const path = document.createElementNS(svgNamespace, "path");
-  const strength = Number(element.dataset.scrollSurfaceStrength) || 0.82;
-  const borderWidth = Number.parseFloat(styles.borderTopWidth) || 0;
-  path.style.stroke = styles.borderTopColor;
-  path.style.strokeWidth = `${borderWidth}px`;
-  path.style.visibility = "hidden";
-  surfaceOverlay?.append(path);
-  return { element, path, strength, borderWidth, visible: false };
-});
+const surfaces = [...document.querySelectorAll("[data-scroll-surface]")]
+  .map((element) => ({
+    element,
+    strength: Number(element.dataset.scrollSurfaceStrength) || 0.82,
+    width: 0,
+    height: 0,
+    visible: false,
+  }));
 
 const curveElements = [
   ...document.querySelectorAll("[data-scroll-bend], [data-scroll-curve]"),
@@ -74,37 +61,80 @@ const groups = [...new Set(curveElements)].map((element) => {
   const pointSelector = element.classList.contains("chroma-text")
     ? ".chroma-unit"
     : ":scope > *:not(.scroll-rib)";
-  const points = [...element.querySelectorAll(pointSelector)];
-  points.forEach((point) => point.classList.add("scroll-curve-point"));
-  return { element, points, strength: readGroupStrength(element), visible: false };
+  const points = [...element.querySelectorAll(pointSelector)]
+    .map((point) => ({ element: point, normalizedX: 0 }));
+  points.forEach(({ element: point }) => point.classList.add("scroll-curve-point"));
+  return {
+    element,
+    points,
+    halfWidth: 1,
+    strength: readGroupStrength(element),
+    visible: false,
+  };
 });
 
 if (groups.length > 0 || ribs.length > 0 || surfaces.length > 0) {
   const resetGroup = (group) => {
-    group.points.forEach((point) => {
+    group.points.forEach(({ element: point }) => {
       point.style.removeProperty("translate");
       point.style.removeProperty("rotate");
     });
     group.element.classList.remove("is-scroll-curving");
   };
 
+  const resetSurface = (surface) => {
+    surface.element.style.removeProperty("clip-path");
+    surface.element.classList.remove("is-scroll-surface-curving");
+  };
+
+  const measureLayout = () => {
+    groups.forEach(resetGroup);
+    surfaces.forEach(resetSurface);
+
+    const groupMeasurements = groups.map((group) => {
+      const groupRect = group.element.getBoundingClientRect();
+      return {
+        group,
+        groupRect,
+        pointRects: group.points.map(({ element }) => element.getBoundingClientRect()),
+      };
+    });
+    const surfaceMeasurements = surfaces.map((surface) => ({
+      surface,
+      rect: surface.element.getBoundingClientRect(),
+    }));
+
+    groupMeasurements.forEach(({ group, groupRect, pointRects }) => {
+      const centerX = groupRect.left + groupRect.width * 0.5;
+      group.halfWidth = Math.max(1, groupRect.width * 0.5);
+      group.points.forEach((point, index) => {
+        const rect = pointRects[index];
+        const pointX = rect ? rect.left + rect.width * 0.5 : centerX;
+        point.normalizedX = clamp((pointX - centerX) / group.halfWidth, -1, 1);
+      });
+    });
+    surfaceMeasurements.forEach(({ surface, rect }) => {
+      surface.width = rect.width;
+      surface.height = rect.height;
+    });
+  };
+
+  let measureFrame = 0;
+  const scheduleMeasure = () => {
+    if (measureFrame) return;
+    measureFrame = requestAnimationFrame(() => {
+      measureFrame = 0;
+      measureLayout();
+    });
+  };
+
   const renderGroup = (group, impulse, motionScale) => {
-    const groupRect = group.element.getBoundingClientRect();
-    if (groupRect.width <= 0) return;
-
-    const centerX = groupRect.left + groupRect.width * 0.5;
-    const halfWidth = Math.max(1, groupRect.width * 0.5);
     const amplitude = impulse * 30 * group.strength * motionScale;
-
-    group.points.forEach((point) => {
-      const rect = point.getBoundingClientRect();
-      const pointX = rect.left + rect.width * 0.5;
-      const normalizedX = clamp((pointX - centerX) / halfWidth, -1, 1);
+    group.points.forEach(({ element: point, normalizedX }) => {
       const arch = 1 - normalizedX * normalizedX;
       const translateY = -amplitude * arch;
-      const tangent = (2 * amplitude * normalizedX) / halfWidth;
+      const tangent = (2 * amplitude * normalizedX) / group.halfWidth;
       const rotation = clamp(Math.atan(tangent) * (180 / Math.PI), -3, 3);
-
       point.style.translate = `0 ${translateY.toFixed(2)}px`;
       point.style.rotate = `${rotation.toFixed(2)}deg`;
     });
@@ -116,7 +146,7 @@ if (groups.length > 0 || ribs.length > 0 || surfaces.length > 0) {
     rib.path.setAttribute("d", `M 0 80 Q 500 ${controlY.toFixed(2)} 1000 80`);
   };
 
-  const surfacePoints = (rect, amplitude) => {
+  const surfacePoints = (width, height, amplitude) => {
     const magnitude = Math.abs(amplitude);
     const top = [];
     const bottom = [];
@@ -126,42 +156,25 @@ if (groups.length > 0 || ribs.length > 0 || surfaces.length > 0) {
       const normalizedX = progress * 2 - 1;
       const arch = 1 - normalizedX * normalizedX;
       const shift = amplitude >= 0 ? magnitude * (1 - arch) : magnitude * arch;
-      top.push({ x: rect.width * progress, y: shift });
-      bottom.push({ x: rect.width * progress, y: rect.height - magnitude + shift });
+      top.push({ x: width * progress, y: shift });
+      bottom.push({ x: width * progress, y: height - magnitude + shift });
     }
     return { top, bottom };
   };
 
-  const resetSurface = (surface) => {
-    surface.element.style.removeProperty("clip-path");
-    surface.element.classList.remove("is-scroll-surface-curving");
-    surface.path.style.visibility = "hidden";
-  };
-
   const renderSurface = (surface, impulse, motionScale) => {
-    const rect = surface.element.getBoundingClientRect();
-    if (rect.width <= 0 || rect.height <= 0) return;
+    if (surface.width <= 0 || surface.height <= 0) return;
     const amplitude = impulse * 22 * surface.strength * motionScale;
-    const { top, bottom } = surfacePoints(rect, amplitude);
+    const { top, bottom } = surfacePoints(surface.width, surface.height, amplitude);
     const polygon = [...top, ...bottom.toReversed()]
       .map(({ x, y }) => `${x.toFixed(2)}px ${y.toFixed(2)}px`)
       .join(", ");
     surface.element.style.clipPath = `polygon(${polygon})`;
     surface.element.classList.add("is-scroll-surface-curving");
-
-    if (surface.borderWidth > 0) {
-      const absoluteTop = top.map(({ x, y }) => `${(rect.left + x).toFixed(2)} ${(rect.top + y).toFixed(2)}`);
-      const absoluteBottom = bottom.toReversed()
-        .map(({ x, y }) => `${(rect.left + x).toFixed(2)} ${(rect.top + y).toFixed(2)}`);
-      surface.path.setAttribute(
-        "d",
-        `M ${absoluteTop.join(" L ")} L ${absoluteBottom.join(" L ")} Z`,
-      );
-      surface.path.style.visibility = "visible";
-    }
   };
 
   ribs.forEach((rib) => renderRib(rib, 0, 1));
+  measureLayout();
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
@@ -183,8 +196,15 @@ if (groups.length > 0 || ribs.length > 0 || surfaces.length > 0) {
     ...groups.map(({ element }) => element),
     ...ribs.map(({ element }) => element),
     ...surfaces.map(({ element }) => element),
-  ])]
-    .forEach((element) => observer.observe(element));
+  ])].forEach((element) => observer.observe(element));
+
+  const resizeObserver = new ResizeObserver(scheduleMeasure);
+  resizeObserver.observe(document.documentElement);
+  ScrollTrigger.addEventListener("refreshInit", measureLayout);
+  document.fonts?.ready.then(() => {
+    measureLayout();
+    ScrollTrigger.refresh();
+  });
 
   scrollMotion.subscribe(({ impulse, active }) => {
     const motionScale = window.innerWidth <= 760 ? 0.72 : 1;

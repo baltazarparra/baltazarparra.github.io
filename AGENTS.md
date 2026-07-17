@@ -37,14 +37,15 @@ There is no unit-test runner.
 
 Entry route: `src/pages/index.astro`. It uses `src/layouts/BaseLayout.astro`
 for document metadata and composes the page sections in this order: Hero,
-About, Writing, Selected work, Caipora, Clouds, Elsewhere, Footer.
+About, Writing, Selected work, Caipora, Elsewhere, Clouds, Footer.
 
 ### Source areas
 
 - `src/data/site.ts` — editable content, links, labels, and project metadata.
 - `src/components/ChromaText.astro` — scroll-revealed chromatic headings.
 - `src/lib/visual/unifiedRenderer.js` — all canvas/WebGL visual behavior. It
-  owns Smile gaze/scroll motion, image liquid displacement, and motion gating.
+  owns Smile gaze/scroll motion, the portrait liquid displacement, and
+  capability fallbacks. Its core becomes ready independently of media upload.
 - `src/styles/global.css` — reset, tokens, base layout, accessibility defaults.
 - `src/styles/home-rework.css` — the page’s layout, responsive rules, and
   non-canvas animations.
@@ -53,9 +54,9 @@ About, Writing, Selected work, Caipora, Clouds, Elsewhere, Footer.
 
 ### Assets
 
-`public/` contains the Smile model, portrait, Caipora and Clouds images, font,
-favicon, OG image, robots, and sitemap. Assets are referenced from the site
-root (for example, `/smile.glb`).
+`public/` contains the quantized Smile geometry (`/smile-lite.bin`), portrait
+WebP, font, favicon, OG image, robots, and sitemap. The Caipora sprite is loaded
+from the game site; Clouds uses only the lazy Spotify embed.
 
 ## Performance and accessibility
 
@@ -65,6 +66,9 @@ root (for example, `/smile.glb`).
   input or scroll work.
 - Reuse WebGL resources; avoid allocating vectors, textures, or DOM nodes per
   frame.
+- Motion pleno é uma decisão de produto: não adicionar branch de
+  `prefers-reduced-motion`. Preserve, porém, os fallbacks de capacidade para
+  touch, WebGL indisponível, erro de asset e JavaScript ausente.
 - Preserve semantic markup, visible focus states, the skip link, image alt
   text, and external-link safety attributes.
 
