@@ -377,9 +377,10 @@ try {
         ribPaths: [...document.querySelectorAll(".scroll-rib path")]
           .slice(0, 8)
           .map((node) => node.getAttribute("d")),
+        bendMetrics: window.__scrollBendMetrics ?? null,
         viewportFilm: {
-          transform: getComputedStyle(document.body, "::after").transform,
-          opacity: getComputedStyle(document.body, "::after").opacity
+          transform: getComputedStyle(document.querySelector("[data-viewport-film]")).transform,
+          opacity: getComputedStyle(document.querySelector("[data-viewport-film]")).opacity
         },
         rootState: document.documentElement.dataset.scrollMotion ?? null
       }))()`,
@@ -398,9 +399,10 @@ try {
       client,
       `(() => ({
         metrics: window.__scrollMotionMetrics ?? null,
+        bendMetrics: window.__scrollBendMetrics ?? null,
         viewportFilm: {
-          transform: getComputedStyle(document.body, "::after").transform,
-          opacity: getComputedStyle(document.body, "::after").opacity
+          transform: getComputedStyle(document.querySelector("[data-viewport-film]")).transform,
+          opacity: getComputedStyle(document.querySelector("[data-viewport-film]")).opacity
         },
         rootState: document.documentElement.dataset.scrollMotion ?? null
       }))()`,
@@ -422,9 +424,10 @@ try {
         ribPaths: [...document.querySelectorAll(".scroll-rib path")]
           .slice(0, 8)
           .map((node) => node.getAttribute("d")),
+        bendMetrics: window.__scrollBendMetrics ?? null,
         viewportFilm: {
-          transform: getComputedStyle(document.body, "::after").transform,
-          opacity: getComputedStyle(document.body, "::after").opacity
+          transform: getComputedStyle(document.querySelector("[data-viewport-film]")).transform,
+          opacity: getComputedStyle(document.querySelector("[data-viewport-film]")).opacity
         },
         rootState: document.documentElement.dataset.scrollMotion ?? null
       }))()`,
@@ -445,9 +448,10 @@ try {
         metrics: window.__scrollMotionMetrics ?? null,
         curvedPoints: [...document.querySelectorAll(".scroll-curve-point")]
           .filter((node) => node.style.translate).length,
+        bendMetrics: window.__scrollBendMetrics ?? null,
         viewportFilm: {
-          transform: getComputedStyle(document.body, "::after").transform,
-          opacity: getComputedStyle(document.body, "::after").opacity
+          transform: getComputedStyle(document.querySelector("[data-viewport-film]")).transform,
+          opacity: getComputedStyle(document.querySelector("[data-viewport-film]")).opacity
         },
         rootState: document.documentElement.dataset.scrollMotion ?? null
       }))()`,
@@ -674,6 +678,34 @@ try {
       Buffer.from(smileAmbientScreenshot.data, "base64"),
     );
 
+    const measureSmileSpin = async (fraction) => {
+      const target = await evaluate(
+        client,
+        `(() => {
+          const hero = document.querySelector('#hero');
+          const start = (hero?.offsetTop ?? 0) + (hero?.offsetHeight ?? window.innerHeight);
+          const end = Math.max(start, document.documentElement.scrollHeight - window.innerHeight);
+          const top = start + (end - start) * ${fraction};
+          window.scrollTo({ top, behavior: 'instant' });
+          return Math.round(top);
+        })()`,
+      );
+      await delay(250);
+      return evaluate(
+        client,
+        `(() => ({
+          target: ${target},
+          scrollY: Math.round(window.scrollY),
+          progress: window.__unifiedRendererMetrics?.smileSpinProgress
+        }))()`,
+      );
+    };
+    const smileSpin = {
+      start: await measureSmileSpin(0),
+      middle: await measureSmileSpin(0.5),
+      end: await measureSmileSpin(1),
+    };
+
     await evaluate(
       client,
       `(() => {
@@ -822,6 +854,7 @@ try {
       portraitLiquid,
       writing,
       smileAmbient,
+      smileSpin,
       navigation,
       clouds,
       privacy,

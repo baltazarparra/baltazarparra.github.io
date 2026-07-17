@@ -16,25 +16,15 @@ gsap.registerPlugin(ScrollTrigger);
 const clamp = (value, minimum, maximum) =>
   Math.min(maximum, Math.max(minimum, value));
 const frameDuration = 1000 / 60;
-// Touch keeps the shared scroll signal, but not the full-screen film repaint.
-const dynamicFilm = window.matchMedia("(hover: hover) and (pointer: fine)");
-const filmProperties = [
-  "--viewport-film-x",
-  "--viewport-film-y",
-  "--viewport-film-grain-x",
-  "--viewport-film-grain-y",
-  "--viewport-film-fiber-x",
-  "--viewport-film-fiber-y",
-  "--viewport-film-weave-x",
-  "--viewport-film-weave-y",
-  "--viewport-film-rotate",
-  "--viewport-film-scale",
-  "--viewport-film-opacity",
-  "--viewport-film-contrast",
-];
+const film = document.querySelector("[data-viewport-film]");
+const filmGrain = film?.querySelector('[data-film-layer="grain"]');
+const filmFiber = film?.querySelector('[data-film-layer="fiber"]');
+const filmWeave = film?.querySelector('[data-film-layer="weave"]');
 
 /** @type {Set<(state: ScrollMotionState) => void>} */
-const listeners = new Set();
+const readListeners = new Set();
+/** @type {Set<(state: ScrollMotionState) => void>} */
+const writeListeners = new Set();
 /** @type {ScrollMotionState} */
 const state = {
   rawVelocity: 0,
@@ -49,40 +39,33 @@ let frame = 0;
 let lastFrameAt = 0;
 let trigger;
 
-const publish = () => {
-  if (dynamicFilm.matches) {
-    const filmEnergy = Math.min(1, state.energy);
-    const filmX = state.impulse * 3.6;
-    const filmY = state.impulse * -6.4;
-    const filmRotation = state.impulse * 0.032;
-    const filmScale = 1 + Math.abs(state.impulse) * 0.005;
-    const filmGrainX = state.impulse * 18;
-    const filmGrainY = state.impulse * -24;
-    const filmFiberX = state.impulse * -11;
-    const filmFiberY = state.impulse * 7;
-    const filmWeaveX = state.impulse * 5;
-    const filmWeaveY = state.impulse * 14;
-    const rootStyle = document.documentElement.style;
-    rootStyle.setProperty("--viewport-film-x", `${filmX.toFixed(3)}px`);
-    rootStyle.setProperty("--viewport-film-y", `${filmY.toFixed(3)}px`);
-    rootStyle.setProperty("--viewport-film-grain-x", `${filmGrainX.toFixed(3)}px`);
-    rootStyle.setProperty("--viewport-film-grain-y", `${filmGrainY.toFixed(3)}px`);
-    rootStyle.setProperty("--viewport-film-fiber-x", `${filmFiberX.toFixed(3)}px`);
-    rootStyle.setProperty("--viewport-film-fiber-y", `${filmFiberY.toFixed(3)}px`);
-    rootStyle.setProperty("--viewport-film-weave-x", `${filmWeaveX.toFixed(3)}px`);
-    rootStyle.setProperty("--viewport-film-weave-y", `${filmWeaveY.toFixed(3)}px`);
-    rootStyle.setProperty("--viewport-film-rotate", `${filmRotation.toFixed(4)}deg`);
-    rootStyle.setProperty("--viewport-film-scale", filmScale.toFixed(5));
-    rootStyle.setProperty(
-      "--viewport-film-opacity",
-      (0.12 + filmEnergy * 0.025).toFixed(4),
-    );
-    rootStyle.setProperty(
-      "--viewport-film-contrast",
-      (1.04 + filmEnergy * 0.14).toFixed(4),
-    );
+const renderFilm = () => {
+  if (!film) return;
+  const filmEnergy = Math.min(1, state.energy);
+  const impulse = state.impulse;
+  film.style.transform = [
+    `translate3d(${(impulse * 3.6).toFixed(3)}px, ${(impulse * -6.4).toFixed(3)}px, 0)`,
+    `rotate(${(impulse * 0.032).toFixed(4)}deg)`,
+    `scale(${(1 + Math.abs(impulse) * 0.005).toFixed(5)})`,
+  ].join(" ");
+  film.style.opacity = (0.12 + filmEnergy * 0.025).toFixed(4);
+  film.style.filter = `contrast(${(1.04 + filmEnergy * 0.14).toFixed(4)})`;
+  if (filmGrain) {
+    filmGrain.style.transform = `translate3d(${(impulse * 18).toFixed(3)}px, ${(impulse * -24).toFixed(3)}px, 0)`;
   }
-  listeners.forEach((listener) => listener(state));
+  if (filmFiber) {
+    filmFiber.style.transform = `translate3d(${(impulse * -11).toFixed(3)}px, ${(impulse * 7).toFixed(3)}px, 0)`;
+  }
+  if (filmWeave) {
+    filmWeave.style.transform = `translate3d(${(impulse * 5).toFixed(3)}px, ${(impulse * 14).toFixed(3)}px, 0)`;
+  }
+};
+
+const publish = () => {
+  // Geometry consumers read first; film and bend DOM writes follow as one phase.
+  readListeners.forEach((listener) => listener(state));
+  renderFilm();
+  writeListeners.forEach((listener) => listener(state));
   window.__scrollMotionMetrics = {
     rawVelocity: state.rawVelocity,
     impulse: state.impulse,
@@ -120,14 +103,6 @@ const requestSettle = () => {
   if (!frame && !document.hidden) frame = requestAnimationFrame(settle);
 };
 
-dynamicFilm.addEventListener("change", () => {
-  if (!dynamicFilm.matches) {
-    const rootStyle = document.documentElement.style;
-    filmProperties.forEach((property) => rootStyle.removeProperty(property));
-  }
-  publish();
-});
-
 document.addEventListener("visibilitychange", () => {
   if (!document.hidden && state.active) requestSettle();
 });
@@ -150,9 +125,13 @@ const ensureTrigger = () => {
 };
 
 export const scrollMotion = {
-  /** @param {(state: ScrollMotionState) => void} listener */
-  subscribe(listener) {
+  /**
+   * @param {(state: ScrollMotionState) => void} listener
+   * @param {{ phase?: "read" | "write" }} [options]
+   */
+  subscribe(listener, { phase = "write" } = {}) {
     ensureTrigger();
+    const listeners = phase === "read" ? readListeners : writeListeners;
     listeners.add(listener);
     listener(state);
     return () => listeners.delete(listener);

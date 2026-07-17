@@ -29,42 +29,51 @@ body {
     color: var(--color-text);
 }
 
-body::after {
+.viewport-film {
     position: fixed;
     inset: -4rem;
     z-index: 30;
     pointer-events: none;
-    opacity: var(--viewport-film-opacity, 0.1);
-    background-image:
-        url("data:image/svg+xml,%3Csvg viewBox='0 0 132 132' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7 .86' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.84'/%3E%3C/svg%3E"),
-        repeating-linear-gradient(
-            96deg,
-            transparent 0 3px,
-            rgb(255 255 255 / 24%) 4px,
-            transparent 5px 11px
-        ),
-        repeating-linear-gradient(
-            7deg,
-            transparent 0 14px,
-            rgb(0 0 0 / 30%) 15px,
-            transparent 16px 31px
-        );
-    background-size: 132px 132px, 13px 100%, 100% 33px;
-    background-position:
-        var(--viewport-film-grain-x, 0px) var(--viewport-film-grain-y, 0px),
-        var(--viewport-film-fiber-x, 0px) var(--viewport-film-fiber-y, 0px),
-        var(--viewport-film-weave-x, 0px) var(--viewport-film-weave-y, 0px);
-    filter: contrast(var(--viewport-film-contrast, 1.04));
-    transform:
-        translate3d(
-            var(--viewport-film-x, 0px),
-            var(--viewport-film-y, 0px),
-            0
-        )
-        rotate(var(--viewport-film-rotate, 0deg))
-        scale(var(--viewport-film-scale, 1));
+    contain: strict;
+    filter: contrast(1.04);
+    isolation: isolate;
+    opacity: 0.1;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
     transform-origin: center;
-    content: "";
+    will-change: transform, filter, opacity;
+}
+
+.viewport-film__layer {
+    position: absolute;
+    inset: 0;
+    background-repeat: repeat;
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
+}
+
+.viewport-film__layer--grain {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 132 132' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7 .86' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.84'/%3E%3C/svg%3E");
+    background-size: 132px 132px;
+}
+
+.viewport-film__layer--fiber {
+    background-image: repeating-linear-gradient(
+        96deg,
+        transparent 0 3px,
+        rgb(255 255 255 / 24%) 4px,
+        transparent 5px 11px
+    );
+    background-size: 13px 100%;
+}
+
+.viewport-film__layer--weave {
+    background-image: repeating-linear-gradient(
+        7deg,
+        transparent 0 14px,
+        rgb(0 0 0 / 30%) 15px,
+        transparent 16px 31px
+    );
+    background-size: 100% 33px;
 }
 
 main {

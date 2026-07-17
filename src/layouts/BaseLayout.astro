@@ -86,5 +86,10 @@ const structuredData = {
   </head>
   <body>
     <slot />
+    <div class="viewport-film" data-viewport-film aria-hidden="true">
+      <span class="viewport-film__layer viewport-film__layer--weave" data-film-layer="weave"></span>
+      <span class="viewport-film__layer viewport-film__layer--fiber" data-film-layer="fiber"></span>
+      <span class="viewport-film__layer viewport-film__layer--grain" data-film-layer="grain"></span>
+    </div>
   </body>
 </html>

@@ -17,6 +17,7 @@ const SMILE_CAMERA_DEPTH = 3.4;
 const SMILE_FOCAL_LENGTH = 2.5;
 const SMILE_SLOT_ROLL = -0.05;
 const SMILE_DOCK_ROLL = -0.02;
+const SMILE_POST_DOCK_TURN = Math.PI * 2;
 const SMILE_DOCK_WIDTH_RATIO = 0.9;
 const SMILE_DOCK_VISIBLE_HEIGHT_RATIO = 0.2;
 const liquidUrls = liquidSlots.map((slot) =>
@@ -30,6 +31,7 @@ const metrics = {
   quality: "unknown",
   renderer: "unknown",
   smileProgress: 0,
+  smileSpinProgress: 0,
   scrollImpulse: 0,
   smileVisible: false,
   smileDocked: false,
@@ -614,6 +616,7 @@ const init = async () => {
     lastPointerAt: performance.now(),
     lastInputProcessedAt: 0,
     smileProgress: 0,
+    smileSpinProgress: 0,
     scrollDirection: 1,
     scrollImpulse: 0,
     smileX: 0,
@@ -970,7 +973,9 @@ const init = async () => {
     const initialRoll = ambientSmileMotion
       ? SMILE_SLOT_ROLL + Math.cos(time * 0.00034) * 0.05
       : SMILE_SLOT_ROLL;
-    const roll = initialRoll + (SMILE_DOCK_ROLL - initialRoll) * arrival;
+    const roll = initialRoll
+      + (SMILE_DOCK_ROLL - initialRoll) * arrival
+      + state.smileSpinProgress * SMILE_POST_DOCK_TURN;
     const gazeWeight = 1 - arrival;
     const scale = (
       state.smileLayout.slotScale
@@ -1278,7 +1283,7 @@ const init = async () => {
     metrics.scrollImpulse = impulse;
     updateRects();
     requestFrame(450);
-  });
+  }, { phase: "read" });
   if (hero) {
     ScrollTrigger.create({
       trigger: hero,
@@ -1293,6 +1298,22 @@ const init = async () => {
       },
       onRefresh: () => {
         updateRects(true);
+        requestFrame(250);
+      },
+    });
+    ScrollTrigger.create({
+      trigger: hero,
+      start: "bottom top",
+      end: "max",
+      invalidateOnRefresh: true,
+      onUpdate: (self) => {
+        state.smileSpinProgress = self.progress;
+        metrics.smileSpinProgress = self.progress;
+        requestFrame(550);
+      },
+      onRefresh: (self) => {
+        state.smileSpinProgress = self.progress;
+        metrics.smileSpinProgress = self.progress;
         requestFrame(250);
       },
     });
