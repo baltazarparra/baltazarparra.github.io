@@ -241,6 +241,12 @@ try {
           `document.querySelector("[data-unified-canvas]")?.style.setProperty("display", "none", "important")`,
         );
       }
+      if (process.env.RUNTIME_HIDE_FILM === "1") {
+        await evaluate(
+          client,
+          `document.querySelector("[data-viewport-film]")?.style.setProperty("display", "none", "important")`,
+        );
+      }
       await delay(750);
 
       if (process.env.RUNTIME_CPU_PROFILE === "1") {
