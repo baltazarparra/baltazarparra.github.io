@@ -4,6 +4,10 @@ import { scrollMotion } from "./scrollMotion.js";
 const svgNamespace = "http://www.w3.org/2000/svg";
 const clamp = (value, minimum, maximum) =>
   Math.min(maximum, Math.max(minimum, value));
+// Per-point DOM deformation stays off the native touch-scroll path.
+const dynamicScrollBend = window.matchMedia(
+  "(hover: hover) and (pointer: fine)",
+).matches;
 
 const readStrength = (element) => {
   const localStrength = Number(element.dataset.scrollCurve);
@@ -31,6 +35,7 @@ const createRib = (element, edge) => {
   svg.setAttribute("preserveAspectRatio", "none");
   svg.setAttribute("aria-hidden", "true");
   path.setAttribute("vector-effect", "non-scaling-stroke");
+  path.setAttribute("d", "M 0 80 Q 500 80 1000 80");
   svg.append(path);
   element.append(svg);
   return { element, path, strength: readStrength(element), visible: false };
@@ -42,7 +47,9 @@ const ribs = [...document.querySelectorAll("[data-scroll-rib]")].flatMap((elemen
     .map((edge) => createRib(element, edge));
 });
 
-const surfaces = [...document.querySelectorAll("[data-scroll-surface]")]
+const surfaces = (dynamicScrollBend
+  ? [...document.querySelectorAll("[data-scroll-surface]")]
+  : [])
   .map((element) => ({
     element,
     strength: Number(element.dataset.scrollSurfaceStrength) || 0.82,
@@ -51,11 +58,13 @@ const surfaces = [...document.querySelectorAll("[data-scroll-surface]")]
     visible: false,
   }));
 
-const curveElements = [
-  ...document.querySelectorAll("[data-scroll-bend], [data-scroll-curve]"),
-  ...[...document.querySelectorAll(".chroma-text")]
-    .filter((element) => !element.closest("[data-scroll-curve]")),
-];
+const curveElements = dynamicScrollBend
+  ? [
+      ...document.querySelectorAll("[data-scroll-bend], [data-scroll-curve]"),
+      ...[...document.querySelectorAll(".chroma-text")]
+        .filter((element) => !element.closest("[data-scroll-curve]")),
+    ]
+  : [];
 
 const groups = [...new Set(curveElements)].map((element) => {
   const pointSelector = element.classList.contains("chroma-text")
@@ -73,7 +82,10 @@ const groups = [...new Set(curveElements)].map((element) => {
   };
 });
 
-if (groups.length > 0 || ribs.length > 0 || surfaces.length > 0) {
+if (
+  dynamicScrollBend
+  && (groups.length > 0 || ribs.length > 0 || surfaces.length > 0)
+) {
   const resetGroup = (group) => {
     group.points.forEach(({ element: point }) => {
       point.style.removeProperty("translate");

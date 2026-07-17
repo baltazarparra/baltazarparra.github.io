@@ -311,6 +311,23 @@ try {
           };
         })(),
         smileCanvas: document.querySelectorAll("[data-unified-canvas]").length,
+        viewport: (() => {
+          const canvas = document.querySelector("[data-unified-canvas]");
+          const canvasRect = canvas?.getBoundingClientRect();
+          const rendererMetrics = window.__unifiedRendererMetrics;
+          return {
+            meta: document.querySelector('meta[name="viewport"]')?.content ?? null,
+            innerHeight: window.innerHeight,
+            canvasCssHeight: canvasRect?.height ?? null,
+            canvasBitmapHeight: canvas?.height ?? null,
+            rendererCanvasCssHeight: rendererMetrics?.canvasCssHeight ?? null,
+            rendererCanvasBitmapHeight: rendererMetrics?.canvasBitmapHeight ?? null,
+            layoutViewportHeight: rendererMetrics?.layoutViewportHeight ?? null,
+            backingStoreAligned: canvas && canvasRect
+              ? Math.abs(canvas.height - canvasRect.height * Math.min(devicePixelRatio || 1, 1)) <= 1
+              : false
+          };
+        })(),
         sectionOrder: [...document.querySelectorAll("main > section")].map((node) => node.id),
         pageHeight: document.documentElement.scrollHeight,
         clientWidth: document.documentElement.clientWidth,

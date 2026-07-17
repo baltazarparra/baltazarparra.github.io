@@ -35,6 +35,9 @@ const metrics = {
   smileDocked: false,
   smileWidthRatio: 0,
   smileVisibleHeightRatio: 0,
+  canvasCssHeight: 0,
+  canvasBitmapHeight: 0,
+  layoutViewportHeight: 0,
   mediaReady: 0,
   mediaHover: 0,
   mediaVelocity: 0,
@@ -446,11 +449,11 @@ const viewportRevealFor = (rect) => {
   return Math.min(1, visibleHeight / fadeBand);
 };
 
-const viewportFor = (rect, dpr) => ({
+const viewportFor = (rect, dpr, renderWidth, renderHeight) => ({
   x: Math.max(0, Math.round(rect.left * dpr)),
-  y: Math.max(0, Math.round((window.innerHeight - rect.bottom) * dpr)),
-  width: Math.min(Math.round(rect.width * dpr), Math.round(window.innerWidth * dpr)),
-  height: Math.min(Math.round(rect.height * dpr), Math.round(window.innerHeight * dpr)),
+  y: Math.max(0, Math.round(renderHeight - rect.bottom * dpr)),
+  width: Math.min(Math.round(rect.width * dpr), renderWidth),
+  height: Math.min(Math.round(rect.height * dpr), renderHeight),
 });
 
 const updateLabels = () => {
@@ -598,6 +601,9 @@ const init = async () => {
   const state = {
     width: 1,
     height: 1,
+    cssWidth: 1,
+    cssHeight: 1,
+    layoutHeight: 1,
     dpr: 1,
     pointerX: 0.5,
     pointerY: 0.5,
@@ -783,7 +789,12 @@ const init = async () => {
       width: rect.width + edgePadding * 2,
       height: rect.height + edgePadding * 2,
     };
-    const viewport = viewportFor(expandedRect, state.dpr);
+    const viewport = viewportFor(
+      expandedRect,
+      state.dpr,
+      state.width,
+      state.height,
+    );
     if (viewport.width < 1 || viewport.height < 1) return;
     drawRippleField(surface, time);
     gl.enable(gl.SCISSOR_TEST);
@@ -890,8 +901,11 @@ const init = async () => {
   };
 
   const updateSmileLayout = () => {
-    const viewportWidth = Math.max(window.innerWidth, 1);
-    const viewportHeight = Math.max(window.innerHeight, 1);
+    const viewportWidth = Math.max(state.cssWidth, 1);
+    const renderHeight = Math.max(state.cssHeight, 1);
+    // The lvh canvas can bleed below the stable svh layout on mobile browsers.
+    const heroHeight = hero?.getBoundingClientRect().height || window.innerHeight;
+    const layoutHeight = Math.max(1, Math.min(renderHeight, heroHeight));
     const slotCenterDocumentY = state.smileRect.top
       + window.scrollY
       + state.smileRect.height * 0.5;
@@ -901,19 +915,22 @@ const init = async () => {
     );
     const dockScale = smileScaleForWidth(SMILE_DOCK_WIDTH_RATIO, SMILE_DOCK_ROLL);
     const dockProjection = measureSmileProjection(dockScale, SMILE_DOCK_ROLL);
-    const dockTopNdc = SMILE_DOCK_VISIBLE_HEIGHT_RATIO * 2 - 1;
+    const dockTopY = layoutHeight * (1 - SMILE_DOCK_VISIBLE_HEIGHT_RATIO);
+    const dockTopNdc = 1 - (dockTopY / renderHeight) * 2;
     const dockAnchorY = dockTopNdc - dockProjection.topNdc;
+    state.layoutHeight = layoutHeight;
+    metrics.layoutViewportHeight = layoutHeight;
 
     state.smileLayout = {
       slotScale,
       slotAnchorX: (
         (state.smileRect.left + state.smileRect.width * 0.5) / viewportWidth
       ) * 2 - 1,
-      slotAnchorY: 1 - (slotCenterDocumentY / viewportHeight) * 2,
+      slotAnchorY: 1 - (slotCenterDocumentY / renderHeight) * 2,
       dockScale,
       dockAnchorY,
       dockWidthRatio: dockProjection.widthRatio,
-      dockVisibleHeightRatio: (dockProjection.topNdc + dockAnchorY + 1) * 0.5,
+      dockVisibleHeightRatio: (layoutHeight - dockTopY) / layoutHeight,
     };
   };
 
@@ -1000,16 +1017,29 @@ const init = async () => {
 
   const resize = () => {
     const dpr = Math.min(window.devicePixelRatio || 1, 1);
-    const width = Math.max(1, Math.round(window.innerWidth * dpr));
-    const height = Math.max(1, Math.round(window.innerHeight * dpr));
+    const canvasRect = canvas.getBoundingClientRect();
+    const cssWidth = Math.max(1, canvasRect.width);
+    const cssHeight = Math.max(1, canvasRect.height);
+    const width = Math.max(1, Math.round(cssWidth * dpr));
+    const height = Math.max(1, Math.round(cssHeight * dpr));
+    const sizeChanged = state.width !== width
+      || state.height !== height
+      || Math.abs(state.cssWidth - cssWidth) > 0.01
+      || Math.abs(state.cssHeight - cssHeight) > 0.01;
+    if (!sizeChanged) return false;
     state.dpr = dpr;
     state.width = width;
     state.height = height;
+    state.cssWidth = cssWidth;
+    state.cssHeight = cssHeight;
+    metrics.canvasCssHeight = cssHeight;
+    metrics.canvasBitmapHeight = height;
     if (canvas.width !== width || canvas.height !== height) {
       canvas.width = width;
       canvas.height = height;
     }
     updateRects(true);
+    return true;
   };
 
   const render = (time) => {
@@ -1238,10 +1268,9 @@ const init = async () => {
   });
   pageObserver.observe(document.body);
   const resizeObserver = new ResizeObserver(() => {
-    resize();
-    requestFrame(400);
+    if (resize()) requestFrame(400);
   });
-  resizeObserver.observe(document.documentElement);
+  resizeObserver.observe(canvas);
   window.addEventListener("pointermove", updateGlobalPointer, { passive: true });
   scrollMotion.subscribe(({ direction, impulse }) => {
     state.scrollDirection = direction;
