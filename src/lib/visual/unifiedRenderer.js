@@ -11,6 +11,10 @@ const contextMetric = document.querySelector('[data-metric="contexts"]');
 const programMetric = document.querySelector('[data-metric="programs"]');
 const frameMetric = document.querySelector('[data-metric="frame"]');
 const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+const isIPhone = /iPhone/i.test(navigator.userAgent);
+const isMobileDevice = isIPhone
+  || navigator.userAgentData?.mobile === true
+  || /Android|iPad|iPod|Mobile/i.test(navigator.userAgent);
 const liquidSlots = allLiquidSlots;
 const geometryUrl = new URL("/smile-lite.bin", window.location.origin);
 const SMILE_CAMERA_DEPTH = 3.4;
@@ -19,7 +23,8 @@ const SMILE_SLOT_ROLL = -0.05;
 const SMILE_DOCK_ROLL = -0.02;
 const SMILE_POST_DOCK_TURN = Math.PI * 2;
 const SMILE_DOCK_WIDTH_RATIO = 0.9;
-const SMILE_DOCK_VISIBLE_HEIGHT_RATIO = 0.2;
+const SMILE_DESKTOP_DOCK_VISIBLE_HEIGHT_RATIO = 0.2;
+const SMILE_MOBILE_DOCK_VISIBLE_HEIGHT_RATIO = 0.1;
 const liquidUrls = liquidSlots.map((slot) =>
   new URL(slot.dataset.liquidSource || "/baltz-portrait.webp", window.location.origin),
 );
@@ -35,6 +40,7 @@ const metrics = {
   scrollImpulse: 0,
   smileVisible: false,
   smileDocked: false,
+  smileDockEdge: "bottom",
   smileWidthRatio: 0,
   smileVisibleHeightRatio: 0,
   canvasCssHeight: 0,
@@ -636,7 +642,8 @@ const init = async () => {
       dockScale: 1,
       dockAnchorY: -1,
       dockWidthRatio: SMILE_DOCK_WIDTH_RATIO,
-      dockVisibleHeightRatio: SMILE_DOCK_VISIBLE_HEIGHT_RATIO,
+      dockVisibleHeightRatio: SMILE_DESKTOP_DOCK_VISIBLE_HEIGHT_RATIO,
+      dockEdge: "bottom",
     },
     surfaces: liquidSlots.map((element, index) => ({
       element,
@@ -918,9 +925,17 @@ const init = async () => {
     );
     const dockScale = smileScaleForWidth(SMILE_DOCK_WIDTH_RATIO, SMILE_DOCK_ROLL);
     const dockProjection = measureSmileProjection(dockScale, SMILE_DOCK_ROLL);
-    const dockTopY = layoutHeight * (1 - SMILE_DOCK_VISIBLE_HEIGHT_RATIO);
-    const dockTopNdc = 1 - (dockTopY / renderHeight) * 2;
-    const dockAnchorY = dockTopNdc - dockProjection.topNdc;
+    const dockVisibleHeightRatio = isMobileDevice
+      ? SMILE_MOBILE_DOCK_VISIBLE_HEIGHT_RATIO
+      : SMILE_DESKTOP_DOCK_VISIBLE_HEIGHT_RATIO;
+    const dockEdge = isIPhone ? "top" : "bottom";
+    const dockBoundaryY = dockEdge === "top"
+      ? layoutHeight * dockVisibleHeightRatio
+      : layoutHeight * (1 - dockVisibleHeightRatio);
+    const dockBoundaryNdc = 1 - (dockBoundaryY / renderHeight) * 2;
+    const dockAnchorY = dockEdge === "top"
+      ? dockBoundaryNdc - dockProjection.bottomNdc
+      : dockBoundaryNdc - dockProjection.topNdc;
     state.layoutHeight = layoutHeight;
     metrics.layoutViewportHeight = layoutHeight;
 
@@ -933,7 +948,8 @@ const init = async () => {
       dockScale,
       dockAnchorY,
       dockWidthRatio: dockProjection.widthRatio,
-      dockVisibleHeightRatio: (layoutHeight - dockTopY) / layoutHeight,
+      dockVisibleHeightRatio,
+      dockEdge,
     };
   };
 
@@ -986,6 +1002,7 @@ const init = async () => {
       + (state.smileLayout.dockAnchorY - state.smileLayout.slotAnchorY) * arrival;
     const smileAlpha = 1;
     metrics.smileDocked = progress >= 0.999;
+    metrics.smileDockEdge = state.smileLayout.dockEdge;
     metrics.smileWidthRatio = metrics.smileDocked
       ? state.smileLayout.dockWidthRatio
       : 0;

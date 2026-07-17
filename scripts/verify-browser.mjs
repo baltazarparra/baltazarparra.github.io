@@ -157,6 +157,15 @@ const profiles = [
     height: 844,
     mobile: true,
     touch: true,
+    userAgent: "Mozilla/5.0 (Linux; Android 15; Pixel 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36",
+  },
+  {
+    name: "iphone",
+    width: 390,
+    height: 844,
+    mobile: true,
+    touch: true,
+    userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 18_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.5 Mobile/15E148 Safari/604.1",
   },
   {
     name: "narrow-320",
@@ -164,6 +173,7 @@ const profiles = [
     height: 800,
     mobile: true,
     touch: true,
+    userAgent: "Mozilla/5.0 (Linux; Android 15; Pixel 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36",
   },
   {
     name: "zoom-200",
@@ -256,6 +266,12 @@ try {
       });
     }
     await client.send("Network.setCacheDisabled", { cacheDisabled: true });
+    if (profile.userAgent) {
+      await client.send("Network.setUserAgentOverride", {
+        userAgent: profile.userAgent,
+        platform: profile.name === "iphone" ? "iPhone" : "Android",
+      });
+    }
     await client.send("Emulation.setDeviceMetricsOverride", {
       width: profile.width,
       height: profile.height,
@@ -675,6 +691,7 @@ try {
         progress: window.__unifiedRendererMetrics?.smileProgress,
         persists: window.__unifiedRendererMetrics?.smileVisible,
         docked: window.__unifiedRendererMetrics?.smileDocked,
+        dockEdge: window.__unifiedRendererMetrics?.smileDockEdge,
         widthRatio: window.__unifiedRendererMetrics?.smileWidthRatio,
         visibleHeightRatio: window.__unifiedRendererMetrics?.smileVisibleHeightRatio
       }))()`,
