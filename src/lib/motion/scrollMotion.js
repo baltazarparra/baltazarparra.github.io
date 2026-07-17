@@ -20,6 +20,21 @@ const film = document.querySelector("[data-viewport-film]");
 const filmGrain = film?.querySelector('[data-film-layer="grain"]');
 const filmFiber = film?.querySelector('[data-film-layer="fiber"]');
 const filmWeave = film?.querySelector('[data-film-layer="weave"]');
+const desktopFilm = window.matchMedia("(hover: hover) and (pointer: fine)");
+const desktopFilmProperties = [
+  "--viewport-film-x",
+  "--viewport-film-y",
+  "--viewport-film-grain-x",
+  "--viewport-film-grain-y",
+  "--viewport-film-fiber-x",
+  "--viewport-film-fiber-y",
+  "--viewport-film-weave-x",
+  "--viewport-film-weave-y",
+  "--viewport-film-rotate",
+  "--viewport-film-scale",
+  "--viewport-film-opacity",
+  "--viewport-film-contrast",
+];
 
 /** @type {Set<(state: ScrollMotionState) => void>} */
 const readListeners = new Set();
@@ -39,26 +54,65 @@ let frame = 0;
 let lastFrameAt = 0;
 let trigger;
 
-const renderFilm = () => {
-  if (!film) return;
+const filmValues = () => {
   const filmEnergy = Math.min(1, state.energy);
   const impulse = state.impulse;
+  return {
+    x: impulse * 3.6,
+    y: impulse * -6.4,
+    rotation: impulse * 0.032,
+    scale: 1 + Math.abs(impulse) * 0.005,
+    grainX: impulse * 18,
+    grainY: impulse * -24,
+    fiberX: impulse * -11,
+    fiberY: impulse * 7,
+    weaveX: impulse * 5,
+    weaveY: impulse * 14,
+    opacity: 0.12 + filmEnergy * 0.025,
+    contrast: 1.04 + filmEnergy * 0.14,
+  };
+};
+
+const renderDesktopFilm = (values) => {
+  const rootStyle = document.documentElement.style;
+  rootStyle.setProperty("--viewport-film-x", `${values.x.toFixed(3)}px`);
+  rootStyle.setProperty("--viewport-film-y", `${values.y.toFixed(3)}px`);
+  rootStyle.setProperty("--viewport-film-grain-x", `${values.grainX.toFixed(3)}px`);
+  rootStyle.setProperty("--viewport-film-grain-y", `${values.grainY.toFixed(3)}px`);
+  rootStyle.setProperty("--viewport-film-fiber-x", `${values.fiberX.toFixed(3)}px`);
+  rootStyle.setProperty("--viewport-film-fiber-y", `${values.fiberY.toFixed(3)}px`);
+  rootStyle.setProperty("--viewport-film-weave-x", `${values.weaveX.toFixed(3)}px`);
+  rootStyle.setProperty("--viewport-film-weave-y", `${values.weaveY.toFixed(3)}px`);
+  rootStyle.setProperty("--viewport-film-rotate", `${values.rotation.toFixed(4)}deg`);
+  rootStyle.setProperty("--viewport-film-scale", values.scale.toFixed(5));
+  rootStyle.setProperty("--viewport-film-opacity", values.opacity.toFixed(4));
+  rootStyle.setProperty("--viewport-film-contrast", values.contrast.toFixed(4));
+};
+
+const renderMobileFilm = (values) => {
+  if (!film) return;
   film.style.transform = [
-    `translate3d(${(impulse * 3.6).toFixed(3)}px, ${(impulse * -6.4).toFixed(3)}px, 0)`,
-    `rotate(${(impulse * 0.032).toFixed(4)}deg)`,
-    `scale(${(1 + Math.abs(impulse) * 0.005).toFixed(5)})`,
+    `translate3d(${values.x.toFixed(3)}px, ${values.y.toFixed(3)}px, 0)`,
+    `rotate(${values.rotation.toFixed(4)}deg)`,
+    `scale(${values.scale.toFixed(5)})`,
   ].join(" ");
-  film.style.opacity = (0.12 + filmEnergy * 0.025).toFixed(4);
-  film.style.filter = `contrast(${(1.04 + filmEnergy * 0.14).toFixed(4)})`;
+  film.style.opacity = values.opacity.toFixed(4);
+  film.style.filter = `contrast(${values.contrast.toFixed(4)})`;
   if (filmGrain) {
-    filmGrain.style.transform = `translate3d(${(impulse * 18).toFixed(3)}px, ${(impulse * -24).toFixed(3)}px, 0)`;
+    filmGrain.style.transform = `translate3d(${values.grainX.toFixed(3)}px, ${values.grainY.toFixed(3)}px, 0)`;
   }
   if (filmFiber) {
-    filmFiber.style.transform = `translate3d(${(impulse * -11).toFixed(3)}px, ${(impulse * 7).toFixed(3)}px, 0)`;
+    filmFiber.style.transform = `translate3d(${values.fiberX.toFixed(3)}px, ${values.fiberY.toFixed(3)}px, 0)`;
   }
   if (filmWeave) {
-    filmWeave.style.transform = `translate3d(${(impulse * 5).toFixed(3)}px, ${(impulse * 14).toFixed(3)}px, 0)`;
+    filmWeave.style.transform = `translate3d(${values.weaveX.toFixed(3)}px, ${values.weaveY.toFixed(3)}px, 0)`;
   }
+};
+
+const renderFilm = () => {
+  const values = filmValues();
+  if (desktopFilm.matches) renderDesktopFilm(values);
+  else renderMobileFilm(values);
 };
 
 const publish = () => {
@@ -72,6 +126,7 @@ const publish = () => {
     energy: state.energy,
     direction: state.direction,
     active: state.active,
+    filmMode: desktopFilm.matches ? "pseudo" : "element",
   };
 };
 
@@ -102,6 +157,20 @@ const settle = (time) => {
 const requestSettle = () => {
   if (!frame && !document.hidden) frame = requestAnimationFrame(settle);
 };
+
+desktopFilm.addEventListener("change", () => {
+  const rootStyle = document.documentElement.style;
+  if (!desktopFilm.matches) {
+    desktopFilmProperties.forEach((property) => rootStyle.removeProperty(property));
+  } else if (film) {
+    ["transform", "opacity", "filter"]
+      .forEach((property) => film.style.removeProperty(property));
+    [filmGrain, filmFiber, filmWeave].forEach((layer) => {
+      layer?.style.removeProperty("transform");
+    });
+  }
+  publish();
+});
 
 document.addEventListener("visibilitychange", () => {
   if (!document.hidden && state.active) requestSettle();

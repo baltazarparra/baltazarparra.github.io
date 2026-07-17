@@ -378,10 +378,13 @@ try {
           .slice(0, 8)
           .map((node) => node.getAttribute("d")),
         bendMetrics: window.__scrollBendMetrics ?? null,
-        viewportFilm: {
-          transform: getComputedStyle(document.querySelector("[data-viewport-film]")).transform,
-          opacity: getComputedStyle(document.querySelector("[data-viewport-film]")).opacity
-        },
+        viewportFilm: (() => {
+          const fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
+          const style = fine
+            ? getComputedStyle(document.body, "::after")
+            : getComputedStyle(document.querySelector("[data-viewport-film]"));
+          return { source: fine ? "pseudo" : "element", transform: style.transform, opacity: style.opacity };
+        })(),
         rootState: document.documentElement.dataset.scrollMotion ?? null
       }))()`,
     );
@@ -400,10 +403,13 @@ try {
       `(() => ({
         metrics: window.__scrollMotionMetrics ?? null,
         bendMetrics: window.__scrollBendMetrics ?? null,
-        viewportFilm: {
-          transform: getComputedStyle(document.querySelector("[data-viewport-film]")).transform,
-          opacity: getComputedStyle(document.querySelector("[data-viewport-film]")).opacity
-        },
+        viewportFilm: (() => {
+          const fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
+          const style = fine
+            ? getComputedStyle(document.body, "::after")
+            : getComputedStyle(document.querySelector("[data-viewport-film]"));
+          return { source: fine ? "pseudo" : "element", transform: style.transform, opacity: style.opacity };
+        })(),
         rootState: document.documentElement.dataset.scrollMotion ?? null
       }))()`,
     );
@@ -425,10 +431,13 @@ try {
           .slice(0, 8)
           .map((node) => node.getAttribute("d")),
         bendMetrics: window.__scrollBendMetrics ?? null,
-        viewportFilm: {
-          transform: getComputedStyle(document.querySelector("[data-viewport-film]")).transform,
-          opacity: getComputedStyle(document.querySelector("[data-viewport-film]")).opacity
-        },
+        viewportFilm: (() => {
+          const fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
+          const style = fine
+            ? getComputedStyle(document.body, "::after")
+            : getComputedStyle(document.querySelector("[data-viewport-film]"));
+          return { source: fine ? "pseudo" : "element", transform: style.transform, opacity: style.opacity };
+        })(),
         rootState: document.documentElement.dataset.scrollMotion ?? null
       }))()`,
     );
@@ -449,10 +458,13 @@ try {
         curvedPoints: [...document.querySelectorAll(".scroll-curve-point")]
           .filter((node) => node.style.translate).length,
         bendMetrics: window.__scrollBendMetrics ?? null,
-        viewportFilm: {
-          transform: getComputedStyle(document.querySelector("[data-viewport-film]")).transform,
-          opacity: getComputedStyle(document.querySelector("[data-viewport-film]")).opacity
-        },
+        viewportFilm: (() => {
+          const fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
+          const style = fine
+            ? getComputedStyle(document.body, "::after")
+            : getComputedStyle(document.querySelector("[data-viewport-film]"));
+          return { source: fine ? "pseudo" : "element", transform: style.transform, opacity: style.opacity };
+        })(),
         rootState: document.documentElement.dataset.scrollMotion ?? null
       }))()`,
     );

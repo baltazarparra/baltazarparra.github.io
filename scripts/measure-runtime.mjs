@@ -26,9 +26,11 @@ const profiles = [
     touch: true,
     runs: 1,
   },
-].filter((profile) =>
-  process.env.RUNTIME_DESKTOP_ONLY === "1" ? profile.name === "desktop" : true,
-);
+].filter((profile) => {
+  if (process.env.RUNTIME_DESKTOP_ONLY === "1") return profile.name === "desktop";
+  if (process.env.RUNTIME_MOBILE_ONLY === "1") return profile.name === "mobile";
+  return true;
+});
 
 await mkdir(outputDirectory, { recursive: true });
 
