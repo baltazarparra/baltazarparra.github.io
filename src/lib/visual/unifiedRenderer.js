@@ -30,6 +30,8 @@ const metrics = {
   mediaHover: 0,
   mediaVelocity: 0,
   mediaTrailDistance: 0,
+  mediaRippleStrength: 0,
+  mediaRippleCount: 0,
   frameTimes: [],
   get frameP95() {
     if (this.frameTimes.length === 0) return 0;
@@ -46,6 +48,46 @@ const quadVertexSource = `
   void main() {
     vUv = aPosition * 0.5 + 0.5;
     gl_Position = vec4(aPosition, 0.0, 1.0);
+  }
+`;
+
+const rippleVertexSource = `
+  attribute vec2 aPosition;
+  uniform vec2 uCenter;
+  uniform float uRadius;
+  uniform float uRotation;
+  varying vec2 vBrushUv;
+
+  void main() {
+    float sine = sin(uRotation);
+    float cosine = cos(uRotation);
+    mat2 rotation = mat2(cosine, -sine, sine, cosine);
+    vec2 position = rotation * aPosition * uRadius;
+    vBrushUv = aPosition * 0.5 + 0.5;
+    gl_Position = vec4(uCenter * 2.0 - 1.0 + position, 0.0, 1.0);
+  }
+`;
+
+const rippleFragmentSource = `
+  precision mediump float;
+  varying vec2 vBrushUv;
+  uniform float uOpacity;
+  uniform float uPhase;
+
+  void main() {
+    vec2 point = (vBrushUv - 0.5) * 2.0;
+    float angle = atan(point.y, point.x);
+    float wobble = 1.0
+      + sin(angle * 3.0 + uPhase) * 0.11
+      + sin(angle * 5.0 - uPhase * 0.73) * 0.065;
+    float distanceFromCenter = length(point) / wobble;
+    float body = 1.0 - smoothstep(0.72, 1.0, distanceFromCenter);
+    float hollow = 1.0 - smoothstep(0.24, 0.58, distanceFromCenter);
+    float brokenRing = max(0.0, body - hollow * 0.82);
+    float innerCurrent = (1.0 - smoothstep(0.0, 0.34, distanceFromCenter)) * 0.16;
+    float texture = 0.82 + 0.18 * sin(angle * 4.0 + distanceFromCenter * 7.0 + uPhase);
+    float strength = (brokenRing * texture + innerCurrent) * uOpacity;
+    gl_FragColor = vec4(vec3(strength), strength);
   }
 `;
 
@@ -82,8 +124,11 @@ const mediaFragmentSource = `
   precision mediump float;
   varying vec2 vUv;
   uniform sampler2D uTexture;
+  uniform sampler2D uRipples;
   uniform vec2 uPointer;
   uniform vec2 uTrailPointer;
+  uniform vec2 uRippleTexel;
+  uniform float uRippleStrength;
   uniform float uHover;
   uniform float uVelocity;
   uniform float uReveal;
@@ -111,8 +156,29 @@ const mediaFragmentSource = `
     return uv;
   }
 
+  float rippleAt(vec2 uv) {
+    return texture2D(uRipples, clamp(uv, 0.001, 0.999)).r;
+  }
+
   void main() {
     vec2 surfaceUv = (vUv - uEdgeInset) / max(vec2(0.001), vec2(1.0) - uEdgeInset * 2.0);
+    vec2 rippleUv = clamp(surfaceUv, 0.001, 0.999);
+    float rippleCenter = 0.0;
+    vec2 rippleGradient = vec2(0.0);
+    if (uRippleStrength > 0.0005) {
+      rippleCenter = rippleAt(rippleUv);
+      rippleGradient = vec2(
+        rippleAt(rippleUv + vec2(uRippleTexel.x, 0.0))
+          - rippleAt(rippleUv - vec2(uRippleTexel.x, 0.0)),
+        rippleAt(rippleUv + vec2(0.0, uRippleTexel.y))
+          - rippleAt(rippleUv - vec2(0.0, uRippleTexel.y))
+      );
+    }
+    float rippleAngle = rippleCenter * 6.28318530718;
+    vec2 rippleDirection = vec2(sin(rippleAngle), cos(rippleAngle));
+    vec2 liquidWarp = (
+      rippleDirection * rippleCenter + rippleGradient * 0.42
+    ) * uRippleStrength;
     float edgeAge = max(0.0, uTime - uEdgeStartedAt);
     vec2 impactDelta = surfaceUv - uEdgePoint;
     vec2 correctedImpact = impactDelta * vec2(uViewportAspect, 1.0);
@@ -139,7 +205,7 @@ const mediaFragmentSource = `
     componentWarp += (surfaceUv - 0.5) * impactDecay
       * localInfluence * uEdgePolarity * 0.009;
     componentWarp *= uPortrait;
-    vec2 shapeUv = surfaceUv - componentWarp;
+    vec2 shapeUv = surfaceUv - componentWarp + liquidWarp * uPortrait * 0.34;
 
     if (
       shapeUv.x < 0.0 || shapeUv.x > 1.0 ||
@@ -160,7 +226,6 @@ const mediaFragmentSource = `
     vec2 uv = coverUv(shapeUv);
     vec3 color;
     float radius = 1.0;
-    vec2 hoverPrism = vec2(0.0);
 
     float scrollWave = sin((shapeUv.y * 17.0) - uTime * 7.0) * uScrollMotion;
     vec2 scrollOffset = vec2(scrollWave * 0.008 * uScrollDirection, scrollWave * 0.003);
@@ -170,8 +235,6 @@ const mediaFragmentSource = `
       vec2 delta = shapeUv - uPointer;
       vec2 corrected = delta * vec2(uViewportAspect, 1.0);
       radius = length(corrected);
-      vec2 direction = corrected / max(radius, 0.001);
-      direction.x /= max(uViewportAspect, 0.001);
       vec2 trailDelta = shapeUv - uTrailPointer;
       vec2 correctedTrail = trailDelta * vec2(uViewportAspect, 1.0);
       float trailRadius = length(correctedTrail);
@@ -180,32 +243,33 @@ const mediaFragmentSource = `
       vec2 flowDirection = pointerFlow / max(pointerFlowLength, 0.001);
       flowDirection.x /= max(uViewportAspect, 0.001);
       float speed = smoothstep(0.015, 0.38, uVelocity);
-      float lens = smoothstep(0.54, 0.0, radius) * uHover;
-      float ripple = sin(radius * 36.0 - uTime * 7.4);
-      ripple *= exp(-radius * 5.2) * uHover;
-      float fineRipple = sin(radius * 58.0 - uTime * 9.2);
-      fineRipple *= exp(-radius * 8.5) * uHover;
-      float wake = smoothstep(0.48, 0.0, trailRadius) * speed * uHover;
-      float wakeRipple = sin(trailRadius * 31.0 - uTime * 6.1) * wake;
-      vec2 tangentDirection = vec2(-direction.y, direction.x);
-      hoverDisplacement = direction * (
-        lens * 0.017 + ripple * 0.007 + fineRipple * 0.002
-      );
-      hoverDisplacement -= flowDirection * wake * (0.007 + speed * 0.010);
-      hoverDisplacement += tangentDirection * (
-        ripple * 0.005 + wakeRipple * 0.007
-      );
-      hoverPrism = direction * lens * (0.0012 + speed * 0.0018);
-      hoverPrism += flowDirection * wake * 0.0017;
+      float wake = smoothstep(0.52, 0.0, trailRadius) * speed * uHover;
+      float liquidPresence = smoothstep(0.015, 0.42, rippleCenter) * uHover;
+      vec2 tangentFlow = vec2(-rippleGradient.y, rippleGradient.x);
+      hoverDisplacement = liquidWarp * (0.72 + speed * 0.24);
+      hoverDisplacement -= flowDirection * wake * 0.006;
+      hoverDisplacement += tangentFlow * liquidPresence * 0.006;
     }
 
     if (uPortrait > 0.5) {
       vec2 refractedUv = coverUv(shapeUv + hoverDisplacement + scrollOffset);
       vec2 prism = uEdgeNormal * impactWave * impactDecay * impactInfluence * 0.0011;
-      prism += hoverPrism * uHover;
       color.r = texture2D(uTexture, clamp(refractedUv + prism, 0.001, 0.999)).r;
       color.g = texture2D(uTexture, clamp(refractedUv, 0.001, 0.999)).g;
       color.b = texture2D(uTexture, clamp(refractedUv - prism, 0.001, 0.999)).b;
+      if (uHover > 0.002 && rippleCenter > 0.01) {
+        vec2 blurVector = liquidWarp * 0.075;
+        vec3 blurBefore = texture2D(
+          uTexture,
+          clamp(refractedUv - blurVector, 0.001, 0.999)
+        ).rgb;
+        vec3 blurAfter = texture2D(
+          uTexture,
+          clamp(refractedUv + blurVector, 0.001, 0.999)
+        ).rgb;
+        float blurMix = smoothstep(0.01, 0.34, rippleCenter) * 0.46;
+        color = mix(color, (blurBefore + color + blurAfter) / 3.0, blurMix);
+      }
       color *= 0.99 + waveFront * impactDecay * 0.025;
     } else {
       uv = coverUv(shapeUv + hoverDisplacement + scrollOffset);
@@ -425,14 +489,19 @@ const init = async () => {
   const geometry = parseGeometry(geometryBufferSource);
 
   const backgroundProgram = createProgram(gl, quadVertexSource, backgroundFragmentSource);
+  const rippleProgram = createProgram(gl, rippleVertexSource, rippleFragmentSource);
   const mediaProgram = createProgram(gl, quadVertexSource, mediaFragmentSource);
   const smileProgram = createProgram(gl, smileVertexSource, smileFragmentSource);
 
   const backgroundUniforms = uniformsFor(gl, backgroundProgram, [
     "uResolution", "uPointer", "uTime", "uMotion",
   ]);
+  const rippleUniforms = uniformsFor(gl, rippleProgram, [
+    "uCenter", "uRadius", "uRotation", "uOpacity", "uPhase",
+  ]);
   const mediaUniforms = uniformsFor(gl, mediaProgram, [
-    "uTexture", "uPointer", "uTrailPointer", "uHover", "uVelocity", "uReveal", "uPortrait", "uTime",
+    "uTexture", "uRipples", "uPointer", "uTrailPointer", "uRippleTexel", "uRippleStrength",
+    "uHover", "uVelocity", "uReveal", "uPortrait", "uTime",
     "uViewportAspect", "uTextureAspect", "uScrollMotion", "uScrollDirection", "uSurfaceBend",
     "uEdgePoint", "uEdgeNormal", "uEdgeInset", "uEdgePulse", "uEdgeStartedAt", "uEdgePolarity",
   ]);
@@ -448,6 +517,44 @@ const init = async () => {
     new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]),
     gl.STATIC_DRAW,
   );
+
+  const rippleResolution = 192;
+  const createRippleTarget = () => {
+    const texture = gl.createTexture();
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.texImage2D(
+      gl.TEXTURE_2D,
+      0,
+      gl.RGBA,
+      rippleResolution,
+      rippleResolution,
+      0,
+      gl.RGBA,
+      gl.UNSIGNED_BYTE,
+      null,
+    );
+    const framebuffer = gl.createFramebuffer();
+    gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer);
+    gl.framebufferTexture2D(
+      gl.FRAMEBUFFER,
+      gl.COLOR_ATTACHMENT0,
+      gl.TEXTURE_2D,
+      texture,
+      0,
+    );
+    if (gl.checkFramebufferStatus(gl.FRAMEBUFFER) !== gl.FRAMEBUFFER_COMPLETE) {
+      throw new Error("Ripple framebuffer is incomplete");
+    }
+    gl.viewport(0, 0, rippleResolution, rippleResolution);
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+    return { texture, framebuffer };
+  };
 
   const smileVertexBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, smileVertexBuffer);
@@ -515,6 +622,22 @@ const init = async () => {
       trailX: 0.5,
       trailY: 0.5,
       pointerActive: false,
+      rippleTarget: createRippleTarget(),
+      ripples: Array.from({ length: 24 }, () => ({
+        active: false,
+        x: 0.5,
+        y: 0.5,
+        startedAt: 0,
+        radius: 0.05,
+        opacity: 0,
+        rotation: 0,
+        phase: 0,
+      })),
+      nextRipple: 0,
+      rippleFieldActive: false,
+      rippleStrength: 0,
+      rippleStrengthTarget: 0,
+      lastRippleAt: 0,
       hover: 0,
       hoverTarget: 0,
       velocity: 0,
@@ -548,6 +671,7 @@ const init = async () => {
   };
 
   const drawBackground = (time) => {
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
     gl.disable(gl.SCISSOR_TEST);
     gl.disable(gl.DEPTH_TEST);
     gl.viewport(0, 0, state.width, state.height);
@@ -585,6 +709,46 @@ const init = async () => {
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   };
 
+  const drawRippleField = (surface, time) => {
+    if (!surface.rippleFieldActive) return;
+    let activeCount = 0;
+    const timeSeconds = time * 0.001;
+    gl.bindFramebuffer(gl.FRAMEBUFFER, surface.rippleTarget.framebuffer);
+    gl.disable(gl.SCISSOR_TEST);
+    gl.disable(gl.DEPTH_TEST);
+    gl.viewport(0, 0, rippleResolution, rippleResolution);
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.ONE, gl.ONE);
+    gl.useProgram(rippleProgram);
+    bindQuad(rippleProgram);
+
+    surface.ripples.forEach((ripple) => {
+      if (!ripple.active) return;
+      const age = Math.max(0, timeSeconds - ripple.startedAt);
+      const life = 1.45;
+      if (age >= life) {
+        ripple.active = false;
+        return;
+      }
+      activeCount += 1;
+      const progress = age / life;
+      const easedGrowth = 1 - (1 - progress) ** 2;
+      const radius = ripple.radius + easedGrowth * 0.24;
+      const opacity = ripple.opacity * (1 - progress) ** 2.35;
+      gl.uniform2f(rippleUniforms.uCenter, ripple.x, ripple.y);
+      gl.uniform1f(rippleUniforms.uRadius, radius * 2);
+      gl.uniform1f(rippleUniforms.uRotation, ripple.rotation + age * 0.7);
+      gl.uniform1f(rippleUniforms.uOpacity, opacity);
+      gl.uniform1f(rippleUniforms.uPhase, ripple.phase + age * 1.4);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    });
+
+    surface.rippleFieldActive = activeCount > 0;
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+  };
+
   const drawMediaSurface = (surface, time) => {
     if (!surface.ready || !surface.texture || !surface.image || surface.reveal <= 0.001) return;
     const rect = surface.rect;
@@ -600,6 +764,7 @@ const init = async () => {
     };
     const viewport = viewportFor(expandedRect, state.dpr);
     if (viewport.width < 1 || viewport.height < 1) return;
+    drawRippleField(surface, time);
     gl.enable(gl.SCISSOR_TEST);
     gl.disable(gl.DEPTH_TEST);
     gl.enable(gl.BLEND);
@@ -610,8 +775,17 @@ const init = async () => {
     gl.activeTexture(gl.TEXTURE0);
     gl.bindTexture(gl.TEXTURE_2D, surface.texture);
     gl.uniform1i(mediaUniforms.uTexture, 0);
+    gl.activeTexture(gl.TEXTURE1);
+    gl.bindTexture(gl.TEXTURE_2D, surface.rippleTarget.texture);
+    gl.uniform1i(mediaUniforms.uRipples, 1);
     gl.uniform2f(mediaUniforms.uPointer, surface.x, surface.y);
     gl.uniform2f(mediaUniforms.uTrailPointer, surface.trailX, surface.trailY);
+    gl.uniform2f(
+      mediaUniforms.uRippleTexel,
+      1 / rippleResolution,
+      1 / rippleResolution,
+    );
+    gl.uniform1f(mediaUniforms.uRippleStrength, surface.rippleStrength);
     gl.uniform1f(mediaUniforms.uHover, surface.hover);
     gl.uniform1f(mediaUniforms.uVelocity, surface.velocity);
     gl.uniform1f(mediaUniforms.uReveal, surface.reveal);
@@ -761,6 +935,10 @@ const init = async () => {
       surface.hover += (surface.hoverTarget - surface.hover) * 0.11;
       surface.velocity += (surface.velocityTarget - surface.velocity) * 0.14;
       surface.velocityTarget *= 0.88;
+      surface.rippleStrength += (
+        surface.rippleStrengthTarget - surface.rippleStrength
+      ) * 0.14;
+      surface.rippleStrengthTarget *= surface.pointerActive ? 0.95 : 0.86;
       const scrollTarget = Math.abs(state.scrollImpulse) * surface.scrollScale;
       surface.scrollMotion += (scrollTarget - surface.scrollMotion) * 0.12;
       const revealTarget = surface.ready ? viewportRevealFor(surface.rect) : 0;
@@ -775,6 +953,17 @@ const init = async () => {
       ...state.surfaces.map((surface) =>
         Math.hypot(surface.x - surface.trailX, surface.y - surface.trailY),
       ),
+    );
+    metrics.mediaRippleStrength = Math.max(
+      0,
+      ...state.surfaces.map(({ rippleStrength }) => rippleStrength),
+    );
+    metrics.mediaRippleCount = state.surfaces.reduce(
+      (count, surface) => surface.ripples.reduce(
+        (surfaceCount, { active }) => surfaceCount + Number(active),
+        count,
+      ),
+      0,
     );
     state.pointerMotion += (state.pointerMotionTarget - state.pointerMotion) * 0.1;
     state.pointerMotionTarget *= 0.9;
@@ -871,6 +1060,7 @@ const init = async () => {
     if (softwareRenderer || !finePointer.matches) return;
     const now = performance.now();
     if (now - surface.lastProcessedAt < 28) return;
+    const elapsed = Math.max(16, now - surface.lastProcessedAt);
     surface.lastProcessedAt = now;
     const rect = surface.rect;
     const x = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
@@ -881,13 +1071,35 @@ const init = async () => {
       surface.trailX = x;
       surface.trailY = y;
       surface.pointerActive = true;
+      surface.lastRippleAt = now;
     }
-    const distance = Math.hypot(x - surface.x, y - surface.y);
+    const deltaX = x - surface.x;
+    const deltaY = y - surface.y;
+    const distance = Math.hypot(deltaX, deltaY);
+    const speed = Math.min(1, distance * (980 / elapsed));
+    if (distance > 0.012 && now - surface.lastRippleAt >= 28) {
+      const ripple = surface.ripples[surface.nextRipple];
+      ripple.active = true;
+      ripple.x = x;
+      ripple.y = y;
+      ripple.startedAt = now * 0.001;
+      ripple.radius = 0.035 + speed * 0.025;
+      ripple.opacity = 0.19 + speed * 0.16;
+      ripple.rotation = Math.atan2(deltaY, deltaX);
+      ripple.phase = surface.nextRipple * 1.618;
+      surface.nextRipple = (surface.nextRipple + 1) % surface.ripples.length;
+      surface.lastRippleAt = now;
+      surface.rippleFieldActive = true;
+    }
     surface.x = x;
     surface.y = y;
     surface.velocityTarget = Math.min(1, distance * 7.5);
+    surface.rippleStrengthTarget = Math.max(
+      surface.rippleStrengthTarget,
+      0.09 + speed * 0.26,
+    );
     surface.hoverTarget = 1;
-    requestFrame(700);
+    requestFrame(1700);
   };
 
   const impactMediaEdge = (surface, event, polarity) => {
@@ -930,6 +1142,7 @@ const init = async () => {
     surface.pointerActive = false;
     surface.hoverTarget = 0;
     surface.velocityTarget = 0.45;
+    surface.rippleStrengthTarget = Math.max(surface.rippleStrengthTarget, 0.075);
     requestFrame(1600);
   };
 
