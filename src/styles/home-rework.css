@@ -32,7 +32,7 @@ html[data-scroll-motion="active"] body:has(.rework-home)::after {
 }
 
 .unified-canvas {
-    z-index: 1;
+    z-index: 10;
     max-width: none;
     opacity: 0;
     transition: opacity 350ms ease;
@@ -937,6 +937,7 @@ html[data-renderer="ready"][data-liquid="active"]
 .rework-footer {
     width: 100%;
     min-height: 58dvh;
+    padding-bottom: 20dvh;
     margin-inline: auto;
     display: grid;
     place-items: center;

@@ -622,7 +622,11 @@ try {
     await evaluate(
       client,
       `(() => {
-        window.scrollTo({ top: window.innerHeight * 0.75, behavior: 'instant' });
+        const hero = document.querySelector('#hero');
+        window.scrollTo({
+          top: (hero?.offsetTop ?? 0) + (hero?.offsetHeight ?? window.innerHeight),
+          behavior: 'instant'
+        });
         return true;
       })()`,
     );
@@ -631,9 +635,15 @@ try {
       client,
       `(() => ({
         scrollY: Math.round(window.scrollY),
-        expectedSettleAt: Math.round(window.innerHeight * 0.75),
+        expectedSettleAt: Math.round(
+          (document.querySelector('#hero')?.offsetTop ?? 0)
+          + (document.querySelector('#hero')?.offsetHeight ?? window.innerHeight)
+        ),
         progress: window.__unifiedRendererMetrics?.smileProgress,
-        persists: window.__unifiedRendererMetrics?.smileVisible
+        persists: window.__unifiedRendererMetrics?.smileVisible,
+        docked: window.__unifiedRendererMetrics?.smileDocked,
+        widthRatio: window.__unifiedRendererMetrics?.smileWidthRatio,
+        visibleHeightRatio: window.__unifiedRendererMetrics?.smileVisibleHeightRatio
       }))()`,
     );
 

@@ -13,6 +13,12 @@ const frameMetric = document.querySelector('[data-metric="frame"]');
 const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
 const liquidSlots = allLiquidSlots;
 const geometryUrl = new URL("/smile-lite.bin", window.location.origin);
+const SMILE_CAMERA_DEPTH = 3.4;
+const SMILE_FOCAL_LENGTH = 2.5;
+const SMILE_SLOT_ROLL = -0.05;
+const SMILE_DOCK_ROLL = -0.02;
+const SMILE_DOCK_WIDTH_RATIO = 0.9;
+const SMILE_DOCK_VISIBLE_HEIGHT_RATIO = 0.2;
 const liquidUrls = liquidSlots.map((slot) =>
   new URL(slot.dataset.liquidSource || "/baltz-portrait.webp", window.location.origin),
 );
@@ -26,6 +32,9 @@ const metrics = {
   smileProgress: 0,
   scrollImpulse: 0,
   smileVisible: false,
+  smileDocked: false,
+  smileWidthRatio: 0,
+  smileVisibleHeightRatio: 0,
   mediaReady: 0,
   mediaHover: 0,
   mediaVelocity: 0,
@@ -317,8 +326,8 @@ const smileVertexSource = `
     vec3 position = rotation * aPosition;
     position *= uScale;
     position.y += uYOffset;
-    position.z += 3.4;
-    float focalLength = 2.5;
+    position.z += ${SMILE_CAMERA_DEPTH.toFixed(1)};
+    float focalLength = ${SMILE_FOCAL_LENGTH.toFixed(1)};
     gl_Position = vec4(
       position.x * focalLength / uAspect + (uAnchor.x + uScreenOffset.x) * position.z,
       position.y * focalLength + (uAnchor.y + uScreenOffset.y) * position.z,
@@ -334,6 +343,7 @@ const smileFragmentSource = `
   uniform vec2 uPointer;
   uniform vec3 uTint;
   uniform float uAlpha;
+  uniform float uPresence;
   uniform float uTime;
   varying vec3 vNormal;
 
@@ -354,6 +364,7 @@ const smileFragmentSource = `
     color += accent * diffuse * 0.2;
     color += vec3(0.34, 0.4, 0.5) * backLight * 0.1;
     color += uTint * rim * 0.42;
+    color += accent * rim * (0.06 + uPresence * 0.14);
     gl_FragColor = vec4(color + grain, uAlpha);
   }
 `;
@@ -403,7 +414,8 @@ const parseGeometry = (buffer) => {
   if (indexOffset + indexBytes !== buffer.byteLength) {
     throw new Error("Corrupt Smile geometry length");
   }
-  return { indexCount, indexBytes, positionOffset, normalOffset, indexOffset };
+  const positions = new Int16Array(buffer, positionOffset, positionBytes / 2);
+  return { indexCount, indexBytes, positionOffset, normalOffset, indexOffset, positions };
 };
 
 const loadImage = async (url) => {
@@ -507,7 +519,7 @@ const init = async () => {
   ]);
   const smileUniforms = uniformsFor(gl, smileProgram, [
     "uRotation", "uRoll", "uScale", "uAspect", "uYOffset",
-    "uAnchor", "uScreenOffset", "uPointer", "uTint", "uAlpha", "uTime",
+    "uAnchor", "uScreenOffset", "uPointer", "uTint", "uAlpha", "uPresence", "uTime",
   ]);
 
   const quadBuffer = gl.createBuffer();
@@ -608,6 +620,15 @@ const init = async () => {
     lastFrameAt: 0,
     settleUntil: 0,
     smileRect: smileSlot.getBoundingClientRect(),
+    smileLayout: {
+      slotScale: 0.4,
+      slotAnchorX: 0,
+      slotAnchorY: 0,
+      dockScale: 1,
+      dockAnchorY: -1,
+      dockWidthRatio: SMILE_DOCK_WIDTH_RATIO,
+      dockVisibleHeightRatio: SMILE_DOCK_VISIBLE_HEIGHT_RATIO,
+    },
     surfaces: liquidSlots.map((element, index) => ({
       element,
       url: liquidUrls[index],
@@ -823,6 +844,79 @@ const init = async () => {
     gl.drawElements(gl.TRIANGLES, geometry.indexCount, gl.UNSIGNED_SHORT, 0);
   };
 
+  const measureSmileProjection = (scale, roll) => {
+    const aspect = state.width / Math.max(state.height, 1);
+    const cosine = Math.cos(roll);
+    const sine = Math.sin(roll);
+    let minX = Infinity;
+    let maxX = -Infinity;
+    let minY = Infinity;
+    let maxY = -Infinity;
+
+    for (let offset = 0; offset < geometry.positions.length; offset += 3) {
+      const x = geometry.positions[offset] / 32767;
+      const y = geometry.positions[offset + 1] / 32767;
+      const z = geometry.positions[offset + 2] / 32767;
+      const rotatedX = cosine * x - sine * y;
+      const rotatedY = sine * x + cosine * y;
+      const projectedZ = z * scale + SMILE_CAMERA_DEPTH;
+      const projectedX = rotatedX * scale * SMILE_FOCAL_LENGTH / aspect / projectedZ;
+      const projectedY = rotatedY * scale * SMILE_FOCAL_LENGTH / projectedZ;
+      minX = Math.min(minX, projectedX);
+      maxX = Math.max(maxX, projectedX);
+      minY = Math.min(minY, projectedY);
+      maxY = Math.max(maxY, projectedY);
+    }
+
+    return {
+      widthRatio: (maxX - minX) * 0.5,
+      topNdc: maxY,
+      bottomNdc: minY,
+    };
+  };
+
+  const smileScaleForWidth = (targetWidthRatio, roll) => {
+    let lower = 0.01;
+    let upper = 6;
+    for (let iteration = 0; iteration < 24; iteration += 1) {
+      const candidate = (lower + upper) * 0.5;
+      if (measureSmileProjection(candidate, roll).widthRatio < targetWidthRatio) {
+        lower = candidate;
+      } else {
+        upper = candidate;
+      }
+    }
+    return (lower + upper) * 0.5;
+  };
+
+  const updateSmileLayout = () => {
+    const viewportWidth = Math.max(window.innerWidth, 1);
+    const viewportHeight = Math.max(window.innerHeight, 1);
+    const slotCenterDocumentY = state.smileRect.top
+      + window.scrollY
+      + state.smileRect.height * 0.5;
+    const slotScale = smileScaleForWidth(
+      Math.max(0.01, state.smileRect.width / viewportWidth),
+      SMILE_SLOT_ROLL,
+    );
+    const dockScale = smileScaleForWidth(SMILE_DOCK_WIDTH_RATIO, SMILE_DOCK_ROLL);
+    const dockProjection = measureSmileProjection(dockScale, SMILE_DOCK_ROLL);
+    const dockTopNdc = SMILE_DOCK_VISIBLE_HEIGHT_RATIO * 2 - 1;
+    const dockAnchorY = dockTopNdc - dockProjection.topNdc;
+
+    state.smileLayout = {
+      slotScale,
+      slotAnchorX: (
+        (state.smileRect.left + state.smileRect.width * 0.5) / viewportWidth
+      ) * 2 - 1,
+      slotAnchorY: 1 - (slotCenterDocumentY / viewportHeight) * 2,
+      dockScale,
+      dockAnchorY,
+      dockWidthRatio: dockProjection.widthRatio,
+      dockVisibleHeightRatio: (dockProjection.topNdc + dockAnchorY + 1) * 0.5,
+    };
+  };
+
   const drawSmile = (time) => {
     if (!hero) {
       metrics.smileVisible = false;
@@ -852,64 +946,56 @@ const init = async () => {
     const ambientSmileMotion = finePointer.matches;
     const progress = state.smileProgress;
     const arrival = progress * progress * (3 - 2 * progress);
+    const overshoot = Math.sin(progress * Math.PI) * progress * 0.075;
     const float = ambientSmileMotion
       ? Math.sin(time * 0.00058) * 0.032 * (1 - arrival * 0.72)
       : 0;
-    const scrollLift = state.scrollImpulse * 0.04;
-    const roll = (ambientSmileMotion ? -0.05 + Math.cos(time * 0.00034) * 0.05 : -0.05)
-      - scrollLift * 0.48;
-    const gazeWeight = 1 - arrival * 0.68;
-    const baseScale = portraitLayout ? 1.03 : 1.16;
-    const slotScale = state.smileRect.height / Math.max(window.innerHeight, 1);
-    const fullViewportScale = Math.max(0.4, Math.min(0.76, baseScale * slotScale));
-    const initialAnchorX = Math.max(
-      -0.72,
-      Math.min(
-        0.72,
-        ((state.smileRect.left + state.smileRect.width * 0.5) / window.innerWidth) * 2 - 1,
-      ),
-    );
-    const ambientAnchorX = portraitLayout ? 0.46 : 0.58;
-    const anchorX = initialAnchorX + (ambientAnchorX - initialAnchorX) * arrival;
-    const initialAnchorY = portraitLayout ? -0.1 : 0;
-    const ambientAnchorY = portraitLayout ? -0.08 : -0.04;
-    const anchorY = initialAnchorY + (ambientAnchorY - initialAnchorY) * arrival;
-    const ambientYOffset = portraitLayout ? -0.68 : -0.92;
-    const blur = arrival * 0.0024;
+    const initialRoll = ambientSmileMotion
+      ? SMILE_SLOT_ROLL + Math.cos(time * 0.00034) * 0.05
+      : SMILE_SLOT_ROLL;
+    const roll = initialRoll + (SMILE_DOCK_ROLL - initialRoll) * arrival;
+    const gazeWeight = 1 - arrival;
+    const scale = (
+      state.smileLayout.slotScale
+      + (state.smileLayout.dockScale - state.smileLayout.slotScale) * arrival
+    ) * (1 + overshoot);
+    const anchorX = state.smileLayout.slotAnchorX * (1 - arrival);
+    const anchorY = state.smileLayout.slotAnchorY
+      + (state.smileLayout.dockAnchorY - state.smileLayout.slotAnchorY) * arrival;
     const smileAlpha = 1;
+    metrics.smileDocked = progress >= 0.999;
+    metrics.smileWidthRatio = metrics.smileDocked
+      ? state.smileLayout.dockWidthRatio
+      : 0;
+    metrics.smileVisibleHeightRatio = metrics.smileDocked
+      ? state.smileLayout.dockVisibleHeightRatio
+      : 0;
     gl.uniform2f(smileUniforms.uRotation, state.smileX * gazeWeight, state.smileY * gazeWeight);
-    gl.uniform1f(smileUniforms.uRoll, roll - arrival * 0.035);
-    gl.uniform1f(
-      smileUniforms.uScale,
-      fullViewportScale * (1 + arrival * 0.28 + Math.abs(state.scrollImpulse) * 0.018),
-    );
+    gl.uniform1f(smileUniforms.uRoll, roll);
+    gl.uniform1f(smileUniforms.uScale, scale);
     gl.uniform1f(smileUniforms.uAspect, aspect);
     gl.uniform1f(
       smileUniforms.uYOffset,
-      float - (portraitLayout ? 0.025 : 0) + ambientYOffset * arrival - scrollLift * 0.2,
+      (float - (portraitLayout ? 0.025 : 0)) * (1 - arrival),
     );
     gl.uniform2f(smileUniforms.uAnchor, anchorX, anchorY);
     gl.uniform2f(smileUniforms.uPointer, state.pointerX * 2 - 1, state.pointerY * 2 - 1);
+    gl.uniform1f(smileUniforms.uPresence, arrival);
     gl.uniform1f(smileUniforms.uTime, time * 0.001);
-    if (blur > 0) {
-      const samples = [[-1, 0], [1, 0], [0, -1], [0, 1], [-0.7, -0.7], [0.7, -0.7], [-0.7, 0.7], [0.7, 0.7]];
-      samples.forEach(([x, y]) => {
-        drawSmilePass(x * blur, y * blur, [0.15, 0.18, 0.23], smileAlpha * 0.055);
-      });
-    }
     if (state.pointerMotion > 0.42) {
-      const split = Math.min(0.0055, state.pointerMotion * 0.0055);
+      const split = Math.min(0.0055, state.pointerMotion * 0.0055) * (1 - arrival * 0.72);
       drawSmilePass(-split, 0, [0.92, 0.12, 0.04], 0.17 * smileAlpha);
       drawSmilePass(split, 0, [0.06, 0.22, 0.82], 0.12 * smileAlpha);
     }
     drawSmilePass(0, 0, [0.15, 0.18, 0.23], smileAlpha);
   };
 
-  const updateRects = () => {
+  const updateRects = (updateLayout = false) => {
     state.smileRect = smileSlot.getBoundingClientRect();
     state.surfaces.forEach((surface) => {
       surface.rect = surface.element.getBoundingClientRect();
     });
+    if (updateLayout) updateSmileLayout();
   };
 
   const resize = () => {
@@ -923,7 +1009,7 @@ const init = async () => {
       canvas.width = width;
       canvas.height = height;
     }
-    updateRects();
+    updateRects(true);
   };
 
   const render = (time) => {
@@ -968,8 +1054,8 @@ const init = async () => {
     state.pointerMotion += (state.pointerMotionTarget - state.pointerMotion) * 0.1;
     state.pointerMotionTarget *= 0.9;
     drawBackground(time);
-    drawSmile(time);
     drawMedia(time);
+    drawSmile(time);
   };
 
   const frame = (time) => {
@@ -1168,7 +1254,7 @@ const init = async () => {
     ScrollTrigger.create({
       trigger: hero,
       start: "top top",
-      end: () => `+=${Math.round(window.innerHeight * 0.75)}`,
+      end: "bottom top",
       invalidateOnRefresh: true,
       onUpdate: (self) => {
         state.smileProgress = self.progress;
@@ -1177,7 +1263,7 @@ const init = async () => {
         requestFrame(550);
       },
       onRefresh: () => {
-        updateRects();
+        updateRects(true);
         requestFrame(250);
       },
     });
