@@ -124,7 +124,7 @@ html[data-renderer="fallback"] .opening-loader {
 .scroll-rib {
     position: absolute;
     left: 0;
-    z-index: 3;
+    z-index: 12;
     width: 100%;
     height: 8rem;
     overflow: visible;
@@ -848,8 +848,6 @@ html[data-renderer="ready"][data-liquid="active"]
 }
 
 .rework-home .clouds {
-    --end-x: 50%;
-    --end-y: 50%;
     min-height: 82svh;
     display: grid;
     grid-template-columns: minmax(0, 1fr);
@@ -881,8 +879,6 @@ html[data-renderer="ready"][data-liquid="active"]
 }
 
 .rework-home .elsewhere {
-    --end-x: 50%;
-    --end-y: 50%;
     min-height: 85svh;
     display: grid;
     grid-template-columns: 5fr 7fr;
@@ -896,25 +892,6 @@ html[data-renderer="ready"][data-liquid="active"]
 .elsewhere-heading {
     min-width: 0;
     padding-inline: clamp(1.5rem, 3vw, 3rem);
-}
-.rework-home .elsewhere::before,
-.rework-home .clouds::before {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: radial-gradient(
-        circle 18rem at var(--end-x) var(--end-y),
-        rgb(230 91 47 / 12%),
-        transparent 72%
-    );
-    content: "";
-    opacity: 0;
-    transition: opacity 850ms ease;
-    pointer-events: none;
-}
-.rework-home .elsewhere[data-trail="active"]::before,
-.rework-home .clouds[data-trail="active"]::before {
-    opacity: 1;
 }
 .elsewhere-links {
     border-top: 1px solid rgb(243 240 233 / 20%);
@@ -969,52 +946,78 @@ html[data-renderer="ready"][data-liquid="active"]
     line-height: 0.72;
     -webkit-text-stroke: 1px rgb(243 240 233 / 22%);
 }
-.end-trail-layer {
+.gooey-trail {
     position: fixed;
     inset: 0;
-    z-index: 2;
+    z-index: 12;
     overflow: hidden;
-    pointer-events: none;
-}
-.end-trail-layer span {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 5rem;
-    aspect-ratio: 1;
-    border: 1px solid rgb(230 91 47 / 48%);
-    border-radius: 50%;
+    mix-blend-mode: normal;
     opacity: 0;
-    transition: opacity 900ms ease;
-    will-change: transform;
+    pointer-events: none;
+    transition: opacity 240ms ease;
 }
-.end-trail-layer span:nth-child(2) {
-    width: 4.25rem;
-    border-color: rgb(230 91 47 / 38%);
+
+html[data-gooey-trail="ready"] .gooey-trail {
+    opacity: 0.88;
 }
-.end-trail-layer span:nth-child(3) {
-    width: 3.5rem;
-    border-color: rgb(243 240 233 / 30%);
+
+@media (hover: hover) and (pointer: fine) {
+    html[data-gooey-surface="active"] body:has(.rework-home)::after,
+    html[data-gooey-surface="active"] body:has(.rework-home) .viewport-film {
+        filter: contrast(calc(var(--viewport-film-contrast, 1.04) + 0.1));
+        opacity: calc(var(--viewport-film-opacity, 0.12) + 0.08);
+    }
 }
-.end-trail-layer span:nth-child(4) {
-    width: 2.8rem;
-    border-color: rgb(230 91 47 / 28%);
+
+.gooey-trail__grid {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(var(--gooey-columns, 16), minmax(0, 1fr));
+    grid-auto-rows: var(--gooey-cell-size, 5rem);
+    transform: translateZ(0);
 }
-.end-trail-layer span:nth-child(5) {
-    width: 2.1rem;
-    border-color: rgb(243 240 233 / 23%);
+
+.gooey-trail[data-filter="gooey"] .gooey-trail__grid {
+    filter: saturate(1.18);
 }
-.end-trail-layer span:nth-child(6) {
-    width: 1.45rem;
-    border-color: rgb(230 91 47 / 22%);
+
+.gooey-trail__cell {
+    width: 100%;
+    height: 100%;
+    border-radius: 30%;
+    background: var(--gooey-cell-color, var(--color-text));
+    color: var(--gooey-cell-color, var(--color-text));
+    opacity: 0;
+    transform: scale(0.32);
+    will-change: transform, opacity;
 }
-.end-trail-layer span:nth-child(7) {
-    width: 0.8rem;
-    border-color: rgb(243 240 233 / 20%);
+
+.gooey-trail[data-filter="gooey"] .gooey-trail__cell {
+    filter: blur(1.6px);
+    box-shadow: 0 0 1.8rem currentColor;
 }
-html[data-end-trail="active"] .end-trail-layer span {
-    opacity: 1;
+
+.gooey-trail__cell[data-tone="paper"] {
+    --gooey-cell-color: #f3f0e9;
 }
+
+.gooey-trail__cell[data-tone="ember"] {
+    --gooey-cell-color: #e65b2f;
+}
+
+.gooey-trail__cell[data-tone="rust"] {
+    --gooey-cell-color: #8f2d1b;
+}
+
+.gooey-trail[data-filter="fallback"] {
+    opacity: 0.22;
+}
+
+.gooey-trail[data-filter="fallback"] .gooey-trail__cell {
+    border-radius: 12%;
+}
+
 @media (hover: hover) and (pointer: fine) {
     .interactive-row:hover {
         color: var(--color-canvas);
@@ -1218,12 +1221,6 @@ html[data-end-trail="active"] .end-trail-layer span {
     }
     .footer-wordmark {
         font-size: clamp(6.5rem, 31vw, 11rem);
-    }
-}
-
-@media (hover: none), (pointer: coarse) {
-    .end-trail-layer {
-        display: none;
     }
 }
 

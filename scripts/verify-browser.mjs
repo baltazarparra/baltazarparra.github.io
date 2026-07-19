@@ -752,6 +752,70 @@ try {
       }))()`,
     );
 
+    const gooeyTrail = {
+      initial: await evaluate(
+        client,
+        `(() => window.__gooeyTrailMetrics ?? null)()`,
+      ),
+    };
+    const trailSnapshot = () => evaluate(
+      client,
+      `(() => {
+        const layer = document.querySelector('.gooey-trail');
+        const grid = document.querySelector('[data-gooey-grid]');
+        const visibleCells = [...document.querySelectorAll('.gooey-trail__cell')]
+          .map((cell, index) => {
+            const style = getComputedStyle(cell);
+            return {
+              index,
+              opacity: Number(style.opacity),
+              transform: style.transform,
+              color: style.backgroundColor
+            };
+          })
+          .filter((cell) => cell.opacity > 0.01);
+        const layerStyle = layer ? getComputedStyle(layer) : null;
+        const gridStyle = grid ? getComputedStyle(grid) : null;
+        return {
+          metrics: window.__gooeyTrailMetrics ?? null,
+          layer: layerStyle ? {
+            display: layerStyle.display,
+            opacity: layerStyle.opacity,
+            zIndex: layerStyle.zIndex,
+            mixBlendMode: layerStyle.mixBlendMode
+          } : null,
+          gridFilter: gridStyle?.filter ?? null,
+          visibleCells
+        };
+      })()`,
+    );
+
+    if (!profile.touch && !profile.disableJavaScript) {
+      const moveAcross = async (selector, positions) => {
+        const rect = await evaluate(
+          client,
+          `(() => {
+            const node = document.querySelector(${JSON.stringify(selector)});
+            if (!node) return null;
+            const rect = node.getBoundingClientRect();
+            return { left: rect.left, top: rect.top, width: rect.width, height: rect.height };
+          })()`,
+        );
+        if (!rect) return;
+        for (const [xProgress, yProgress] of positions) {
+          await client.send("Input.dispatchMouseEvent", {
+            type: "mouseMoved",
+            x: rect.left + rect.width * xProgress,
+            y: rect.top + rect.height * yProgress,
+          });
+          await delay(55);
+        }
+      };
+      await moveAcross("#caipora", [[0.24, 0.38], [0.5, 0.5], [0.76, 0.62]]);
+      await delay(90);
+      gooeyTrail.caipora = await trailSnapshot();
+    }
+
     const caiporaScreenshot = await client.send("Page.captureScreenshot", {
       format: "png",
       fromSurface: true,
@@ -762,6 +826,42 @@ try {
       Buffer.from(caiporaScreenshot.data, "base64"),
     );
 
+    if (!profile.touch && !profile.disableJavaScript) {
+      await evaluate(
+        client,
+        `(() => {
+          document.querySelector('#elsewhere').scrollIntoView({ behavior: 'instant', block: 'center' });
+          return true;
+        })()`,
+      );
+      await delay(350);
+      const elsewhereRect = await evaluate(
+        client,
+        `(() => {
+          const rect = document.querySelector('#elsewhere').getBoundingClientRect();
+          return { left: rect.left, top: rect.top, width: rect.width, height: rect.height };
+        })()`,
+      );
+      for (const [xProgress, yProgress] of [[0.18, 0.34], [0.34, 0.42], [0.52, 0.5], [0.7, 0.58], [0.84, 0.66]]) {
+        await client.send("Input.dispatchMouseEvent", {
+          type: "mouseMoved",
+          x: elsewhereRect.left + elsewhereRect.width * xProgress,
+          y: elsewhereRect.top + elsewhereRect.height * yProgress,
+        });
+        await delay(70);
+      }
+      gooeyTrail.elsewhere = await trailSnapshot();
+      const elsewhereTrailScreenshot = await client.send("Page.captureScreenshot", {
+        format: "png",
+        fromSurface: true,
+        captureBeyondViewport: false,
+      });
+      await writeFile(
+        resolve(outputDirectory, `${profile.name}-gooey-elsewhere.png`),
+        Buffer.from(elsewhereTrailScreenshot.data, "base64"),
+      );
+    }
+
     await evaluate(
       client,
       `(() => {
@@ -770,6 +870,25 @@ try {
       })()`,
     );
     await delay(1200);
+
+    if (!profile.touch && !profile.disableJavaScript) {
+      const headingRect = await evaluate(
+        client,
+        `(() => {
+          const rect = document.querySelector('#clouds-title').getBoundingClientRect();
+          return { left: rect.left, top: rect.top, width: rect.width, height: rect.height };
+        })()`,
+      );
+      for (const progress of [0.08, 0.28, 0.5, 0.72, 0.92]) {
+        await client.send("Input.dispatchMouseEvent", {
+          type: "mouseMoved",
+          x: headingRect.left + headingRect.width * progress,
+          y: headingRect.top + headingRect.height * (0.35 + progress * 0.22),
+        });
+        await delay(70);
+      }
+      gooeyTrail.clouds = await trailSnapshot();
+    }
     const clouds = await evaluate(
       client,
       `(() => {
@@ -793,6 +912,50 @@ try {
       resolve(outputDirectory, `${profile.name}-clouds.png`),
       Buffer.from(cloudsScreenshot.data, "base64"),
     );
+
+    if (!profile.touch && !profile.disableJavaScript) {
+      await evaluate(
+        client,
+        `(() => {
+          document.querySelector('.rework-footer').scrollIntoView({ behavior: 'instant', block: 'center' });
+          return true;
+        })()`,
+      );
+      await delay(350);
+      const footerRect = await evaluate(
+        client,
+        `(() => {
+          const rect = document.querySelector('.rework-footer').getBoundingClientRect();
+          return { left: rect.left, top: rect.top, width: rect.width, height: rect.height };
+        })()`,
+      );
+      for (const progress of [0.2, 0.36, 0.54, 0.7, 0.84]) {
+        await client.send("Input.dispatchMouseEvent", {
+          type: "mouseMoved",
+          x: footerRect.left + footerRect.width * progress,
+          y: footerRect.top + footerRect.height * (0.3 + progress * 0.35),
+        });
+        await delay(70);
+      }
+      gooeyTrail.footer = await trailSnapshot();
+      const footerTrailScreenshot = await client.send("Page.captureScreenshot", {
+        format: "png",
+        fromSurface: true,
+        captureBeyondViewport: false,
+      });
+      await writeFile(
+        resolve(outputDirectory, `${profile.name}-gooey-footer.png`),
+        Buffer.from(footerTrailScreenshot.data, "base64"),
+      );
+    } else {
+      gooeyTrail.capability = await evaluate(
+        client,
+        `(() => ({
+          metrics: window.__gooeyTrailMetrics ?? null,
+          layerDisplay: getComputedStyle(document.querySelector('[data-gooey-trail]')).display
+        }))()`,
+      );
+    }
 
     const privacy = await evaluate(
       client,
@@ -885,6 +1048,7 @@ try {
       smileAmbient,
       smileSpin,
       navigation,
+      gooeyTrail,
       clouds,
       privacy,
       accessibility,
@@ -938,10 +1102,18 @@ try {
       resolve(outputDirectory, "404.png"),
       Buffer.from(screenshot.data, "base64"),
     );
-    const returned = client.waitFor("Page.loadEventFired");
-    await evaluate(client, "document.querySelector('.not-found a').click() || true");
-    await returned;
-    notFound.returnedTo = await evaluate(client, "location.href");
+    const hasReturnLink = await evaluate(
+      client,
+      "Boolean(document.querySelector('.not-found a'))",
+    );
+    if (hasReturnLink) {
+      const returned = client.waitFor("Page.loadEventFired");
+      await evaluate(client, "document.querySelector('.not-found a').click()");
+      await returned;
+      notFound.returnedTo = await evaluate(client, "location.href");
+    } else {
+      notFound.returnedTo = null;
+    }
     client.close();
     await browser.send("Target.closeTarget", { targetId });
   }

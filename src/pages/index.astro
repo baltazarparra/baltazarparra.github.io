@@ -191,7 +191,7 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
       </article>
     </section>
 
-    <section class="scene elsewhere" id="elsewhere" data-end-zone aria-labelledby="elsewhere-title" data-scroll-bend="0.42">
+    <section class="scene elsewhere" id="elsewhere" data-gooey-zone aria-labelledby="elsewhere-title" data-scroll-bend="0.42">
       <div class="elsewhere-heading">
         <p class="section-label">Elsewhere</p>
         <h2 id="elsewhere-title"><ChromaText segments={chroma.elsewhere} /></h2>
@@ -207,10 +207,10 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
       </nav>
     </section>
 
-    <section class="scene clouds" id="clouds" data-end-zone aria-labelledby="clouds-title" data-scroll-bend="0.54">
+    <section class="scene clouds" id="clouds" data-gooey-zone aria-labelledby="clouds-title" data-scroll-bend="0.54">
       <div class="clouds-copy">
         <h2 id="clouds-title"><ChromaText segments={chroma.clouds} /></h2>
-        <div class="spotify-frame">
+        <div class="spotify-frame" data-gooey-exclude>
           <iframe
             title="Clouds on Spotify"
             src={site.clouds.embedUrl}
@@ -225,11 +225,11 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
     </section>
   </main>
 
-  <div class="end-trail-layer" data-end-trail aria-hidden="true">
-    <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+  <div class="gooey-trail" data-gooey-trail aria-hidden="true">
+    <div class="gooey-trail__grid" data-gooey-grid></div>
   </div>
 
-  <footer class="rework-footer" data-scroll-bend="0.62" data-scroll-rib="top">
+  <footer class="rework-footer" data-gooey-zone data-scroll-bend="0.62" data-scroll-rib="top">
     <p class="footer-wordmark" aria-hidden="true">baltz.</p>
   </footer>
 
@@ -238,6 +238,7 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
     import { ScrollTrigger } from "gsap/ScrollTrigger";
     import { scrollMotion } from "../lib/motion/scrollMotion.js";
     import "../lib/motion/scrollBend.js";
+    import "../lib/motion/gooeyTrail.js";
     import "../lib/visual/unifiedRenderer.js";
 
     gsap.registerPlugin(ScrollTrigger);
@@ -471,80 +472,6 @@ const githubLogoSvg = renderToStaticMarkup(createElement(GithubLogoIcon, {
         }, { passive: true });
       });
 
-      const endZones = [...document.querySelectorAll<HTMLElement>("[data-end-zone]")];
-      const trail = document.querySelector<HTMLElement>("[data-end-trail]");
-      const trailNodes = trail
-        ? [...trail.querySelectorAll<HTMLElement>("span")]
-        : [];
-
-      if (endZones.length > 0 && trailNodes.length > 0) {
-        const points = trailNodes.map(() => ({ x: 0, y: 0 }));
-        let trailFrame = 0;
-        let trailActive = false;
-        let pointerX = 0;
-        let pointerY = 0;
-
-        const drawTrail = () => {
-          trailFrame = 0;
-          if (!trailActive) return;
-
-          const head = points[0];
-          if (!head) return;
-          head.x += (pointerX - head.x) * 0.34;
-          head.y += (pointerY - head.y) * 0.34;
-
-          for (let index = 1; index < points.length; index += 1) {
-            const point = points[index];
-            const previous = points[index - 1];
-            if (!point || !previous) continue;
-            point.x += (previous.x - point.x) * 0.25;
-            point.y += (previous.y - point.y) * 0.25;
-          }
-
-          trailNodes.forEach((node, index) => {
-            const point = points[index];
-            if (!point) return;
-            node.style.transform = `translate3d(${point.x}px, ${point.y}px, 0) translate(-50%, -50%)`;
-          });
-          endZones.forEach((zone) => {
-            const rect = zone.getBoundingClientRect();
-            zone.style.setProperty("--end-x", `${head.x - rect.left}px`);
-            zone.style.setProperty("--end-y", `${head.y - rect.top}px`);
-          });
-          trailFrame = requestAnimationFrame(drawTrail);
-        };
-
-        const activateTrail = (event: PointerEvent) => {
-          pointerX = event.clientX;
-          pointerY = event.clientY;
-          if (!trailActive) {
-            points.forEach((point) => {
-              point.x = pointerX;
-              point.y = pointerY;
-            });
-            trailActive = true;
-            document.documentElement.dataset.endTrail = "active";
-            endZones.forEach((zone) => { zone.dataset.trail = "active"; });
-          }
-          if (!trailFrame) trailFrame = requestAnimationFrame(drawTrail);
-        };
-
-        const deactivateTrail = (event: PointerEvent) => {
-          const nextTarget = event.relatedTarget;
-          if (endZones.some((zone) => nextTarget instanceof Node && zone.contains(nextTarget))) return;
-          trailActive = false;
-          document.documentElement.dataset.endTrail = "idle";
-          endZones.forEach((zone) => { zone.dataset.trail = "idle"; });
-          if (trailFrame) cancelAnimationFrame(trailFrame);
-          trailFrame = 0;
-        };
-
-        endZones.forEach((zone) => {
-          zone.addEventListener("pointerenter", activateTrail, { passive: true });
-          zone.addEventListener("pointermove", activateTrail, { passive: true });
-          zone.addEventListener("pointerleave", deactivateTrail, { passive: true });
-        });
-      }
     }
   </script>
 </BaseLayout>
